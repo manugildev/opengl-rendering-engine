@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\core\util\Logger.h" />
+    <ClInclude Include="src\core\Application.h" />
     <ClInclude Include="include\glm\detail\compute_vector_relational.hpp" />
     <ClInclude Include="include\glm\detail\qualifier.hpp" />
     <ClInclude Include="include\glm\ext\vec1.hpp" />
@@ -31,6 +33,8 @@
     <ClInclude Include="include\glm\gtx\vec_swizzle.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\core\util\Logger.cpp" />
+    <ClCompile Include="src\core\Application.cpp" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
