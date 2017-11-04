@@ -7,6 +7,8 @@
 - Add texture loader
 - Add text renderer
 - Add obj loader
+- Add log file in logger
+- Add FullScreen Mode
 
 # Window
 - Class for a window that handles everything related with it
