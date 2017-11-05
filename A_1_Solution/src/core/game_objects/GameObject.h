@@ -2,6 +2,7 @@
 #include <GLEW\glew.h>
 #include <glm\glm.hpp>
 #include "..\camera\Camera.h"
+#include "..\src\core\util\BasicShader.h"
 
 class Application;
 
@@ -14,9 +15,6 @@ public:
 	void render();
 	void init();
 
-	static void GameObject::AddShader(GLuint shader_program, const char * shader_text, GLenum shader_type);
-	GLuint GameObject::compile_shaders();
-
 private:
 	glm::mat4 model_mat;
 	GLuint teapot_vao = 0;
@@ -24,5 +22,6 @@ private:
 	GLuint shader_program_id;
 	int location_proj_mat, location_view_mat, location_model_mat;
 	Camera* camera;
+	BasicShader* shader_program;
 };
 

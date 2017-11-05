@@ -57,13 +57,13 @@
     <ClInclude Include="res\teapot.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\util\shader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\core\util\ShaderProgram.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\core\camera\Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\util\BasicShader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -84,6 +84,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\core\camera\Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\util\BasicShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -109,8 +112,8 @@
     <None Include="include\glm\gtx\texture.inl">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="res\shaders\fragment_shader.glsl" />
-    <None Include="res\shaders\vertex_shader.glsl" />
+    <None Include="res\shaders\basic_fragment_shader.glsl" />
+    <None Include="res\shaders\basic_vertex_shader.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ideas.txt" />

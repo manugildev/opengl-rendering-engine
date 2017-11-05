@@ -1,7 +1,7 @@
 #version 330
 
-in vec3 vertex_positions;
-in vec3 vertex_normals;
+layout (location=0) in vec3 vertex_positions;
+layout (location=1) in vec3 vertex_normals;
 
 out vec3 n_eye;
 

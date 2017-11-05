@@ -1,6 +1,9 @@
 
 ### ENGINE
 
+- Kill the pointers such as the camera one
+- Camera should also implement entity class
+
 # UTIL
 - Add shader loader and compiler
 - Add color to the logger and different type messages
@@ -12,7 +15,6 @@
 
 # Window
 - Class for a window that handles everything related with it
-
 
 ### GAME
 

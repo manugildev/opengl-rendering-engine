@@ -19,11 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\core\util\BasicShader.h" />
     <ClInclude Include="src\core\camera\Camera.h" />
     <ClInclude Include="res\teapot.h" />
     <ClInclude Include="src\core\util\ShaderProgram.h" />
     <ClInclude Include="src\core\game_objects\GameObject.h" />
-    <ClInclude Include="src\core\util\shader.h" />
     <ClInclude Include="src\core\util\Logger.h" />
     <ClInclude Include="src\core\Application.h" />
     <ClInclude Include="include\glm\detail\compute_vector_relational.hpp" />
@@ -38,6 +38,7 @@
     <ClInclude Include="include\glm\gtx\vec_swizzle.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\core\util\BasicShader.cpp" />
     <ClCompile Include="src\core\camera\Camera.cpp" />
     <ClCompile Include="src\core\util\ShaderProgram.cpp" />
     <ClCompile Include="src\core\game_objects\GameObject.cpp" />
@@ -53,8 +54,8 @@
     <None Include="include\glm\gtx\functions.inl" />
     <None Include="include\glm\gtx\matrix_factorisation.inl" />
     <None Include="include\glm\gtx\texture.inl" />
-    <None Include="res\shaders\fragment_shader.glsl" />
-    <None Include="res\shaders\vertex_shader.glsl" />
+    <None Include="res\shaders\basic_fragment_shader.glsl" />
+    <None Include="res\shaders\basic_vertex_shader.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ideas.txt" />

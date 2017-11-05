@@ -91,7 +91,10 @@ void Application::window_size_callback(GLFWwindow * window, int width, int heigh
 	glfwGetWindowSize(window, &app->window_width, &app->window_height);
 	glViewport(0, 0, app->window_width, app->window_height);
 	app->get_camera()->set_aspect_ratio((float) width / (float) height);
-	std::cout << "Window size callback" << std::endl;
+
+	char temp[128];
+	sprintf_s(temp, "Window resize: %dx%d", width, height);
+	LOG_MESSAGE(temp);
 }
 
 #pragma region INPUT_CALLBACKS
