@@ -1,12 +1,14 @@
-#include <glm\gtc\matrix_transform.hpp>
 #include <iostream>
+
+#include <glm\gtc\matrix_transform.hpp>
+#include <glm\ext.hpp>
 
 #include "GameObject.h"
 #include "..\res\teapot.h"
 #include "..\util\shader.h"
-#include "glm\ext.hpp"
+#include "..\Application.h"
 
-GameObject::GameObject() {
+GameObject::GameObject(Application *app) : camera(app->get_camera()){
 	this->model_mat = glm::mat4(1.0f);
 	init();
 }
@@ -17,7 +19,6 @@ void GameObject::init() {
 
 	/* Generate Object Buffer*/
 	GLuint vp_vbo = 0;
-	GLuint vbo = 0;
 	location_positions = glGetAttribLocation(shader_program_id, "vertex_positions");
 	location_normals = glGetAttribLocation(shader_program_id, "vertex_normals");
 
@@ -29,43 +30,36 @@ void GameObject::init() {
 	glBindBuffer(GL_ARRAY_BUFFER, vn_vbo);
 	glBufferData(GL_ARRAY_BUFFER, 3 * teapot_vertex_count * sizeof(float), teapot_normals, GL_STATIC_DRAW);
 
-	glGenVertexArrays(1, &teapot_vao);
-	glBindVertexArray(teapot_vao);
-
 	glEnableVertexAttribArray(location_positions);
 	glBindBuffer(GL_ARRAY_BUFFER, vp_vbo);
 	glVertexAttribPointer(location_positions, 3, GL_FLOAT, GL_FALSE, 0, NULL);
 	glEnableVertexAttribArray(location_normals);
 	glBindBuffer(GL_ARRAY_BUFFER, vn_vbo);
 	glVertexAttribPointer(location_normals, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-
-	glEnableVertexAttribArray(0);
-	glEnableVertexAttribArray(1);
+	
+	location_model_mat = glGetUniformLocation(shader_program_id, "model_mat");
+	location_view_mat = glGetUniformLocation(shader_program_id, "view_mat");
+	location_proj_mat = glGetUniformLocation(shader_program_id, "proj_mat");
 
 }
 
 GameObject::~GameObject() {}
 
-void GameObject::update() {}
+void GameObject::update() {
+	model_mat = glm::rotate(model_mat, glm::radians(1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+}
 
 void GameObject::render() {
 	glUseProgram(shader_program_id);
 	glBindVertexArray(teapot_vao);
 
-	int location_model_mat = glGetUniformLocation(shader_program_id, "model_mat");
-	int location_view_mat = glGetUniformLocation(shader_program_id, "view_mat");
-	int location_proj_mat = glGetUniformLocation(shader_program_id, "proj_mat");
+	glm::mat4 view = this->camera->get_view_matrix();
+	// TODO: MOVE THIS TO THE CAMERA CLASS
+	glm::mat4 perspective_proj = glm::perspective(this->camera->get_zoom(), (float) 960 / (float) 540, 0.1f, 1000.0f);
 
-	glm::mat4 view = glm::lookAt(glm::vec3(0.0f, 0.0f, 90.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-	glm::mat4 perspective_proj = glm::perspective(glm::radians(65.0f), (float) 640 / (float) 490, 0.1f, 100.0f);
-	model_mat = glm::rotate(model_mat, glm::radians(1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-	
-	std::cout << glm::to_string(model_mat) << std::endl;
-
-	glUniformMatrix4fv(location_proj_mat, 1, GL_FALSE, &perspective_proj[0][0]);
 	glUniformMatrix4fv(location_view_mat, 1, GL_FALSE, &view[0][0]);
+	glUniformMatrix4fv(location_proj_mat, 1, GL_FALSE, &perspective_proj[0][0]);
 	glUniformMatrix4fv(location_model_mat, 1, GL_FALSE, &model_mat[0][0]);
-
 	glDrawArrays(GL_TRIANGLES, 0, teapot_vertex_count);
 }
 
@@ -78,7 +72,6 @@ void GameObject::AddShader(GLuint shader_program, const char * shader_text, GLen
 
 	std::string out_shader = read_shader_source(shader_text);
 	const char * shader_source = out_shader.c_str();
-	printf(shader_source);
 
 	glShaderSource(shader_obj, 1, (const char**) &shader_source, NULL);
 	glCompileShader(shader_obj);

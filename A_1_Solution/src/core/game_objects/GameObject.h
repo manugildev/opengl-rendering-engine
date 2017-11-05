@@ -1,10 +1,13 @@
 #pragma once
 #include <GLEW\glew.h>
 #include <glm\glm.hpp>
+#include "..\camera\Camera.h"
+
+class Application;
 
 class GameObject {
 public:
-	GameObject();
+	GameObject(Application *app);
 	~GameObject();
 
 	void update();
@@ -19,5 +22,7 @@ private:
 	GLuint teapot_vao = 0;
 	GLuint location_positions, location_normals;
 	GLuint shader_program_id;
+	int location_proj_mat, location_view_mat, location_model_mat;
+	Camera* camera;
 };
 
