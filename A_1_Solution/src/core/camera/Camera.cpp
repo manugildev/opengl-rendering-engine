@@ -1,7 +1,8 @@
 #include "Camera.h"
+#include <iostream>
 
 Camera::Camera(glm::vec3 position, glm::vec3 up, GLfloat yaw, GLfloat pitch, glm::vec3 front,
-			   GLfloat movement_speed, GLfloat mouse_sensitiviy, GLfloat zoom) {
+			   GLfloat movement_speed, GLfloat mouse_sensitivity, GLfloat zoom) {
 	this->position = position;
 	this->world_up = up;
 	this->yaw = yaw;
@@ -36,9 +37,9 @@ void Camera::process_mouse(GLfloat x_offset, GLfloat y_offset, GLboolean constra
 }
 
 void Camera::process_mouse_scroll(GLfloat y_offset) {
-	if (this->zoom >= 1.0f && this->zoom <= 45.0f) this->zoom -= y_offset;
-	if (this->zoom <= 1.0f) this->zoom = 1.0f; 
-	if (this->zoom >= 45.0f) this->zoom = 45.0f;
+	if (this->zoom >= 1.0f && this->zoom <= 65.0f) this->zoom -= y_offset;
+	if (this->zoom <= 1.0f) this->zoom = 1.0f;
+	if (this->zoom >= 65.0f) this->zoom = 65.0f;
 }
 
 void Camera::update_camera_vectors() {
@@ -57,11 +58,19 @@ void Camera::update_camera_vectors() {
 }
 
 glm::mat4 Camera::get_view_matrix() {
-	return glm::lookAt(this->position, this->position+this->front, this->up);
+	return glm::lookAt(this->position, this->position + this->front, this->up);
+}
+
+glm::mat4 Camera::get_persp_proj_matrix() {
+	return glm::perspective(glm::radians(this->get_zoom()), this->aspect_ratio, 0.1f, 1000.0f);;
 }
 
 GLfloat Camera::get_zoom() {
 	return this->zoom;
+}
+
+void Camera::set_aspect_ratio(float aspect_ratio) {
+	this->aspect_ratio = aspect_ratio;
 }
 
 Camera::~Camera() {}

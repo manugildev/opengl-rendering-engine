@@ -1,13 +1,7 @@
 #include "Application.h"
 #include "util\Logger.h"
 
-
-// TODO: MOVE THIS KEYS TO OTHER PLACE
-bool keys[1024];
-bool first_mouse = true;
-
-GLfloat delta_time;
-GLfloat lastFrame = 0.0f;
+#include <iostream>
 
 
 Application::Application(Camera* camera) : camera(camera) {
@@ -21,8 +15,12 @@ int Application::init() {
 
 	/* Create a windowed mode window and its OpenGL context */
 	// TODO: Move window to another class? new Window(height, width, fullscreen, title, some more data)
-	window = glfwCreateWindow(960, 540, "Hello World", NULL, NULL);
+	window = glfwCreateWindow(960, 540, "A_1", NULL, NULL);
 	glfwGetWindowSize(window, &window_width, &window_height);
+	get_camera()->set_aspect_ratio((float) window_width / (float) window_height);
+	last_x = window_width / 2.0f;
+	last_y = window_height / 2.0f;
+
 	LOG_MESSAGE("Creating window");
 	if (!window) {
 		LOG_MESSAGE("Window not created.");
@@ -30,10 +28,11 @@ int Application::init() {
 		return -1;
 	}
 
-	// TODO: Window Size Callback
 
 	/* Make the window's context current */
+	glfwSetWindowUserPointer(window, this);
 	glfwMakeContextCurrent(window);
+	glfwSetWindowSizeCallback(window, window_size_callback);
 	glfwSetKeyCallback(window, key_callback);
 	glfwSetCursorPosCallback(window, mouse_callback);
 	glfwSetScrollCallback(window, scroll_callback);
@@ -68,11 +67,10 @@ void Application::runMainGameLoop(GameObject* objects[], int length) {
 		glfwPollEvents();
 		do_movement();
 
-
 		/* Render here */
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
-		
+
 		for (int i = 0; i < length; i++) objects[i]->update();
 		for (int i = 0; i < length; i++) objects[i]->render();
 
@@ -82,16 +80,51 @@ void Application::runMainGameLoop(GameObject* objects[], int length) {
 	}
 }
 
+void Application::calculate_delta_time() {
+	GLfloat currentFrame = glfwGetTime();
+	delta_time = currentFrame - lastFrame;
+	lastFrame = currentFrame;
+}
+
+void Application::window_size_callback(GLFWwindow * window, int width, int height) {
+	Application* app = reinterpret_cast<Application *>(glfwGetWindowUserPointer(window));
+	glfwGetWindowSize(window, &app->window_width, &app->window_height);
+	glViewport(0, 0, app->window_width, app->window_height);
+	app->get_camera()->set_aspect_ratio((float) width / (float) height);
+	std::cout << "Window size callback" << std::endl;
+}
+
+#pragma region INPUT_CALLBACKS
 void Application::key_callback(GLFWwindow * window, int key, int scancode, int action, int mode) {
+	Application* app = reinterpret_cast<Application *>(glfwGetWindowUserPointer(window));
 	if (key >= 0 && key < 1024) {
-		if (action == GLFW_PRESS) keys[key] = true;
-		else if (action == GLFW_RELEASE) keys[key] = false;
+		if (action == GLFW_PRESS) app->keys[key] = true;
+		else if (action == GLFW_RELEASE) app->keys[key] = false;
 	}
 }
 
-void Application::scroll_callback(GLFWwindow * window, double x_offset, double y_offset) {}
+void Application::scroll_callback(GLFWwindow * window, double x_offset, double y_offset) {
+	Application* app = reinterpret_cast<Application *>(glfwGetWindowUserPointer(window));
+	app->get_camera()->process_mouse_scroll(y_offset);
+}
 
-void Application::mouse_callback(GLFWwindow * window, double x_pos, double y_pos) {}
+void Application::mouse_callback(GLFWwindow * window, double x_pos, double y_pos) {
+	Application* app = reinterpret_cast<Application *>(glfwGetWindowUserPointer(window));
+	if (app->first_mouse) {
+		app->last_x = x_pos;
+		app->last_y = y_pos;
+		app->first_mouse = false;
+	}
+
+	app->x_offset = x_pos - app->last_x;
+	app->y_offset = app->last_y - y_pos;
+
+	app->last_x = x_pos;
+	app->last_y = y_pos;
+
+	app->get_camera()->process_mouse(app->x_offset, app->y_offset);
+}
+#pragma endregion
 
 void Application::do_movement() {
 	if (keys[GLFW_KEY_W] || keys[GLFW_KEY_UP]) this->camera->process_keyboard(FORWARD, delta_time);
@@ -102,13 +135,6 @@ void Application::do_movement() {
 
 Camera* Application::get_camera() {
 	return this->camera;
-}
-
-
-void Application::calculate_delta_time() {
-	GLfloat currentFrame = glfwGetTime();
-	delta_time = currentFrame - lastFrame;
-	lastFrame = currentFrame;
 }
 
 Application::~Application() {

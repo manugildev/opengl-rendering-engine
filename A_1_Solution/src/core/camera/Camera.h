@@ -9,13 +9,13 @@ enum Camera_Movement { FORWARD, BACKWARD, LEFT, RIGHT };
 
 const GLfloat YAW = -90.0f;
 const GLfloat PITCH = 0.0f;
-const GLfloat SPEED = 30.0f;
-const GLfloat SENSITIVITY = 0.25f;
+const GLfloat SPEED = 40.0f;
+const GLfloat SENSITIVITY = 0.10f;
 const GLfloat ZOOM = 45.0f;
 
 class Camera {
 public:
-	Camera(glm::vec3 position = glm::vec3(0.0f,0.0f,-90.0f),
+	Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, -90.0f),
 		   glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f),
 		   GLfloat yaw = YAW, GLfloat pitch = PITCH,
 		   glm::vec3 front = glm::vec3(0.0f, 0.0f, -1.0f),
@@ -32,6 +32,8 @@ public:
 
 	GLfloat get_zoom();
 	glm::mat4 get_view_matrix();
+	glm::mat4 get_persp_proj_matrix();
+	void set_aspect_ratio(float aspect_ratio);
 
 private:
 	glm::vec3 position;
@@ -48,5 +50,7 @@ private:
 	GLfloat movement_speed;
 	GLfloat mouse_sensitivity;
 	GLfloat zoom;
+
+	float aspect_ratio;
 };
 

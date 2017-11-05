@@ -8,7 +8,7 @@
 #include "..\util\shader.h"
 #include "..\Application.h"
 
-GameObject::GameObject(Application *app) : camera(app->get_camera()){
+GameObject::GameObject(Application *app) : camera(app->get_camera()) {
 	this->model_mat = glm::mat4(1.0f);
 	init();
 }
@@ -36,7 +36,7 @@ void GameObject::init() {
 	glEnableVertexAttribArray(location_normals);
 	glBindBuffer(GL_ARRAY_BUFFER, vn_vbo);
 	glVertexAttribPointer(location_normals, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-	
+
 	location_model_mat = glGetUniformLocation(shader_program_id, "model_mat");
 	location_view_mat = glGetUniformLocation(shader_program_id, "view_mat");
 	location_proj_mat = glGetUniformLocation(shader_program_id, "proj_mat");
@@ -54,8 +54,7 @@ void GameObject::render() {
 	glBindVertexArray(teapot_vao);
 
 	glm::mat4 view = this->camera->get_view_matrix();
-	// TODO: MOVE THIS TO THE CAMERA CLASS
-	glm::mat4 perspective_proj = glm::perspective(this->camera->get_zoom(), (float) 960 / (float) 540, 0.1f, 1000.0f);
+	glm::mat4 perspective_proj = this->camera->get_persp_proj_matrix();
 
 	glUniformMatrix4fv(location_view_mat, 1, GL_FALSE, &view[0][0]);
 	glUniformMatrix4fv(location_proj_mat, 1, GL_FALSE, &perspective_proj[0][0]);

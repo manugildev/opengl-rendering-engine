@@ -6,8 +6,6 @@
 int main(void) {
 
 	Camera camera(glm::vec3(0.0f, 0.0f, 90.0f));
-
-	std::cout << &camera << std::endl;
 	Application *app = new Application(&camera);
 	GameObject *teapot = new GameObject(app);
 
