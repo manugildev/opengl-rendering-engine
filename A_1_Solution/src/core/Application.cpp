@@ -3,7 +3,6 @@
 
 #include <iostream>
 
-
 Application::Application(Camera* camera) : camera(camera) {
 	init();
 }
@@ -14,29 +13,12 @@ int Application::init() {
 	if (!glfwInit()) { LOG_MESSAGE("GLFW not initialized."); return -1; }
 
 	/* Create a windowed mode window and its OpenGL context */
-	// TODO: Move window to another class? new Window(height, width, fullscreen, title, some more data)
-	window = glfwCreateWindow(960, 540, "A_1", NULL, NULL);
-	glfwGetWindowSize(window, &window_width, &window_height);
-	get_camera()->set_aspect_ratio((float) window_width / (float) window_height);
-	last_x = window_width / 2.0f;
-	last_y = window_height / 2.0f;
-
-	LOG_MESSAGE("Creating window");
-	if (!window) {
-		LOG_MESSAGE("Window not created.");
-		glfwTerminate();
-		return -1;
-	}
-
-
-	/* Make the window's context current */
-	glfwSetWindowUserPointer(window, this);
-	glfwMakeContextCurrent(window);
-	glfwSetWindowSizeCallback(window, window_size_callback);
-	glfwSetKeyCallback(window, key_callback);
-	glfwSetCursorPosCallback(window, mouse_callback);
-	glfwSetScrollCallback(window, scroll_callback);
-	//glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	window = new Window(this, 960, 540, "A_1");
+	
+	get_camera()->set_aspect_ratio(window->get_aspect_ratio());
+	
+	last_x = window->get_width() / 2.0f;
+	last_y = window->get_height() / 2.0f;
 
 	glewExperimental = GL_TRUE;
 	glewInit();
@@ -53,15 +35,15 @@ int Application::init() {
 	glDepthFunc(GL_LESS);
 
 	/* Set viewport to windows size */
-	glViewport(0, 0, window_width, window_height);
+	glViewport(0, 0, window->get_width(), window->get_height());
 	return 1;
 }
 
 
 void Application::runMainGameLoop(GameObject* objects[], int length) {
-	while (!glfwWindowShouldClose(window) && glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS) {
+	while (!glfwWindowShouldClose(window->window_obj) && glfwGetKey(window->window_obj, GLFW_KEY_ESCAPE) != GLFW_PRESS) {
 
-		calculate_delta_time();
+		delta_time = calculate_delta_time();
 
 		/* Poll for and process events */
 		glfwPollEvents();
@@ -71,61 +53,48 @@ void Application::runMainGameLoop(GameObject* objects[], int length) {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
 
-		for (int i = 0; i < length; i++) objects[i]->update();
+		for (int i = 0; i < length; i++) objects[i]->update(delta_time);
 		for (int i = 0; i < length; i++) objects[i]->render();
 
 		/* Swap front and back buffers */
-		glfwSwapBuffers(window);
-
+		glfwSwapBuffers(window->window_obj);
 	}
 }
 
-void Application::calculate_delta_time() {
-	GLfloat currentFrame = glfwGetTime();
+float Application::calculate_delta_time() {
+	float currentFrame = glfwGetTime();
 	delta_time = currentFrame - lastFrame;
 	lastFrame = currentFrame;
+	return delta_time;
 }
 
-void Application::window_size_callback(GLFWwindow * window, int width, int height) {
-	Application* app = reinterpret_cast<Application *>(glfwGetWindowUserPointer(window));
-	glfwGetWindowSize(window, &app->window_width, &app->window_height);
-	glViewport(0, 0, app->window_width, app->window_height);
-	app->get_camera()->set_aspect_ratio((float) width / (float) height);
 
-	char temp[128];
-	sprintf_s(temp, "Window resize: %dx%d", width, height);
-	LOG_MESSAGE(temp);
-}
-
-#pragma region INPUT_CALLBACKS
-void Application::key_callback(GLFWwindow * window, int key, int scancode, int action, int mode) {
-	Application* app = reinterpret_cast<Application *>(glfwGetWindowUserPointer(window));
+#pragma region INPUT_FUNCTIONS
+void Application::key_callback(int key, int scancode, int action, int mode) {
 	if (key >= 0 && key < 1024) {
-		if (action == GLFW_PRESS) app->keys[key] = true;
-		else if (action == GLFW_RELEASE) app->keys[key] = false;
+		if (action == GLFW_PRESS) keys[key] = true;
+		else if (action == GLFW_RELEASE) keys[key] = false;
 	}
 }
 
-void Application::scroll_callback(GLFWwindow * window, double x_offset, double y_offset) {
-	Application* app = reinterpret_cast<Application *>(glfwGetWindowUserPointer(window));
-	app->get_camera()->process_mouse_scroll(y_offset);
+void Application::scroll_callback(double x_offset, double y_offset) {
+	camera->process_mouse_scroll(y_offset);
 }
 
-void Application::mouse_callback(GLFWwindow * window, double x_pos, double y_pos) {
-	Application* app = reinterpret_cast<Application *>(glfwGetWindowUserPointer(window));
-	if (app->first_mouse) {
-		app->last_x = x_pos;
-		app->last_y = y_pos;
-		app->first_mouse = false;
+void Application::mouse_callback(double x_pos, double y_pos) {
+	if (first_mouse) {
+		last_x = x_pos;
+		last_y = y_pos;
+		first_mouse = false;
 	}
 
-	app->x_offset = x_pos - app->last_x;
-	app->y_offset = app->last_y - y_pos;
+	x_offset = x_pos - last_x;
+	y_offset = last_y - y_pos;
 
-	app->last_x = x_pos;
-	app->last_y = y_pos;
+	last_x = x_pos;
+	last_y = y_pos;
 
-	app->get_camera()->process_mouse(app->x_offset, app->y_offset);
+	camera->process_mouse(x_offset, y_offset);
 }
 #pragma endregion
 
@@ -140,7 +109,12 @@ Camera* Application::get_camera() {
 	return this->camera;
 }
 
+Window* Application::get_window() {
+	return this->window;
+}
+
 Application::~Application() {
-	glfwDestroyWindow(window);
+	delete window;
+	window = NULL;
 	glfwTerminate();
 }

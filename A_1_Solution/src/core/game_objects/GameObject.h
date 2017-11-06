@@ -11,7 +11,7 @@ public:
 	GameObject(Application *app);
 	~GameObject();
 
-	void update();
+	void update(float delta_time);
 	void render();
 	void init();
 

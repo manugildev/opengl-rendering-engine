@@ -37,20 +37,9 @@ void GameObject::init() {
 	glEnableVertexAttribArray(1);
 
 	this->shader_program = BasicShader::create();
-
-	location_model_mat = glGetUniformLocation(shader_program->program_id, "model_mat");
-	location_view_mat = glGetUniformLocation(shader_program->program_id, "view_mat");
-	location_proj_mat = glGetUniformLocation(shader_program->program_id, "proj_mat");
 }
 
-GameObject::~GameObject() {
-	delete camera;
-	delete shader_program;
-	camera = NULL;
-	shader_program = NULL;
-}
-
-void GameObject::update() {
+void GameObject::update(float delta_time) {
 	model_mat = glm::rotate(model_mat, glm::radians(1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 }
 
@@ -68,4 +57,11 @@ void GameObject::render() {
 	glDrawArrays(GL_TRIANGLES, 0, teapot_vertex_count);
 
 	shader_program->stop();
+}
+
+GameObject::~GameObject() {
+	delete camera;
+	delete shader_program;
+	camera = NULL;
+	shader_program = NULL;
 }
