@@ -63,10 +63,16 @@
     <ClInclude Include="src\core\camera\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\util\BasicShader.h">
+    <ClInclude Include="src\core\Window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\Window.h">
+    <ClInclude Include="src\core\util\shaders\BasicShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\util\shaders\LightingShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\game_objects\Light.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -89,10 +95,16 @@
     <ClCompile Include="src\core\camera\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\util\BasicShader.cpp">
+    <ClCompile Include="src\core\Window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\Window.cpp">
+    <ClCompile Include="src\core\util\shaders\BasicShader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\util\shaders\LightingShader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\game_objects\Light.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -120,6 +132,10 @@
     </None>
     <None Include="res\shaders\basic_fragment_shader.glsl" />
     <None Include="res\shaders\basic_vertex_shader.glsl" />
+    <None Include="res\shaders\lighting_fragment_shader.glsl" />
+    <None Include="res\shaders\lighting_vertex_shader.glsl" />
+    <None Include="res\shaders\lamp_fragment_shader.glsl" />
+    <None Include="res\shaders\lamp_vertex_shader.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ideas.txt" />

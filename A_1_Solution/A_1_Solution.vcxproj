@@ -19,7 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\core\util\BasicShader.h" />
+    <ClInclude Include="src\core\game_objects\Light.h" />
+    <ClInclude Include="src\core\util\shaders\LightingShader.h" />
+    <ClInclude Include="src\core\util\shaders\BasicShader.h" />
     <ClInclude Include="src\core\camera\Camera.h" />
     <ClInclude Include="res\teapot.h" />
     <ClInclude Include="src\core\util\ShaderProgram.h" />
@@ -39,7 +41,9 @@
     <ClInclude Include="src\core\Window.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\core\util\BasicShader.cpp" />
+    <ClCompile Include="src\core\game_objects\Light.cpp" />
+    <ClCompile Include="src\core\util\shaders\LightingShader.cpp" />
+    <ClCompile Include="src\core\util\shaders\BasicShader.cpp" />
     <ClCompile Include="src\core\camera\Camera.cpp" />
     <ClCompile Include="src\core\util\ShaderProgram.cpp" />
     <ClCompile Include="src\core\game_objects\GameObject.cpp" />
@@ -58,6 +62,10 @@
     <None Include="include\glm\gtx\texture.inl" />
     <None Include="res\shaders\basic_fragment_shader.glsl" />
     <None Include="res\shaders\basic_vertex_shader.glsl" />
+    <None Include="res\shaders\lamp_fragment_shader.glsl" />
+    <None Include="res\shaders\lamp_vertex_shader.glsl" />
+    <None Include="res\shaders\lighting_fragment_shader.glsl" />
+    <None Include="res\shaders\lighting_vertex_shader.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ideas.txt" />

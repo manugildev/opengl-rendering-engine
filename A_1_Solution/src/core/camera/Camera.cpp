@@ -10,7 +10,7 @@ Camera::Camera(glm::vec3 position, glm::vec3 up, GLfloat yaw, GLfloat pitch, glm
 	this->front = front;
 	this->movement_speed = movement_speed;
 	this->mouse_sensitivity = mouse_sensitivity;
-	this->zoom = zoom;
+	this->field_of_view = zoom;
 	this->update_camera_vectors();
 }
 
@@ -37,9 +37,9 @@ void Camera::process_mouse(GLfloat x_offset, GLfloat y_offset, GLboolean constra
 }
 
 void Camera::process_mouse_scroll(GLfloat y_offset) {
-	if (this->zoom >= 1.0f && this->zoom <= 65.0f) this->zoom -= y_offset;
-	if (this->zoom <= 1.0f) this->zoom = 1.0f;
-	if (this->zoom >= 65.0f) this->zoom = 65.0f;
+	if (this->field_of_view >= 1.0f && this->field_of_view <= 65.0f) this->field_of_view -= y_offset;
+	if (this->field_of_view <= 1.0f) this->field_of_view = 1.0f;
+	if (this->field_of_view >= 65.0f) this->field_of_view = 65.0f;
 }
 
 void Camera::update_camera_vectors() {
@@ -62,11 +62,11 @@ glm::mat4 Camera::get_view_matrix() {
 }
 
 glm::mat4 Camera::get_persp_proj_matrix() {
-	return glm::perspective(glm::radians(this->get_zoom()), this->aspect_ratio, 0.1f, 1000.0f);;
+	return glm::perspective(glm::radians(this->get_field_of_view()), this->aspect_ratio, 0.1f, 1000.0f);;
 }
 
-GLfloat Camera::get_zoom() {
-	return this->zoom;
+GLfloat Camera::get_field_of_view() {
+	return this->field_of_view;
 }
 
 void Camera::set_aspect_ratio(float aspect_ratio) {

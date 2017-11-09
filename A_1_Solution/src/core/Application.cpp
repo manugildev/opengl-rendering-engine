@@ -51,7 +51,7 @@ void Application::runMainGameLoop(GameObject* objects[], int length) {
 
 		/* Render here */
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
+		glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 
 		for (int i = 0; i < length; i++) objects[i]->update(delta_time);
 		for (int i = 0; i < length; i++) objects[i]->render();
@@ -112,6 +112,7 @@ Camera* Application::get_camera() {
 Window* Application::get_window() {
 	return this->window;
 }
+
 
 Application::~Application() {
 	delete window;

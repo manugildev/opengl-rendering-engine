@@ -11,7 +11,7 @@ const GLfloat YAW = -90.0f;
 const GLfloat PITCH = 0.0f;
 const GLfloat SPEED = 60.0f;
 const GLfloat SENSITIVITY = 0.10f;
-const GLfloat ZOOM = 45.0f;
+const GLfloat FIELD_OF_VIEW = 45.0f;
 
 class Camera {
 public:
@@ -21,7 +21,7 @@ public:
 		   glm::vec3 front = glm::vec3(0.0f, 0.0f, -1.0f),
 		   GLfloat movement_speed = SPEED,
 		   GLfloat mouse_sensitiviy = SENSITIVITY,
-		   GLfloat zoom = ZOOM);
+		   GLfloat field_of_view = FIELD_OF_VIEW);
 	~Camera();
 
 	void process_keyboard(Camera_Movement direction, GLfloat delta_time);
@@ -30,7 +30,7 @@ public:
 
 	void update_camera_vectors();
 
-	GLfloat get_zoom();
+	GLfloat get_field_of_view();
 	glm::mat4 get_view_matrix();
 	glm::mat4 get_persp_proj_matrix();
 	void set_aspect_ratio(float aspect_ratio);
@@ -49,7 +49,7 @@ private:
 	/* Camera Options */
 	GLfloat movement_speed;
 	GLfloat mouse_sensitivity;
-	GLfloat zoom;
+	GLfloat field_of_view;
 
 	float aspect_ratio;
 };

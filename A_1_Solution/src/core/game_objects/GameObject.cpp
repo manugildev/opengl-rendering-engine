@@ -7,13 +7,12 @@
 #include "..\res\teapot.h"
 #include "..\Application.h"
 
-GameObject::GameObject(Application *app) : camera(app->get_camera()) {
+GameObject::GameObject(Application *app, glm::vec3 object_color) : camera(app->get_camera()), object_color(object_color) {
 	this->model_mat = glm::mat4(1.0f);
 	init();
 }
 
 void GameObject::init() {
-
 	/* Generate Object VBO */
 	GLuint vp_vbo = 0;
 	glGenBuffers(1, &vp_vbo);
@@ -36,7 +35,8 @@ void GameObject::init() {
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 
-	this->shader_program = BasicShader::create();
+	this->shader_program = LightingShader::create();
+
 }
 
 void GameObject::update(float delta_time) {
@@ -49,10 +49,14 @@ void GameObject::render() {
 
 	glm::mat4 view = this->camera->get_view_matrix();
 	glm::mat4 perspective_proj = this->camera->get_persp_proj_matrix();
-
+	
 	shader_program->set_view_matrix(view);
 	shader_program->set_proj_matrix(perspective_proj);
 	shader_program->set_model_matrix(model_mat);
+
+	shader_program->set_object_color(object_color);
+	shader_program->set_light_pos(glm::vec3(1.0f, 1.0f, 1.0f));
+	shader_program->set_light_color(glm::vec3(0.3f, 1.0f, 1.0f));
 
 	glDrawArrays(GL_TRIANGLES, 0, teapot_vertex_count);
 
