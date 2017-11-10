@@ -17,21 +17,21 @@ uniform sampler2D texture_0;
 
 void main(){
 	// Ambient Lighting
-	vec3 ambient = ambient_strength * vec3(texture(texture_0, tex_coords));
+	vec3 ambient = ambient_strength * vec3(texture(texture_0, tex_coords)) ;
 
 	// Diffuse Lighting
 	vec3 norm = normalize(normal);
 	vec3 light_dir = normalize(light_pos - frag_pos);
 	float diff = max(dot(norm, light_dir), 0.0f);
-	vec3 diffuse = diff * light_color;
+	vec3 diffuse = diff * light_color * vec3(texture(texture_0, tex_coords)); 
 
 	// Specular Lighting
 	vec3 view_dir = normalize(view_pos - frag_pos);
 	vec3 reflect_dir = reflect(-light_dir, norm);
 	float spec = pow(max(dot(view_dir, reflect_dir), 0.0), 8);
-	vec3 specular = specular_strength * spec * light_color;
+	vec3 specular = specular_strength * spec * light_color * vec3(texture(texture_0, tex_coords));
 
-	vec3 result = (ambient + diffuse + specular) * object_color;
+	vec3 result = (ambient + diffuse + specular) * mix(vec3(texture(texture_0, tex_coords)), object_color, 0.6f) ;
 
 	frag_color = vec4(result, 1.0f);
 

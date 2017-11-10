@@ -11,10 +11,10 @@ int main(void) {
 
 	Application *app = new Application(&camera);
 
-	Texture texture("textures/bricks.jpg");
-	GameObject *teapot = new GameObject(app, glm::vec3(1.0f, 0.3f, 0.0f));
-	GameObject *teapot1 = new GameObject(app, glm::vec3(0.4f, 1.0f, 0.8f));
-	GameObject *teapot2 = new GameObject(app, glm::vec3(0.5f, 0.3f, 0.76f));
+	Texture texture("textures/teapot.jpg");
+	GameObject *teapot = new GameObject(app, glm::vec3(1.0f, 0.3f, 0.0f), &texture);
+	GameObject *teapot1 = new GameObject(app, glm::vec3(1.0f, 1.0f, 1.0f), &texture);
+	GameObject *teapot2 = new GameObject(app, glm::vec3(0.5f, 0.3f, 0.76f), &texture);
 
 	LightingShader* shader_program = LightingShader::create();
 

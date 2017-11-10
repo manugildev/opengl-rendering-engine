@@ -11,7 +11,7 @@ const glm::vec3 DEFAULT_OBJ_COLOR(1.0f);
 
 class GameObject {
 public:
-	GameObject(Application *app, glm::vec3 object_color=DEFAULT_OBJ_COLOR);
+	GameObject(Application *app, glm::vec3 object_color=DEFAULT_OBJ_COLOR, Texture* texture=new Texture(""));
 	~GameObject();
 
 	void update(float delta_time);

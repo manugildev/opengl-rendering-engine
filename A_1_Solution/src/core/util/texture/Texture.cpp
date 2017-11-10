@@ -7,6 +7,7 @@
 
 Texture::Texture(const std::string & file_name) {
 	if (file_name == "") { is_empty = true; return; }
+	std::cout << "Reading: " << file_name.c_str() << std::endl;
 
 	int width, height, num_of_components;
 	unsigned char* image_data = stbi_load(file_name.c_str(), &width, &height, &num_of_components, STBI_rgb_alpha);
@@ -14,7 +15,6 @@ Texture::Texture(const std::string & file_name) {
 	if (image_data == nullptr) {
 		std::cout << "Texture loading failed: " << file_name.c_str() << std::endl;
 	}
-
 
 	glGenTextures(1, &texture_id);
 	glBindTexture(GL_TEXTURE_2D, texture_id);

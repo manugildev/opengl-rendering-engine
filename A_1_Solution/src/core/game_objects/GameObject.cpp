@@ -7,9 +7,8 @@
 #include "..\res\teapot.h"
 #include "..\Application.h"
 
-GameObject::GameObject(Application *app, glm::vec3 object_color) : camera(app->get_camera()), object_color(object_color){
+GameObject::GameObject(Application *app, glm::vec3 object_color, Texture* texture) : camera(app->get_camera()), object_color(object_color), texture(texture){
 	this->model_mat = glm::mat4(1.0f);
-	texture = new Texture("textures/bricks.jpg");
 	init();
 }
 
@@ -45,7 +44,6 @@ void GameObject::init() {
 	glEnableVertexAttribArray(1);
 	glEnableVertexAttribArray(2);
 
-
 }
 
 void GameObject::set_shader_program(LightingShader* shader_program) {
@@ -70,10 +68,12 @@ void GameObject::render() {
 	glm::mat4 view = this->camera->get_view_matrix();
 	glm::mat4 perspective_proj = this->camera->get_persp_proj_matrix();
 
+	texture->bind(0);
+	shader_program->set_texture(0);
+
 	shader_program->set_view_matrix(view);
 	shader_program->set_proj_matrix(perspective_proj);
 	shader_program->set_model_matrix(model_mat);
-
 
 	shader_program->set_object_color(object_color);
 	shader_program->set_light_color(glm::vec3(1.0f, 1.0f, 1.0f));
@@ -81,8 +81,6 @@ void GameObject::render() {
 	shader_program->set_ambient_strength(0.1f);
 	shader_program->set_specular_strength(1.0f);
 
-	texture->bind(0);
-	shader_program->set_texture(0);
 
 	glDrawArrays(GL_TRIANGLES, 0, teapot_vertex_count);
 
