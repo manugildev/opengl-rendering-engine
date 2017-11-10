@@ -3,9 +3,11 @@
 #include <glm\glm.hpp>
 
 struct Vertex {
-	Vertex(glm::vec3 pos, const glm::vec2 tex_coord) : pos(pos), tex_coord(tex_coord) {}
+	Vertex(glm::vec3 pos, glm::vec3 normal, glm::vec2 tex_coord) : pos(pos), normal(normal), tex_coord(tex_coord) {}
 	glm::vec3 pos;
+	glm::vec3 normal;
 	glm::vec2 tex_coord;
+	
 };
 
 
@@ -17,6 +19,7 @@ public:
 	void draw();
 private:
 	enum {POSITION_VB,
+		  NORMAL_VB,
 		  TEXCOORD_VB,
 		  NUM_BUFFERS};
 

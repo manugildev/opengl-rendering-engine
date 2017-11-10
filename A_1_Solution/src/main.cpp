@@ -11,9 +11,10 @@ int main(void) {
 
 	Application *app = new Application(&camera);
 
-	Texture texture("textures/teapot.jpg");
+	Texture texture("textures/teapot.jpg",0);
+	Texture texture2("textures/bricks.jpg",1);
 	GameObject *teapot = new GameObject(app, glm::vec3(1.0f, 0.3f, 0.0f), &texture);
-	GameObject *teapot1 = new GameObject(app, glm::vec3(1.0f, 1.0f, 1.0f), &texture);
+	GameObject *teapot1 = new GameObject(app, glm::vec3(1.0f, 1.0f, 1.0f), &texture2);
 	GameObject *teapot2 = new GameObject(app, glm::vec3(0.5f, 0.3f, 0.76f), &texture);
 
 	LightingShader* shader_program = LightingShader::create();
@@ -21,7 +22,6 @@ int main(void) {
 	teapot->set_shader_program(shader_program);
 	teapot1->set_shader_program(shader_program);
 	teapot2->set_shader_program(shader_program);
-
 
 	teapot->set_pos(glm::vec3(40.0f, 0.0f, 0.0f));
 	teapot1->set_pos(glm::vec3(0.0f, 0.0f, -40.0f));
