@@ -8,7 +8,7 @@
 int main(void) {
 
 	Camera camera(glm::vec3(0.0f, 0.0f, 90.0f));
-
+	
 	Application *app = new Application(&camera);
 
 	Texture texture("textures/teapot.jpg",0);

@@ -6,6 +6,7 @@
 #include "Window.h"
 #include "game_objects\GameObject.h"
 #include "camera\Camera.h"
+#include "util\mesh\Mesh.h"
 
 
 class Application {
@@ -31,6 +32,7 @@ public:
 private:
 	Window* window;
 	Camera* camera;
+	Mesh* mesh;
 
 	bool keys[1024];
 	bool first_mouse = true;

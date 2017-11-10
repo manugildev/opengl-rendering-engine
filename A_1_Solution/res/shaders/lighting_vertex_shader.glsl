@@ -1,8 +1,8 @@
 #version 330
 
 layout (location=0) in vec3 vertex_positions;
-layout (location=1) in vec3 vertex_normals;
-layout (location=2) in vec2 vertex_tex_coords;
+layout (location=1) in vec2 vertex_tex_coords;
+layout (location=2) in vec3 vertex_normals;
 
 out vec3 normal;
 out vec3 frag_pos;

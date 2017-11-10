@@ -19,30 +19,31 @@ void GameObject::init() {
 	glBindBuffer(GL_ARRAY_BUFFER, vp_vbo);
 	glBufferData(GL_ARRAY_BUFFER, 3 * teapot_vertex_count * sizeof(float), teapot_vertex_points, GL_STATIC_DRAW);
 
+	GLuint vt_vbo = 0;
+	glGenBuffers(1, &vt_vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, vt_vbo);
+	glBufferData(GL_ARRAY_BUFFER, 2 * teapot_vertex_count * sizeof(float), teapot_tex_coords, GL_STATIC_DRAW);
+
 	GLuint vn_vbo = 0;
 	glGenBuffers(1, &vn_vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vn_vbo);
 	glBufferData(GL_ARRAY_BUFFER, 3 * teapot_vertex_count * sizeof(float), teapot_normals, GL_STATIC_DRAW);
-
-	GLuint vt_vbo = 0;
-	glGenBuffers(1, &vt_vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, vt_vbo);
-	glBufferData(GL_ARRAY_BUFFER, 3 * teapot_vertex_count * sizeof(float), teapot_tex_coords, GL_STATIC_DRAW);
-
+	
 	/* Define VAO */
 	glGenVertexArrays(1, &teapot_vao);
 	glBindVertexArray(teapot_vao);
 
-	glBindBuffer(GL_ARRAY_BUFFER, vp_vbo);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-	glBindBuffer(GL_ARRAY_BUFFER, vn_vbo);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-	glBindBuffer(GL_ARRAY_BUFFER, vn_vbo);
-	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-
 	glEnableVertexAttribArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, vp_vbo);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+
 	glEnableVertexAttribArray(1);
+	glBindBuffer(GL_ARRAY_BUFFER, vt_vbo);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, 0);
+
 	glEnableVertexAttribArray(2);
+	glBindBuffer(GL_ARRAY_BUFFER, vn_vbo);
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
 }
 
@@ -61,13 +62,12 @@ void GameObject::set_initial_shader_values() {
 }
 
 void GameObject::update(float delta_time) {
-	//model_mat = glm::rotate(model_mat, glm::radians(1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	model_mat = glm::rotate(model_mat, glm::radians(1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 }
 
 void GameObject::render() {
 	shader_program->start();
 	glBindVertexArray(teapot_vao);
-
 
 	glm::mat4 view = this->camera->get_view_matrix();
 	glm::mat4 perspective_proj = this->camera->get_persp_proj_matrix();
@@ -83,8 +83,8 @@ void GameObject::render() {
 	glDrawArrays(GL_TRIANGLES, 0, teapot_vertex_count);
 
 	glBindVertexArray(0);
-	texture->unbind();
-	shader_program->stop();
+	//texture->unbind();
+	//shader_program->stop();
 }
 
 void GameObject::set_pos(glm::vec3 pos) {
