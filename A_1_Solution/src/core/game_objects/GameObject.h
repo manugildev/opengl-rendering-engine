@@ -2,7 +2,7 @@
 #include <GLEW\glew.h>
 #include <glm\glm.hpp>
 #include "..\camera\Camera.h"
-#include "..\src\core\util\shaders\LightingShader.h"
+#include "..\util\shaders\lighting\LightingShader.h"
 
 class Application;
 
@@ -17,13 +17,21 @@ public:
 	void render();
 	void init();
 
+	void set_initial_shader_values();
+
+	void set_pos(glm::vec3 pos);
+	void set_scale(glm::vec3 scale);
+	LightingShader* shader_program;
+
+protected:
+	GLuint teapot_vao = 0;
+	GLuint location_positions, location_normals;
+	Camera* camera;
+	bool is_light = false;
+
 private:
 	glm::mat4 model_mat;
 	glm::vec3 object_color;
-	GLuint teapot_vao = 0;
-	GLuint location_positions, location_normals;
 
-	Camera* camera;
-	LightingShader* shader_program;
 };
 

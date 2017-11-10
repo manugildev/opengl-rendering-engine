@@ -22,7 +22,6 @@ int Application::init() {
 
 	glewExperimental = GL_TRUE;
 	glewInit();
-	glfwWindowHint(GLFW_SAMPLES, 16);
 
 	/* Get GL version information */
 	const GLubyte *renderer = glGetString(GL_RENDERER);
@@ -53,8 +52,8 @@ void Application::runMainGameLoop(GameObject* objects[], int length) {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 
-		for (int i = 0; i < length; i++) objects[i]->update(delta_time);
-		for (int i = 0; i < length; i++) objects[i]->render();
+		for (int i = 0; i < length; i++) dynamic_cast<GameObject*>(objects[i])->update(delta_time);
+		for (int i = 0; i < length; i++)  dynamic_cast<GameObject*>(objects[i])->render();
 
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window->window_obj);

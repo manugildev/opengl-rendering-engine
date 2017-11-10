@@ -37,15 +37,28 @@ void GameObject::init() {
 
 	this->shader_program = LightingShader::create();
 
+	this->set_initial_shader_values();
+
+}
+
+void GameObject::set_initial_shader_values() {
+	shader_program->start();
+	shader_program->set_object_color(object_color);
+	shader_program->set_light_color(glm::vec3(1.0f, 1.0f, 1.0f));
+	shader_program->set_light_pos(glm::vec3(0.0f, 200.0f, 200.0f));
+	shader_program->set_ambient_strength(0.1f);
+	shader_program->set_specular_strength(1.0f);
+	shader_program->stop();
 }
 
 void GameObject::update(float delta_time) {
-	model_mat = glm::rotate(model_mat, glm::radians(1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	//model_mat = glm::rotate(model_mat, glm::radians(1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 }
 
 void GameObject::render() {
 	shader_program->start();
 	glBindVertexArray(teapot_vao);
+
 
 	glm::mat4 view = this->camera->get_view_matrix();
 	glm::mat4 perspective_proj = this->camera->get_persp_proj_matrix();
@@ -53,14 +66,19 @@ void GameObject::render() {
 	shader_program->set_view_matrix(view);
 	shader_program->set_proj_matrix(perspective_proj);
 	shader_program->set_model_matrix(model_mat);
-
-	shader_program->set_object_color(object_color);
-	shader_program->set_light_pos(glm::vec3(1.0f, 1.0f, 1.0f));
-	shader_program->set_light_color(glm::vec3(0.3f, 1.0f, 1.0f));
-
+	
 	glDrawArrays(GL_TRIANGLES, 0, teapot_vertex_count);
 
+	glBindVertexArray(0);
 	shader_program->stop();
+}
+
+void GameObject::set_pos(glm::vec3 pos) {
+	model_mat = glm::translate(model_mat, pos);
+}
+
+void GameObject::set_scale(glm::vec3 scale) {
+	model_mat = glm::scale(model_mat, scale);
 }
 
 GameObject::~GameObject() {

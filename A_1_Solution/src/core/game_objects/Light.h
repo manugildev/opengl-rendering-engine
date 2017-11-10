@@ -2,13 +2,13 @@
 
 #include <glm\glm.hpp>
 #include <GLEW\glew.h>
-#include <..\src\core\util\shaders\LightingShader.h>
-#include <..\src\core\Application.h>
+#include "..\util\shaders\lighting\LightingShader.h"
+#include "..\Application.h"
 #include "GameObject.h"
 
-class Light {
+class Light : public GameObject {
 public:
-	Light(Camera* camera);
+	Light(Application* app);
 	~Light();
 
 	void update(float delta_time);
@@ -21,7 +21,6 @@ private:
 	glm::mat4 model_mat;
 
 	GLuint light_vao;
-	LightingShader* shader_program;
 	Camera* camera;
 };
 

@@ -1,15 +1,16 @@
 #pragma once
 #include "..\ShaderProgram.h"
 
-const std::string VERTEX_FILE = "shaders/basic_vertex_shader.glsl";
-const std::string FRAGMENT_FILE = "shaders/basic_fragment_shader.glsl";
 
-class BasicShader : public ShaderProgram {
+class LampShader : public ShaderProgram {
 public:
-	static BasicShader* create();
+	const std::string VERTEX_FILE = "shaders/lamp_vertex_shader.glsl";
+	const std::string FRAGMENT_FILE = "shaders/lamp_fragment_shader.glsl";
 
-	BasicShader();
-	~BasicShader();
+	static LampShader* create();
+
+	LampShader();
+	~LampShader();
 
 	void bind_attributes() override;
 	void get_all_uniform_locations() override;

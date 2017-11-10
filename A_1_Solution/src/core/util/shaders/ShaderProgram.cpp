@@ -1,7 +1,7 @@
 #include "ShaderProgram.h"
 #include <fstream>
 #include <iostream>
-#include "Logger.h"
+#include "..\Logger.h"
 
 
 ShaderProgram::ShaderProgram(std::string vertex_file, std::string fragment_file) {

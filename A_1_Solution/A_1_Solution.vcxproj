@@ -20,11 +20,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\core\game_objects\Light.h" />
-    <ClInclude Include="src\core\util\shaders\LightingShader.h" />
-    <ClInclude Include="src\core\util\shaders\BasicShader.h" />
+    <ClInclude Include="src\core\util\shaders\lamp\LampShader.h" />
+    <ClInclude Include="src\core\util\shaders\lighting\LightingShader.h" />
+    <ClInclude Include="src\core\util\shaders\basic\BasicShader.h" />
     <ClInclude Include="src\core\camera\Camera.h" />
     <ClInclude Include="res\teapot.h" />
-    <ClInclude Include="src\core\util\ShaderProgram.h" />
+    <ClInclude Include="src\core\util\shaders\ShaderProgram.h" />
     <ClInclude Include="src\core\game_objects\GameObject.h" />
     <ClInclude Include="src\core\util\Logger.h" />
     <ClInclude Include="src\core\Application.h" />
@@ -42,10 +43,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\game_objects\Light.cpp" />
-    <ClCompile Include="src\core\util\shaders\LightingShader.cpp" />
-    <ClCompile Include="src\core\util\shaders\BasicShader.cpp" />
+    <ClCompile Include="src\core\util\shaders\lamp\LampShader.cpp" />
+    <ClCompile Include="src\core\util\shaders\lighting\LightingShader.cpp" />
+    <ClCompile Include="src\core\util\shaders\basic\BasicShader.cpp" />
     <ClCompile Include="src\core\camera\Camera.cpp" />
-    <ClCompile Include="src\core\util\ShaderProgram.cpp" />
+    <ClCompile Include="src\core\util\shaders\ShaderProgram.cpp" />
     <ClCompile Include="src\core\game_objects\GameObject.cpp" />
     <ClCompile Include="src\core\util\Logger.cpp" />
     <ClCompile Include="src\core\Application.cpp" />
