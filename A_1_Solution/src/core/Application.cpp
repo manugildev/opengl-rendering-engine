@@ -2,6 +2,9 @@
 #include "util\Logger.h"
 
 #include <iostream>
+#include "util\mesh\Mesh.h"
+#include "util\texture\Texture.h"
+
 
 Application::Application(Camera* camera) : camera(camera) {
 	init();
@@ -14,9 +17,9 @@ int Application::init() {
 
 	/* Create a windowed mode window and its OpenGL context */
 	window = new Window(this, 960, 540, "A_1");
-	
+
 	get_camera()->set_aspect_ratio(window->get_aspect_ratio());
-	
+
 	last_x = window->get_width() / 2.0f;
 	last_y = window->get_height() / 2.0f;
 
@@ -35,6 +38,7 @@ int Application::init() {
 
 	/* Set viewport to windows size */
 	glViewport(0, 0, window->get_width(), window->get_height());
+	
 	return 1;
 }
 
@@ -54,6 +58,14 @@ void Application::runMainGameLoop(GameObject* objects[], int length) {
 
 		for (int i = 0; i < length; i++) dynamic_cast<GameObject*>(objects[i])->update(delta_time);
 		for (int i = 0; i < length; i++)  dynamic_cast<GameObject*>(objects[i])->render();
+
+		Vertex vertices[] = {
+			Vertex(glm::vec3(20.0f, 10.0f, 0.0f), glm::vec2(0.0f, 0.0f)),
+			Vertex(glm::vec3(10.0f, 10.0f, 0.0f), glm::vec2(0.5f, 1.0f)),
+			Vertex(glm::vec3(10.0f, -10.0f, 0.0f), glm::vec2(1.0f, 1.0f))};
+
+		Mesh mesh(vertices, sizeof(vertices) / sizeof(vertices[0]));
+		mesh.draw();
 
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window->window_obj);

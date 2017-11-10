@@ -24,7 +24,7 @@ void Light::init() {
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
 
-	this->shader_program = LightingShader::create();
+	//this->shader_program = LightingShader::create();
 }
 
 Light::~Light() {}
@@ -33,17 +33,17 @@ void Light::update(float delta_time) {
 }
 
 void Light::render() {
-	shader_program->start();
+	//shader_program->start();
 	glBindVertexArray(light_vao);
 
 	glm::mat4 view = this->camera->get_view_matrix();
 	glm::mat4 perspective_proj = this->camera->get_persp_proj_matrix();
 
-	shader_program->set_view_matrix(view);
-	shader_program->set_proj_matrix(perspective_proj);
-	shader_program->set_model_matrix(model_mat);
+	//shader_program->set_view_matrix(view);
+	//shader_program->set_proj_matrix(perspective_proj);
+	//shader_program->set_model_matrix(model_mat);
 	
 	glDrawArrays(GL_POINT, 0, 1);
 
-	shader_program->stop();
+	//shader_program->stop();
 }

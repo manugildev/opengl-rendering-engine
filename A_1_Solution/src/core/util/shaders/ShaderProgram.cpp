@@ -78,6 +78,11 @@ void ShaderProgram::modify_float(GLuint location, float value) {
 void ShaderProgram::modify_mat4(GLuint location, glm::mat4 mat) {
 	glUniformMatrix4fv(location, 1, GL_FALSE, &mat[0][0]);
 }
+
+void ShaderProgram::modify_texture(GLuint location, int value) {
+	glUniform1i(location, value);
+}
+
 #pragma endregion
 
 GLuint ShaderProgram::load_shader(const std::string file_name, const GLenum shader_type) {

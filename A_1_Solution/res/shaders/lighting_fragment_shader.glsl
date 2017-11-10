@@ -4,6 +4,7 @@ out vec4 frag_color;
 
 in vec3 frag_pos;
 in vec3 normal;
+in vec2 tex_coords;
 
 uniform vec3 light_pos;
 uniform vec3 view_pos;
@@ -12,9 +13,11 @@ uniform vec3 light_color;
 uniform float ambient_strength;
 uniform float specular_strength;
 
+uniform sampler2D texture_0;
+
 void main(){
 	// Ambient Lighting
-	vec3 ambient = ambient_strength * light_color;
+	vec3 ambient = ambient_strength * vec3(texture(texture_0, tex_coords));
 
 	// Diffuse Lighting
 	vec3 norm = normalize(normal);

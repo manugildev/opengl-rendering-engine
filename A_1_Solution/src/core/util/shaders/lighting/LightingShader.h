@@ -22,9 +22,11 @@ public:
 	void set_light_color(glm::vec3 light_color);
 	void set_ambient_strength(float value);
 	void set_specular_strength(float value);
+	void set_texture(int value);
 
 private:
 	GLuint location_model_mat, location_view_mat, location_proj_mat;
 	GLuint location_object_color, location_light_pos, location_light_color;
 	GLuint location_ambient_strength, location_specular_strength;
+	GLuint location_texture_0;
 };

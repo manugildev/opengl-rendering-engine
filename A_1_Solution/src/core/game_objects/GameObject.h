@@ -3,10 +3,11 @@
 #include <glm\glm.hpp>
 #include "..\camera\Camera.h"
 #include "..\util\shaders\lighting\LightingShader.h"
+#include "..\util\texture\Texture.h"
 
 class Application;
 
-const glm::vec3 DEFAULT_OBJ_COLOR(1.0f);
+const glm::vec3 DEFAULT_OBJ_COLOR(1.0f); 
 
 class GameObject {
 public:
@@ -21,7 +22,9 @@ public:
 
 	void set_pos(glm::vec3 pos);
 	void set_scale(glm::vec3 scale);
+	void set_shader_program(LightingShader* shader_program);
 	LightingShader* shader_program;
+
 
 protected:
 	GLuint teapot_vao = 0;
@@ -32,6 +35,7 @@ protected:
 private:
 	glm::mat4 model_mat;
 	glm::vec3 object_color;
+	Texture* texture;
 
 };
 

@@ -25,6 +25,7 @@ void LightingShader::get_all_uniform_locations() {
 	location_light_color = get_uniform_location("light_color");
 	location_ambient_strength = get_uniform_location("ambient_strength");
 	location_specular_strength = get_uniform_location("specular_strength");
+	location_texture_0 = get_uniform_location("texture_0");
 }
 
 void LightingShader::set_object_color(glm::vec3 object_color) { modify_vec3(location_object_color, object_color); }
@@ -42,3 +43,5 @@ void LightingShader::set_proj_matrix(glm::mat4 matrix) { modify_mat4(location_pr
 void LightingShader::set_ambient_strength(float value) { modify_float(location_ambient_strength, value); }
 
 void LightingShader::set_specular_strength(float value) { modify_float(location_specular_strength , value); }
+
+void LightingShader::set_texture(int number) { modify_texture(location_texture_0, number); }

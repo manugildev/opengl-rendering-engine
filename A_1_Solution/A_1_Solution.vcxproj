@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\core\game_objects\Light.h" />
+    <ClInclude Include="src\core\util\mesh\Mesh.h" />
     <ClInclude Include="src\core\util\shaders\lamp\LampShader.h" />
     <ClInclude Include="src\core\util\shaders\lighting\LightingShader.h" />
     <ClInclude Include="src\core\util\shaders\basic\BasicShader.h" />
@@ -39,10 +40,12 @@
     <ClInclude Include="include\glm\gtx\matrix_factorisation.hpp" />
     <ClInclude Include="include\glm\gtx\texture.hpp" />
     <ClInclude Include="include\glm\gtx\vec_swizzle.hpp" />
+    <ClInclude Include="src\core\util\texture\Texture.h" />
     <ClInclude Include="src\core\Window.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\game_objects\Light.cpp" />
+    <ClCompile Include="src\core\util\mesh\Mesh.cpp" />
     <ClCompile Include="src\core\util\shaders\lamp\LampShader.cpp" />
     <ClCompile Include="src\core\util\shaders\lighting\LightingShader.cpp" />
     <ClCompile Include="src\core\util\shaders\basic\BasicShader.cpp" />
@@ -51,6 +54,7 @@
     <ClCompile Include="src\core\game_objects\GameObject.cpp" />
     <ClCompile Include="src\core\util\Logger.cpp" />
     <ClCompile Include="src\core\Application.cpp" />
+    <ClCompile Include="src\core\util\texture\Texture.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\core\Window.cpp" />
   </ItemGroup>

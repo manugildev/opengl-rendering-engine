@@ -33,6 +33,7 @@ protected:
 	void modify_vec3(GLuint location, glm::vec3 vector);
 	void modify_boolean(GLuint location, bool value);
 	void modify_float(GLuint location, float value);
-	void modify_mat4(GLuint location, glm::mat4 mat);
+	void modify_mat4(GLuint location, glm::mat4 mat); 
+	void modify_texture(GLuint location, int value);
 };
 
