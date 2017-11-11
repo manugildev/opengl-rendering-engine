@@ -5,6 +5,8 @@
 
 Window::Window(Application* app, int width, int height, std::string title) {
 	this->app = app;
+
+	glfwWindowHint(GLFW_SAMPLES, 16);
 	window_obj = glfwCreateWindow(960, 540, "A_1", NULL, NULL);
 	
 	LOG_MESSAGE("Creating window");
@@ -13,7 +15,6 @@ Window::Window(Application* app, int width, int height, std::string title) {
 		glfwTerminate();
 	}
 
-	glfwWindowHint(GLFW_SAMPLES, 16);
 	glfwGetWindowSize(window_obj, &this->window_width, &this->window_height);
 	glfwSetCursorPos(window_obj, window_width / 2, window_height / 2);
 	glfwSetWindowSizeCallback(window_obj, window_size_callback);
