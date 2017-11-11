@@ -2,21 +2,29 @@
 
 #include <glm\glm.hpp>
 #include <GLEW\glew.h>
-#include "..\util\shaders\lamp\LampShader.h"
-#include "GameObject.h"
-#include "..\util\mesh\Mesh.h"
+#include "..\..\util\shaders\lamp\LampShader.h"
+#include "..\GameObject.h"
+#include "..\..\util\mesh\Mesh.h"
 
 class Application;
 
+const glm::vec3 DEFAULT_LIGHT_POS(0.0f);
+const glm::vec3 DEFAULT_LIGHT_COLOR(1.0f);
+
 class Light : public GameObject {
 public:
-	Light(Application* app);
+	Light(Application* app, glm::vec3 light_pos=DEFAULT_LIGHT_POS, glm::vec3 light_color=DEFAULT_LIGHT_COLOR);
 	~Light();
 
 	void render() override;
 	void update(float delta_time) override;
 	void set_initial_shader_values() override;
 	void set_shader_program(LampShader* shader_program);
+
+
+	glm::vec3 get_light_position();
+	glm::vec3 get_light_color();
+	
 
 private:
 	glm::vec3 light_pos;

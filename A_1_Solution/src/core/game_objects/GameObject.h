@@ -27,6 +27,9 @@ public:
 	void set_specular_strength(int specular_strength);
 	void set_specular_power(int specular_power);
 	void set_shader_program(LightingShader* shader_program);
+
+	void update_lights();
+
 	LightingShader* shader_program;
 
 

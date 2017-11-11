@@ -7,7 +7,7 @@
 #include "game_objects\GameObject.h"
 #include "camera\Camera.h"
 #include "util\mesh\Mesh.h"
-#include "game_objects\Light.h"
+#include "game_objects\lights\Light.h"
 
 
 class Application {
@@ -21,20 +21,20 @@ public:
 	void runMainGameLoop();
 	int window_width, window_height;
 
-	void do_movement();
-
 	Camera* get_camera();
 	Window* get_window();
 
 	void key_callback(int key, int scancode, int action, int mode); 
 	void scroll_callback(double x_offset, double y_offset); 
 	void mouse_callback(double x_pos, double y_pos);
-	// TODO: Turn this into vectors
+
 	void set_game_objects(std::vector<GameObject*> game_objects);
 	void set_lights(std::vector<Light*> lights);
 	std::vector<GameObject*> get_game_objects();
 	std::vector<Light*> get_lights();
 
+	void update_lights();
+	void do_movement();
 	bool is_debug();
 
 private:

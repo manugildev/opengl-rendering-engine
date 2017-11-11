@@ -38,8 +38,6 @@ void Window::window_size_callback(GLFWwindow * window, int width, int height) {
 	sprintf_s(temp, "Window resize: %dx%d", width, height);
 	LOG_MESSAGE(temp);
 
-	delete w;
-	w = NULL;
 }
 
 void Window::key_callback(GLFWwindow * window, int key, int scancode, int action, int mode) {

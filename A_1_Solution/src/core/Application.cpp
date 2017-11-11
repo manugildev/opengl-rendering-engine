@@ -53,14 +53,20 @@ void Application::runMainGameLoop() {
 
 		/* Render here */
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
-
+		glClearColor(0.49f, 0.54f, 0.55f, 1.0f);
+		
 		for (int i = 0; i < game_objects.size(); i++) game_objects[i]->update(delta_time);
+		for (int i = 0; i < lights.size(); i++) lights[i]->update(delta_time);
 		for (int i = 0; i < game_objects.size(); i++) game_objects[i]->render();
+		for (int i = 0; i < lights.size(); i++) lights[i]->render();
 
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window->window_obj);
 	}
+}
+
+void Application::update_lights() {
+	for (int i = 0; i < game_objects.size(); i++) game_objects[i]->update_lights();
 }
 
 float Application::calculate_delta_time() {
@@ -115,6 +121,7 @@ void Application::set_game_objects(std::vector<GameObject*> game_objects) {
 }
 void Application::set_lights(std::vector<Light*> lights) {
 	this->lights = lights;
+	this->update_lights();
 }
 
 std::vector<GameObject*> Application::get_game_objects() {

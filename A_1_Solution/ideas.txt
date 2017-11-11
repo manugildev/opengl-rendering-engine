@@ -3,19 +3,14 @@
 
 - Kill the pointers such as the camera one
 - Camera should also implement entity class
-- Move the shader to outside of the GameObject
 
 # UTIL
 - Add shader loader and compiler
 - Add color to the logger and different type messages
-- Add texture loader
 - Add text renderer
-- Add obj loader
 - Add log file in logger
 - Add FullScreen Mode
 
-# Window
-- Class for a window that handles everything related with it
 
 ### GAME
 

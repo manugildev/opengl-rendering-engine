@@ -1,14 +1,14 @@
 #include "core\Application.h"
 #include "core\camera\Camera.h"
 #include "core\game_objects\GameObject.h"
-#include "core\game_objects\Light.h"
+#include "core\game_objects\lights\Light.h"
 #include "core\util\texture\Texture.h"
 #include <iostream>
 
 int main(void) {
 
 	Camera camera(glm::vec3(0.0f, 0.0f, 90.0f));
-	
+
 	Application *app = new Application(&camera);
 
 	Mesh* mesh = new Mesh("models/monkey3.obj");
@@ -18,7 +18,7 @@ int main(void) {
 
 	GameObject *teapot = new GameObject(app, mesh, glm::vec3(1.0f, 0.3f, 0.0f));
 	GameObject *teapot1 = new GameObject(app, mesh, glm::vec3(1.0f, 1.0f, 1.0f), &texture1);
-	GameObject *teapot2 = new GameObject(app, mesh, glm::vec3(0.5f, 0.3f, 0.76f), &texture2);
+	GameObject *teapot2 = new GameObject(app, mesh, glm::vec3(0.8f, 0.5f, 0.96f), &texture2);
 
 	LightingShader* shader_program = LightingShader::create();
 
@@ -35,11 +35,15 @@ int main(void) {
 	teapot2->set_scale(glm::vec3(10.0f, 10.0f, 10.0f));
 
 	LampShader* shader_program1 = LampShader::create();
-	Light* light = new Light(app);
+	Light* light = new Light(app, glm::vec3(0.0f), glm::vec3(1.0f, 1.0f, 1.0f));
+
 	light->set_shader_program(shader_program1);
 
-	std::vector<GameObject*> objects = {teapot, teapot1, teapot2, dynamic_cast<GameObject*>(light)};
+	std::vector<GameObject*> objects = {teapot, teapot1, teapot2};
+	std::vector<Light*> lights = {light};
+
 	app->set_game_objects(objects);
+	app->set_lights(lights);
 
 	app->runMainGameLoop();
 }

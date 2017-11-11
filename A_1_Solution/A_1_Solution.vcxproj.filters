@@ -54,16 +54,10 @@
     <ClInclude Include="src\core\game_objects\GameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="res\teapot.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\core\camera\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\core\Window.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\game_objects\Light.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\core\util\shaders\lighting\LightingShader.h">
@@ -90,6 +84,9 @@
     <ClInclude Include="src\core\util\shaders\lamp\LampShader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\game_objects\lights\Light.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -108,9 +105,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\core\Window.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\game_objects\Light.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\core\util\shaders\lighting\LightingShader.cpp">
@@ -135,6 +129,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\core\util\shaders\lamp\LampShader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\game_objects\lights\Light.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
