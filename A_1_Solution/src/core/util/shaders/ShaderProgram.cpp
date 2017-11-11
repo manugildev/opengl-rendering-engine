@@ -75,6 +75,10 @@ void ShaderProgram::modify_float(GLuint location, float value) {
 	glUniform1f(location, value);
 }
 
+void ShaderProgram::modify_int(GLuint location, int value) {
+	glUniform1i(location, value);
+}
+
 void ShaderProgram::modify_mat4(GLuint location, glm::mat4 mat) {
 	glUniformMatrix4fv(location, 1, GL_FALSE, &mat[0][0]);
 }
@@ -82,6 +86,7 @@ void ShaderProgram::modify_mat4(GLuint location, glm::mat4 mat) {
 void ShaderProgram::modify_texture(GLuint location, int value) {
 	glUniform1i(location, value);
 }
+
 
 #pragma endregion
 

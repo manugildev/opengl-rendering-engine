@@ -12,12 +12,13 @@ uniform vec3 object_color;
 uniform vec3 light_color;
 uniform float ambient_strength;
 uniform float specular_strength;
+uniform int specular_power;
 
 uniform sampler2D texture_0;
 
 void main(){
 	// Ambient Lighting
-	vec3 ambient = ambient_strength * vec3(texture(texture_0, tex_coords)) ;
+	vec3 ambient = ambient_strength * vec3(texture(texture_0, tex_coords));
 
 	// Diffuse Lighting
 	vec3 norm = normalize(normal);
@@ -28,10 +29,10 @@ void main(){
 	// Specular Lighting
 	vec3 view_dir = normalize(view_pos - frag_pos);
 	vec3 reflect_dir = reflect(-light_dir, norm);
-	float spec = pow(max(dot(view_dir, reflect_dir), 0.0), 8);
+	float spec = pow(max(dot(view_dir, reflect_dir), 0.0), specular_power);
 	vec3 specular = specular_strength * spec * light_color * vec3(texture(texture_0, tex_coords));
 
-	vec3 result = (ambient + diffuse + specular) * mix(vec3(texture(texture_0, tex_coords)), object_color, 0.6f) ;
+	vec3 result = (ambient + diffuse + specular) * mix(vec3(texture(texture_0, tex_coords)), object_color, 0.9f);
 
 	frag_color = vec4(result, 1.0f);
 

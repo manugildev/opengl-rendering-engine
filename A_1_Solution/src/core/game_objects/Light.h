@@ -5,10 +5,11 @@
 #include "..\util\shaders\lighting\LightingShader.h"
 #include "..\Application.h"
 #include "GameObject.h"
+#include "..\util\mesh\Mesh.h"
 
 class Light : public GameObject {
 public:
-	Light(Application* app);
+	Light(Application* app, Mesh* mesh);
 	~Light();
 
 	void update(float delta_time);

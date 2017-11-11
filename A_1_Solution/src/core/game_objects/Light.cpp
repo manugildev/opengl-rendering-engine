@@ -1,30 +1,11 @@
 #include "Light.h"
 #include <glm\gtc\type_ptr.hpp>
 
-Light::Light(Application* app) : GameObject(app), light_pos(5.0f, 4.0f, 0.0f), light_color(0.5f, 0.3f, 0.5f) {
-	//this->init();
+Light::Light(Application* app, Mesh* mesh) : GameObject(app, mesh), light_pos(5.0f, 4.0f, 0.0f), light_color(0.5f, 0.3f, 0.5f) {
 	this->model_mat = glm::translate(glm::mat4(1.0f), light_pos);
 }
 
 void Light::init() {
-
-	/* Define VAO */
-	glGenVertexArrays(1, &light_vao);
-	glBindVertexArray(light_vao);
-
-	/* Generate Object VBO */
-	GLuint vp_vbo = 0;
-	glGenBuffers(1, &vp_vbo);
-
-	glBindBuffer(GL_ARRAY_BUFFER, vp_vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(light_pos), &light_pos, GL_STATIC_DRAW);
-	
-	glEnableVertexAttribArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, vp_vbo);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-
-	//this->shader_program = LightingShader::create();
 }
 
 Light::~Light() {}

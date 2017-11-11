@@ -32,7 +32,6 @@ public:
 private:
 	Window* window;
 	Camera* camera;
-	Mesh* mesh;
 
 	bool keys[1024];
 	bool first_mouse = true;

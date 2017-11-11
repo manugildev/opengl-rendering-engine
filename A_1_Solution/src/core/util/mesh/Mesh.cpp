@@ -7,7 +7,6 @@ Mesh::Mesh(const std::string & file_name) {
 }
 
 Mesh::Mesh(Vertex* vertices, unsigned int num_of_vertices, unsigned int * indices, unsigned int num_of_indices) {
-
 	IndexedModel model;
 	
 	for (int i = 0; i < num_of_vertices; i++) {

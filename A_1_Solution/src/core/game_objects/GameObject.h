@@ -4,6 +4,7 @@
 #include "..\camera\Camera.h"
 #include "..\util\shaders\lighting\LightingShader.h"
 #include "..\util\texture\Texture.h"
+#include "..\util\mesh\Mesh.h"
 
 class Application;
 
@@ -11,12 +12,11 @@ const glm::vec3 DEFAULT_OBJ_COLOR(1.0f);
 
 class GameObject {
 public:
-	GameObject(Application *app, glm::vec3 object_color=DEFAULT_OBJ_COLOR, Texture* texture=new Texture("",0));
+	GameObject(Application *app, Mesh* mesh, glm::vec3 object_color = DEFAULT_OBJ_COLOR, Texture* texture = new Texture("textures/empty_pixel.jpg"));
 	~GameObject();
 
 	void update(float delta_time);
 	void render();
-	void init();
 
 	void set_initial_shader_values();
 
@@ -36,6 +36,7 @@ private:
 	glm::mat4 model_mat;
 	glm::vec3 object_color;
 	Texture* texture;
+	Mesh* mesh;
 
 };
 

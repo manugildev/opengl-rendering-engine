@@ -1,6 +1,6 @@
 float teapot_vertex_count = 2975;
 
-float teapot_vertex_points[] = {
+double teapot_vertex_points[] = {
 	5.92969, 4.125, 0,
 	5.38719, 4.125, 2.7475,
 	5.2971, 4.49414, 2.70917,
@@ -2979,7 +2979,7 @@ float teapot_vertex_points[] = {
 	4.26289, 4.57031, -2.269145
 };
 
-float teapot_tex_coords[] = {
+double teapot_tex_coords[] = {
 	2, 2,
 	1.75, 2,
 	1.75, 1.975,
@@ -5958,7 +5958,7 @@ float teapot_tex_coords[] = {
 	0.125, 0.25
 };
 
-float teapot_normals[] = {
+double teapot_normals[] = {
 	-0.966742, -0.255752, 0,
 	-0.893014, -0.256345, -0.369882,
 	-0.893437, 0.255996, -0.369102,

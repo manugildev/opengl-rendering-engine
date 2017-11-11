@@ -11,11 +11,14 @@ int main(void) {
 	
 	Application *app = new Application(&camera);
 
-	Texture texture("textures/teapot.jpg",0);
-	Texture texture2("textures/bricks.jpg",1);
-	GameObject *teapot = new GameObject(app, glm::vec3(1.0f, 0.3f, 0.0f), &texture);
-	GameObject *teapot1 = new GameObject(app, glm::vec3(1.0f, 1.0f, 1.0f), &texture2);
-	GameObject *teapot2 = new GameObject(app, glm::vec3(0.5f, 0.3f, 0.76f), &texture);
+	Mesh* mesh = new Mesh("models/monkey3.obj");
+
+	Texture texture1("textures/teapot.jpg");
+	Texture texture2("textures/bricks.jpg");
+
+	GameObject *teapot = new GameObject(app, mesh, glm::vec3(1.0f, 0.3f, 0.0f));
+	GameObject *teapot1 = new GameObject(app, mesh, glm::vec3(1.0f, 1.0f, 1.0f), &texture1);
+	GameObject *teapot2 = new GameObject(app, mesh, glm::vec3(0.5f, 0.3f, 0.76f), &texture2);
 
 	LightingShader* shader_program = LightingShader::create();
 
@@ -26,7 +29,10 @@ int main(void) {
 	teapot->set_pos(glm::vec3(40.0f, 0.0f, 0.0f));
 	teapot1->set_pos(glm::vec3(0.0f, 0.0f, -40.0f));
 	teapot2->set_pos(glm::vec3(-40.0f, 0.0f, 0.0f));
-	
+
+	teapot->set_scale(glm::vec3(10.0f, 10.0f, 10.0f));
+	teapot1->set_scale(glm::vec3(10.0f, 10.0f, 10.0f));
+	teapot2->set_scale(glm::vec3(10.0f, 10.0f, 10.0f));
 
 	// TODO: Test if vectors would be a better option than arrays
 	GameObject *objects[3] = {teapot, teapot1, teapot2 };

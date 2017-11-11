@@ -38,7 +38,6 @@ int Application::init() {
 	/* Set viewport to windows size */
 	glViewport(0, 0, window->get_width(), window->get_height());
 	
-	mesh = new  Mesh("models/monkey3.obj");
 	return 1;
 }
 
@@ -58,9 +57,7 @@ void Application::runMainGameLoop(GameObject* objects[], int length) {
 
 		for (int i = 0; i < length; i++) dynamic_cast<GameObject*>(objects[i])->update(delta_time);
 		for (int i = 0; i < length; i++)  dynamic_cast<GameObject*>(objects[i])->render();
-
-		mesh->draw();
-		
+				
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window->window_obj);
 	}
