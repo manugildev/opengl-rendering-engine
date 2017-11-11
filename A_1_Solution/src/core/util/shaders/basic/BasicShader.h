@@ -1,10 +1,11 @@
 #pragma once
 #include "..\ShaderProgram.h"
 
+const std::string BASIC_VERTEX_FILE = "shaders/basic_vertex_shader.glsl";
+const std::string BASIC_FRAGMENT_FILE = "shaders/basic_fragment_shader.glsl";
+
 class BasicShader : public ShaderProgram {
 public:
-	const std::string VERTEX_FILE = "shaders/basic_vertex_shader.glsl";
-	const std::string FRAGMENT_FILE = "shaders/basic_fragment_shader.glsl";
 
 	static BasicShader* create();
 

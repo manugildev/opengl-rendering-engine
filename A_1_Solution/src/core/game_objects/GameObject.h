@@ -5,6 +5,7 @@
 #include "..\util\shaders\lighting\LightingShader.h"
 #include "..\util\texture\Texture.h"
 #include "..\util\mesh\Mesh.h"
+#include "..\util\mesh\CubeMesh.h"
 
 class Application;
 
@@ -15,28 +16,29 @@ public:
 	GameObject(Application *app, Mesh* mesh, glm::vec3 object_color = DEFAULT_OBJ_COLOR, Texture* texture = new Texture("textures/empty_pixel.jpg"));
 	~GameObject();
 
-	void update(float delta_time);
-	void render();
+	virtual void update(float delta_time);
+	virtual void render();
 
-	void set_initial_shader_values();
+	virtual void set_initial_shader_values();
 
 	void set_pos(glm::vec3 pos);
 	void set_scale(glm::vec3 scale);
+	void set_ambient_strength(float ambient_strength);
+	void set_specular_strength(int specular_strength);
+	void set_specular_power(int specular_power);
 	void set_shader_program(LightingShader* shader_program);
 	LightingShader* shader_program;
 
 
 protected:
-	GLuint teapot_vao = 0;
-	GLuint location_positions, location_normals;
 	Camera* camera;
-	bool is_light = false;
-
-private:
 	glm::mat4 model_mat;
-	glm::vec3 object_color;
-	Texture* texture;
 	Mesh* mesh;
 
+private:
+	glm::vec3 object_color;
+	Texture* texture;
+	CubeMesh cube_mesh;
+	Application* app;
 };
 

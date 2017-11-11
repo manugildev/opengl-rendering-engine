@@ -1,8 +1,8 @@
 #pragma once
 #include "..\ShaderProgram.h"
 
-const std::string VERTEX_FILE = "shaders/lighting_vertex_shader.glsl";
-const std::string FRAGMENT_FILE = "shaders/lighting_fragment_shader.glsl";
+const std::string LAMP_VERTEX_FILE = "shaders/lighting_vertex_shader.glsl";
+const std::string LAMP_FRAGMENT_FILE = "shaders/lighting_fragment_shader.glsl";
 
 class LightingShader : public ShaderProgram {
 public:

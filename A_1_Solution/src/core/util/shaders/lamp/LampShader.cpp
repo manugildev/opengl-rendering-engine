@@ -4,7 +4,6 @@
 LampShader *LampShader::create() {
 	LampShader *p = new LampShader();
 	p->init();
-	std::cout << p << std::endl;
 	return p;
 }
 

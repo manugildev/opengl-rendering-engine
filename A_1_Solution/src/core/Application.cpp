@@ -5,7 +5,7 @@
 #include "util\texture\Texture.h"
 
 
-Application::Application(Camera* camera) : camera(camera){
+Application::Application(Camera* camera) : camera(camera) {
 	init();
 }
 
@@ -37,12 +37,12 @@ int Application::init() {
 
 	/* Set viewport to windows size */
 	glViewport(0, 0, window->get_width(), window->get_height());
-	
+
 	return 1;
 }
 
 
-void Application::runMainGameLoop(GameObject* objects[], int length) {
+void Application::runMainGameLoop() {
 	while (!glfwWindowShouldClose(window->window_obj) && glfwGetKey(window->window_obj, GLFW_KEY_ESCAPE) != GLFW_PRESS) {
 
 		delta_time = calculate_delta_time();
@@ -55,9 +55,9 @@ void Application::runMainGameLoop(GameObject* objects[], int length) {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 
-		for (int i = 0; i < length; i++) dynamic_cast<GameObject*>(objects[i])->update(delta_time);
-		for (int i = 0; i < length; i++)  dynamic_cast<GameObject*>(objects[i])->render();
-				
+		for (int i = 0; i < game_objects.size(); i++) game_objects[i]->update(delta_time);
+		for (int i = 0; i < game_objects.size(); i++) game_objects[i]->render();
+
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window->window_obj);
 	}
@@ -77,6 +77,9 @@ void Application::key_callback(int key, int scancode, int action, int mode) {
 		if (action == GLFW_PRESS) keys[key] = true;
 		else if (action == GLFW_RELEASE) keys[key] = false;
 	}
+
+	if (keys[GLFW_KEY_M]) debug = true;
+	else debug = false;
 }
 
 void Application::scroll_callback(double x_offset, double y_offset) {
@@ -103,8 +106,23 @@ void Application::mouse_callback(double x_pos, double y_pos) {
 void Application::do_movement() {
 	if (keys[GLFW_KEY_W] || keys[GLFW_KEY_UP]) this->camera->process_keyboard(FORWARD, delta_time);
 	if (keys[GLFW_KEY_S] || keys[GLFW_KEY_DOWN]) this->camera->process_keyboard(BACKWARD, delta_time);
-	if (keys[GLFW_KEY_A] || keys[GLFW_KEY_LEFT])this->camera->process_keyboard(LEFT, delta_time);
+	if (keys[GLFW_KEY_A] || keys[GLFW_KEY_LEFT]) this->camera->process_keyboard(LEFT, delta_time);
 	if (keys[GLFW_KEY_D] || keys[GLFW_KEY_RIGHT]) this->camera->process_keyboard(RIGHT, delta_time);
+}
+
+void Application::set_game_objects(std::vector<GameObject*> game_objects) {
+	this->game_objects = game_objects;
+}
+void Application::set_lights(std::vector<Light*> lights) {
+	this->lights = lights;
+}
+
+std::vector<GameObject*> Application::get_game_objects() {
+	return this->game_objects;
+}
+
+std::vector<Light*> Application::get_lights() {
+	return this->lights;
 }
 
 Camera* Application::get_camera() {
@@ -114,7 +132,9 @@ Camera* Application::get_camera() {
 Window* Application::get_window() {
 	return this->window;
 }
-
+bool Application::is_debug() {
+	return this->debug;
+}
 
 Application::~Application() {
 	delete window;

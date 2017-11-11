@@ -7,7 +7,7 @@ BasicShader * BasicShader::create() {
 	return p;
 }
 
-BasicShader::BasicShader() : ShaderProgram(VERTEX_FILE, FRAGMENT_FILE) {}
+BasicShader::BasicShader() : ShaderProgram(BASIC_VERTEX_FILE, BASIC_FRAGMENT_FILE) {}
 
 BasicShader::~BasicShader() {}
 

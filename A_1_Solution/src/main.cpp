@@ -34,7 +34,12 @@ int main(void) {
 	teapot1->set_scale(glm::vec3(10.0f, 10.0f, 10.0f));
 	teapot2->set_scale(glm::vec3(10.0f, 10.0f, 10.0f));
 
-	// TODO: Test if vectors would be a better option than arrays
-	GameObject *objects[3] = {teapot, teapot1, teapot2 };
-	app->runMainGameLoop(objects,3);
+	LampShader* shader_program1 = LampShader::create();
+	Light* light = new Light(app);
+	light->set_shader_program(shader_program1);
+
+	std::vector<GameObject*> objects = {teapot, teapot1, teapot2, dynamic_cast<GameObject*>(light)};
+	app->set_game_objects(objects);
+
+	app->runMainGameLoop();
 }

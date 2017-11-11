@@ -7,7 +7,7 @@ LightingShader * LightingShader::create() {
 	return p;
 }
 
-LightingShader::LightingShader() : ShaderProgram(VERTEX_FILE, FRAGMENT_FILE) {}
+LightingShader::LightingShader() : ShaderProgram(LAMP_VERTEX_FILE, LAMP_FRAGMENT_FILE) {}
 
 LightingShader::~LightingShader() {}
 

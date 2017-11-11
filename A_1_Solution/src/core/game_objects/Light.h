@@ -2,26 +2,25 @@
 
 #include <glm\glm.hpp>
 #include <GLEW\glew.h>
-#include "..\util\shaders\lighting\LightingShader.h"
-#include "..\Application.h"
+#include "..\util\shaders\lamp\LampShader.h"
 #include "GameObject.h"
 #include "..\util\mesh\Mesh.h"
 
+class Application;
+
 class Light : public GameObject {
 public:
-	Light(Application* app, Mesh* mesh);
+	Light(Application* app);
 	~Light();
 
-	void update(float delta_time);
-	void render();
-	void init();
+	void render() override;
+	void update(float delta_time) override;
+	void set_initial_shader_values() override;
+	void set_shader_program(LampShader* shader_program);
 
 private:
 	glm::vec3 light_pos;
 	glm::vec3 light_color;
-	glm::mat4 model_mat;
-
-	GLuint light_vao;
-	Camera* camera;
+	LampShader* shader_program;
 };
 

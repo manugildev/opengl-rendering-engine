@@ -7,7 +7,7 @@
 #include "..\res\teapot.h"
 #include "..\Application.h"
 
-GameObject::GameObject(Application *app, Mesh* mesh, glm::vec3 object_color, Texture* texture) : camera(app->get_camera()), mesh(mesh), object_color(object_color), texture(texture){
+GameObject::GameObject(Application *app, Mesh* mesh, glm::vec3 object_color, Texture* texture) : app(app), camera(app->get_camera()), mesh(mesh), object_color(object_color), texture(texture){
 	this->model_mat = glm::mat4(1.0f);
 }
 
@@ -19,10 +19,10 @@ void GameObject::set_shader_program(LightingShader* shader_program) {
 void GameObject::set_initial_shader_values() {
 	shader_program->start();
 	shader_program->set_light_color(glm::vec3(1.0f, 1.0f, 1.0f));
-	shader_program->set_light_pos(glm::vec3(0.0f, 200.0f, 200.0f));
+	shader_program->set_light_pos(glm::vec3(0.0f, 0.0f, 0.0f));
 	shader_program->set_ambient_strength(0.1f);
 	shader_program->set_specular_strength(1.0f);
-	shader_program->set_specular_power(100);
+	shader_program->set_specular_power(8);
 	shader_program->stop();
 }
 
@@ -45,6 +45,13 @@ void GameObject::render() {
 	shader_program->set_object_color(object_color);
 	
 	mesh->draw();
+	
+	/* Draw Debug CubeMesh */
+	if (app->is_debug()) {
+		glm::mat4 cube_mat = glm::scale(model_mat, mesh->get_size());
+		shader_program->set_model_matrix(cube_mat);
+		cube_mesh.draw();
+	}
 
 	texture->unbind();
 	shader_program->stop();
@@ -58,6 +65,26 @@ void GameObject::set_pos(glm::vec3 pos) {
 void GameObject::set_scale(glm::vec3 scale) {
 	model_mat = glm::scale(model_mat, scale);
 }
+
+void GameObject::set_ambient_strength(float ambient_strength) {
+	shader_program->start();
+	shader_program->set_ambient_strength(ambient_strength);
+	shader_program->stop();
+}
+
+void GameObject::set_specular_strength(int specular_strength) {
+	shader_program->start();
+	shader_program->set_specular_strength(specular_strength);
+	shader_program->stop();
+}
+
+void GameObject::set_specular_power(int specular_power) {
+	shader_program->start();
+	shader_program->set_specular_power(specular_power);
+	shader_program->stop();
+
+}
+
 #pragma endregion
 
 GameObject::~GameObject() {
