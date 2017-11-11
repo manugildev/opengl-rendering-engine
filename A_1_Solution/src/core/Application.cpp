@@ -54,7 +54,7 @@ void Application::runMainGameLoop() {
 		/* Render here */
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glClearColor(0.7f, 0.7f, 0.7f, 1.0f);
-		
+
 		for (int i = 0; i < game_objects.size(); i++) game_objects[i]->update(delta_time);
 		for (int i = 0; i < point_lights.size(); i++) point_lights[i]->update(delta_time);
 		dir_light->update(delta_time);
@@ -154,6 +154,8 @@ bool Application::is_debug() {
 
 Application::~Application() {
 	delete window;
+	for (int i = 0; i < game_objects.size(); i++) { delete game_objects[i]; game_objects[i] = NULL; }
+	for (int i = 0; i < point_lights.size(); i++) { delete point_lights[i]; point_lights[i] = NULL; }
 	window = NULL;
 	glfwTerminate();
 }

@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include <glm\gtc\matrix_transform.hpp>
+#include <glm\detail\func_vector_relational.hpp>
 #include <glm\ext.hpp>
 
 #include "GameObject.h"
@@ -9,6 +10,7 @@
 
 GameObject::GameObject(Application *app, Mesh* mesh, glm::vec3 object_color, Texture* texture) : app(app), camera(app->get_camera()), mesh(mesh), object_color(object_color), texture(texture){
 	this->model_mat = glm::mat4(1.0f);
+	
 }
 
 void GameObject::set_shader_program(LightingShader* shader_program) {
@@ -34,7 +36,13 @@ void GameObject::update_lights() {
 
 
 void GameObject::update(float delta_time) {
-	model_mat = glm::rotate(model_mat, glm::radians(1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	//model_mat = glm::rotate(model_mat, glm::radians(1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	glm::vec3 new_speed = this->speed + (this->acceleration * delta_time);
+	if (glm::all(glm::lessThan(new_speed, this->max_speed))) {
+		this->speed = new_speed;
+	}
+	this->position += (this->speed * delta_time);
+	this->set_pos(this->position);
 }
 
 void GameObject::render() {
@@ -66,8 +74,24 @@ void GameObject::render() {
 
 #pragma region PROPERTIES_SETTERS
 void GameObject::set_pos(glm::vec3 pos) {
-	model_mat = glm::translate(model_mat, pos);
+	this->position = pos;
+	model_mat[3][0] = pos.x;
+	model_mat[3][1] = pos.y;
+	model_mat[3][2] = pos.z;
 }
+
+void GameObject::set_acceleration(glm::vec3 acc) {
+	this->acceleration = acc;
+}
+
+void GameObject::set_speed(glm::vec3 speed) {
+	this->speed = speed;
+}
+
+void GameObject::set_max_speed(glm::vec3 max_speed) {
+	this->max_speed = max_speed;
+}
+
 
 void GameObject::set_scale(glm::vec3 scale) {
 	model_mat = glm::scale(model_mat, scale);
@@ -89,7 +113,6 @@ void GameObject::set_specular_power(int specular_power) {
 	shader_program->start();
 	shader_program->set_specular_power(specular_power);
 	shader_program->stop();
-
 }
 
 #pragma endregion

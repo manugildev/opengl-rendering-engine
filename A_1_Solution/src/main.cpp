@@ -29,7 +29,7 @@ int main(void) {
 	teapot->set_pos(glm::vec3(40.0f, 0.0f, 0.0f));
 	teapot1->set_pos(glm::vec3(0.0f, 0.0f, -40.0f));
 	teapot2->set_pos(glm::vec3(-40.0f, 0.0f, 0.0f));
-
+	
 	teapot->set_scale(glm::vec3(10.0f, 10.0f, 10.0f));
 	teapot1->set_scale(glm::vec3(10.0f, 10.0f, 10.0f));
 	teapot2->set_scale(glm::vec3(10.0f, 10.0f, 10.0f));
