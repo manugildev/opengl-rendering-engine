@@ -1,10 +1,9 @@
 #include "Light.h"
 #include <glm\gtc\type_ptr.hpp>
 
-Light::Light(Application* app, glm::vec3 light_pos, glm::vec3 light_color) : GameObject(app, new Mesh("models/sphere.obj")), light_pos(light_pos), light_color(light_color) {
-	this->model_mat = glm::translate(glm::mat4(1.0f), light_pos);
+Light::Light(Application* app, glm::vec3 position, glm::vec3 light_color) : GameObject(app, new Mesh("models/sphere.obj")), position(position), light_color(light_color) {
+	this->model_mat = glm::translate(glm::mat4(1.0f), position);
 }
-
 
 void Light::set_shader_program(LampShader* shader_program) {
 	this->shader_program = shader_program;
@@ -35,8 +34,8 @@ void Light::render() {
 	shader_program->stop();
 }
 
-glm::vec3 Light::get_light_position() {
-	return this->light_pos;
+glm::vec3 Light::get_position() {
+	return this->position;
 }
 
 glm::vec3 Light::get_light_color() {

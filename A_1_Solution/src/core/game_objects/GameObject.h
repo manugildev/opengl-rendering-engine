@@ -2,12 +2,12 @@
 #include <GLEW\glew.h>
 #include <glm\glm.hpp>
 #include "..\camera\Camera.h"
-#include "..\util\shaders\lighting\LightingShader.h"
 #include "..\util\texture\Texture.h"
 #include "..\util\mesh\Mesh.h"
 #include "..\util\mesh\CubeMesh.h"
 
 class Application;
+class LightingShader;
 
 const glm::vec3 DEFAULT_OBJ_COLOR(1.0f); 
 
@@ -24,7 +24,7 @@ public:
 	void set_pos(glm::vec3 pos);
 	void set_scale(glm::vec3 scale);
 	void set_ambient_strength(float ambient_strength);
-	void set_specular_strength(int specular_strength);
+	void set_specular_strength(float specular_strength);
 	void set_specular_power(int specular_power);
 	void set_shader_program(LightingShader* shader_program);
 

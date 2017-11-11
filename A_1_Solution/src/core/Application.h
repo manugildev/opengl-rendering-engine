@@ -7,7 +7,10 @@
 #include "game_objects\GameObject.h"
 #include "camera\Camera.h"
 #include "util\mesh\Mesh.h"
-#include "game_objects\lights\Light.h"
+#include "game_objects\lights\DirLight.h"
+#include "game_objects\lights\PointLight.h"
+
+#include <vector>
 
 
 class Application {
@@ -29,9 +32,11 @@ public:
 	void mouse_callback(double x_pos, double y_pos);
 
 	void set_game_objects(std::vector<GameObject*> game_objects);
-	void set_lights(std::vector<Light*> lights);
+	void set_directional_light(DirLight* dir_light);
+	void set_point_lights(std::vector<PointLight*> point_lights);
 	std::vector<GameObject*> get_game_objects();
-	std::vector<Light*> get_lights();
+	DirLight* get_dir_light();
+	std::vector<PointLight*> get_point_lights();
 
 	void update_lights();
 	void do_movement();
@@ -41,7 +46,8 @@ private:
 	Window* window;
 	Camera* camera; 
 	std::vector<GameObject*> game_objects;
-	std::vector<Light*> lights;
+	std::vector<PointLight*> point_lights;
+	DirLight* dir_light;
 	
 	bool keys[1024];
 	bool first_mouse = true;

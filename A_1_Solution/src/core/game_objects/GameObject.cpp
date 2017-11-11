@@ -5,6 +5,7 @@
 
 #include "GameObject.h"
 #include "..\Application.h"
+#include "..\src\core\util\shaders\lighting\LightingShader.h"
 
 GameObject::GameObject(Application *app, Mesh* mesh, glm::vec3 object_color, Texture* texture) : app(app), camera(app->get_camera()), mesh(mesh), object_color(object_color), texture(texture){
 	this->model_mat = glm::mat4(1.0f);
@@ -17,17 +18,17 @@ void GameObject::set_shader_program(LightingShader* shader_program) {
 
 void GameObject::set_initial_shader_values() {
 	shader_program->start();
-	shader_program->set_ambient_strength(0.1f);
-	shader_program->set_specular_strength(1.0f);
-	shader_program->set_specular_power(256);
+	shader_program->set_ambient_strength(0.05f);
+	shader_program->set_specular_strength(0.8f);
+	shader_program->set_specular_power(8);
 	shader_program->stop();
 }
 
 void GameObject::update_lights() {
-	// TODO: Only working for one light right now, implement shaders for multilighting
+	// TODO: Only working for one light right now, implement shaders for multi lighting
 	shader_program->start();
-	shader_program->set_light_color(app->get_lights()[0]->get_light_color());
-	shader_program->set_light_pos(app->get_lights()[0]->get_light_position());
+	shader_program->set_directional_light(app->get_dir_light());
+	shader_program->set_point_lights(app->get_point_lights());
 	shader_program->stop();
 }
 
@@ -78,7 +79,7 @@ void GameObject::set_ambient_strength(float ambient_strength) {
 	shader_program->stop();
 }
 
-void GameObject::set_specular_strength(int specular_strength) {
+void GameObject::set_specular_strength(float specular_strength) {
 	shader_program->start();
 	shader_program->set_specular_strength(specular_strength);
 	shader_program->stop();

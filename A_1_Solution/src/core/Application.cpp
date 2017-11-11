@@ -53,12 +53,14 @@ void Application::runMainGameLoop() {
 
 		/* Render here */
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glClearColor(0.49f, 0.54f, 0.55f, 1.0f);
+		glClearColor(0.7f, 0.7f, 0.7f, 1.0f);
 		
 		for (int i = 0; i < game_objects.size(); i++) game_objects[i]->update(delta_time);
-		for (int i = 0; i < lights.size(); i++) lights[i]->update(delta_time);
+		for (int i = 0; i < point_lights.size(); i++) point_lights[i]->update(delta_time);
+		dir_light->update(delta_time);
 		for (int i = 0; i < game_objects.size(); i++) game_objects[i]->render();
-		for (int i = 0; i < lights.size(); i++) lights[i]->render();
+		for (int i = 0; i < point_lights.size(); i++) point_lights[i]->render();
+		dir_light->render();
 
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window->window_obj);
@@ -119,8 +121,11 @@ void Application::do_movement() {
 void Application::set_game_objects(std::vector<GameObject*> game_objects) {
 	this->game_objects = game_objects;
 }
-void Application::set_lights(std::vector<Light*> lights) {
-	this->lights = lights;
+void Application::set_directional_light(DirLight* dir_light) {
+	this->dir_light = dir_light;
+}
+void Application::set_point_lights(std::vector<PointLight*> point_lights) {
+	this->point_lights = point_lights;
 	this->update_lights();
 }
 
@@ -128,8 +133,12 @@ std::vector<GameObject*> Application::get_game_objects() {
 	return this->game_objects;
 }
 
-std::vector<Light*> Application::get_lights() {
-	return this->lights;
+DirLight* Application::get_dir_light() {
+	return this->dir_light;
+}
+
+std::vector<PointLight*> Application::get_point_lights() {
+	return this->point_lights;
 }
 
 Camera* Application::get_camera() {
