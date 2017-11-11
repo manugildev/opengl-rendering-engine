@@ -7,21 +7,30 @@ Window::Window(Application* app, int width, int height, std::string title) {
 	this->app = app;
 
 	glfwWindowHint(GLFW_SAMPLES, 16);
-	window_obj = glfwCreateWindow(960, 540, "A_1", NULL, NULL);
+
 	
+	// Move window to the upper left corner.
+	window_obj = glfwCreateWindow(940, 540, "A_1", NULL, NULL);
+
+	/* Activate this for FullScreen */
+	//GLFWmonitor* primary = glfwGetPrimaryMonitor();
+	//const GLFWvidmode* mode = glfwGetVideoMode(primary);
+	//glfwSetWindowSize(window_obj, mode->width, mode->height);
+
 	LOG_MESSAGE("Creating window");
 	if (!window_obj) {
 		LOG_MESSAGE("Window not created.");
 		glfwTerminate();
 	}
 
+	glfwSetWindowUserPointer(window_obj, this);
 	glfwGetWindowSize(window_obj, &this->window_width, &this->window_height);
 	glfwSetCursorPos(window_obj, window_width / 2, window_height / 2);
 	glfwSetWindowSizeCallback(window_obj, window_size_callback);
 	glfwSetInputMode(window_obj, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	glfwSetWindowPos(window_obj, 400, 300);
+	//glfwSetWindowAspectRatio(window_obj, 16, 9);
 
-	glfwSetWindowUserPointer(window_obj, this);
 	glfwMakeContextCurrent(window_obj);
 	glfwSetKeyCallback(window_obj, key_callback);
 	glfwSetCursorPosCallback(window_obj, mouse_callback);

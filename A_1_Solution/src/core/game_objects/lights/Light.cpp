@@ -13,7 +13,6 @@ void Light::set_shader_program(LampShader* shader_program) {
 
 void Light::set_initial_shader_values() {
 	this->shader_program->start();
-	this->shader_program->set_object_color(this->light_color);
 	this->shader_program->stop();
 }
 
@@ -26,6 +25,7 @@ void Light::render() {
 	glm::mat4 view = this->camera->get_view_matrix();
 	glm::mat4 perspective_proj = this->camera->get_persp_proj_matrix();
 
+	shader_program->set_object_color(light_color);
 	shader_program->set_view_matrix(view);
 	shader_program->set_proj_matrix(perspective_proj);
 	shader_program->set_model_matrix(model_mat);
@@ -33,7 +33,6 @@ void Light::render() {
 	mesh->draw();
 
 	shader_program->stop();
-
 }
 
 glm::vec3 Light::get_light_position() {

@@ -36,11 +36,13 @@ int main(void) {
 
 	LampShader* shader_program1 = LampShader::create();
 	Light* light = new Light(app, glm::vec3(0.0f), glm::vec3(1.0f, 1.0f, 1.0f));
+	Light* directional_light = new Light(app, glm::vec3(10.0f, 0.0f, 0.0f), glm::vec3(1.0f, 0.4f, 1.0f));
 
 	light->set_shader_program(shader_program1);
+	directional_light->set_shader_program(shader_program1);
 
 	std::vector<GameObject*> objects = {teapot, teapot1, teapot2};
-	std::vector<Light*> lights = {light};
+	std::vector<Light*> lights = {light, directional_light};
 
 	app->set_game_objects(objects);
 	app->set_lights(lights);

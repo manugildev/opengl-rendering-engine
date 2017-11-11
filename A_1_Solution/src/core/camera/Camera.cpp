@@ -37,9 +37,9 @@ void Camera::process_mouse(GLfloat x_offset, GLfloat y_offset, GLboolean constra
 }
 
 void Camera::process_mouse_scroll(GLfloat y_offset) {
-	if (this->field_of_view >= 1.0f && this->field_of_view <= 65.0f) this->field_of_view -= y_offset;
+	if (this->field_of_view >= 1.0f && this->field_of_view <= 85.0f) this->field_of_view -= y_offset;
 	if (this->field_of_view <= 1.0f) this->field_of_view = 1.0f;
-	if (this->field_of_view >= 65.0f) this->field_of_view = 65.0f;
+	if (this->field_of_view >= 85.0f) this->field_of_view = 85.0f;
 }
 
 void Camera::update_camera_vectors() {
