@@ -10,7 +10,7 @@
 class Application;
 class LightingShader;
 
-const glm::vec3 DEFAULT_OBJ_COLOR(1.0f); 
+const glm::vec3 DEFAULT_OBJ_COLOR(1.0f);
 
 class GameObject {
 public:
@@ -34,12 +34,14 @@ public:
 
 	glm::vec3 get_pos();
 	glm::vec3 get_rotation();
-	glm::vec3 get_speed();
+	glm::vec3 get_speed(); 
+	glm::vec3 get_rotation_speed();
 
 	void set_scale(glm::vec3 scale);
 	void set_ambient_strength(float ambient_strength);
 	void set_specular_strength(float specular_strength);
 	void set_specular_power(int specular_power);
+	void set_mix_power(float mix_power);
 	void set_shader_program(LightingShader* shader_program);
 
 	void update_lights();
@@ -57,6 +59,7 @@ protected:
 private:
 	GameObject* parent;
 	glm::vec3 object_color;
+	float mix_power;
 	Texture* texture;
 	CubeModel cube_mesh;
 

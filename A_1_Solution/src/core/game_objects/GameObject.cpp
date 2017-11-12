@@ -21,6 +21,7 @@ void GameObject::set_initial_shader_values() {
 	shader_program->start();
 	shader_program->set_ambient_strength(0.02f);
 	shader_program->set_specular_strength(0.1f);
+	shader_program->set_mix_power(0.0f);
 	shader_program->set_specular_power(4);
 	shader_program->stop();
 }
@@ -75,15 +76,14 @@ void GameObject::render() {
 	shader_program->set_model_matrix(model_mat);
 
 	shader_program->set_object_color(object_color);
+	shader_program->set_mix_power(mix_power);
 
-	mesh->draw();
-
-	/* Draw Debug CubeMesh */
 	if (app->is_debug()) {
-		glm::mat4 cube_mat = glm::scale(model_mat, mesh->meshes[0].get_size());
-		shader_program->set_model_matrix(cube_mat);
-		cube_mesh.draw(GL_LINES);
+		texture->unbind();
+		mesh->draw(GL_LINES);
 	}
+	else mesh->draw();
+
 
 	texture->unbind();
 	shader_program->stop();
@@ -134,6 +134,10 @@ glm::vec3 GameObject::get_speed() {
 	return this->speed;
 }
 
+glm::vec3 GameObject::get_rotation_speed() {
+	return this->rotation_speed;
+}
+
 void GameObject::set_scale(glm::vec3 scale) {
 	this->scale = scale;
 }
@@ -154,6 +158,14 @@ void GameObject::set_specular_power(int specular_power) {
 	shader_program->start();
 	shader_program->set_specular_power(specular_power);
 	shader_program->stop();
+}
+
+
+void GameObject::set_mix_power(float mix_power) {
+	shader_program->start();
+	shader_program->set_mix_power(mix_power);
+	shader_program->stop();
+	this->mix_power = mix_power;
 }
 
 void GameObject::set_parent(GameObject* parent) {

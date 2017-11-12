@@ -28,6 +28,8 @@ void LightingShader::get_all_uniform_locations() {
 	location_specular_strength = get_uniform_location("specular_strength");
 	location_specular_power = get_uniform_location("specular_power");
 	location_texture_0 = get_uniform_location("texture_0");
+	location_mix_power = get_uniform_location("mix_power");
+
 
 	/* Locations for Lights */
 	// Directional Lights
@@ -65,6 +67,10 @@ void LightingShader::set_specular_strength(float value) { modify_float(location_
 void LightingShader::set_specular_power(int value) { modify_int(location_specular_power, value); }
 
 void LightingShader::set_texture(int number) { modify_texture(location_texture_0, number); }
+
+void LightingShader::set_mix_power(float value) {
+	modify_float(location_mix_power, value);
+}
 
 void LightingShader::set_directional_light(DirLight* dir_light) {
 	modify_vec3(location_dir_light.direction, dir_light->get_direction());

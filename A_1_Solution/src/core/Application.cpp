@@ -67,11 +67,11 @@ void Application::runMainGameLoop() {
 		dir_light->render();
 
 		/* Start second viewport */
-		glViewport(0, window->get_height()- window->get_height() /6 , window->get_width() / 6, window->get_height() / 6);
+		glViewport(0, window->get_height() - window->get_height() / 4, window->get_width() / 4, window->get_height() / 4);
 
 		/* Update Camera for second viewport */
 		camera->update_view_matrix_second_viewport(glm::vec3(0.0f, -1.0f, 0.0f));
-		camera->set_persp_proj_matrix(glm::ortho(-window->get_width()/20.f, window->get_width()/20.0f, -window->get_height() / 20.0f, window->get_height() / 20.0f, 0.1f, 1000.f));
+		camera->set_persp_proj_matrix(glm::ortho(-window->get_width() / 20.f, window->get_width() / 20.0f, -window->get_height() / 20.0f, window->get_height() / 20.0f, 0.1f, 1000.f));
 
 		/* Render second viewport */
 		for (int i = 0; i < game_objects.size(); i++) game_objects[i]->update(delta_time);
@@ -105,8 +105,12 @@ void Application::key_callback(int key, int scancode, int action, int mode) {
 		else if (action == GLFW_RELEASE) keys[key] = false;
 	}
 
-	if (keys[GLFW_KEY_M]) debug = true;
-	else debug = false;
+	if (keys[GLFW_KEY_J]) game_objects[0]->set_rotation_speed(glm::vec3(0.0f, -10.0f, 0.0f));
+	if (keys[GLFW_KEY_L]) game_objects[0]->set_rotation_speed(glm::vec3(0.0f, 10.0f, 0.0f));
+	if (!keys[GLFW_KEY_L] && !keys[GLFW_KEY_J]) {
+		game_objects[0]->set_rotation_acceleration(glm::vec3(0.0f));
+		game_objects[0]->set_rotation_speed(glm::vec3(0.0f));
+	}
 }
 
 void Application::scroll_callback(double x_offset, double y_offset) {

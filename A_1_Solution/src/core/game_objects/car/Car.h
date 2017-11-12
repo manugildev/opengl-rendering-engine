@@ -6,7 +6,7 @@ class Application;
 class Car : public GameObject {
 
 public:
-	Car(Application *, Model* model, glm::vec3 object_color, Texture* texture);
+	Car(Application *, Model* model, glm::vec3 object_color, Texture* texture=new Texture("textures/empty_pixel.jpg"));
 	void update(float delta_time) override;
 	~Car();
 	void set_initial_pos(glm::vec3 pos);
@@ -23,6 +23,7 @@ private:
 	float distance_traveled;
 
 	bool animation_running = false;
+	float previous_random_mutiplier = 0;
 
 };
 

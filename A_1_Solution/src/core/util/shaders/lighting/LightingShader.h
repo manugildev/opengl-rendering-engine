@@ -6,7 +6,7 @@
 
 const std::string LAMP_VERTEX_FILE = "shaders/lighting_vertex_shader.glsl";
 const std::string LAMP_FRAGMENT_FILE = "shaders/lighting_fragment_shader.glsl";
-const int MAX_LIGHTS = 4;
+const int MAX_LIGHTS = 9;
 
 /* Structures for storing all the locations of the same light*/
 struct DLight {
@@ -42,6 +42,7 @@ public:
 	void set_specular_strength(float value); 
 	void set_specular_power(int value);
 	void set_texture(int value);
+	void set_mix_power(float value);
 
 	void set_directional_light(DirLight* dir_light);
 	void set_point_lights(std::vector<PointLight*> point_lights);
@@ -51,7 +52,7 @@ private:
 	GLuint location_model_mat, location_view_mat, location_proj_mat;
 	GLuint location_object_color, location_light_pos, location_light_color;
 	GLuint location_ambient_strength, location_specular_strength, location_specular_power;
-	GLuint location_texture_0;
+	GLuint location_texture_0, location_mix_power;
 
 	DLight location_dir_light;
 	PLight location_point_light[MAX_LIGHTS];

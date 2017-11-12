@@ -6,6 +6,7 @@
 Light::Light(Application* app, glm::vec3 light_position, glm::vec3 light_color) : GameObject(app, new Model("models/sphere.obj")), light_position(light_position), light_color(light_color) {
 	this->model_mat = glm::translate(glm::mat4(1.0f), light_position);
 	this->set_pos(light_position);
+	this->set_scale(glm::vec3(0.3f));
 }
 
 void Light::set_shader_program(LampShader* shader_program) {
@@ -29,7 +30,10 @@ void Light::render() {
 	shader_program->set_proj_matrix(perspective_proj);
 	shader_program->set_model_matrix(model_mat);
 
-	mesh->draw();
+	if (app->is_debug()) {
+		mesh->draw(GL_LINES);
+	} else mesh->draw();
+
 
 	shader_program->stop();
 }
