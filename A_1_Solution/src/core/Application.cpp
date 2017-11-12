@@ -58,7 +58,8 @@ void Application::runMainGameLoop() {
 
 		glViewport(0, 0, window->get_width(), window->get_height());
 		camera->update_view_matrix();
-		camera->set_persp_proj_matrix(glm::perspective(glm::radians(camera->get_field_of_view()), camera->get_aspect_ratio(), 0.1f, 1000.0f));
+		camera->set_persp_proj_matrix(glm::perspective(glm::radians(camera->get_field_of_view()), camera->get_aspect_ratio(), 0.1f, 10000.0f));
+		cube_map->render(camera->get_view_matrix(), camera->get_persp_proj_matrix());
 		for (int i = 0; i < game_objects.size(); i++) game_objects[i]->update(delta_time);
 		for (int i = 0; i < point_lights.size(); i++) point_lights[i]->update(delta_time);
 		dir_light->update(delta_time);
@@ -71,7 +72,7 @@ void Application::runMainGameLoop() {
 
 		/* Update Camera for second viewport */
 		camera->update_view_matrix_second_viewport(glm::vec3(0.0f, -1.0f, 0.0f));
-		camera->set_persp_proj_matrix(glm::ortho(-window->get_width() / 20.f, window->get_width() / 20.0f, -window->get_height() / 20.0f, window->get_height() / 20.0f, 0.1f, 1000.f));
+		camera->set_persp_proj_matrix(glm::ortho(-window->get_width() / 20.f, window->get_width() / 20.0f, -window->get_height() / 20.0f, window->get_height() / 20.0f, 0.1f, 10000.f));
 
 		/* Render second viewport */
 		for (int i = 0; i < game_objects.size(); i++) game_objects[i]->update(delta_time);
@@ -162,6 +163,11 @@ DirLight* Application::get_dir_light() {
 
 std::vector<PointLight*> Application::get_point_lights() {
 	return this->point_lights;
+}
+
+void Application::set_cube_map(CubeMap * cube_map) {
+	this->cube_map = cube_map;
+	this->cube_map->init();
 }
 
 Camera* Application::get_camera() {

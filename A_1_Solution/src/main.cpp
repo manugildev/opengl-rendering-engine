@@ -6,6 +6,7 @@
 #include "core\util\shaders\lighting\LightingShader.h"
 #include <iostream>
 #include <assimp/Importer.hpp>
+#include "core\game_objects\cube_map\cube_map.h"
 
 float random_acceleration(float LO, float HI) {
 	return LO + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (HI - LO)));
@@ -94,8 +95,6 @@ int main(void) {
 	car8->set_mix_power(0.8f);
 	car8->set_acceleration(glm::vec3(0.0f, 0.0f, random_acceleration(0.5f, 2.0f)));
 
-
-
 	LampShader* shader_program1 = LampShader::create();
 	PointLight* p_light_1 = new PointLight(app, glm::vec3(40.0f, 2.0f, 8.0f), glm::vec3(1.0f, 0.0f, 1.0f), 1.0f, 0.5f, 0.001f);
 	PointLight* p_light_2 = new PointLight(app, glm::vec3(-40.0f, 2.0f, -13.0f), glm::vec3(1.0f, 1.0f, 0.0f), 1.0f, 0.5f, 0.001f);
@@ -119,6 +118,10 @@ int main(void) {
 	app->set_game_objects(objects);
 	app->set_directional_light(d_light);
 	app->set_point_lights(point_lights);
+
+
+	CubeMap* cube_map = new CubeMap();
+	app->set_cube_map(cube_map);
 
 	app->runMainGameLoop();
 }

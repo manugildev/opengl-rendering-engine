@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\core\game_objects\car\Car.h" />
+    <ClInclude Include="src\core\game_objects\cube_map\cube_map.h" />
     <ClInclude Include="src\core\game_objects\lights\PointLight.h" />
     <ClInclude Include="src\core\game_objects\lights\DirLight.h" />
     <ClInclude Include="src\core\game_objects\lights\Light.h" />
@@ -46,10 +47,12 @@
     <ClInclude Include="include\glm\gtx\texture.hpp" />
     <ClInclude Include="include\glm\gtx\vec_swizzle.hpp" />
     <ClInclude Include="src\core\util\texture\Texture.h" />
+    <ClInclude Include="src\core\util\util\Util.h" />
     <ClInclude Include="src\core\Window.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\game_objects\car\Car.cpp" />
+    <ClCompile Include="src\core\game_objects\cube_map\cube_map.cpp" />
     <ClCompile Include="src\core\game_objects\lights\DirLight.cpp" />
     <ClCompile Include="src\core\game_objects\lights\Light.cpp" />
     <ClCompile Include="src\core\game_objects\lights\PointLight.cpp" />
@@ -66,6 +69,7 @@
     <ClCompile Include="src\core\util\Logger.cpp" />
     <ClCompile Include="src\core\Application.cpp" />
     <ClCompile Include="src\core\util\texture\Texture.cpp" />
+    <ClCompile Include="src\core\util\util\Util.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\core\Window.cpp" />
   </ItemGroup>
@@ -160,6 +164,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(ProjectDir)include;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -172,6 +177,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(ProjectDir)include;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -186,6 +192,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -202,6 +209,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

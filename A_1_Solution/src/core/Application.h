@@ -9,6 +9,7 @@
 #include "util\mesh\Mesh.h"
 #include "game_objects\lights\DirLight.h"
 #include "game_objects\lights\PointLight.h"
+#include "game_objects\cube_map\cube_map.h"
 
 #include <vector>
 
@@ -37,6 +38,7 @@ public:
 	std::vector<GameObject*> get_game_objects();
 	DirLight* get_dir_light();
 	std::vector<PointLight*> get_point_lights();
+	void set_cube_map(CubeMap* cube_map);
 
 	void update_lights();
 	void do_movement();
@@ -45,6 +47,7 @@ public:
 private:
 	Window* window;
 	Camera* camera; 
+	CubeMap* cube_map;
 	std::vector<GameObject*> game_objects;
 	std::vector<PointLight*> point_lights;
 	DirLight* dir_light;
