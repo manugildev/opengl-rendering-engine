@@ -20,8 +20,8 @@ void GameObject::set_shader_program(LightingShader* shader_program) {
 void GameObject::set_initial_shader_values() {
 	shader_program->start();
 	shader_program->set_ambient_strength(0.02f);
-	shader_program->set_specular_strength(1.0f);
-	shader_program->set_specular_power(8);
+	shader_program->set_specular_strength(0.1f);
+	shader_program->set_specular_power(4);
 	shader_program->stop();
 }
 
@@ -43,7 +43,7 @@ void GameObject::update_model_mat() {
 	this->model_mat[3][1] = this->position[1];
 	this->model_mat[3][2] = this->position[2];
 	//this->model_mat = glm::translate(this->model_mat, this->position);
-
+	if (parent != nullptr) this->model_mat = parent->model_mat * this->model_mat;
 }
 
 void GameObject::update(float delta_time) {
@@ -73,6 +73,7 @@ void GameObject::render() {
 	shader_program->set_view_matrix(view);
 	shader_program->set_proj_matrix(perspective_proj);
 	shader_program->set_model_matrix(model_mat);
+
 	shader_program->set_object_color(object_color);
 
 	mesh->draw();
@@ -81,7 +82,7 @@ void GameObject::render() {
 	if (app->is_debug()) {
 		glm::mat4 cube_mat = glm::scale(model_mat, mesh->meshes[0].get_size());
 		shader_program->set_model_matrix(cube_mat);
-		cube_mesh.draw();
+		cube_mesh.draw(GL_LINES);
 	}
 
 	texture->unbind();
@@ -122,7 +123,15 @@ void GameObject::set_max_rotation_speed(glm::vec3 max_speed) {
 }
 
 glm::vec3 GameObject::get_pos() {
-	return this->position;
+	return position;
+}
+
+glm::vec3 GameObject::get_rotation() {
+	return this->rotation;
+}
+
+glm::vec3 GameObject::get_speed() {
+	return this->speed;
 }
 
 void GameObject::set_scale(glm::vec3 scale) {
@@ -146,6 +155,11 @@ void GameObject::set_specular_power(int specular_power) {
 	shader_program->set_specular_power(specular_power);
 	shader_program->stop();
 }
+
+void GameObject::set_parent(GameObject* parent) {
+	this->parent = parent;
+}
+
 #pragma endregion
 
 GameObject::~GameObject() {

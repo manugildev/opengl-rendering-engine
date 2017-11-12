@@ -1,5 +1,6 @@
 #include "Camera.h"
 #include <iostream>
+#include <glm\ext.hpp>
 
 Camera::Camera(glm::vec3 position, glm::vec3 up, GLfloat yaw, GLfloat pitch, glm::vec3 front,
 			   GLfloat movement_speed, GLfloat mouse_sensitivity, GLfloat zoom) {
@@ -20,6 +21,9 @@ void Camera::process_keyboard(Camera_Movement direction, GLfloat delta_time) {
 	if (direction == BACKWARD) this->position -= this->front * velocity;
 	if (direction == LEFT) this->position -= this->right * velocity;
 	if (direction == RIGHT) this->position += this->right * velocity;
+
+	this->update_persp_proj_matrix();
+	this->update_view_matrix();
 }
 
 void Camera::process_mouse(GLfloat x_offset, GLfloat y_offset, GLboolean constrain_pitch) {
@@ -58,11 +62,36 @@ void Camera::update_camera_vectors() {
 }
 
 glm::mat4 Camera::get_view_matrix() {
-	return glm::lookAt(this->position, this->position + this->front, this->up);
+	return this->view_matrix;
 }
 
 glm::mat4 Camera::get_persp_proj_matrix() {
-	return glm::perspective(glm::radians(this->get_field_of_view()), this->aspect_ratio, 0.1f, 1000.0f);;
+	return this->persp_proj_matrix;
+}
+
+void Camera::set_persp_proj_matrix(glm::mat4 perspective) {
+	this->persp_proj_matrix = perspective;
+}
+
+void Camera::set_view_matrix(glm::mat4 view_matrix) {
+	this->view_matrix = view_matrix;
+}
+
+void Camera::update_view_matrix() {
+	this->view_matrix = glm::lookAt(this->position, this->position + this->front, this->up);
+}
+
+void Camera::update_view_matrix_second_viewport(glm::vec3 front) {
+	glm::vec3 second_camera_position(position[0], 90.0f, position[2]);
+	this->view_matrix = glm::lookAt(second_camera_position, second_camera_position + front, glm::vec3(0,0,-1));
+}
+
+void Camera::update_persp_proj_matrix() {
+	this->persp_proj_matrix = glm::perspective(glm::radians(this->get_field_of_view()), this->aspect_ratio, 0.1f, 1000.0f);
+}
+
+float Camera::get_aspect_ratio() {
+	return this->aspect_ratio;
 }
 
 GLfloat Camera::get_field_of_view() {

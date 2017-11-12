@@ -5,7 +5,7 @@ Model::Model(const std::string & file_name) { this->load_model(file_name.c_str()
 void Model::load_model(const char* file_name) {
 	// Read file via ASSIMP
 	Assimp::Importer importer;
-	const aiScene *scene = importer.ReadFile(file_name, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenSmoothNormals);
+	const aiScene *scene = importer.ReadFile(file_name, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenNormals);
 
 	// Check for errors
 	if (!scene || scene->mFlags == AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
@@ -16,9 +16,9 @@ void Model::load_model(const char* file_name) {
 	this->processNode(scene->mRootNode, scene);
 }
 
-void Model::draw() {
+void Model::draw(GLenum mode) {
 	for (GLuint i = 0; i < this->meshes.size(); i++) {
-		this->meshes[i].draw();
+		this->meshes[i].draw(mode);
 	}
 }
 

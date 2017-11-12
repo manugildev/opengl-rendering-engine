@@ -22,7 +22,7 @@ public:
 
 	virtual void set_initial_shader_values();
 
-	void set_pos(glm::vec3 pos);
+	virtual void set_pos(glm::vec3 pos);
 	void set_acceleration(glm::vec3 acc);
 	void set_speed(glm::vec3 speed);
 	void set_max_speed(glm::vec3 max_speed);
@@ -30,8 +30,11 @@ public:
 	void set_rotation_acceleration(glm::vec3 acc);
 	void set_rotation_speed(glm::vec3 speed);
 	void set_max_rotation_speed(glm::vec3 max_speed);
+	void set_parent(GameObject* parent);
 
 	glm::vec3 get_pos();
+	glm::vec3 get_rotation();
+	glm::vec3 get_speed();
 
 	void set_scale(glm::vec3 scale);
 	void set_ambient_strength(float ambient_strength);
@@ -52,6 +55,7 @@ protected:
 	Application* app;
 
 private:
+	GameObject* parent;
 	glm::vec3 object_color;
 	Texture* texture;
 	CubeModel cube_mesh;

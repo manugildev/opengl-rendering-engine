@@ -6,7 +6,7 @@
 
 const std::string LAMP_VERTEX_FILE = "shaders/lighting_vertex_shader.glsl";
 const std::string LAMP_FRAGMENT_FILE = "shaders/lighting_fragment_shader.glsl";
-const int MAX_LIGHTS = 3;
+const int MAX_LIGHTS = 4;
 
 /* Structures for storing all the locations of the same light*/
 struct DLight {

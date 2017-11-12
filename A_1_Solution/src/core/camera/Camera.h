@@ -32,10 +32,19 @@ public:
 
 	GLfloat get_field_of_view();
 	glm::mat4 get_view_matrix();
-	glm::mat4 get_persp_proj_matrix();
+	glm::mat4 get_persp_proj_matrix(); 
+	float get_aspect_ratio();
+	void set_persp_proj_matrix(glm::mat4 perspective);
+	void set_view_matrix(glm::mat4 view_matrix);
+	void update_view_matrix();
+	void update_view_matrix_second_viewport(glm::vec3 front);
+	void update_persp_proj_matrix();
 	void set_aspect_ratio(float aspect_ratio);
 
 private:
+	glm::mat4 persp_proj_matrix;
+	glm::mat4 view_matrix;
+
 	glm::vec3 position;
 	glm::vec3 world_up;
 	glm::vec3 front;

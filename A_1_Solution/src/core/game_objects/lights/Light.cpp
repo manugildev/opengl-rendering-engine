@@ -1,6 +1,7 @@
 #include "Light.h"
 #include "..\..\Application.h"
 #include <glm\gtc\type_ptr.hpp>
+#include <glm\ext.hpp>
 
 Light::Light(Application* app, glm::vec3 light_position, glm::vec3 light_color) : GameObject(app, new Model("models/sphere.obj")), light_position(light_position), light_color(light_color) {
 	this->model_mat = glm::translate(glm::mat4(1.0f), light_position);
@@ -35,12 +36,11 @@ void Light::render() {
 
 void Light::update(float delta_time) {
 	GameObject::update(delta_time);
-	this->light_position = get_pos();
 	app->update_lights();
 }
 
 glm::vec3 Light::get_light_position() {
-	return this->light_position;
+	return glm::vec3(model_mat[3][0], model_mat[3][1], model_mat[3][2]);
 }
 
 glm::vec3 Light::get_light_color() {

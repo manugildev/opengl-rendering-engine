@@ -1,6 +1,6 @@
 #version 330
 
-#define number_of_point_lights 3
+#define number_of_point_lights 4
 
 struct DirLight {
 	vec3 direction;

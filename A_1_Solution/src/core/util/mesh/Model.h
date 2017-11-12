@@ -16,7 +16,7 @@ public:
 	Model(const std::string & file_name);
 
 	void load_model(const char* file_name);
-	void draw();
+	void draw(GLenum mode=GL_TRIANGLES);
 
 	~Model();
 	void processNode(aiNode* node, const aiScene* scene);

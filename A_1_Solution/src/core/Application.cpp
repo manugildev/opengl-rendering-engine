@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "util\texture\Texture.h"
+#include <glm\glm.hpp>
 
 
 Application::Application(Camera* camera) : camera(camera) {
@@ -55,6 +56,24 @@ void Application::runMainGameLoop() {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glClearColor(0.7f, 0.7f, 0.7f, 1.0f);
 
+		glViewport(0, 0, window->get_width(), window->get_height());
+		camera->update_view_matrix();
+		camera->set_persp_proj_matrix(glm::perspective(glm::radians(camera->get_field_of_view()), camera->get_aspect_ratio(), 0.1f, 1000.0f));
+		for (int i = 0; i < game_objects.size(); i++) game_objects[i]->update(delta_time);
+		for (int i = 0; i < point_lights.size(); i++) point_lights[i]->update(delta_time);
+		dir_light->update(delta_time);
+		for (int i = 0; i < game_objects.size(); i++) game_objects[i]->render();
+		for (int i = 0; i < point_lights.size(); i++) point_lights[i]->render();
+		dir_light->render();
+
+		/* Start second viewport */
+		glViewport(0, window->get_height()- window->get_height() /6 , window->get_width() / 6, window->get_height() / 6);
+
+		/* Update Camera for second viewport */
+		camera->update_view_matrix_second_viewport(glm::vec3(0.0f, -1.0f, 0.0f));
+		camera->set_persp_proj_matrix(glm::ortho(-window->get_width()/20.f, window->get_width()/20.0f, -window->get_height() / 20.0f, window->get_height() / 20.0f, 0.1f, 1000.f));
+
+		/* Render second viewport */
 		for (int i = 0; i < game_objects.size(); i++) game_objects[i]->update(delta_time);
 		for (int i = 0; i < point_lights.size(); i++) point_lights[i]->update(delta_time);
 		dir_light->update(delta_time);
