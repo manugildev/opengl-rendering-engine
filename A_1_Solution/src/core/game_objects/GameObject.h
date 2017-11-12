@@ -4,7 +4,8 @@
 #include "..\camera\Camera.h"
 #include "..\util\texture\Texture.h"
 #include "..\util\mesh\Mesh.h"
-#include "..\util\mesh\CubeMesh.h"
+#include "..\util\mesh\Model.h"
+#include "..\util\mesh\CubeModel.h"
 
 class Application;
 class LightingShader;
@@ -13,7 +14,7 @@ const glm::vec3 DEFAULT_OBJ_COLOR(1.0f);
 
 class GameObject {
 public:
-	GameObject(Application *app, Mesh* mesh, glm::vec3 object_color = DEFAULT_OBJ_COLOR, Texture* texture = new Texture("textures/empty_pixel.jpg"));
+	GameObject(Application *app, Model* mesh, glm::vec3 object_color = DEFAULT_OBJ_COLOR, Texture* texture = new Texture("textures/empty_pixel.jpg"));
 	~GameObject();
 
 	virtual void update(float delta_time);
@@ -47,13 +48,13 @@ public:
 protected:
 	Camera* camera;
 	glm::mat4 model_mat;
-	Mesh* mesh;
+	Model* mesh;
 	Application* app;
 
 private:
 	glm::vec3 object_color;
 	Texture* texture;
-	CubeMesh cube_mesh;
+	CubeModel cube_mesh;
 
 	glm::vec3 scale = glm::vec3(1.0f);
 

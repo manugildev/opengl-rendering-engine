@@ -2,30 +2,28 @@
 #include <vector>
 #include <algorithm> 
 
-Mesh::Mesh(const std::string & file_name) {
-	IndexedModel model = OBJModel(file_name).ToIndexedModel();
-	this->init_mesh(model);
-}
+Mesh::Mesh(std::vector<Vertex> vertices, std::vector<GLuint> indices) {
 
-Mesh::Mesh(Vertex* vertices, unsigned int num_of_vertices, unsigned int * indices, unsigned int num_of_indices) {
+	this->vertices = vertices;
+	this->indices = indices;
+
 	IndexedModel model;
-	
-	for (int i = 0; i < num_of_vertices; i++) {
+
+	for (int i = 0; i < vertices.size(); i++) {
 		model.positions.push_back(vertices[i].pos);
 		model.texCoords.push_back(vertices[i].tex_coord);
 		model.normals.push_back(vertices[i].normal);
 	}
 
-	for (int i = 0; i < num_of_indices; i++) {
+	for (int i = 0; i < indices.size(); i++) {
 		model.indices.push_back(indices[i]);
 	}
 
 	this->init_mesh(model);
-
 }
 
 void Mesh::init_mesh(const IndexedModel& model) {
-	this->mesh_draw_count = model.indices.size();	
+	this->mesh_draw_count = model.indices.size();
 	this->calculate_size(model.positions);
 
 	glGenVertexArrays(1, &mesh_vao);
@@ -51,7 +49,6 @@ void Mesh::init_mesh(const IndexedModel& model) {
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, model.indices.size() * sizeof(model.indices[0]), &model.indices[0], GL_STATIC_DRAW);
 
 	glBindVertexArray(0);
-
 }
 
 void Mesh::calculate_size(std::vector<glm::vec3> positions) {
@@ -82,7 +79,5 @@ glm::vec3 Mesh::get_size() {
 }
 
 Mesh::~Mesh() {
-	glDeleteBuffers(NUM_BUFFERS, mesh_vab);
-	glDeleteVertexArrays(1, &mesh_vao);
 }
 

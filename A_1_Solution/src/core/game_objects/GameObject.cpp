@@ -8,7 +8,7 @@
 #include "..\Application.h"
 #include "..\src\core\util\shaders\lighting\LightingShader.h"
 
-GameObject::GameObject(Application *app, Mesh* mesh, glm::vec3 object_color, Texture* texture) : app(app), camera(app->get_camera()), mesh(mesh), object_color(object_color), texture(texture) {
+GameObject::GameObject(Application *app, Model* mesh, glm::vec3 object_color, Texture* texture) : app(app), camera(app->get_camera()), mesh(mesh), object_color(object_color), texture(texture) {
 	this->model_mat = glm::mat4(1.0f);
 }
 
@@ -79,7 +79,7 @@ void GameObject::render() {
 
 	/* Draw Debug CubeMesh */
 	if (app->is_debug()) {
-		glm::mat4 cube_mat = glm::scale(model_mat, mesh->get_size());
+		glm::mat4 cube_mat = glm::scale(model_mat, mesh->meshes[0].get_size());
 		shader_program->set_model_matrix(cube_mat);
 		cube_mesh.draw();
 	}
@@ -151,8 +151,6 @@ void GameObject::set_specular_power(int specular_power) {
 GameObject::~GameObject() {
 	delete camera;
 	delete shader_program;
-	delete mesh;
-	mesh = NULL;
 	camera = NULL;
 	shader_program = NULL;
 }

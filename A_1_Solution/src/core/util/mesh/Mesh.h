@@ -15,9 +15,11 @@ struct Vertex {
 
 class Mesh {
 public:
-	Mesh(Vertex* vertices, unsigned int num_of_vertices, unsigned int * indices, unsigned int num_of_indices);
-	Mesh(const std::string& file_name);
-	~Mesh();
+	Mesh::Mesh(std::vector<Vertex> vertices, std::vector<GLuint> indices);
+    ~Mesh();
+
+	std::vector<Vertex> vertices;
+	std::vector<GLuint> indices;
 
 	virtual void draw(GLenum mode = GL_TRIANGLES);
 	glm::vec3 get_size();
@@ -28,9 +30,9 @@ protected:
 
 	void init_mesh(const IndexedModel & model);
 	void calculate_size(std::vector<glm::vec3> positions);
+	glm::vec3 size;
 	enum { POSITION_VB, TEXCOORD_VB, NORMAL_VB, INDEX_VB, NUM_BUFFERS };
 	GLuint mesh_vab[NUM_BUFFERS];
-	glm::vec3 size;
 
 private:
 };

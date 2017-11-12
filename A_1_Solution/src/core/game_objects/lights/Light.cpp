@@ -2,7 +2,7 @@
 #include "..\..\Application.h"
 #include <glm\gtc\type_ptr.hpp>
 
-Light::Light(Application* app, glm::vec3 light_position, glm::vec3 light_color) : GameObject(app, new Mesh("models/sphere.obj")), light_position(light_position), light_color(light_color) {
+Light::Light(Application* app, glm::vec3 light_position, glm::vec3 light_color) : GameObject(app, new Model("models/sphere.obj")), light_position(light_position), light_color(light_color) {
 	this->model_mat = glm::translate(glm::mat4(1.0f), light_position);
 	this->set_pos(light_position);
 }

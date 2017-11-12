@@ -22,8 +22,9 @@
     <ClInclude Include="src\core\game_objects\lights\PointLight.h" />
     <ClInclude Include="src\core\game_objects\lights\DirLight.h" />
     <ClInclude Include="src\core\game_objects\lights\Light.h" />
-    <ClInclude Include="src\core\util\mesh\CubeMesh.h" />
+    <ClInclude Include="src\core\util\mesh\CubeModel.h" />
     <ClInclude Include="src\core\util\mesh\Mesh.h" />
+    <ClInclude Include="src\core\util\mesh\Model.h" />
     <ClInclude Include="src\core\util\obj_loader\obj_loader.h" />
     <ClInclude Include="src\core\util\shaders\lamp\LampShader.h" />
     <ClInclude Include="src\core\util\shaders\lighting\LightingShader.h" />
@@ -50,8 +51,9 @@
     <ClCompile Include="src\core\game_objects\lights\DirLight.cpp" />
     <ClCompile Include="src\core\game_objects\lights\Light.cpp" />
     <ClCompile Include="src\core\game_objects\lights\PointLight.cpp" />
-    <ClCompile Include="src\core\util\mesh\CubeMesh.cpp" />
+    <ClCompile Include="src\core\util\mesh\CubeModel.cpp" />
     <ClCompile Include="src\core\util\mesh\Mesh.cpp" />
+    <ClCompile Include="src\core\util\mesh\Model.cpp" />
     <ClCompile Include="src\core\util\obj_loader\obj_loader.cpp" />
     <ClCompile Include="src\core\util\shaders\lamp\LampShader.cpp" />
     <ClCompile Include="src\core\util\shaders\lighting\LightingShader.cpp" />
