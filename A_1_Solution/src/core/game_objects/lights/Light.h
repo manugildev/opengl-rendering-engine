@@ -13,7 +13,7 @@ const glm::vec3 DEFAULT_LIGHT_COLOR(1.0f);
 
 class Light : public GameObject {
 public:
-	Light(Application* app, glm::vec3 position=DEFAULT_LIGHT_POS, glm::vec3 light_color=DEFAULT_LIGHT_COLOR);
+	Light(Application* app, glm::vec3 light_position =DEFAULT_LIGHT_POS, glm::vec3 light_color=DEFAULT_LIGHT_COLOR);
 	~Light();
 
 	void render() override;
@@ -21,10 +21,10 @@ public:
 	void set_initial_shader_values() override;
 	void set_shader_program(LampShader* shader_program);
 
-	glm::vec3 get_position();
+	glm::vec3 get_light_position();
 	glm::vec3 get_light_color();
 protected:
-	glm::vec3 position;
+	glm::vec3 light_position;
 	glm::vec3 light_color;
 
 private:

@@ -3,6 +3,7 @@
 
 - Kill the pointers such as the camera one
 - Camera should also implement entity class
+- Extract movement calculations out of the gameobject class
 
 # UTIL
 - Add shader loader and compiler

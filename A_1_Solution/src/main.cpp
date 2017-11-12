@@ -4,6 +4,7 @@
 #include "core\util\texture\Texture.h"
 #include "core\util\shaders\lighting\LightingShader.h"
 #include <iostream>
+#include <assimp/Importer.hpp>
 
 int main(void) {
 
@@ -13,12 +14,12 @@ int main(void) {
 
 	Mesh* mesh = new Mesh("models/monkey3.obj");
 
-	Texture texture1("textures/teapot.jpg");
-	Texture texture2("textures/bricks.jpg");
+	Texture texture1("textures/shotgun.jpg");
+	Texture texture2("textures/planet.jpg");
 
-	GameObject *teapot = new GameObject(app, mesh, glm::vec3(1.0f, 1.0f, 1.0f));
-	GameObject *teapot1 = new GameObject(app, mesh, glm::vec3(1.0f, 1.0f, 1.0f), &texture1);
-	GameObject *teapot2 = new GameObject(app, mesh, glm::vec3(1.0f, 1.0f, 1.0f), &texture2);
+	GameObject *teapot = new GameObject(app, mesh, glm::vec3(1.0f, 0.0f, 1.0f));
+	GameObject *teapot1 = new GameObject(app, mesh, glm::vec3(1.0f, 1.0f, 0.0f));
+	GameObject *teapot2 = new GameObject(app, mesh, glm::vec3(0.0f, 1.0f, 1.0f));
 
 	LightingShader* shader_program = LightingShader::create();
 
@@ -29,15 +30,11 @@ int main(void) {
 	teapot->set_pos(glm::vec3(40.0f, 0.0f, 0.0f));
 	teapot1->set_pos(glm::vec3(0.0f, 0.0f, -40.0f));
 	teapot2->set_pos(glm::vec3(-40.0f, 0.0f, 0.0f));
-	
-	teapot->set_scale(glm::vec3(10.0f, 10.0f, 10.0f));
-	teapot1->set_scale(glm::vec3(10.0f, 10.0f, 10.0f));
-	teapot2->set_scale(glm::vec3(10.0f, 10.0f, 10.0f));
-
+		
 	LampShader* shader_program1 = LampShader::create();
-	PointLight* p_light_1 = new PointLight(app, glm::vec3(30.0f, 0.0f, 0.0f), glm::vec3(1.0f), 1.0f, 0.01f, 0.01f);
-	PointLight* p_light_2 = new PointLight(app, glm::vec3(-30.0f, 0.0f, 0.0f), glm::vec3(1.0f,0.6f,0.6f), 1.0f, 0.01f, 0.01f);
-	PointLight* p_light_3 = new PointLight(app, glm::vec3(0.0f, 0.0f, -30.0f), glm::vec3(0.6f, 1.0f, 0.6f), 1.0f, 0.01f, 0.01f);
+	PointLight* p_light_1 = new PointLight(app, glm::vec3(30.0f, 0.0f, 0.0f), glm::vec3(1.0f, 0.6f, 0.6f), 1.0f, 0.09f, 0.00001f);
+	PointLight* p_light_2 = new PointLight(app, glm::vec3(-30.0f, 0.0f, 0.0f), glm::vec3(0.6f, 1.0f, 0.6f), 1.0f, 0.09f, 0.00001f);
+	PointLight* p_light_3 = new PointLight(app, glm::vec3(0.0f, 0.0f, -30.0f), glm::vec3(1.0f), 1.0f, 0.01f, 0.01f);
 
 	DirLight* d_light = new DirLight(app, glm::vec3(0.0f, -0.8f, -1.0f), glm::vec3(1.0f));
 

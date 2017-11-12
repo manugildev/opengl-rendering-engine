@@ -78,7 +78,7 @@ void LightingShader::set_point_lights(std::vector<PointLight*> point_lights) {
 }
 
 void LightingShader::set_point_light(PointLight* point_light, int index) {
-	modify_vec3(location_point_light[index].position, point_light->get_position());
+	modify_vec3(location_point_light[index].position, point_light->get_light_position());
 	modify_vec3(location_point_light[index].light_color, point_light->get_light_color());
 	modify_float(location_point_light[index].constant, point_light->get_constant());
 	modify_float(location_point_light[index].linear, point_light->get_linear());

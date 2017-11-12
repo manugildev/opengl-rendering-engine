@@ -51,7 +51,7 @@ void main(){
 
 	// Calculate Result
 	vec3 result = dir_lighting + point_lighting;
-	result *= mix(vec3(texture(texture_0, tex_coords)), object_color, 0.9f);
+	result *= mix(vec3(texture(texture_0, tex_coords)), object_color, 0.1f);
 
 	frag_color = vec4(result, 1.0f);
 
