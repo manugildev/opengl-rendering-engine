@@ -72,7 +72,7 @@ void Application::runMainGameLoop() {
 
 		/* Update Camera for second viewport */
 		camera->update_view_matrix_second_viewport(glm::vec3(0.0f, -1.0f, 0.0f));
-		camera->set_persp_proj_matrix(glm::ortho(-window->get_width() / 20.f, window->get_width() / 20.0f, -window->get_height() / 20.0f, window->get_height() / 20.0f, 0.1f, 10000.f));
+		camera->set_persp_proj_matrix(glm::ortho(-window->get_width() / 50.f, window->get_width() / 50.0f, -window->get_height() /50.0f, window->get_height() / 50.0f, 0.1f, 10000.f));
 
 		/* Render second viewport */
 		for (int i = 0; i < game_objects.size(); i++) game_objects[i]->update(delta_time);

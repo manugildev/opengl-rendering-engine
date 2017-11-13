@@ -47,3 +47,7 @@ bool Util::parse_file_into_str(const char *file_name, char *shader_str, int max_
 	}
 	return true;
 }
+
+float Util::random_range(float LO, float HI) {
+	return LO + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (HI - LO)));
+}

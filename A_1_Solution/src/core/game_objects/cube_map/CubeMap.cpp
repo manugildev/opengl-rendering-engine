@@ -1,6 +1,4 @@
-#define STB_IMAGE_IMPLEMENTATION
-
-#include "cube_map.h"
+#include "CubeMap.h"
 
 #define FRONT "cube_map/back.png"
 #define BACK "cube_map/front.png"

@@ -7,8 +7,7 @@ Window::Window(Application* app, int width, int height, std::string title) {
 	this->app = app;
 
 	glfwWindowHint(GLFW_SAMPLES, 16);
-
-	
+		
 	// Move window to the upper left corner.
 	window_obj = glfwCreateWindow(940, 540, "A_1", NULL, NULL);
 
@@ -28,7 +27,7 @@ Window::Window(Application* app, int width, int height, std::string title) {
 	glfwSetCursorPos(window_obj, window_width / 2, window_height / 2);
 	glfwSetWindowSizeCallback(window_obj, window_size_callback);
 	glfwSetInputMode(window_obj, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-	glfwSetWindowPos(window_obj, 400, 300);
+	//glfwSetWindowPos(window_obj, 400, 300);
 	glfwSetWindowAspectRatio(window_obj, 16, 9);
 
 	glfwMakeContextCurrent(window_obj);

@@ -9,7 +9,7 @@
 #include "util\mesh\Mesh.h"
 #include "game_objects\lights\DirLight.h"
 #include "game_objects\lights\PointLight.h"
-#include "game_objects\cube_map\cube_map.h"
+#include "game_objects\cube_map\CubeMap.h"
 
 #include <vector>
 

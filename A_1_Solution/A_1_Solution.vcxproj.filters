@@ -99,10 +99,10 @@
     <ClInclude Include="src\core\game_objects\car\Car.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\game_objects\cube_map\cube_map.h">
+    <ClInclude Include="src\core\util\util\Util.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\util\util\Util.h">
+    <ClInclude Include="src\core\game_objects\cube_map\CubeMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -164,10 +164,10 @@
     <ClCompile Include="src\core\game_objects\car\Car.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\game_objects\cube_map\cube_map.cpp">
+    <ClCompile Include="src\core\util\util\Util.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\util\util\Util.cpp">
+    <ClCompile Include="src\core\game_objects\cube_map\CubeMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
