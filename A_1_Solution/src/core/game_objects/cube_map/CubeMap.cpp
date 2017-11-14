@@ -12,7 +12,8 @@
 
 CubeMap::CubeMap() {}
 
-void CubeMap::init() {
+void CubeMap::init(BasicShader* shader_program){
+	this->shader_program = shader_program;
     vbo = 0;
     glGenBuffers(1, &vbo);
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
@@ -26,27 +27,6 @@ void CubeMap::init() {
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
 
     create_cube_map(FRONT, BACK, TOP, BOTTOM, LEFT, RIGHT, &cube_map_texture);
-
-    char vertex_shader[4096];
-    char fragment_shader[4096];
-    Util::parse_file_into_str("shaders/cube_vertex_shader.glsl", vertex_shader, 4096);
-    Util::parse_file_into_str("shaders/cube_fragment_shader.glsl", fragment_shader, 4096);
-    const GLchar *v = (const GLchar *) vertex_shader;
-    const GLchar *f = (const GLchar *) fragment_shader;
-
-    GLuint vs = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vs, 1, &v, NULL);
-    glCompileShader(vs);
-    GLuint fs = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fs, 1, &f, NULL);
-    glCompileShader(fs);
-    cube_program_id = glCreateProgram();
-    glAttachShader(cube_program_id, fs);
-    glAttachShader(cube_program_id, vs);
-    glLinkProgram(cube_program_id);
-
-    cube_V_location = glGetUniformLocation(cube_program_id, "V");
-    cube_P_location = glGetUniformLocation(cube_program_id, "P");
 
 }
 
@@ -97,13 +77,13 @@ void CubeMap::create_cube_map(const char *front, const char *back, const char *t
 
 void CubeMap::render(glm::mat4 v, glm::mat4 p) {
     glDepthMask(GL_FALSE);
-    glUseProgram(cube_program_id);
-    glBindVertexArray(vao);
-    glUniformMatrix4fv(cube_V_location, 1, GL_FALSE, &v[0][0]);
-    glUniformMatrix4fv(cube_P_location, 1, GL_FALSE, &p[0][0]);
+	this->shader_program->start();
+	glBindVertexArray(vao);
+	this->shader_program->set_view_matrix(v);
+	this->shader_program->set_proj_matrix(p);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_CUBE_MAP, cube_map_texture);
     glDrawArrays(GL_TRIANGLES, 0, 36);
 	glDepthMask(GL_TRUE);
-	glUseProgram(0);
+	this->shader_program->stop();
 }

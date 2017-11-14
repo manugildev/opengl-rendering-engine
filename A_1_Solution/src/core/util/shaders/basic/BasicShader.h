@@ -7,9 +7,9 @@ const std::string BASIC_FRAGMENT_FILE = "shaders/basic_fragment_shader.glsl";
 class BasicShader : public ShaderProgram {
 public:
 
-	static BasicShader* create();
+	static BasicShader* create(std::string vertex_shader=BASIC_VERTEX_FILE, std::string fragment_shader=BASIC_FRAGMENT_FILE);
 
-	BasicShader();
+	BasicShader(std::string vertex_shader = BASIC_VERTEX_FILE, std::string fragment_shader = BASIC_FRAGMENT_FILE);
 	~BasicShader();
 
 	void bind_attributes() override;

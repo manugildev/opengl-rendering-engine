@@ -167,7 +167,6 @@ std::vector<PointLight*> Application::get_point_lights() {
 
 void Application::set_cube_map(CubeMap * cube_map) {
 	this->cube_map = cube_map;
-	this->cube_map->init();
 }
 
 Camera* Application::get_camera() {

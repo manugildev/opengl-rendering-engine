@@ -296,3 +296,4 @@ __pycache__/
 # The custom Bin Directory
 bin/
 
+*.rar

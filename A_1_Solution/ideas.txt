@@ -11,7 +11,7 @@
 - Add text renderer
 - Add log file in logger
 - Add FullScreen Mode
-
+- Add a tool to add Shader and Vertex variables on the go [Replacement]
 
 ### GAME
 

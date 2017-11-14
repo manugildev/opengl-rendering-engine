@@ -1,10 +1,10 @@
 #version 410
 
-in vec3 vp;
-uniform mat4 P, V;
+in vec3 vertex_positions;
+uniform mat4 proj_mat, view_mat;
 out vec3 texcoords;
 
 void main () {
-	texcoords = vp;
-	gl_Position = P * V * vec4 (vp, 1.0);
+	texcoords = vertex_positions;
+	gl_Position = proj_mat * view_mat * vec4 (vertex_positions, 1.0);
 }

@@ -5,6 +5,7 @@
 #include <glm\glm.hpp>
 #include "assert.h"
 #include "stdio.h"
+#include "..\..\util\shaders\basic\BasicShader.h"
 
 #include "..\..\util\util\util.h"
 
@@ -40,7 +41,10 @@ public:
     GLint cube_V_location;
     GLint cube_P_location;
     GLuint cube_map_texture;
-    void init();
+    void init(BasicShader* shader_program);
+
+private:
+	BasicShader* shader_program;
 };
 
 

@@ -1,13 +1,13 @@
 #include "BasicShader.h"
 #include <iostream>
 
-BasicShader * BasicShader::create() {
-	BasicShader * p = new BasicShader();
+BasicShader * BasicShader::create(std::string vertex_shader, std::string fragment_shader) {
+	BasicShader * p = new BasicShader(vertex_shader, fragment_shader);
 	p->init();
 	return p;
 }
 
-BasicShader::BasicShader() : ShaderProgram(BASIC_VERTEX_FILE, BASIC_FRAGMENT_FILE) {}
+BasicShader::BasicShader(std::string vertex_shader, std::string fragment_shader) : ShaderProgram(vertex_shader, fragment_shader) {}
 
 BasicShader::~BasicShader() {}
 

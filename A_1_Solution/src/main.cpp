@@ -115,8 +115,11 @@ int main(void) {
 	DirLight* d_light = new DirLight(app, glm::vec3(0.0f, -0.8f, -1.0f), glm::vec3(1.0f));
 	d_light->set_shader_program(shader_program1);
 
+
+	BasicShader* cube_map_shader = BasicShader::create("shaders/cube_vertex_shader.glsl", "shaders/cube_fragment_shader.glsl");
 	/* CubeMap */
 	CubeMap* cube_map = new CubeMap();
+	cube_map->init(cube_map_shader);
 
 	/* Setting up the Application */
 	app->set_game_objects(objects);
