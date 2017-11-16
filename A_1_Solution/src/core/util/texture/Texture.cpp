@@ -4,49 +4,49 @@
 
 #include <std_image\stb_image.h>
 
-Texture::Texture(const std::string & file_name) {
-	if (file_name == "") { is_empty = true; return;}
+Texture::Texture(GLenum texture_target, const std::string & file_name) : texture_target(texture_target), file_name(file_name){
+	texture_id = load();
+}
 
+GLint Texture::load() {
 	int width, height, num_of_components;
 	unsigned char* image_data = stbi_load(file_name.c_str(), &width, &height, &num_of_components, STBI_rgb_alpha);
 
 	if (image_data == nullptr) {
 		std::cout << "Texture loading failed: " << file_name.c_str() << std::endl;
+		return -1;
 	}
-
-	glGenTextures(1, &texture_id);
+	GLuint id;
+	glGenTextures(1, &id);
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texture_id);
+	glBindTexture(texture_target, id);
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(texture_target, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(texture_target, GL_TEXTURE_WRAP_S, GL_REPEAT);
 
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(texture_target, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameterf(texture_target, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data);
+	glTexImage2D(texture_target, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data);
 
-	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindTexture(texture_target, 0);
 
 	stbi_image_free(image_data);
+	return id;
 }
 
-void Texture::bind() {
-	if (is_empty) { unbind(); return; } 
-
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texture_id);
+void Texture::bind(int texture_unit) {
+	glActiveTexture(GL_TEXTURE0 + texture_unit);
+	glBindTexture(texture_target, texture_id);
 }
 
 void Texture::unbind() {
-	glBindTexture(GL_TEXTURE_2D, 0);
-	glDisable(GL_TEXTURE_2D);
+	glBindTexture(texture_target, 0);
+	glDisable(texture_target);
 }
-
-Texture::~Texture() {
-	glDeleteTextures(1, &texture_id);
-}
-
 int Texture::get_unit() {
 	return this->unit;
+}
+Texture::~Texture() {
+	glDeleteTextures(1, &texture_id);
 }

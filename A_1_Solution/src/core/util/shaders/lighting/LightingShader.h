@@ -9,18 +9,26 @@ const std::string LAMP_FRAGMENT_FILE = "shaders/lighting_fragment_shader.glsl";
 const int MAX_LIGHTS = 9;
 
 /* Structures for storing all the locations of the same light*/
-struct DLight {
+struct DLight_Location {
 	GLuint direction;
 	GLuint light_color;
 };
 
-struct PLight {
+struct PLight_Location {
 	GLuint position;
 	GLuint light_color;
 	GLuint constant;
 	GLuint linear;
 	GLuint quadratic;
 };
+
+struct Material_Location {
+	GLuint ambient;
+	GLuint diffuse;
+	GLuint specular;
+	GLuint shininess;
+};
+
 
 class LightingShader : public ShaderProgram {
 public:
@@ -47,6 +55,7 @@ public:
 	void set_directional_light(DirLight* dir_light);
 	void set_point_lights(std::vector<PointLight*> point_lights);
 	void set_point_light(PointLight* dir_light, int index);
+	void set_material(Material material);
 
 private:
 	GLuint location_model_mat, location_view_mat, location_proj_mat;
@@ -54,7 +63,8 @@ private:
 	GLuint location_ambient_strength, location_specular_strength, location_specular_power;
 	GLuint location_texture_0, location_mix_power;
 
-	DLight location_dir_light;
-	PLight location_point_light[MAX_LIGHTS];
+	DLight_Location location_dir_light;
+	PLight_Location location_point_light[MAX_LIGHTS];
+	Material_Location location_material;
 
 };

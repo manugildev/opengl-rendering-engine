@@ -68,7 +68,7 @@ void GameObject::render() {
 	glm::mat4 view = this->camera->get_view_matrix();
 	glm::mat4 perspective_proj = this->camera->get_persp_proj_matrix();
 
-	texture->bind();
+	texture->bind(0);
 	shader_program->set_texture(texture->get_unit());
 
 	shader_program->set_view_matrix(view);

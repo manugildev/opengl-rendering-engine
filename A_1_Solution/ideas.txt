@@ -2,6 +2,7 @@
 ### ENGINE
 
 - Kill the pointers such as the camera one
+- Make pointers C++ v11
 - Camera should also implement entity class
 - Extract movement calculations out of the gameobject class
 
@@ -12,6 +13,8 @@
 - Add log file in logger
 - Add FullScreen Mode
 - Add a tool to add Shader and Vertex variables on the go [Replacement]
+- Model can have materials as imports
+- Color class
 
 ### GAME
 

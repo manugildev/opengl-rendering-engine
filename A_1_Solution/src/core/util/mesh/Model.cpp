@@ -1,6 +1,6 @@
 #include "Model.h"
 
-Model::Model(const std::string & file_name) { this->load_model(file_name.c_str()); }
+Model::Model(const std::string & file_name) :file_name(file_name) { this->load_model(file_name.c_str()); }
 
 void Model::load_model(const char* file_name) {
 	// Read file via ASSIMP
@@ -36,6 +36,46 @@ void Model::processNode(aiNode* node, const aiScene* scene) {
 	for (GLuint i = 0; i < node->mNumChildren; i++) {
 		this->processNode(node->mChildren[i], scene);
 	}
+
+	/* Process Materials */
+
+	// Extract the directory part from the file name
+	std::string::size_type SlashIndex = file_name.find_last_of("/");
+	std::string dir;
+
+	if (SlashIndex == std::string::npos) { dir = "."; }
+	else if (SlashIndex == 0) { dir = "/"; }
+	else { dir = file_name.substr(0, SlashIndex); }
+
+
+	for (unsigned int i = 0; i < scene->mNumMaterials; i++) {
+		const aiMaterial* pMaterial = scene->mMaterials[i];
+		textures[i] = NULL;
+
+		if (pMaterial->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
+			aiString path;
+
+			if (pMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &path, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS) {
+				std::string full_path = dir + "/" + path.data;
+				textures[i] = new Texture(GL_TEXTURE_2D, full_path.c_str());
+
+				if (textures[i]->load() == -1) {
+					printf("Error loading texture '%s'\n", full_path.c_str());
+					delete textures[i];
+					textures[i] = NULL;
+					return;
+				} else {
+					printf("Loaded texture '%s'\n", full_path.c_str());
+				}
+			}
+		}
+
+		// Load empty texture in case the model does not include its own texture
+		if (!textures[i]) {
+			textures[i] = new Texture();
+			textures[i]->load();
+		}
+	}
 }
 
 Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene) {
@@ -44,6 +84,7 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene) {
 	std::vector<glm::vec3> positions;
 	std::vector<glm::vec3> normals;
 	std::vector<GLuint> indices;
+	std::vector<Texture> textures;
 
 	// Walk through each of the mesh's vertices
 	for (GLuint i = 0; i < mesh->mNumVertices; i++) {
@@ -62,7 +103,7 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene) {
 		normal.y = mesh->mNormals[i].y;
 		normal.z = mesh->mNormals[i].z;
 		normals.push_back(glm::vec3(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z));
-		
+
 		// Texture Coordinates
 		if (mesh->mTextureCoords[0]) { // Does the mesh contain texture coordinates?
 			tex_coord.x = mesh->mTextureCoords[0][i].x;
@@ -74,7 +115,7 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene) {
 		vertices.push_back(vertex);
 	}
 
-	// Now wak through each of the mesh's faces (a face is a mesh its triangle) and retrieve the corresponding vertex indices.
+	// Now walk through each of the mesh's faces (a face is a mesh its triangle) and retrieve the corresponding vertex indices.
 	for (GLuint i = 0; i < mesh->mNumFaces; i++) {
 		aiFace face = mesh->mFaces[i];
 		// Retrieve all indices of the face and store them in the indices vector
@@ -83,8 +124,13 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene) {
 		}
 	}
 
-	
+
 	return Mesh(vertices, indices);
 }
 
-Model::~Model() {}
+Model::~Model() {
+	for (unsigned int i = 0; i < textures.size(); i++) {
+		delete textures[i];
+		textures[i] = NULL;
+	}
+}

@@ -46,6 +46,11 @@ void LightingShader::get_all_uniform_locations() {
 		location_point_light[i].quadratic = get_uniform_location("point_lights[" + index + "].quadratic");
 	}
 
+	/* Locations for Material */
+	location_material.ambient = get_uniform_location("material.ambient");
+	location_material.diffuse = get_uniform_location("material.diffuse");
+	location_material.specular = get_uniform_location("material.specular");
+	location_material.shininess = get_uniform_location("material.shininess");
 }
 
 void LightingShader::set_object_color(glm::vec3 object_color) { modify_vec3(location_object_color, object_color); }
@@ -89,4 +94,11 @@ void LightingShader::set_point_light(PointLight* point_light, int index) {
 	modify_float(location_point_light[index].constant, point_light->get_constant());
 	modify_float(location_point_light[index].linear, point_light->get_linear());
 	modify_float(location_point_light[index].quadratic, point_light->get_quadratic());
+}
+
+void LightingShader::set_material(Material material) {
+	this->modify_vec3(location_material.ambient, material.ambient);
+	this->modify_vec3(location_material.diffuse, material.diffuse);
+	this->modify_vec3(location_material.specular, material.specular);
+	this->modify_float(location_material.shininess, material.shininess);
 }

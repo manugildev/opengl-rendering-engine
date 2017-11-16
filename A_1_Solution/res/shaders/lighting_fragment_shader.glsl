@@ -15,6 +15,13 @@ struct PointLight {
 	float quadratic;
 };
 
+struct Material {
+    vec3 ambient;
+    vec3 diffuse;
+    vec3 specular;
+    float shininess;
+}; 
+  
 
 out vec4 frag_color;
 
@@ -32,6 +39,7 @@ uniform float mix_power;
 
 uniform DirLight dir_light;
 uniform PointLight point_lights[number_of_point_lights];
+uniform Material material;
 
 uniform sampler2D texture_0;
 

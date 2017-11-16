@@ -20,7 +20,7 @@ int main(void) {
 	Model* car_model = new Model("models/volks.obj");
 
 	/* Textures */
-	Texture city_texture("textures/marble.jpg");
+	Texture city_texture(GL_TEXTURE_2D, "textures/marble.jpg");
 
 	/* GameObjects */
 	LightingShader* shader_program = LightingShader::create();

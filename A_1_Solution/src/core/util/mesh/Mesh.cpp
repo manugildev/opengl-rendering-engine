@@ -11,7 +11,7 @@ Mesh::Mesh(std::vector<Vertex> vertices, std::vector<GLuint> indices) {
 
 	for (int i = 0; i < vertices.size(); i++) {
 		model.positions.push_back(vertices[i].pos);
-		model.texCoords.push_back(vertices[i].tex_coord);
+		model.tex_coords.push_back(vertices[i].tex_coord);
 		model.normals.push_back(vertices[i].normal);
 	}
 
@@ -36,7 +36,7 @@ void Mesh::init_mesh(const IndexedModel& model) {
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
 	glBindBuffer(GL_ARRAY_BUFFER, mesh_vab[TEXCOORD_VB]);
-	glBufferData(GL_ARRAY_BUFFER, model.positions.size() * sizeof(model.texCoords[0]), &model.texCoords[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, model.positions.size() * sizeof(model.tex_coords[0]), &model.tex_coords[0], GL_STATIC_DRAW);
 	glEnableVertexAttribArray(1);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, 0);
 

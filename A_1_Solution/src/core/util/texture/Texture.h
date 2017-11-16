@@ -3,18 +3,23 @@
 #include <iostream>
 #include <GLEW/glew.h>
 
+const std::string TEXTURE_WHITE_PIXEL = "textures/empty_pixel.jpg";
+
 class Texture {
 public:
-	Texture(const std::string &file_name);
-	void bind();
+	Texture(GLenum texture_target=GL_TEXTURE_2D, const std::string &file_name=TEXTURE_WHITE_PIXEL);
+
+	GLint load();
+	void bind(int texture_unit);
 	void unbind();
+	int get_unit();
 	~Texture();
 
-	bool is_empty = false;
-	int get_unit();
-
 private:
-	GLuint texture_id;
 	int unit = 0;
+
+	GLuint texture_id;
+	GLenum texture_target;
+	const std::string file_name;
 };
 
