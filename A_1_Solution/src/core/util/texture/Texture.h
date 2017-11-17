@@ -13,6 +13,7 @@ public:
 	void bind(int texture_unit);
 	void unbind();
 	int get_unit();
+	std::string get_file_name();
 	~Texture();
 
 private:
@@ -20,6 +21,6 @@ private:
 
 	GLuint texture_id;
 	GLenum texture_target;
-	const std::string file_name;
+	std::string file_name;
 };
 

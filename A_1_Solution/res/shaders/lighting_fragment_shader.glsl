@@ -16,9 +16,9 @@ struct PointLight {
 };
 
 struct Material {
-    vec3 ambient;
-    vec3 diffuse;
-    vec3 specular;
+    vec3 ambient_color;
+    vec3 diffuse_color;
+    vec3 specular_color;
     float shininess;
 }; 
   

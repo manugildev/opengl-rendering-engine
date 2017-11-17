@@ -8,7 +8,7 @@
 #include "..\Application.h"
 #include "..\src\core\util\shaders\lighting\LightingShader.h"
 
-GameObject::GameObject(Application *app, Model* mesh, glm::vec3 object_color, Texture* texture) : app(app), camera(app->get_camera()), mesh(mesh), object_color(object_color), texture(texture) {
+GameObject::GameObject(Application *app, Model* mesh, glm::vec3 object_color) : app(app), camera(app->get_camera()), mesh(mesh), object_color(object_color) {
 	this->model_mat = glm::mat4(1.0f);
 }
 
@@ -67,10 +67,7 @@ void GameObject::render() {
 
 	glm::mat4 view = this->camera->get_view_matrix();
 	glm::mat4 perspective_proj = this->camera->get_persp_proj_matrix();
-
-	texture->bind(0);
-	shader_program->set_texture(texture->get_unit());
-
+	
 	shader_program->set_view_matrix(view);
 	shader_program->set_proj_matrix(perspective_proj);
 	shader_program->set_model_matrix(model_mat);
@@ -78,14 +75,12 @@ void GameObject::render() {
 	shader_program->set_object_color(object_color);
 	shader_program->set_mix_power(mix_power);
 
-	if (app->is_debug()) {
-		texture->unbind();
+	if (app->is_debug()) { // TODO: Make this work again
 		mesh->draw(GL_LINES);
 	}
 	else mesh->draw();
 
 
-	texture->unbind();
 	shader_program->stop();
 }
 

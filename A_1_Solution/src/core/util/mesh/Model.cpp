@@ -1,11 +1,16 @@
 #include "Model.h"
 
-Model::Model(const std::string & file_name) :file_name(file_name) { this->load_model(file_name.c_str()); }
+#include "..\util\Util.h"
+
+Model::Model(const std::string & file_name) :file_name(file_name) {
+	this->load_model(file_name.c_str());
+}
 
 void Model::load_model(const char* file_name) {
 	// Read file via ASSIMP
 	Assimp::Importer importer;
 	const aiScene *scene = importer.ReadFile(file_name, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenNormals);
+
 
 	// Check for errors
 	if (!scene || scene->mFlags == AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
@@ -15,13 +20,6 @@ void Model::load_model(const char* file_name) {
 	// Process ASSIMP's root node recursively
 	this->processNode(scene->mRootNode, scene);
 }
-
-void Model::draw(GLenum mode) {
-	for (GLuint i = 0; i < this->meshes.size(); i++) {
-		this->meshes[i].draw(mode);
-	}
-}
-
 
 void Model::processNode(aiNode* node, const aiScene* scene) {
 	// Process each mesh located at the current node
@@ -39,46 +37,38 @@ void Model::processNode(aiNode* node, const aiScene* scene) {
 
 	/* Process Materials */
 
-	// Extract the directory part from the file name
-	std::string::size_type SlashIndex = file_name.find_last_of("/");
-	std::string dir;
-
-	if (SlashIndex == std::string::npos) { dir = "."; }
-	else if (SlashIndex == 0) { dir = "/"; }
-	else { dir = file_name.substr(0, SlashIndex); }
-
-
 	for (unsigned int i = 0; i < scene->mNumMaterials; i++) {
 		const aiMaterial* pMaterial = scene->mMaterials[i];
-		textures[i] = NULL;
+		aiColor4D ambient_color;
+		aiColor4D diffuse_color;
+		aiColor4D specular_color;
+		float shininess;
 
+		aiGetMaterialColor(pMaterial, AI_MATKEY_COLOR_AMBIENT, &ambient_color);
+		aiGetMaterialColor(pMaterial, AI_MATKEY_COLOR_DIFFUSE, &diffuse_color);
+		aiGetMaterialColor(pMaterial, AI_MATKEY_COLOR_SPECULAR, &specular_color);
+		aiGetMaterialFloat(pMaterial, AI_MATKEY_SHININESS, &shininess);
+		
+		// TODO: Save colors
+		// TODO: Add more Texture Types
 		if (pMaterial->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
-			aiString path;
-
-			if (pMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &path, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS) {
-				std::string full_path = dir + "/" + path.data;
-				textures[i] = new Texture(GL_TEXTURE_2D, full_path.c_str());
-
-				if (textures[i]->load() == -1) {
-					printf("Error loading texture '%s'\n", full_path.c_str());
-					delete textures[i];
-					textures[i] = NULL;
-					return;
-				} else {
-					printf("Loaded texture '%s'\n", full_path.c_str());
-				}
-			}
+			load_texture(i, pMaterial, aiTextureType_DIFFUSE);
+		} else {
+			// There is no texture > we load the white pixel texture
+			textures.push_back(new Texture());
+			textures[i]->load();		
 		}
 
-		// Load empty texture in case the model does not include its own texture
-		if (!textures[i]) {
-			textures[i] = new Texture();
-			textures[i]->load();
-		}
+		Material mat;
+		mat.ambient_color = glm::vec3(ambient_color.r, ambient_color.g, ambient_color.b);
+		mat.diffuse_color = glm::vec3(diffuse_color.r, diffuse_color.g, diffuse_color.b);
+		mat.specular_color = glm::vec3(specular_color.r, specular_color.g, specular_color.b);
+		mat.shininess = shininess;
 	}
 }
 
 Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene) {
+
 	// Data to fill
 	std::vector<Vertex> vertices;
 	std::vector<glm::vec3> positions;
@@ -124,9 +114,60 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene) {
 		}
 	}
 
-
-	return Mesh(vertices, indices);
+	/* We create the Mesh that we are going to return */
+	Mesh result_mesh(vertices, indices);
+	result_mesh.set_material_index(mesh->mMaterialIndex);
+	return result_mesh;
 }
+
+void Model::load_texture(int i, const aiMaterial* pMaterial, aiTextureType texture_type) {
+	std::string dir = Util::get_dir_by_path(file_name);
+
+	aiString path;
+	if (pMaterial->GetTexture(texture_type, 0, &path, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS) {
+		std::string full_path = dir + "/" + path.data;
+
+		Texture* t_loaded = texture_is_loaded(full_path);
+		if (!t_loaded) {
+			textures.push_back(new Texture(GL_TEXTURE_2D, full_path.c_str()));
+			if (textures[i]->load() == -1) {
+				printf("Error loading texture '%s', loading the white pixel texture instead.\n", full_path.c_str());
+				delete textures[i];
+				textures[i] = nullptr;
+				textures[i] = new Texture();
+				textures[i]->load();
+			} else {
+				printf("Loaded texture '%s'\n", full_path.c_str());
+			}
+		} else {
+			textures.push_back(t_loaded);
+			printf("Already loaded texture '%s'\n", full_path.c_str());
+		}
+	}
+}
+
+
+// Returns nullptr if the texture is not loaded yet, and returns the Texture pointer if it is
+Texture * Model::texture_is_loaded(std::string full_path) {
+	for (int i = 0; i < textures.size(); i++) {
+		if (textures[i]->get_file_name() == full_path) {
+			return textures[i];
+		}
+	}
+	return nullptr;
+}
+
+void Model::draw(GLenum mode) { //TODO: Maybe bring shader_program here to bind the correct texture in case we have 2 loaded for the same model eg (diffuse, ambient)
+	for (GLuint i = 0; i < this->meshes.size(); i++) {
+		const unsigned int m_index = meshes[i].get_material_index();
+
+		// We check first if it's a nullptr
+		if (textures[m_index]) 	textures[m_index]->bind(0);
+		this->meshes[i].draw(mode);
+		textures[m_index]->unbind();
+	}
+}
+
 
 Model::~Model() {
 	for (unsigned int i = 0; i < textures.size(); i++) {

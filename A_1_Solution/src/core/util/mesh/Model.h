@@ -12,10 +12,11 @@
 
 
 struct Material {
-	glm::vec3 ambient;
-	glm::vec3 diffuse;
-	glm::vec3 specular;
-	float shininess;
+	glm::vec3 ambient_color = glm::vec3(0.0f);
+	glm::vec3 diffuse_color = glm::vec3(0.0f);
+	glm::vec3 specular_color = glm::vec3(0.0f);
+	float shininess = 0.0f;
+	Texture* texture = nullptr;
 };
 
 class Model {
@@ -31,8 +32,10 @@ public:
 	void processNode(aiNode* node, const aiScene* scene);
 	Mesh processMesh(aiMesh* mesh, const aiScene* scene);
 
+	void load_texture(int i, const aiMaterial* pMaterial, aiTextureType texture_type);
+	Texture* texture_is_loaded(std::string full_path);
+
 	std::vector<Mesh> meshes;
-	std::vector<Texture*> textures;
-	std::vector<Texture> loaded_textures; // TODO; Work on this to not repeat textures
+	std::vector<Texture*> textures; // TODO; Work on this to not repeat textures, this has to be global not model dependent. If a texture is already loade why load it again? IDEA: AssetManager
 };
 

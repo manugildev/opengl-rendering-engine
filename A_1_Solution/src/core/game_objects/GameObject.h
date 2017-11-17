@@ -14,7 +14,7 @@ const glm::vec3 DEFAULT_OBJ_COLOR(1.0f);
 
 class GameObject {
 public:
-	GameObject(Application *app, Model* mesh, glm::vec3 object_color = DEFAULT_OBJ_COLOR, Texture* texture = new Texture());
+	GameObject(Application *app, Model* mesh, glm::vec3 object_color = DEFAULT_OBJ_COLOR);
 	~GameObject();
 
 	virtual void update(float delta_time);
@@ -60,7 +60,6 @@ private:
 	GameObject* parent;
 	glm::vec3 object_color;
 	float mix_power;
-	Texture* texture;
 	CubeModel cube_mesh;
 
 	glm::vec3 scale = glm::vec3(1.0f);

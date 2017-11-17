@@ -47,9 +47,9 @@ void LightingShader::get_all_uniform_locations() {
 	}
 
 	/* Locations for Material */
-	location_material.ambient = get_uniform_location("material.ambient");
-	location_material.diffuse = get_uniform_location("material.diffuse");
-	location_material.specular = get_uniform_location("material.specular");
+	location_material.ambient_color = get_uniform_location("material.ambient_color");
+	location_material.diffuse_color = get_uniform_location("material.diffuse_color");
+	location_material.specular_color = get_uniform_location("material.specular_color");
 	location_material.shininess = get_uniform_location("material.shininess");
 }
 
@@ -97,8 +97,8 @@ void LightingShader::set_point_light(PointLight* point_light, int index) {
 }
 
 void LightingShader::set_material(Material material) {
-	this->modify_vec3(location_material.ambient, material.ambient);
-	this->modify_vec3(location_material.diffuse, material.diffuse);
-	this->modify_vec3(location_material.specular, material.specular);
+	this->modify_vec3(location_material.ambient_color, material.ambient_color);
+	this->modify_vec3(location_material.diffuse_color, material.diffuse_color);
+	this->modify_vec3(location_material.specular_color, material.specular_color);
 	this->modify_float(location_material.shininess, material.shininess);
 }

@@ -78,6 +78,14 @@ glm::vec3 Mesh::get_size() {
 	return this->size;
 }
 
+void Mesh::set_material_index(GLuint material_index) {
+	this->material_index = material_index;
+}
+
+GLuint Mesh::get_material_index() {
+	return this->material_index;
+}
+
 Mesh::~Mesh() {
 }
 

@@ -1,7 +1,7 @@
 #include "Car.h"
 #include <glm\ext.hpp>
 
-Car::Car(Application * app, Model* model, glm::vec3 object_color, Texture* texture) : GameObject(app, model, object_color, texture) {
+Car::Car(Application * app, Model* model, glm::vec3 object_color) : GameObject(app, model, object_color) {
 	this->initial_position = this->get_pos();
 }
 

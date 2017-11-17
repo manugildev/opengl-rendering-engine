@@ -47,6 +47,9 @@ void Texture::unbind() {
 int Texture::get_unit() {
 	return this->unit;
 }
+std::string Texture::get_file_name() {
+	return this->file_name;
+}
 Texture::~Texture() {
 	glDeleteTextures(1, &texture_id);
 }

@@ -51,3 +51,14 @@ bool Util::parse_file_into_str(const char *file_name, char *shader_str, int max_
 float Util::random_range(float LO, float HI) {
 	return LO + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (HI - LO)));
 }
+
+std::string Util::get_dir_by_path(std::string path) {
+	// Extract the directory part from the file name
+	std::string::size_type SlashIndex = path.find_last_of("/");
+	std::string dir;
+
+	if (SlashIndex == std::string::npos)  dir = ".";
+	else if (SlashIndex == 0) dir = "/";
+	else dir = path.substr(0, SlashIndex);
+	return dir;
+}

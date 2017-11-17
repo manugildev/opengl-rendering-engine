@@ -32,6 +32,8 @@ public:
 
 	virtual void draw(GLenum mode = GL_TRIANGLES);
 	glm::vec3 get_size();
+	void set_material_index(GLuint material_index);
+	GLuint get_material_index();
 
 protected:
 	GLuint mesh_vao = 0;

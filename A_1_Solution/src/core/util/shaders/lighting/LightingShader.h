@@ -23,12 +23,14 @@ struct PLight_Location {
 };
 
 struct Material_Location {
-	GLuint ambient;
-	GLuint diffuse;
-	GLuint specular;
+	GLuint ambient_color;
+	GLuint diffuse_color;
+	GLuint specular_color;
 	GLuint shininess;
 };
 
+
+// TODO: Material only shader??
 
 class LightingShader : public ShaderProgram {
 public:

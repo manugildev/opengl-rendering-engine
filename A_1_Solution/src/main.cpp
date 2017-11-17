@@ -16,7 +16,7 @@ int main(void) {
 	Application *app = new Application(&camera);
 
 	/* Models */
-	Model* city_model = new Model("models/street.obj");
+	Model* city_model = new Model("models/street/street.obj");
 	Model* car_model = new Model("models/volks.obj");
 
 	/* Textures */
@@ -24,7 +24,7 @@ int main(void) {
 
 	/* GameObjects */
 	LightingShader* shader_program = LightingShader::create();
-	GameObject *teapot = new GameObject(app, city_model, glm::vec3(1.0f), &city_texture);
+	GameObject *teapot = new GameObject(app, city_model, glm::vec3(1.0f));
 	teapot->set_scale(glm::vec3(1.0f));
 	teapot->set_rotation_speed(glm::vec3(0.0f, 0.0f, 0.0f));
 	teapot->set_pos(glm::vec3(0.0f, 0.0f, 0.0f));
