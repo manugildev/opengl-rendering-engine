@@ -108,7 +108,7 @@ int main(void) {
 	PointLight* p_light_8 = new PointLight(app, glm::vec3(8.0f, 2.0f, 40.0f), glm::vec3(0.0f, 1.0f, 0.0f), 1.0f, 0.5f, 0.001f);
 	PointLight* p_light_9 = new PointLight(app, glm::vec3(0.0f, 5.0f, 0.0f), glm::vec3(1.0f), 1.0f, 0.05f, 0.001f);
 
-	std::vector<PointLight*> point_lights = {p_light_1, p_light_2, p_light_3, p_light_4, p_light_5, p_light_6,p_light_7,p_light_8, p_light_9};
+	std::vector<PointLight*> point_lights = {p_light_1, p_light_2, p_light_3, p_light_4, p_light_5, p_light_6, p_light_7, p_light_8, p_light_9};
 	for (int i = 0; i < point_lights.size(); i++) point_lights[i]->set_parent(teapot);
 	for (int i = 0; i < point_lights.size(); i++) point_lights[i]->set_shader_program(shader_program1);
 

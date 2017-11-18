@@ -36,5 +36,6 @@ protected:
 	void modify_int(GLuint location, int value);
 	void modify_mat4(GLuint location, glm::mat4 mat); 
 	void modify_texture(GLuint location, int value);
+
 };
 

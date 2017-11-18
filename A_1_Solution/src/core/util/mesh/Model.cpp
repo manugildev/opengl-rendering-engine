@@ -1,6 +1,7 @@
 #include "Model.h"
 
 #include "..\util\Util.h"
+#include "..\shaders\lighting\LightingShader.h"
 
 Model::Model(const std::string & file_name) :file_name(file_name) {
 	this->load_model(file_name.c_str());
@@ -64,6 +65,8 @@ void Model::processNode(aiNode* node, const aiScene* scene) {
 		mat.diffuse_color = glm::vec3(diffuse_color.r, diffuse_color.g, diffuse_color.b);
 		mat.specular_color = glm::vec3(specular_color.r, specular_color.g, specular_color.b);
 		mat.shininess = shininess;
+		mat.diffuse_texture = textures[i];
+		materials.push_back(mat);
 	}
 }
 
@@ -141,7 +144,7 @@ void Model::load_texture(int i, const aiMaterial* pMaterial, aiTextureType textu
 			}
 		} else {
 			textures.push_back(t_loaded);
-			printf("Already loaded texture '%s'\n", full_path.c_str());
+			//printf("Already loaded texture '%s'\n", full_path.c_str());
 		}
 	}
 }
@@ -157,16 +160,28 @@ Texture * Model::texture_is_loaded(std::string full_path) {
 	return nullptr;
 }
 
-void Model::draw(GLenum mode) { //TODO: Maybe bring shader_program here to bind the correct texture in case we have 2 loaded for the same model eg (diffuse, ambient)
+void Model::draw(LightingShader* shader_program, GLenum mode) { //TODO: Maybe bring shader_program here to bind the correct texture in case we have 2 loaded for the same model eg (diffuse, ambient)
 	for (GLuint i = 0; i < this->meshes.size(); i++) {
 		const unsigned int m_index = meshes[i].get_material_index();
-
+		shader_program->set_material(materials[m_index]);
 		// We check first if it's a nullptr
 		if (textures[m_index]) 	textures[m_index]->bind(0);
 		this->meshes[i].draw(mode);
 		textures[m_index]->unbind();
 	}
 }
+
+void Model::draw(GLenum mode) { // Clean this shit
+	for (GLuint i = 0; i < this->meshes.size(); i++) {
+		const unsigned int m_index = meshes[i].get_material_index();
+		// We check first if it's a nullptr
+		if (textures[m_index]) 	textures[m_index]->bind(0);
+		this->meshes[i].draw(mode);
+		textures[m_index]->unbind();
+	}
+}
+
+
 
 
 Model::~Model() {
