@@ -76,9 +76,9 @@ void GameObject::render() {
 	shader_program->set_mix_power(mix_power);
 
 	if (app->is_debug()) { // TODO: Make this work again
-		mesh->draw(GL_LINES);
+		mesh->draw(nullptr, GL_LINES);
 	}
-	else mesh->draw();
+	else mesh->draw(this->shader_program);
 
 
 	shader_program->stop();

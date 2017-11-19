@@ -49,7 +49,7 @@ void Model::processNode(aiNode* node, const aiScene* scene) {
 		aiGetMaterialColor(pMaterial, AI_MATKEY_COLOR_DIFFUSE, &diffuse_color);
 		aiGetMaterialColor(pMaterial, AI_MATKEY_COLOR_SPECULAR, &specular_color);
 		aiGetMaterialFloat(pMaterial, AI_MATKEY_SHININESS, &shininess);
-		
+
 		// TODO: Save colors
 		// TODO: Add more Texture Types
 		if (pMaterial->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
@@ -57,7 +57,7 @@ void Model::processNode(aiNode* node, const aiScene* scene) {
 		} else {
 			// There is no texture > we load the white pixel texture
 			textures.push_back(new Texture());
-			textures[i]->load();		
+			textures[i]->load();
 		}
 
 		Material mat;
@@ -163,24 +163,14 @@ Texture * Model::texture_is_loaded(std::string full_path) {
 void Model::draw(LightingShader* shader_program, GLenum mode) { //TODO: Maybe bring shader_program here to bind the correct texture in case we have 2 loaded for the same model eg (diffuse, ambient)
 	for (GLuint i = 0; i < this->meshes.size(); i++) {
 		const unsigned int m_index = meshes[i].get_material_index();
-		shader_program->set_material(materials[m_index]);
+		if (shader_program != nullptr)
+			shader_program->set_material(materials[m_index]);
 		// We check first if it's a nullptr
 		if (textures[m_index]) 	textures[m_index]->bind(0);
 		this->meshes[i].draw(mode);
 		textures[m_index]->unbind();
 	}
 }
-
-void Model::draw(GLenum mode) { // Clean this shit
-	for (GLuint i = 0; i < this->meshes.size(); i++) {
-		const unsigned int m_index = meshes[i].get_material_index();
-		// We check first if it's a nullptr
-		if (textures[m_index]) 	textures[m_index]->bind(0);
-		this->meshes[i].draw(mode);
-		textures[m_index]->unbind();
-	}
-}
-
 
 
 

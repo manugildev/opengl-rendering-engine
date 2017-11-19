@@ -31,7 +31,7 @@ void Light::render() {
 	shader_program->set_model_matrix(model_mat);
 
 	if (app->is_debug()) {
-		mesh->draw(GL_LINES);
+		mesh->draw(nullptr, GL_LINES);
 	} else mesh->draw();
 
 

@@ -27,8 +27,7 @@ public:
 	Model(const std::string & file_name);
 
 	void load_model(const char* file_name);
-	void draw(LightingShader* shader_program, GLenum mode = GL_TRIANGLES);
-	void draw(GLenum mode = GL_TRIANGLES);
+	void draw(LightingShader* shader_program=nullptr, GLenum mode = GL_TRIANGLES);
 
 	~Model();
 	void processNode(aiNode* node, const aiScene* scene);
