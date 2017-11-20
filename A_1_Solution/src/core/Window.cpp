@@ -26,7 +26,7 @@ Window::Window(Application* app, int width, int height, std::string title) {
 	glfwGetWindowSize(window_obj, &this->window_width, &this->window_height);
 	glfwSetCursorPos(window_obj, window_width / 2, window_height / 2);
 	glfwSetWindowSizeCallback(window_obj, window_size_callback);
-	//glfwSetInputMode(window_obj, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	glfwSetInputMode(window_obj, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	glfwSetWindowPos(window_obj, 400, 300);
 	glfwSetWindowAspectRatio(window_obj, 16, 9);
 
