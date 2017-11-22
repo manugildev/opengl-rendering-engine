@@ -14,7 +14,7 @@ const glm::vec3 DEFAULT_OBJ_COLOR(1.0f);
 
 class GameObject {
 public:
-	GameObject(Application *app, Model* mesh, glm::vec3 object_color = DEFAULT_OBJ_COLOR);
+	GameObject(Application *app, Model* model, glm::vec3 object_color = DEFAULT_OBJ_COLOR);
 	~GameObject();
 
 	virtual void update(float delta_time);
@@ -53,7 +53,7 @@ public:
 protected:
 	Camera* camera;
 	glm::mat4 model_mat;
-	Model* mesh;
+	Model* model;
 	Application* app;
 
 private:

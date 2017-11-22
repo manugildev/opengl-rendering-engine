@@ -46,7 +46,11 @@ uniform sampler2D texture_0;
 vec3 calc_dir_light(DirLight light, vec3 normal, vec3 view_dir);
 vec3 calc_point_light(PointLight light, vec3 normal, vec3 frag_pos, vec3 view_dir);
 
+vec3 texture_blend;
+
 void main(){
+	texture_blend = mix(vec3(texture(texture_0, tex_coords)), object_color, mix_power);
+
 	vec3 norm = normalize(normal);
 	vec3 view_dir = normalize(view_pos - frag_pos);
 
@@ -69,16 +73,16 @@ vec3 calc_dir_light(DirLight light, vec3 normal, vec3 view_dir) {
 	vec3 light_dir = normalize(-light.direction);
 	
 	// Ambient Lighting
-	vec3 ambient = light.light_color * vec3(texture(texture_0, tex_coords)) * material.ambient_color;
+	vec3 ambient = light.light_color * texture_blend * material.ambient_color;
 
 	// Diffuse Lighting
 	float diff = max(dot(normal, light_dir), 0.0f);	
-	vec3 diffuse = light.light_color * diff * vec3(texture(texture_0, tex_coords)) * material.diffuse_color;
+	vec3 diffuse = light.light_color * diff * texture_blend * material.diffuse_color;
 
 	// Specular Lighting
 	vec3 reflect_dir = reflect(-light_dir, normal);
 	float spec = pow(max(dot(view_dir, reflect_dir), 0.0), specular_power);
-	vec3 specular = light.light_color * spec * vec3(texture(texture_0, tex_coords)) * material.specular_color;
+	vec3 specular = light.light_color * spec * texture_blend * material.specular_color;
 
 	return (ambient + diffuse + specular);
 }
@@ -91,18 +95,18 @@ vec3 calc_point_light(PointLight light, vec3 normal, vec3 frag_pos, vec3 view_di
 	float attenuation = 1.0f / (light.constant + (light.linear * distance) + (light.quadratic * (distance * distance)));
 			
 	// Ambient Lighting
-	vec3 ambient = light.light_color * vec3(texture(texture_0, tex_coords)) * material.ambient_color;
+	vec3 ambient = light.light_color * texture_blend * material.ambient_color;
 	ambient *= attenuation;
 
 	// Diffuse Lighting
 	float diff = max(dot(normal, light_dir), 0.0f);	
-	vec3 diffuse = light.light_color * vec3(texture(texture_0, tex_coords)) * material.diffuse_color;
+	vec3 diffuse = light.light_color * texture_blend * material.diffuse_color;
 	diffuse *= attenuation;
 
 	// Specular Lighting
 	vec3 reflect_dir = reflect(-light_dir, normal);
 	float spec = pow(max(dot(view_dir, reflect_dir), 0.0), specular_power);
-	vec3 specular = light.light_color * vec3(texture(texture_0, tex_coords)) * material.specular_color;
+	vec3 specular = light.light_color * texture_blend * material.specular_color;
 	specular *= attenuation;
 
 	return (ambient + diffuse + specular);

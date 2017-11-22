@@ -8,7 +8,7 @@
 #include "..\Application.h"
 #include "..\src\core\util\shaders\lighting\LightingShader.h"
 
-GameObject::GameObject(Application *app, Model* mesh, glm::vec3 object_color) : app(app), camera(app->get_camera()), mesh(mesh), object_color(object_color) {
+GameObject::GameObject(Application *app, Model* model, glm::vec3 object_color) : app(app), camera(app->get_camera()), model(model), object_color(object_color) {
 	this->model_mat = glm::mat4(1.0f);
 }
 
@@ -76,9 +76,9 @@ void GameObject::render() {
 	shader_program->set_mix_power(mix_power);
 
 	if (app->is_debug()) { // TODO: Make this work again
-		mesh->draw(nullptr, GL_LINES);
+		model->draw(nullptr, GL_LINES);
 	}
-	else mesh->draw(this->shader_program);
+	else model->draw(this->shader_program);
 
 
 	shader_program->stop();
