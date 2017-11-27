@@ -5,6 +5,7 @@
 - Make pointers C++ v11
 - Camera should also implement entity class
 - Extract movement calculations out of the gameobject class
+- Shadow Mapping
 
 # UTIL
 - Add shader loader and compiler
@@ -17,4 +18,4 @@
 - Color class
 
 ### GAME
-
+- Set a showcase scene
