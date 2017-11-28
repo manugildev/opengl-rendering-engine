@@ -6,6 +6,7 @@
 - Camera should also implement entity class
 - Extract movement calculations out of the gameobject class
 - Shadow Mapping
+- Implement toon shaders for the objects
 
 # UTIL
 - Add shader loader and compiler
