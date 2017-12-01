@@ -23,6 +23,7 @@ public:
 
 	int init();
 	void runMainGameLoop();
+	void bindAsRenderTarget();
 	int window_width, window_height;
 
 	Camera* get_camera();

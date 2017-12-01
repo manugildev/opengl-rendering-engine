@@ -46,6 +46,8 @@ int Application::init() {
 void Application::runMainGameLoop() {
 	while (!glfwWindowShouldClose(window->window_obj) && glfwGetKey(window->window_obj, GLFW_KEY_ESCAPE) != GLFW_PRESS) {
 
+		bindAsRenderTarget();
+
 		delta_time = calculate_delta_time();
 
 		/* Poll for and process events */
@@ -85,6 +87,12 @@ void Application::runMainGameLoop() {
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window->window_obj);
 	}
+}
+
+//TODO: This is probably need to be in the window thing
+void Application::bindAsRenderTarget() {
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+	glViewport(0, 0, window->get_width(), window->get_height());
 }
 
 void Application::update_lights() {
