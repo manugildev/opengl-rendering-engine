@@ -149,7 +149,6 @@ void Model::load_texture(int i, const aiMaterial* pMaterial, aiTextureType textu
 	}
 }
 
-
 // Returns nullptr if the texture is not loaded yet, and returns the Texture pointer if it is
 Texture * Model::texture_is_loaded(std::string full_path) {
 	for (int i = 0; i < textures.size(); i++) {
@@ -171,8 +170,6 @@ void Model::draw(LightingShader* shader_program, GLenum mode) { //TODO: Maybe br
 		textures[m_index]->unbind();
 	}
 }
-
-
 
 Model::~Model() {
 	for (unsigned int i = 0; i < textures.size(); i++) {
