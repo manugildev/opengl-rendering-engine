@@ -1,23 +1,56 @@
 #include "Quad.h"
+#include "..\shaders\gui\GuiShader.h"
 
-Quad::Quad(float positions[]) {
-	glGenVertexArrays(1, &mesh_vao);
-	glBindVertexArray(mesh_vao);
+Quad::Quad() {
 
-	glBufferData(GL_ARRAY_BUFFER, positions.size() * sizeof(model.positions[0]), &model.positions[0], GL_STATIC_DRAW);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
+	// Create Vertex Array Object
+	glGenVertexArrays(1, &vao);
+	glBindVertexArray(vao);
+
+	// Create a Vertex Buffer Object and copy the vertex data to it
+	GLuint vbo;
+	glGenBuffers(1, &vbo);
+
+	GLfloat vertices[] = {
+		-1.0f,  1.0f,  // Top-left
+		1.0f,  1.0f,// Top-right
+		1.0f, -1.0f,  // Bottom-right
+		-1.0f, -1.0f,   // Bottom-left
+	};
+
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+	// Create an element array
+	GLuint ebo;
+	glGenBuffers(1, &ebo);
+
+	GLuint elements[] = {
+		0, 1, 2,
+		2, 3, 0
+	};
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
+
+	// Specify the layout of the vertex data
+
+	shader_program = GuiShader::create();
+	GLint posAttrib = glGetAttribLocation(shader_program->program_id, "vertex_positions");
+	glEnableVertexAttribArray(posAttrib);
+	glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), 0);
 }
 
 Quad::~Quad() {}
 
 void Quad::render() {
-	glBindVertexArray(mesh_vao);
-	glEnableVertexAttribArray(0);
-
-	glDisableVertexAttribArray(0);
+	shader_program->start();
+	glBindVertexArray(vao);
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
-
+	shader_program->stop();
 }
 
-void Quad::update() {}
+GLuint Quad::get_vao() {
+	return vao;
+}

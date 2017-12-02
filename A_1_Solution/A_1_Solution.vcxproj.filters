@@ -102,6 +102,18 @@
     <ClInclude Include="src\core\util\util\Util.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\util\gui\Quad.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\util\gui\GuiTexture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\util\gui\GuiRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\util\shaders\gui\GuiShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -164,6 +176,18 @@
     <ClCompile Include="src\core\util\util\Util.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\util\gui\Quad.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\util\gui\GuiTexture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\util\gui\GuiRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\util\shaders\gui\GuiShader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="include\glm\ext\vec1.inl">
@@ -189,12 +213,14 @@
     </None>
     <None Include="res\shaders\basic_fragment_shader.glsl" />
     <None Include="res\shaders\basic_vertex_shader.glsl" />
-    <None Include="res\shaders\lighting_fragment_shader.glsl" />
     <None Include="res\shaders\lighting_vertex_shader.glsl" />
     <None Include="res\shaders\lamp_fragment_shader.glsl" />
     <None Include="res\shaders\lamp_vertex_shader.glsl" />
+    <None Include="res\shaders\lighting_fragment_shader.hsls" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ideas.txt" />
+    <Text Include="res\shaders\gui_fragment_shader.glsl" />
+    <Text Include="res\shaders\gui_vertex_shader.glsl" />
   </ItemGroup>
 </Project>

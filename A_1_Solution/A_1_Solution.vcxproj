@@ -19,6 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\core\util\shaders\gui\GuiShader.h" />
+    <ClInclude Include="src\core\util\gui\GuiRenderer.h" />
+    <ClInclude Include="src\core\util\gui\GuiTexture.h" />
+    <ClInclude Include="src\core\util\gui\Quad.h" />
     <ClInclude Include="src\core\game_objects\car\Car.h" />
     <ClInclude Include="src\core\game_objects\cube_map\CubeMap.h" />
     <ClInclude Include="src\core\game_objects\lights\PointLight.h" />
@@ -50,6 +54,10 @@
     <ClInclude Include="src\core\Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\core\util\shaders\gui\GuiShader.cpp" />
+    <ClCompile Include="src\core\util\gui\GuiRenderer.cpp" />
+    <ClCompile Include="src\core\util\gui\GuiTexture.cpp" />
+    <ClCompile Include="src\core\util\gui\Quad.cpp" />
     <ClCompile Include="src\core\game_objects\car\Car.cpp" />
     <ClCompile Include="src\core\game_objects\cube_map\CubeMap.cpp" />
     <ClCompile Include="src\core\game_objects\lights\DirLight.cpp" />
@@ -88,6 +96,8 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="ideas.txt" />
+    <Text Include="res\shaders\gui_fragment_shader.glsl" />
+    <Text Include="res\shaders\gui_vertex_shader.glsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

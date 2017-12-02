@@ -1,15 +1,17 @@
 #pragma once
 #include <GLEW/glew.h>
+#include "..\shaders\gui\GuiShader.h"
 
 class Quad {
 public:
-	Quad(float positions[]);
+	Quad();
 	~Quad();
 
+	GLuint get_vao();
 	void render();
-	void update();
 
 private:
-	GLuint mesh_vao;
+	GLuint vao; 
+	GuiShader* shader_program;
 };
 
