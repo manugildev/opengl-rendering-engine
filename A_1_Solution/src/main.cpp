@@ -7,6 +7,7 @@
 #include <iostream>
 #include <assimp\Importer.hpp>
 #include "core\game_objects\cube_map\CubeMap.h"
+#include "core\util\gui\GuiRenderer.h"
 
 int main(void) {
 	/* Camera */
@@ -18,7 +19,7 @@ int main(void) {
 	/* Models */
 	Model* city_model = new Model("models/street/street.obj");
 	Model* car_model = new Model("models/volks.obj");
-	
+
 	/* GameObjects */
 	LightingShader* shader_program = LightingShader::create();
 	GameObject *teapot = new GameObject(app, city_model, glm::vec3(1.0f));
@@ -54,7 +55,7 @@ int main(void) {
 	car6->set_rotation(glm::vec3(0.0f, -270.0f, 0.0f));
 	car6->set_shader_program(shader_program);
 	car6->set_acceleration(glm::vec3(-Util::random_range(0.5f, 2.0f), 0.0f, 0.0f));
-	
+
 	Car *car3 = new Car(app, car_model, glm::vec3(0.10f, 0.73f, 0.61f));
 	car3->set_parent(teapot);
 	car3->set_initial_pos(glm::vec3(0.0f, 1.0f, 0.0f));
@@ -110,11 +111,24 @@ int main(void) {
 	CubeMap* cube_map = new CubeMap();
 	cube_map->init(cube_map_shader);
 
+	/* GUI */
+	GuiRenderer* gui_renderer = new GuiRenderer();
+
+	Texture* texture = new Texture();
+	GuiTexture* first_gui = new GuiTexture(texture, gui_renderer->get_shader_program());
+	first_gui->set_scale(glm::vec2(0.1f, 0.1f));
+	first_gui->set_position(glm::vec2(0.90f, 0.90f));
+
+	gui_renderer->add_gui_texture(first_gui);
+	
 	/* Setting up the Application */
 	app->set_game_objects(objects);
 	app->set_directional_light(d_light);
 	app->set_point_lights(point_lights);
 	app->set_cube_map(cube_map);
 
+	app->set_gui_renderer(gui_renderer);
+
+	/* Run the loop */
 	app->runMainGameLoop();
 }

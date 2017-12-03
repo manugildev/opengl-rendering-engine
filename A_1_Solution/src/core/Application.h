@@ -7,6 +7,7 @@
 #include "game_objects\GameObject.h"
 #include "camera\Camera.h"
 #include "util\mesh\Mesh.h"
+#include "util\gui\GuiRenderer.h"
 #include "game_objects\lights\DirLight.h"
 #include "game_objects\lights\PointLight.h"
 #include "game_objects\cube_map\CubeMap.h"
@@ -34,6 +35,7 @@ public:
 	void mouse_callback(double x_pos, double y_pos);
 
 	void set_game_objects(std::vector<GameObject*> game_objects);
+	void set_gui_renderer(GuiRenderer* gui_renderer);
 	void set_directional_light(DirLight* dir_light);
 	void set_point_lights(std::vector<PointLight*> point_lights);
 	std::vector<GameObject*> get_game_objects();
@@ -50,6 +52,7 @@ private:
 	Camera* camera; 
 	CubeMap* cube_map;
 	std::vector<GameObject*> game_objects;
+	GuiRenderer* gui_renderer;
 	std::vector<PointLight*> point_lights;
 	DirLight* dir_light;
 	

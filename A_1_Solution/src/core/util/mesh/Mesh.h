@@ -6,7 +6,6 @@
 
 #include "..\texture\Texture.h"
 
-
 struct Vertex {
 	Vertex(glm::vec3 pos, glm::vec2 tex_coord, glm::vec3 normal) : pos(pos), tex_coord(tex_coord), normal(normal) {}
 	glm::vec3 pos;

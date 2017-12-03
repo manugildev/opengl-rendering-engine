@@ -57,6 +57,7 @@ void Application::runMainGameLoop() {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glClearColor(0.7f, 0.7f, 0.7f, 1.0f);
 		glViewport(0, 0, window->get_width(), window->get_height());
+		gui_renderer->render();
 		
 		camera->update_view_matrix();
 		camera->set_persp_proj_matrix(glm::perspective(glm::radians(camera->get_field_of_view()), camera->get_aspect_ratio(), 0.1f, 10000.0f));
@@ -153,6 +154,11 @@ void Application::do_movement() {
 void Application::set_game_objects(std::vector<GameObject*> game_objects) {
 	this->game_objects = game_objects;
 }
+
+void Application::set_gui_renderer(GuiRenderer* gui_renderer) {
+	this->gui_renderer = gui_renderer;
+}
+
 void Application::set_directional_light(DirLight* dir_light) {
 	this->dir_light = dir_light;
 }

@@ -10,7 +10,6 @@ public:
 	Texture(GLenum texture_target=GL_TEXTURE_2D, const std::string &file_name=TEXTURE_WHITE_PIXEL, int num_of_textures=1);
 
 	GLint load();
-	void init(unsigned char** data, GLfloat* filter);
 	void bind(int texture_unit) const;
 	void unbind();
 	int get_unit();

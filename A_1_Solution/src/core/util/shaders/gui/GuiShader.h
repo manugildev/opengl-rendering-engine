@@ -15,8 +15,10 @@ public:
 	void get_all_uniform_locations() override;
 
 	void set_transformation_matrix(glm::mat4 transformation_matrix);
+	void set_texture(int number);
 
 private:
 	GLuint location_transformation_matrix;
+	GLuint location_gui_texture;
 };
 

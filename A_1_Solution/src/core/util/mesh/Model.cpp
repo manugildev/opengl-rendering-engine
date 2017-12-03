@@ -138,7 +138,6 @@ void Model::load_texture(int i, const aiMaterial* pMaterial, aiTextureType textu
 				delete textures[i];
 				textures[i] = nullptr;
 				textures[i] = new Texture();
-				textures[i]->load();
 			} else {
 				printf("Loaded texture '%s'\n", full_path.c_str());
 			}

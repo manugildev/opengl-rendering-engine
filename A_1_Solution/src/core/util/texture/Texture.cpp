@@ -5,7 +5,8 @@
 #include <std_image\stb_image.h>
 
 Texture::Texture(GLenum texture_target, const std::string & file_name, int num_of_textures) : texture_target(texture_target), file_name(file_name), num_of_textures(num_of_textures) {
-	texture_id = new GLuint[num_of_textures];	
+	this->texture_id = new GLuint[num_of_textures];
+	this->load();
 }
 
 GLint Texture::load() {
@@ -32,19 +33,6 @@ GLint Texture::load() {
 	return 1;
 }
 
-void Texture::init(unsigned char** data, GLfloat* filter) {
-	glGenTextures(num_of_textures, texture_id);
-	for (int i = 0; i < num_of_textures; i++) {
-
-		glBindTexture(texture_target, texture_id[i]);
-
-		glTexParameterf(texture_target, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameterf(texture_target, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-		glTexImage2D(texture_target, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data);
-	}
-}
-
 void Texture::bind(int texture_unit) const {
 	glActiveTexture(GL_TEXTURE0 + texture_unit);
 	glBindTexture(texture_target, *texture_id);
@@ -67,5 +55,5 @@ void Texture::bindAsRenderTarget() {
 
 Texture::~Texture() {
 	if (*texture_id) glDeleteTextures(num_of_textures, texture_id);
-	if (texture_id) delete texture_id;
+	//if (texture_id) delete texture_id; //TODO: Check this
 }
