@@ -57,7 +57,7 @@ void Application::runMainGameLoop() {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glClearColor(0.7f, 0.7f, 0.7f, 1.0f);
 		glViewport(0, 0, window->get_width(), window->get_height());
-		gui_renderer->render();
+		
 		
 		camera->update_view_matrix();
 		camera->set_persp_proj_matrix(glm::perspective(glm::radians(camera->get_field_of_view()), camera->get_aspect_ratio(), 0.1f, 10000.0f));
@@ -68,6 +68,7 @@ void Application::runMainGameLoop() {
 		for (int i = 0; i < game_objects.size(); i++) game_objects[i]->render();
 		for (int i = 0; i < point_lights.size(); i++) point_lights[i]->render();
 		dir_light->render();
+		gui_renderer->render();
 
 		/* Start second viewport */
 		glViewport(0, window->get_height() - window->get_height() / 4, window->get_width() / 4, window->get_height() / 4);
@@ -83,7 +84,6 @@ void Application::runMainGameLoop() {
 		for (int i = 0; i < game_objects.size(); i++) game_objects[i]->render();
 		for (int i = 0; i < point_lights.size(); i++) point_lights[i]->render();
 		dir_light->render();
-
 
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window->window_obj);

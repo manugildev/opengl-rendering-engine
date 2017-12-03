@@ -7,7 +7,6 @@ GuiTexture::GuiTexture(Texture* texture, GuiShader* shader_program, glm::vec2 po
 }
 
 void GuiTexture::update() {
-
 }
 
 void GuiTexture::render() {

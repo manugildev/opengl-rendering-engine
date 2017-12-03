@@ -119,8 +119,15 @@ int main(void) {
 	first_gui->set_scale(glm::vec2(0.1f, 0.1f));
 	first_gui->set_position(glm::vec2(0.90f, 0.90f));
 
+
+	Texture* texture1 = new Texture(GL_TEXTURE_2D, "textures/logo.png");
+	GuiTexture* second_gui = new GuiTexture(texture1, gui_renderer->get_shader_program());
+	second_gui->set_scale(glm::vec2(0.1f, 0.1f));
+	second_gui->set_position(glm::vec2(0.85f, 0.85f));
+
 	gui_renderer->add_gui_texture(first_gui);
-	
+	gui_renderer->add_gui_texture(second_gui);
+
 	/* Setting up the Application */
 	app->set_game_objects(objects);
 	app->set_directional_light(d_light);
