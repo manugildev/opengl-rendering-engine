@@ -4,7 +4,7 @@
 
 class Quad {
 public:
-	Quad();
+	Quad(GuiShader* shader_program);
 	~Quad();
 
 	GLuint get_vao();

@@ -1,7 +1,7 @@
 #include "Quad.h"
 #include "..\shaders\gui\GuiShader.h"
 
-Quad::Quad() {
+Quad::Quad(GuiShader* shader_program) {
 
 	// Create Vertex Array Object
 	glGenVertexArrays(1, &vao);
@@ -34,8 +34,7 @@ Quad::Quad() {
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
 
 	// Specify the layout of the vertex data
-
-	shader_program = GuiShader::create();
+	// Vertex_Positions are always the same, we change the tranformation_matrix - should work
 	GLint posAttrib = glGetAttribLocation(shader_program->program_id, "vertex_positions");
 	glEnableVertexAttribArray(posAttrib);
 	glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), 0);
@@ -44,11 +43,9 @@ Quad::Quad() {
 Quad::~Quad() {}
 
 void Quad::render() {
-	shader_program->start();
 	glBindVertexArray(vao);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
-	shader_program->stop();
 }
 
 GLuint Quad::get_vao() {
