@@ -49,7 +49,7 @@ public:
 	void set_light_pos(glm::vec3 light_pos);
 	void set_light_color(glm::vec3 light_color);
 	void set_ambient_strength(float value);
-	void set_specular_strength(float value); 
+	void set_specular_strength(float value);
 	void set_specular_power(int value);
 	void set_texture(int value);
 	void set_mix_power(float value);

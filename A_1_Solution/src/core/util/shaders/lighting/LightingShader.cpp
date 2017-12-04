@@ -67,7 +67,7 @@ void LightingShader::set_proj_matrix(glm::mat4 matrix) { modify_mat4(location_pr
 
 void LightingShader::set_ambient_strength(float value) { modify_float(location_ambient_strength, value); }
 
-void LightingShader::set_specular_strength(float value) { modify_float(location_specular_strength , value); }
+void LightingShader::set_specular_strength(float value) { modify_float(location_specular_strength, value); }
 
 void LightingShader::set_specular_power(int value) { modify_int(location_specular_power, value); }
 

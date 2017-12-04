@@ -32,7 +32,7 @@ public:
 
 	GLfloat get_field_of_view();
 	glm::mat4 get_view_matrix();
-	glm::mat4 get_persp_proj_matrix(); 
+	glm::mat4 get_persp_proj_matrix();
 	float get_aspect_ratio();
 	void set_persp_proj_matrix(glm::mat4 perspective);
 	void set_view_matrix(glm::mat4 view_matrix);

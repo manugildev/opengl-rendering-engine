@@ -6,8 +6,7 @@ GuiTexture::GuiTexture(Texture* texture, GuiShader* shader_program, glm::vec2 po
 	this->update_transformation_matrix();
 }
 
-void GuiTexture::update() {
-}
+void GuiTexture::update() {}
 
 void GuiTexture::render() {
 	this->texture->bind(0);

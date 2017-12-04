@@ -30,7 +30,7 @@ void Car::start_turn_around_animation() {
 	if (get_speed()[2] > 0)
 		set_pos(glm::vec3(get_pos()[0], get_pos()[1], city_size - 4.999f));
 	else if (get_speed()[2] < 0)
-		set_pos(glm::vec3(get_pos()[0], get_pos()[1], - city_size + 4.999f));
+		set_pos(glm::vec3(get_pos()[0], get_pos()[1], -city_size + 4.999f));
 	else if (get_speed()[0] > 0)
 		set_pos(glm::vec3(city_size - 4.999f, get_pos()[1], get_pos()[2]));
 	else if (get_speed()[0] < 0)
@@ -43,7 +43,7 @@ void Car::start_turn_around_animation() {
 }
 
 void Car::stop_turn_around_animation() {
-	set_rotation(glm::vec3(0, this->initial_rotation_y + (180* previous_random_mutiplier), 0));
+	set_rotation(glm::vec3(0, this->initial_rotation_y + (180 * previous_random_mutiplier), 0));
 	initial_rotation_y = get_rotation()[1];
 	set_rotation_speed(glm::vec3(0.0f));
 	set_rotation_acceleration(glm::vec3(0.0f));

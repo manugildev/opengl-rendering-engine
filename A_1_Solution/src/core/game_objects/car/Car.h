@@ -15,7 +15,7 @@ public:
 	void stop_turn_around_animation();
 
 
-private: 
+private:
 	float city_size = 50;
 	glm::vec3 initial_position;
 	glm::vec3 initial_speed;

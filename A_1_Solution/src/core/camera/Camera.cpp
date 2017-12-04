@@ -83,7 +83,7 @@ void Camera::update_view_matrix() {
 
 void Camera::update_view_matrix_second_viewport(glm::vec3 front) {
 	glm::vec3 second_camera_position(position[0], 90.0f, position[2]);
-	this->view_matrix = glm::lookAt(second_camera_position, second_camera_position + front, glm::vec3(0,0,-1));
+	this->view_matrix = glm::lookAt(second_camera_position, second_camera_position + front, glm::vec3(0, 0, -1));
 }
 
 void Camera::update_persp_proj_matrix() {

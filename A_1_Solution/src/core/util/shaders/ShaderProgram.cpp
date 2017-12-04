@@ -117,7 +117,7 @@ GLuint ShaderProgram::load_shader(const std::string file_name, const GLenum shad
 		glGetShaderInfoLog(shader_id, 1024, NULL, info_log);
 		fprintf_s(stderr, "Error compiling shader type %d: '%s'", shader_type, info_log);
 	}
-	
+
 	return shader_id;
 }
 

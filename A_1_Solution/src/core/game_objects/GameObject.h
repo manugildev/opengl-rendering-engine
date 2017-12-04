@@ -34,7 +34,7 @@ public:
 
 	glm::vec3 get_pos();
 	glm::vec3 get_rotation();
-	glm::vec3 get_speed(); 
+	glm::vec3 get_speed();
 	glm::vec3 get_rotation_speed();
 
 	void set_scale(glm::vec3 scale);
