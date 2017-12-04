@@ -49,11 +49,7 @@ std::string Texture::get_file_name() {
 	return this->file_name;
 }
 
-void Texture::bindAsRenderTarget() {
-
-}
-
 Texture::~Texture() {
 	if (*texture_id) glDeleteTextures(num_of_textures, texture_id);
-	//if (texture_id) delete texture_id; //TODO: Check this
+	delete texture_id;
 }

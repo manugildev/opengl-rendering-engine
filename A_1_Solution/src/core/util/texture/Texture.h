@@ -15,9 +15,7 @@ public:
 	int get_unit();
 	std::string get_file_name();
 	~Texture();
-
-	void bindAsRenderTarget();
-
+	
 private:
 	int unit = 0;
 

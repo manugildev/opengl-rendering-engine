@@ -11,7 +11,7 @@ public:
 	void render();
 
 private:
-	GLuint vao; 
+	GLuint vao;
 	GuiShader* shader_program;
 };
 
