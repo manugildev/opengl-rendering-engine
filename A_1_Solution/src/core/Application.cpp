@@ -46,28 +46,12 @@ int Application::init() {
 
 void Application::runMainGameLoop() {
 	while (!glfwWindowShouldClose(window->window_obj) && glfwGetKey(window->window_obj, GLFW_KEY_ESCAPE) != GLFW_PRESS) {
-		
-		delta_time = calculate_delta_time();
 
-		/* Poll for and process events */
-		glfwPollEvents();
-		do_movement();
-
-		/* Render here */
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glClearColor(0.7f, 0.7f, 0.7f, 1.0f);
-		glViewport(0, 0, window->get_width(), window->get_height());
+		/* Update */
+		this->update();
 		
-		
-		camera->update_view_matrix();
-		camera->set_persp_proj_matrix(glm::perspective(glm::radians(camera->get_field_of_view()), camera->get_aspect_ratio(), 0.1f, 10000.0f));
-		cube_map->render(camera->get_view_matrix(), camera->get_persp_proj_matrix());
-		for (int i = 0; i < game_objects.size(); i++) game_objects[i]->update(delta_time);
-		for (int i = 0; i < point_lights.size(); i++) point_lights[i]->update(delta_time);
-		dir_light->update(delta_time);
-		for (int i = 0; i < game_objects.size(); i++) game_objects[i]->render();
-		for (int i = 0; i < point_lights.size(); i++) point_lights[i]->render();
-		dir_light->render();
+		/* Render */
+		this->render();
 		gui_renderer->render();
 
 		/* Start second viewport */
@@ -88,6 +72,31 @@ void Application::runMainGameLoop() {
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window->window_obj);
 	}
+}
+
+void Application::update() {
+	delta_time = calculate_delta_time();
+
+	/* Poll for and process events */
+	glfwPollEvents();
+	do_movement();
+
+	camera->update_view_matrix();
+	camera->set_persp_proj_matrix(glm::perspective(glm::radians(camera->get_field_of_view()), camera->get_aspect_ratio(), 0.1f, 10000.0f));
+	for (int i = 0; i < game_objects.size(); i++) game_objects[i]->update(delta_time);
+	for (int i = 0; i < point_lights.size(); i++) point_lights[i]->update(delta_time);
+	dir_light->update(delta_time);
+}
+
+void Application::render() {
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClearColor(0.7f, 0.7f, 0.7f, 1.0f);
+	glViewport(0, 0, window->get_width(), window->get_height());
+
+	cube_map->render(camera->get_view_matrix(), camera->get_persp_proj_matrix());
+	for (int i = 0; i < game_objects.size(); i++) game_objects[i]->render();
+	for (int i = 0; i < point_lights.size(); i++) point_lights[i]->render();
+	dir_light->render();
 }
 
 //TODO: This is probably need to be in the window thing

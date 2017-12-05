@@ -4,9 +4,9 @@
 #include "Quad.h"
 #include "..\texture\Texture.h"
 
-class GuiTexture {
+class GuiTexture : public Texture {
 public:
-	GuiTexture(Texture* texture, GuiShader* shader_program, glm::vec2 position = glm::vec2(0.0f), glm::vec2 scale = glm::vec2(1.0f));
+	GuiTexture(GuiShader* shader_program, const std::string &file_name = TEXTURE_WHITE_PIXEL, glm::vec2 position = glm::vec2(0.0f), glm::vec2 scale = glm::vec2(1.0f));
 	~GuiTexture();
 
 	void update();
@@ -19,10 +19,9 @@ public:
 	void set_position(glm::vec2 position);
 	void set_scale(glm::vec2 scale);
 private:
-	Texture* texture;
+
 	GuiShader* shader_program;
 	Quad* quad;
-	GLuint texture_id;
 	glm::vec2 position;
 	glm::vec2 scale;
 	glm::mat4 transformation_matrix;

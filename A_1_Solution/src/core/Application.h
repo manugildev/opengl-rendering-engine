@@ -24,6 +24,8 @@ public:
 
 	int init();
 	void runMainGameLoop();
+	void update();
+	void render();
 	void bindAsRenderTarget();
 	int window_width, window_height;
 

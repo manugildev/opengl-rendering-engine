@@ -7,9 +7,10 @@ const std::string TEXTURE_WHITE_PIXEL = "textures/empty_pixel.jpg";
 
 class Texture {
 public:
-	Texture(GLenum texture_target=GL_TEXTURE_2D, const std::string &file_name=TEXTURE_WHITE_PIXEL, int num_of_textures=1);
+	Texture(const std::string &file_name=TEXTURE_WHITE_PIXEL, GLenum texture_target = GL_TEXTURE_2D, int num_of_textures=1);
 
 	GLint load();
+	GLuint* get_texture_id();
 	void bind(int texture_unit) const;
 	void unbind();
 	int get_unit();
@@ -22,7 +23,6 @@ private:
 	GLuint* texture_id;
 
 	int width, height, num_of_components;
-	unsigned char* image_data;
 	int num_of_textures;
 	GLenum texture_target;
 	std::string file_name;

@@ -114,14 +114,11 @@ int main(void) {
 	/* GUI */
 	GuiRenderer* gui_renderer = new GuiRenderer();
 
-	Texture* texture = new Texture();
-	GuiTexture* first_gui = new GuiTexture(texture, gui_renderer->get_shader_program());
+	GuiTexture* first_gui = new GuiTexture(gui_renderer->get_shader_program());
 	first_gui->set_scale(glm::vec2(0.1f, 0.1f));
 	first_gui->set_position(glm::vec2(0.90f, 0.90f));
 
-
-	Texture* texture1 = new Texture(GL_TEXTURE_2D, "textures/logo.png");
-	GuiTexture* second_gui = new GuiTexture(texture1, gui_renderer->get_shader_program());
+	GuiTexture* second_gui = new GuiTexture(gui_renderer->get_shader_program(), "textures/logo.png");
 	second_gui->set_scale(glm::vec2(0.1f, 0.1f));
 	second_gui->set_position(glm::vec2(0.85f, 0.85f));
 

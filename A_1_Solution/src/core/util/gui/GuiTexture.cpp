@@ -1,7 +1,7 @@
 #include "GuiTexture.h"
 #include <glm\gtc\matrix_transform.hpp>
 
-GuiTexture::GuiTexture(Texture* texture, GuiShader* shader_program, glm::vec2 position, glm::vec2 scale) : texture(texture), shader_program(shader_program), position(position), scale(scale) {
+GuiTexture::GuiTexture(GuiShader* shader_program, const std::string &file_name, glm::vec2 position, glm::vec2 scale) : Texture(file_name), shader_program(shader_program), position(position), scale(scale) {
 	this->quad = new Quad(shader_program);
 	this->update_transformation_matrix();
 }
@@ -9,10 +9,10 @@ GuiTexture::GuiTexture(Texture* texture, GuiShader* shader_program, glm::vec2 po
 void GuiTexture::update() {}
 
 void GuiTexture::render() {
-	this->texture->bind(0);
+	this->bind(0);
 	this->shader_program->set_transformation_matrix(transformation_matrix);
 	this->quad->render();
-	this->texture->unbind();
+	this->unbind();
 }
 
 void GuiTexture::update_transformation_matrix() {

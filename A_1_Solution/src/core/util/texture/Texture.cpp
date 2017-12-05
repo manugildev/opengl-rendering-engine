@@ -4,17 +4,18 @@
 
 #include <std_image\stb_image.h>
 
-Texture::Texture(GLenum texture_target, const std::string & file_name, int num_of_textures) : texture_target(texture_target), file_name(file_name), num_of_textures(num_of_textures) {
+Texture::Texture(const std::string & file_name, GLenum texture_target, int num_of_textures) : texture_target(texture_target), file_name(file_name), num_of_textures(num_of_textures) {
+	LOG_MESSAGE("Importing: " + file_name);
 	this->texture_id = new GLuint[num_of_textures];
 	this->load();
 }
 
 GLint Texture::load() {
-	image_data = stbi_load(file_name.c_str(), &width, &height, &num_of_components, STBI_rgb_alpha);
 
-	if (image_data == nullptr) {
-		std::cout << "Texture loading failed: " << file_name.c_str() << std::endl;
-	}
+	unsigned char* image_data = stbi_load(file_name.c_str(), &width, &height, &num_of_components, STBI_rgb_alpha);
+
+	if (image_data == nullptr) std::cout << "Texture loading failed: " << file_name.c_str() << std::endl;
+
 	glGenTextures(num_of_textures, texture_id);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(texture_target, *texture_id);
@@ -31,6 +32,10 @@ GLint Texture::load() {
 
 	stbi_image_free(image_data);
 	return 1;
+}
+
+GLuint* Texture::get_texture_id() {
+	return this->texture_id;
 }
 
 void Texture::bind(int texture_unit) const {
