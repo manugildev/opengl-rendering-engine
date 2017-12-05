@@ -133,6 +133,8 @@ void Application::key_callback(int key, int scancode, int action, int mode) {
 	}
 }
 
+void Application::resize_callback(int width, int height) { if(frame_buffer) frame_buffer->resize(); }
+
 void Application::scroll_callback(double x_offset, double y_offset) {
 	camera->process_mouse_scroll(y_offset);
 }

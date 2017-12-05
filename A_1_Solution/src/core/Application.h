@@ -36,6 +36,7 @@ public:
 	void key_callback(int key, int scancode, int action, int mode); 
 	void scroll_callback(double x_offset, double y_offset); 
 	void mouse_callback(double x_pos, double y_pos);
+	void resize_callback(int width, int height);
 
 	void set_game_objects(std::vector<GameObject*> game_objects);
 	void set_gui_renderer(GuiRenderer* gui_renderer);

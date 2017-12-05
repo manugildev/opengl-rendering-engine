@@ -125,7 +125,7 @@ int main(void) {
 	gui_renderer->add_gui_texture(first_gui);
 	gui_renderer->add_gui_texture(second_gui);
 
-	FrameBuffer* frame_buffer = new FrameBuffer(first_gui);
+	FrameBuffer* frame_buffer = new FrameBuffer(app, first_gui);
 	app->frame_buffer = frame_buffer;
 
 	/* Setting up the Application */

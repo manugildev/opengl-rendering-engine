@@ -46,6 +46,7 @@ void Window::window_size_callback(GLFWwindow * window, int width, int height) {
 	char temp[128];
 	sprintf_s(temp, "Window resize: %dx%d", width, height);
 	LOG_MESSAGE(temp);
+	w->app->resize_callback(width, height);
 
 }
 

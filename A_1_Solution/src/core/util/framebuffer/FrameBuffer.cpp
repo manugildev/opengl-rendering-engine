@@ -1,17 +1,16 @@
 #include "FrameBuffer.h"
+#include "..\..\Application.h"
 
-FrameBuffer::FrameBuffer(Texture* texture) : texture(texture){
+FrameBuffer::FrameBuffer(Application* app, Texture* texture) : texture(texture), app(app) {
 	glGenFramebuffers(1, &fbo);
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-
-	glGenTextures(1, texture->get_texture_id());
-
+	
 	texture->bind();
 
 	/* ======================================================================================= */
 	/* Create Texture Attachment */
 	// Give an empty image to OpenGL ( the last "0" )
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 940, 540, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, app->get_window()->get_width(), app->get_window()->get_height() , 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
 	//glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, 940, 540, 0, GL_DEPTH_COMPONENT, GL_FLOAT, 0);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -25,7 +24,7 @@ FrameBuffer::FrameBuffer(Texture* texture) : texture(texture){
 	GLuint depthrenderbuffer;
 	glGenRenderbuffers(1, &depthrenderbuffer);
 	glBindRenderbuffer(GL_RENDERBUFFER, depthrenderbuffer);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, 940, 540);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, app->get_window()->get_width(), app->get_window()->get_height());
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthrenderbuffer);
 
 
@@ -41,6 +40,10 @@ void FrameBuffer::bind() {
 
 void FrameBuffer::unbind() {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+void FrameBuffer::resize() {
+	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, app->get_window()->get_width(), app->get_window()->get_height(), 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
 }
 
 FrameBuffer::~FrameBuffer() {}
