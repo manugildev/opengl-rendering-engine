@@ -39,18 +39,23 @@ int Application::init() {
 
 	/* Set viewport to windows size */
 	glViewport(0, 0, window->get_width(), window->get_height());
-
 	return 1;
 }
 
 
 void Application::runMainGameLoop() {
 	while (!glfwWindowShouldClose(window->window_obj) && glfwGetKey(window->window_obj, GLFW_KEY_ESCAPE) != GLFW_PRESS) {
-
+	
 		/* Update */
 		this->update();
 		
 		/* Render */
+		frame_buffer->bind();
+		glViewport(0, 0, window->get_width(), window->get_height());
+		this->render();
+		frame_buffer->unbind();
+
+		glViewport(0, 0, window->get_width(), window->get_height());
 		this->render();
 		gui_renderer->render();
 
@@ -62,9 +67,6 @@ void Application::runMainGameLoop() {
 		camera->set_persp_proj_matrix(glm::ortho(-window->get_width() / 50.f, window->get_width() / 50.0f, -window->get_height() /50.0f, window->get_height() / 50.0f, 0.1f, 10000.f));
 
 		/* Render second viewport */
-		for (int i = 0; i < game_objects.size(); i++) game_objects[i]->update(delta_time);
-		for (int i = 0; i < point_lights.size(); i++) point_lights[i]->update(delta_time);
-		dir_light->update(delta_time);
 		for (int i = 0; i < game_objects.size(); i++) game_objects[i]->render();
 		for (int i = 0; i < point_lights.size(); i++) point_lights[i]->render();
 		dir_light->render();
@@ -91,7 +93,6 @@ void Application::update() {
 void Application::render() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glClearColor(0.7f, 0.7f, 0.7f, 1.0f);
-	glViewport(0, 0, window->get_width(), window->get_height());
 
 	cube_map->render(camera->get_view_matrix(), camera->get_persp_proj_matrix());
 	for (int i = 0; i < game_objects.size(); i++) game_objects[i]->render();

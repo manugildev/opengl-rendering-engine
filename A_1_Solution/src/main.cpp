@@ -105,9 +105,8 @@ int main(void) {
 	DirLight* d_light = new DirLight(app, glm::vec3(0.0f, -1.0f, -0.0f), glm::vec3(1.0f));
 	d_light->set_shader_program(shader_program1);
 
-
-	BasicShader* cube_map_shader = BasicShader::create("shaders/cube_vertex_shader.glsl", "shaders/cube_fragment_shader.glsl");
 	/* CubeMap */
+	BasicShader* cube_map_shader = BasicShader::create("shaders/cube_vertex_shader.glsl", "shaders/cube_fragment_shader.glsl");
 	CubeMap* cube_map = new CubeMap();
 	cube_map->init(cube_map_shader);
 
@@ -115,15 +114,19 @@ int main(void) {
 	GuiRenderer* gui_renderer = new GuiRenderer();
 
 	GuiTexture* first_gui = new GuiTexture(gui_renderer->get_shader_program());
-	first_gui->set_scale(glm::vec2(0.1f, 0.1f));
-	first_gui->set_position(glm::vec2(0.90f, 0.90f));
+	first_gui->set_scale(glm::vec2(0.2f, 0.2f));
+	first_gui->set_position(glm::vec2(0.80f, 0.80f));
 
 	GuiTexture* second_gui = new GuiTexture(gui_renderer->get_shader_program(), "textures/logo.png");
+	
 	second_gui->set_scale(glm::vec2(0.1f, 0.1f));
-	second_gui->set_position(glm::vec2(0.85f, 0.85f));
+	second_gui->set_position(glm::vec2(0.90f, -0.90f));
 
 	gui_renderer->add_gui_texture(first_gui);
 	gui_renderer->add_gui_texture(second_gui);
+
+	FrameBuffer* frame_buffer = new FrameBuffer(first_gui);
+	app->frame_buffer = frame_buffer;
 
 	/* Setting up the Application */
 	app->set_game_objects(objects);

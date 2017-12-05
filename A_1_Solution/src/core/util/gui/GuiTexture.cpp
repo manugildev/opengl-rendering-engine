@@ -1,7 +1,7 @@
 #include "GuiTexture.h"
 #include <glm\gtc\matrix_transform.hpp>
 
-GuiTexture::GuiTexture(GuiShader* shader_program, const std::string &file_name, glm::vec2 position, glm::vec2 scale) : Texture(file_name), shader_program(shader_program), position(position), scale(scale) {
+GuiTexture::GuiTexture(GuiShader* shader_program, const std::string &file_name) : Texture(file_name), shader_program(shader_program) {
 	this->quad = new Quad(shader_program);
 	this->update_transformation_matrix();
 }

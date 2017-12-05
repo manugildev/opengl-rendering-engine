@@ -17,8 +17,7 @@ GLint Texture::load() {
 	if (image_data == nullptr) std::cout << "Texture loading failed: " << file_name.c_str() << std::endl;
 
 	glGenTextures(num_of_textures, texture_id);
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(texture_target, *texture_id);
+	this->bind();
 
 	glTexParameteri(texture_target, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(texture_target, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -28,8 +27,7 @@ GLint Texture::load() {
 
 	glTexImage2D(texture_target, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data);
 
-	glBindTexture(texture_target, 0);
-
+	this->unbind();
 	stbi_image_free(image_data);
 	return 1;
 }
@@ -57,4 +55,12 @@ std::string Texture::get_file_name() {
 Texture::~Texture() {
 	if (*texture_id) glDeleteTextures(num_of_textures, texture_id);
 	delete texture_id;
+}
+
+int Texture::get_width() {
+	return this->width;
+}
+
+int Texture::get_height() {
+	return this->height;
 }

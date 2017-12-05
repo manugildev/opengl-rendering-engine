@@ -132,7 +132,7 @@ void Model::load_texture(int i, const aiMaterial* pMaterial, aiTextureType textu
 
 		Texture* t_loaded = texture_is_loaded(full_path);
 		if (!t_loaded) {
-			textures.push_back(new Texture(GL_TEXTURE_2D, full_path.c_str()));
+			textures.push_back(new Texture(full_path.c_str()));
 			if (textures[i]->load() == -1) {
 				printf("Error loading texture '%s', loading the white pixel texture instead.\n", full_path.c_str());
 				delete textures[i];

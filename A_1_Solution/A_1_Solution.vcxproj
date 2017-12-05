@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\core\util\framebuffer\FrameBuffer.h" />
     <ClInclude Include="src\core\util\shaders\gui\GuiShader.h" />
     <ClInclude Include="src\core\util\gui\GuiRenderer.h" />
     <ClInclude Include="src\core\util\gui\GuiTexture.h" />
@@ -54,6 +55,7 @@
     <ClInclude Include="src\core\Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\core\util\framebuffer\FrameBuffer.cpp" />
     <ClCompile Include="src\core\util\shaders\gui\GuiShader.cpp" />
     <ClCompile Include="src\core\util\gui\GuiRenderer.cpp" />
     <ClCompile Include="src\core\util\gui\GuiTexture.cpp" />

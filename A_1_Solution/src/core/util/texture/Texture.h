@@ -11,11 +11,14 @@ public:
 
 	GLint load();
 	GLuint* get_texture_id();
-	void bind(int texture_unit) const;
+	void bind(int texture_unit = 0) const;
 	void unbind();
 	int get_unit();
 	std::string get_file_name();
 	~Texture();
+
+	int get_width();
+	int get_height();
 	
 private:
 	int unit = 0;

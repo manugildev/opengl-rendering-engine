@@ -59,7 +59,7 @@ void main(){
 
 	// Point Lights
 	vec3 point_lighting = vec3(0.0f, 0.0f, 0.0f);
-	for (int i = 0; i < number_of_point_lights; i++){
+	for (int i = 0; i < number_of_point_lights; i++) {
 		point_lighting += calc_point_light(point_lights[i], norm, frag_pos, view_dir);
 	}
 

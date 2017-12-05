@@ -11,6 +11,7 @@
 #include "game_objects\lights\DirLight.h"
 #include "game_objects\lights\PointLight.h"
 #include "game_objects\cube_map\CubeMap.h"
+#include "util\framebuffer\FrameBuffer.h"
 
 #include <vector>
 
@@ -49,6 +50,7 @@ public:
 	void do_movement();
 	bool is_debug();
 
+	FrameBuffer* frame_buffer;
 private:
 	Window* window;
 	Camera* camera; 
@@ -66,5 +68,6 @@ private:
 	float last_x = 0, last_y = 0;
 	float x_offset = 0, y_offset = 0;
 	float debug = false;
+
 			
 };

@@ -6,7 +6,7 @@
 
 class GuiTexture : public Texture {
 public:
-	GuiTexture(GuiShader* shader_program, const std::string &file_name = TEXTURE_WHITE_PIXEL, glm::vec2 position = glm::vec2(0.0f), glm::vec2 scale = glm::vec2(1.0f));
+	GuiTexture(GuiShader* shader_program, const std::string &file_name = TEXTURE_WHITE_PIXEL);
 	~GuiTexture();
 
 	void update();
@@ -22,8 +22,8 @@ private:
 
 	GuiShader* shader_program;
 	Quad* quad;
-	glm::vec2 position;
-	glm::vec2 scale;
+	glm::vec2 position = glm::vec2(0.0f);
+	glm::vec2 scale = glm::vec2(1.0f);
 	glm::mat4 transformation_matrix;
 };
 
