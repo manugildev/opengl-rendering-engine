@@ -19,6 +19,7 @@ int main(void) {
 	/* Models */
 	Model* city_model = new Model("models/street/street.obj");
 	Model* car_model = new Model("models/volks.obj");
+	Model* plane_model = new Model("models/plane/piper_pa18.obj");
 
 	/* GameObjects */
 	LightingShader* shader_program = LightingShader::create();
@@ -28,7 +29,7 @@ int main(void) {
 	teapot->set_pos(glm::vec3(0.0f, 0.0f, 0.0f));
 	teapot->set_shader_program(shader_program);
 
-	Car *car1 = new Car(app, car_model, glm::vec3(0.18f, 0.80f, 0.44f));
+	Car *car1 = new Car(app, plane_model, glm::vec3(0.18f, 0.80f, 0.44f));
 	car1->set_parent(teapot);
 	car1->set_initial_pos(glm::vec3(0.0f, 1.0f, -10.0f));
 	car1->set_rotation(glm::vec3(0.0f, 270.0f, 0.0f));
@@ -126,7 +127,7 @@ int main(void) {
 	gui_renderer->add_gui_texture(second_gui);
 
 	FrameBuffer* frame_buffer = new FrameBuffer(app, first_gui);
-	app->frame_buffer = frame_buffer;
+	app->set_frame_buffer(frame_buffer);
 
 	/* Setting up the Application */
 	app->set_game_objects(objects);

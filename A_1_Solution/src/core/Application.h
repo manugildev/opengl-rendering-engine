@@ -46,6 +46,7 @@ public:
 	DirLight* get_dir_light();
 	std::vector<PointLight*> get_point_lights();
 	void set_cube_map(CubeMap* cube_map);
+	void set_frame_buffer(FrameBuffer* frame_buffer);
 
 	void update_lights();
 	void do_movement();

@@ -217,16 +217,9 @@
     <None Include="include\glm\gtx\texture.inl">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="res\shaders\basic_fragment_shader.glsl" />
-    <None Include="res\shaders\basic_vertex_shader.glsl" />
-    <None Include="res\shaders\lighting_vertex_shader.glsl" />
-    <None Include="res\shaders\lamp_fragment_shader.glsl" />
-    <None Include="res\shaders\lamp_vertex_shader.glsl" />
     <None Include="res\shaders\lighting_fragment_shader.hsls" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ideas.txt" />
-    <Text Include="res\shaders\gui_fragment_shader.glsl" />
-    <Text Include="res\shaders\gui_vertex_shader.glsl" />
   </ItemGroup>
 </Project>

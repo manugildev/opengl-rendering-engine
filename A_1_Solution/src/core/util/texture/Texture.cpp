@@ -14,7 +14,7 @@ GLint Texture::load() {
 
 	unsigned char* image_data = stbi_load(file_name.c_str(), &width, &height, &num_of_components, STBI_rgb_alpha);
 
-	if (image_data == nullptr) std::cout << "Texture loading failed: " << file_name.c_str() << std::endl;
+	if (image_data == nullptr) { std::cout << "Texture loading failed: " << file_name.c_str() << std::endl; return -1; };
 
 	glGenTextures(num_of_textures, texture_id);
 	this->bind();
