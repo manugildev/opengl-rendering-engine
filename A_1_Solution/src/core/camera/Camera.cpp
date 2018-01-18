@@ -16,11 +16,14 @@ Camera::Camera(glm::vec3 position, glm::vec3 up, GLfloat yaw, GLfloat pitch, glm
 }
 
 void Camera::process_keyboard(Camera_Movement direction, GLfloat delta_time) {
-	GLfloat velocity = this->movement_speed * delta_time;
-	if (direction == FORWARD) this->position += this->front * velocity;
-	if (direction == BACKWARD) this->position -= this->front * velocity;
-	if (direction == LEFT) this->position -= this->right * velocity;
-	if (direction == RIGHT) this->position += this->right * velocity;
+	movement_speed = this->movement_speed + (this->acceleration * delta_time);
+	if (movement_speed >= max_velocity) movement_speed = max_velocity;
+	//printf("Velocity: %f\n", movement_speed);
+	if (direction == FORWARD) this->position += this->front * movement_speed;
+	if (direction == BACKWARD) this->position -= this->front * movement_speed;
+	if (direction == LEFT) this->position -= this->right * movement_speed;
+	if (direction == RIGHT) this->position += this->right * movement_speed;
+	if (direction == STOP) this->movement_speed = 0.0f;
 
 	this->update_persp_proj_matrix();
 	this->update_view_matrix();
@@ -54,7 +57,6 @@ void Camera::update_camera_vectors() {
 	front.z = sin(glm::radians(this->yaw)) * cos(glm::radians(this->pitch));
 	this->front = glm::normalize(front);
 
-
 	/* Recalculate the new Right and Up Vector */
 	this->right = glm::normalize(glm::cross(this->front, this->world_up));
 	this->up = glm::normalize(glm::cross(this->right, this->front));
@@ -67,6 +69,14 @@ glm::mat4 Camera::get_view_matrix() {
 
 glm::mat4 Camera::get_persp_proj_matrix() {
 	return this->persp_proj_matrix;
+}
+
+glm::vec3 Camera::get_pos() {
+	return this->position;
+}
+
+void Camera::set_pos(glm::vec3 position) {
+	this->position = position;
 }
 
 void Camera::set_persp_proj_matrix(glm::mat4 perspective) {

@@ -34,19 +34,6 @@ void GameObject::update_lights() {
 	shader_program->stop();
 }
 
-
-void GameObject::update_model_mat() {
-	this->model_mat = glm::scale(glm::mat4(1.0f), this->scale);
-	this->model_mat = glm::rotate(this->model_mat, glm::radians(rotation[0]), glm::vec3(1.0f, 0.0f, 0.0f));
-	this->model_mat = glm::rotate(this->model_mat, glm::radians(rotation[1]), glm::vec3(0.0f, 1.0f, 0.0f));
-	this->model_mat = glm::rotate(this->model_mat, glm::radians(rotation[2]), glm::vec3(0.0f, 0.0f, 1.0f));
-	this->model_mat[3][0] = this->position[0];
-	this->model_mat[3][1] = this->position[1];
-	this->model_mat[3][2] = this->position[2];
-	//this->model_mat = glm::translate(this->model_mat, this->position);
-	if (parent != nullptr) this->model_mat = parent->model_mat * this->model_mat;
-}
-
 void GameObject::update(float delta_time) {
 	//model_mat = glm::rotate(model_mat, glm::radians(1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 	glm::vec3 new_speed = this->speed + (this->acceleration * delta_time);
@@ -60,6 +47,18 @@ void GameObject::update(float delta_time) {
 	this->set_rotation(this->rotation);
 
 	this->update_model_mat();
+}
+
+void GameObject::update_model_mat() {
+	this->model_mat = glm::scale(glm::mat4(1.0f), this->scale);
+	this->model_mat = glm::rotate(this->model_mat, glm::radians(rotation[0]), glm::vec3(1.0f, 0.0f, 0.0f));
+	this->model_mat = glm::rotate(this->model_mat, glm::radians(rotation[1]), glm::vec3(0.0f, 1.0f, 0.0f));
+	this->model_mat = glm::rotate(this->model_mat, glm::radians(rotation[2]), glm::vec3(0.0f, 0.0f, 1.0f));
+	this->model_mat[3][0] = this->position[0];
+	this->model_mat[3][1] = this->position[1];
+	this->model_mat[3][2] = this->position[2];
+	//this->model_mat = glm::translate(this->model_mat, this->position);
+	if (parent != nullptr) this->model_mat = parent->model_mat * this->model_mat;
 }
 
 void GameObject::render() {

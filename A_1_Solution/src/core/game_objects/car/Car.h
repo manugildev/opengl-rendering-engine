@@ -8,12 +8,12 @@ class Car : public GameObject {
 public:
 	Car(Application *, Model* model, glm::vec3 object_color);
 	void update(float delta_time) override;
-	~Car();
 	void set_initial_pos(glm::vec3 pos);
 
 	void start_turn_around_animation();
 	void stop_turn_around_animation();
 
+	~Car();
 
 private:
 	float city_size = 50;

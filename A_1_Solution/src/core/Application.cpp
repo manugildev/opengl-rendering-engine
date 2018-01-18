@@ -161,6 +161,10 @@ void Application::do_movement() {
 	if (keys[GLFW_KEY_S] || keys[GLFW_KEY_DOWN]) this->camera->process_keyboard(BACKWARD, delta_time);
 	if (keys[GLFW_KEY_A] || keys[GLFW_KEY_LEFT]) this->camera->process_keyboard(LEFT, delta_time);
 	if (keys[GLFW_KEY_D] || keys[GLFW_KEY_RIGHT]) this->camera->process_keyboard(RIGHT, delta_time);
+	if (!(keys[GLFW_KEY_W] || keys[GLFW_KEY_UP]) &&
+		!(keys[GLFW_KEY_S] || keys[GLFW_KEY_DOWN]) &&
+		!(keys[GLFW_KEY_A] || keys[GLFW_KEY_LEFT]) &&
+		!(keys[GLFW_KEY_D] || keys[GLFW_KEY_RIGHT])) this->camera->process_keyboard(STOP, delta_time);
 }
 
 void Application::set_game_objects(std::vector<GameObject*> game_objects) {
