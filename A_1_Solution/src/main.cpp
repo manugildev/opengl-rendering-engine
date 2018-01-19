@@ -22,6 +22,7 @@ int main(void) {
 	Model* car_model = new Model("models/volks.obj");
 	Model* plane_model = new Model("models/plane/piper_pa18.obj");
 	Model* propeller_model = new Model("models/plane/propeller.obj");
+	Model* wheels_model = new Model("models/plane/wheels.obj");
 
 	/* GameObjects */
 	LightingShader* shader_program = LightingShader::create();
@@ -95,14 +96,27 @@ int main(void) {
 	plane->set_rotation(glm::vec3(0.0f, 0.0f, 0.0f));
 	plane->set_rotation_speed(glm::vec3(0.0f, 20.0f, 0.0f));
 
+	GameObject* stand = new GameObject(app, new Model(), glm::vec3(0.0f));
+	stand->set_parent(city);
+	stand->set_scale(glm::vec3(100.0f, 500.0f, 100.0f));
+	stand->set_pos(glm::vec3(0.0f,-250.3f, 0.0f));
+	stand->set_shader_program(shader_program);
+
 	GameObject* propeller = new GameObject(app, propeller_model);
-	propeller->set_pos(glm::vec3(0.0f, -0.30f, 2.5f));
+	propeller->set_pos(glm::vec3(0.0f, -0.0f, 3.19f));
 	propeller->set_parent(plane);
 	propeller->set_scale(glm::vec3(1.1f,1.1f,1.1f));
 	propeller->set_shader_program(shader_program);
 	propeller->set_rotation_speed(glm::vec3(0.0f,0.0f, 900.0f));
 
-	std::vector<GameObject*> objects = {city, car1, car2, car3, car4, car5, car6, car7, car8, plane, propeller};
+	GameObject* wheels = new GameObject(app, wheels_model);
+	wheels->set_pos(glm::vec3(0.0f, -1.02f, 1.7f));
+	wheels->set_parent(plane);
+	wheels->set_scale(glm::vec3(1.0f, 1.1f, 1.1f));
+	wheels->set_shader_program(shader_program);
+	wheels->set_rotation_speed(glm::vec3(300.0f, 00.0f, 0.0f));
+
+	std::vector<GameObject*> objects = {city, car1, car2, car3, car4, car5, car6, car7, car8, plane, propeller, wheels};
 	
 
 	/* Lights */
@@ -141,7 +155,7 @@ int main(void) {
 	second_gui->set_scale(glm::vec2(0.1f, 0.1f));
 	second_gui->set_position(glm::vec2(0.90f, -0.90f));
 
-	gui_renderer->add_gui_texture(first_gui);
+	//gui_renderer->add_gui_texture(first_gui);
 	gui_renderer->add_gui_texture(second_gui);
 
 	FrameBuffer* frame_buffer = new FrameBuffer(app, first_gui);

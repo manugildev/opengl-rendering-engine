@@ -24,7 +24,7 @@ class Model {
 public:
 	const std::string file_name;
 
-	Model(const std::string & file_name);
+	Model(const std::string & file_name = "models/cube.obj");
 
 	void load_model(const char* file_name);
 	void draw(LightingShader* shader_program = nullptr, GLenum mode = GL_TRIANGLES);

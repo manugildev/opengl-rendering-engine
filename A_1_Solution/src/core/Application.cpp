@@ -52,7 +52,7 @@ void Application::runMainGameLoop() {
 		/* Render */
 		this->frame_buffer->bind();
 		glViewport(0, 0, window->get_width(), window->get_height());
-		this->render();
+		//this->render();
 		this->frame_buffer->unbind();
 
 		glViewport(0, 0, window->get_width(), window->get_height());
@@ -60,16 +60,16 @@ void Application::runMainGameLoop() {
 		this->gui_renderer->render();
 
 		/* Start second viewport */
-		glViewport(0, window->get_height() - window->get_height() / 4, window->get_width() / 4, window->get_height() / 4);
+		//glViewport(0, window->get_height() - window->get_height() / 4, window->get_width() / 4, window->get_height() / 4);
 
 		/* Update Camera for second viewport */
-		this->camera->update_view_matrix_second_viewport(glm::vec3(0.0f, -1.0f, 0.0f));
-		this->camera->set_persp_proj_matrix(glm::ortho(-window->get_width() / 50.f, window->get_width() / 50.0f, -window->get_height() /50.0f, window->get_height() / 50.0f, 0.1f, 10000.f));
+		//this->camera->update_view_matrix_second_viewport(glm::vec3(0.0f, -1.0f, 0.0f));
+		//this->camera->set_persp_proj_matrix(glm::ortho(-window->get_width() / 50.f, window->get_width() / 50.0f, -window->get_height() /50.0f, window->get_height() / 50.0f, 0.1f, 10000.f));
 
 		/* Render second viewport */
-		for (int i = 0; i < game_objects.size(); i++) game_objects[i]->render();
-		for (int i = 0; i < point_lights.size(); i++) point_lights[i]->render();
-		this->dir_light->render();
+		//for (int i = 0; i < game_objects.size(); i++) game_objects[i]->render();
+		//for (int i = 0; i < point_lights.size(); i++) point_lights[i]->render();
+		//this->dir_light->render();
 
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window->window_obj);
