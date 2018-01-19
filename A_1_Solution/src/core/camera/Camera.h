@@ -5,7 +5,7 @@
 #include <glm\glm.hpp>
 #include <glm\gtc\matrix_transform.hpp>
 
-enum Camera_Movement { FORWARD, BACKWARD, LEFT, RIGHT, STOP };
+enum Camera_Movement { FORWARD, BACKWARD, LEFT, RIGHT, STOP, ROLL_LEFT, ROLL_RIGHT};
 
 const GLfloat YAW = -90.0f;
 const GLfloat PITCH = 0.0f;
@@ -34,14 +34,23 @@ public:
 	glm::mat4 get_view_matrix();
 	glm::mat4 get_persp_proj_matrix();
 	glm::vec3 get_pos();
-	void set_pos(glm::vec3 position);
+
 	float get_aspect_ratio();
+	void set_pos(glm::vec3 position);
 	void set_persp_proj_matrix(glm::mat4 perspective);
 	void set_view_matrix(glm::mat4 view_matrix);
 	void update_view_matrix();
 	void update_view_matrix_second_viewport(glm::vec3 front);
 	void update_persp_proj_matrix();
 	void set_aspect_ratio(float aspect_ratio);
+	
+	/* Euler Angles */
+	GLfloat yaw = 0;
+	GLfloat pitch = 0;
+	GLfloat roll = 0;
+	GLfloat field_of_view;
+
+	bool first_person = false;
 
 private:
 	glm::mat4 persp_proj_matrix;
@@ -53,16 +62,13 @@ private:
 	glm::vec3 right;
 	glm::vec3 up;
 
-	/* Euler Angles */
-	GLfloat yaw;
-	GLfloat pitch;
+
 
 	/* Camera Options */
 	GLfloat movement_speed;
 	GLfloat acceleration = 3.0f;
 	GLfloat max_velocity = 0.6f;
 	GLfloat mouse_sensitivity;
-	GLfloat field_of_view;
 
 	float aspect_ratio;
 };

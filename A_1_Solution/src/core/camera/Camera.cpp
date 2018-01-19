@@ -1,9 +1,10 @@
 #include "Camera.h"
 #include <iostream>
 #include <glm\ext.hpp>
+#include <glm\gtc\matrix_transform.hpp>
 
 Camera::Camera(glm::vec3 position, glm::vec3 up, GLfloat yaw, GLfloat pitch, glm::vec3 front,
-			   GLfloat movement_speed, GLfloat mouse_sensitivity, GLfloat zoom) {
+	GLfloat movement_speed, GLfloat mouse_sensitivity, GLfloat zoom) {
 	this->position = position;
 	this->world_up = up;
 	this->yaw = yaw;
@@ -18,29 +19,34 @@ Camera::Camera(glm::vec3 position, glm::vec3 up, GLfloat yaw, GLfloat pitch, glm
 void Camera::process_keyboard(Camera_Movement direction, GLfloat delta_time) {
 	movement_speed = this->movement_speed + (this->acceleration * delta_time);
 	if (movement_speed >= max_velocity) movement_speed = max_velocity;
+	//movement_speed = max_velocity;
 	//printf("Velocity: %f\n", movement_speed);
+	
 	if (direction == FORWARD) this->position += this->front * movement_speed;
 	if (direction == BACKWARD) this->position -= this->front * movement_speed;
 	if (direction == LEFT) this->position -= this->right * movement_speed;
 	if (direction == RIGHT) this->position += this->right * movement_speed;
 	if (direction == STOP) this->movement_speed = 0.0f;
-
+	if (direction == ROLL_LEFT) this->roll -= 1;
+	if (direction == ROLL_RIGHT) this->roll += 1;
+	
 	this->update_persp_proj_matrix();
 	this->update_view_matrix();
 }
 
 void Camera::process_mouse(GLfloat x_offset, GLfloat y_offset, GLboolean constrain_pitch) {
-	x_offset *= this->mouse_sensitivity;
-	y_offset *= this->mouse_sensitivity;
+		x_offset *= this->mouse_sensitivity;
+		y_offset *= this->mouse_sensitivity;
 
-	this->yaw += x_offset;
-	this->pitch += y_offset;
+		this->yaw += x_offset;
+		this->pitch += y_offset;
 
-	if (constrain_pitch) {
-		if (this->pitch > 89.0f) this->pitch = 89.0f;
-		if (this->pitch < -89.0f) this->pitch = -89.0f;
-	}
-	this->update_camera_vectors();
+		if (constrain_pitch) {
+			if (this->pitch > 89.0f) this->pitch = 89.0f;
+			if (this->pitch < -89.0f) this->pitch = -89.0f;
+		}
+		this->update_camera_vectors();
+	
 }
 
 void Camera::process_mouse_scroll(GLfloat y_offset) {
@@ -88,7 +94,9 @@ void Camera::set_view_matrix(glm::mat4 view_matrix) {
 }
 
 void Camera::update_view_matrix() {
-	this->view_matrix = glm::lookAt(this->position, this->position + this->front, this->up);
+	glm::mat4 model_mat = glm::mat4(1.0f);
+	model_mat = glm::rotate(model_mat, glm::radians(roll), glm::vec3(0.0f, 0.0f, 1.0f));
+	this->view_matrix = model_mat * glm::lookAt(this->position, this->position + this->front, this->up);
 }
 
 void Camera::update_view_matrix_second_viewport(glm::vec3 front) {
@@ -97,7 +105,7 @@ void Camera::update_view_matrix_second_viewport(glm::vec3 front) {
 }
 
 void Camera::update_persp_proj_matrix() {
-	this->persp_proj_matrix = glm::perspective(glm::radians(this->get_field_of_view()), this->aspect_ratio, 0.1f, 1000.0f);
+	this->persp_proj_matrix =  glm::perspective(glm::radians(this->get_field_of_view()), this->aspect_ratio, 0.1f, 1000.0f);
 }
 
 float Camera::get_aspect_ratio() {

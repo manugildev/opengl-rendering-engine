@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\core\camera\Camera.h" />
     <ClInclude Include="src\core\game_objects\plane\Plane.h" />
     <ClInclude Include="src\core\util\framebuffer\FrameBuffer.h" />
     <ClInclude Include="src\core\util\shaders\gui\GuiShader.h" />
@@ -36,7 +37,6 @@
     <ClInclude Include="src\core\util\shaders\lamp\LampShader.h" />
     <ClInclude Include="src\core\util\shaders\lighting\LightingShader.h" />
     <ClInclude Include="src\core\util\shaders\basic\BasicShader.h" />
-    <ClInclude Include="src\core\camera\Camera.h" />
     <ClInclude Include="src\core\util\shaders\ShaderProgram.h" />
     <ClInclude Include="src\core\game_objects\GameObject.h" />
     <ClInclude Include="src\core\util\Logger.h" />

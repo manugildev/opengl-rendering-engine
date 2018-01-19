@@ -17,7 +17,7 @@ public:
 	float get_aspect_ratio();
 
 private:
-	Application *app;
+	Application * app;
 
 	int window_width;
 	int window_height;

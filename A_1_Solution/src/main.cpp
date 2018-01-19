@@ -12,7 +12,7 @@
 
 int main(void) {
 	/* Camera */
-	Camera camera(glm::vec3(0.0f, 10.0f, 10.0f));
+	Camera camera(glm::vec3(0.0f, 10.0f, 30.0f));
 
 	/* Application */
 	Application *app = new Application(&camera);
@@ -21,8 +21,6 @@ int main(void) {
 	Model* city_model = new Model("models/street/street.obj");
 	Model* car_model = new Model("models/volks.obj");
 	Model* plane_model = new Model("models/plane/piper_pa18.obj");
-	Model* propeller_model = new Model("models/plane/propeller.obj");
-	Model* wheels_model = new Model("models/plane/wheels.obj");
 
 	/* GameObjects */
 	LightingShader* shader_program = LightingShader::create();
@@ -79,6 +77,7 @@ int main(void) {
 	car4->set_initial_pos(glm::vec3(-5.0f, 1.0f, 0.0f));
 	car4->set_rotation(glm::vec3(0.0f, -180.0f, 0.0f));
 	car4->set_shader_program(shader_program);
+	car4->set_mix_power(1.0f);
 	car4->set_acceleration(glm::vec3(0.0f, 0.0f, Util::random_range(0.5f, 2.0f)));
 
 	Car *car8 = new Car(app, car_model, glm::vec3(0.97f, 0.42f, 0.56f));
@@ -91,33 +90,12 @@ int main(void) {
 	Plane* plane = new Plane(app, plane_model, app->get_camera());
 	plane->set_parent(city);
 	plane->set_shader_program(shader_program);
-	plane->set_rotation_speed(glm::vec3(0.0f, 0.0f, 0.0f));
-	plane->set_pos(glm::vec3(0.0f, 10.0f, 0.0f));
-	plane->set_rotation(glm::vec3(0.0f, 0.0f, 0.0f));
-	plane->set_rotation_speed(glm::vec3(0.0f, 20.0f, 0.0f));
+	plane->set_scale(glm::vec3(0.3f));
+	plane->set_pos(glm::vec3(0.0f, 0.0f, 0.0f));
+	plane->set_rotation(glm::vec3(0.0f, -90.0f, 90.0f));
 
-	GameObject* stand = new GameObject(app, new Model(), glm::vec3(0.0f));
-	stand->set_parent(city);
-	stand->set_scale(glm::vec3(100.0f, 500.0f, 100.0f));
-	stand->set_pos(glm::vec3(0.0f,-250.3f, 0.0f));
-	stand->set_shader_program(shader_program);
+	std::vector<GameObject*> objects = { city, car1, car2, car3, car4, car5, car6, car7, car8, plane };
 
-	GameObject* propeller = new GameObject(app, propeller_model);
-	propeller->set_pos(glm::vec3(0.0f, -0.0f, 3.19f));
-	propeller->set_parent(plane);
-	propeller->set_scale(glm::vec3(1.1f,1.1f,1.1f));
-	propeller->set_shader_program(shader_program);
-	propeller->set_rotation_speed(glm::vec3(0.0f,0.0f, 900.0f));
-
-	GameObject* wheels = new GameObject(app, wheels_model);
-	wheels->set_pos(glm::vec3(0.0f, -1.02f, 1.7f));
-	wheels->set_parent(plane);
-	wheels->set_scale(glm::vec3(1.0f, 1.1f, 1.1f));
-	wheels->set_shader_program(shader_program);
-	wheels->set_rotation_speed(glm::vec3(300.0f, 00.0f, 0.0f));
-
-	std::vector<GameObject*> objects = {city, car1, car2, car3, car4, car5, car6, car7, car8, plane, propeller, wheels};
-	
 
 	/* Lights */
 	LampShader* shader_program1 = LampShader::create();
@@ -131,7 +109,7 @@ int main(void) {
 	PointLight* p_light_8 = new PointLight(app, glm::vec3(8.0f, 2.0f, 40.0f), glm::vec3(0.0f, 1.0f, 0.0f), .3f, 0.8f, 0.1f);
 	PointLight* p_light_9 = new PointLight(app, glm::vec3(0.0f, 5.0f, 0.0f), glm::vec3(1.0f), .3f, 0.8f, 0.1f);
 
-	std::vector<PointLight*> point_lights = {p_light_1, p_light_2, p_light_3, p_light_4, p_light_5, p_light_6, p_light_7, p_light_8, p_light_9};
+	std::vector<PointLight*> point_lights = { p_light_1, p_light_2, p_light_3, p_light_4, p_light_5, p_light_6, p_light_7, p_light_8, p_light_9 };
 	for (int i = 0; i < point_lights.size(); i++) point_lights[i]->set_parent(city);
 	for (int i = 0; i < point_lights.size(); i++) point_lights[i]->set_shader_program(shader_program1);
 
@@ -151,8 +129,7 @@ int main(void) {
 	first_gui->set_position(glm::vec2(0.80f, 0.80f));
 
 	GuiTexture* second_gui = new GuiTexture(gui_renderer->get_shader_program(), "textures/logo.png");
-	
-	second_gui->set_scale(glm::vec2(0.1f, 0.1f));
+	second_gui->set_scale(glm::vec2(0.075f, 0.1f));
 	second_gui->set_position(glm::vec2(0.90f, -0.90f));
 
 	//gui_renderer->add_gui_texture(first_gui);

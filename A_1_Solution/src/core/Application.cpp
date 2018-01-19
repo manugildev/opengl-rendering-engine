@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "game_objects/plane/Plane.h"
 #include "util\Logger.h"
 
 #include <iostream>
@@ -45,10 +46,10 @@ int Application::init() {
 
 void Application::runMainGameLoop() {
 	while (!glfwWindowShouldClose(window->window_obj) && glfwGetKey(window->window_obj, GLFW_KEY_ESCAPE) != GLFW_PRESS) {
-	
+
 		/* Update */
 		this->update();
-		
+
 		/* Render */
 		this->frame_buffer->bind();
 		glViewport(0, 0, window->get_width(), window->get_height());
@@ -125,15 +126,65 @@ void Application::key_callback(int key, int scancode, int action, int mode) {
 		else if (action == GLFW_RELEASE) keys[key] = false;
 	}
 
+	/* City Rotation */
 	if (keys[GLFW_KEY_J]) game_objects[0]->set_rotation_speed(glm::vec3(0.0f, -10.0f, 0.0f));
 	if (keys[GLFW_KEY_L]) game_objects[0]->set_rotation_speed(glm::vec3(0.0f, 10.0f, 0.0f));
 	if (!keys[GLFW_KEY_L] && !keys[GLFW_KEY_J]) {
 		game_objects[0]->set_rotation_acceleration(glm::vec3(0.0f));
 		game_objects[0]->set_rotation_speed(glm::vec3(0.0f));
 	}
+
+	/* Plane Rotation */ //Todo: Get direction instead of pointer
+	Plane* plane = dynamic_cast <Plane*>(game_objects[game_objects.size() - 1]);
+	if (keys[GLFW_KEY_Z]) {
+		//plane->set_rotation_speed(glm::vec3(plane->get_rotation_speed()[0], -30.0f, plane->get_rotation_speed()[2]));
+		plane->get_green_arrow()->set_rotation_speed(glm::vec3(0, -30.0f, 0.0f));
+	}
+	if (keys[GLFW_KEY_X]) {
+		//plane->set_rotation_speed(glm::vec3(plane->get_rotation_speed()[0], 30.0f, plane->get_rotation_speed()[2]));
+		plane->get_green_arrow()->set_rotation_speed(glm::vec3(0, 30.0f, 0.0f));
+	}
+	if (!keys[GLFW_KEY_Z] && !keys[GLFW_KEY_X]) {
+		//plane->set_rotation_speed(glm::vec3(plane->get_rotation_speed()[0], 0.0f, plane->get_rotation_speed()[2]));
+		plane->get_green_arrow()->set_rotation_speed(glm::vec3(0, 0.0f, 0.0f));
+	}
+
+	if (keys[GLFW_KEY_C]) {
+		//plane->set_rotation_speed(glm::vec3(plane->get_rotation_speed()[0], plane->get_rotation_speed()[1], -30.0f));
+		plane->get_blue_arrow()->set_rotation_speed(glm::vec3(0, -30.0f, 0.0f));
+	}
+	if (keys[GLFW_KEY_V]) {
+		//plane->set_rotation_speed(glm::vec3(plane->get_rotation_speed()[0], plane->get_rotation_speed()[1], 30.0f));
+		plane->get_blue_arrow()->set_rotation_speed(glm::vec3(0, 30.0f, 00.0f));
+	}
+	if (!keys[GLFW_KEY_C] && !keys[GLFW_KEY_V]) {
+		//plane->set_rotation_speed(glm::vec3(plane->get_rotation_speed()[0], plane->get_rotation_speed()[1], 0.0f));
+		plane->get_blue_arrow()->set_rotation_speed(glm::vec3(0, 0.0f, 0.0f));
+	}
+
+	if (keys[GLFW_KEY_B]) {
+		//plane->set_rotation_speed(glm::vec3(-30.0f, plane->get_rotation_speed()[1], plane->get_rotation_speed()[2]));
+		plane->get_red_arrow()->set_rotation_speed(glm::vec3(0, -30.0f, 0.0f));
+	}
+	if (keys[GLFW_KEY_N]) {
+		//plane->set_rotation_speed(glm::vec3(30.0f, plane->get_rotation_speed()[1], plane->get_rotation_speed()[2]));
+		plane->get_red_arrow()->set_rotation_speed(glm::vec3(0.0f, 30.0f, 0.0f));
+	}
+	if (!keys[GLFW_KEY_B] && !keys[GLFW_KEY_N]) {
+		//plane->set_rotation_speed(glm::vec3(0.0f, plane->get_rotation_speed()[1], plane->get_rotation_speed()[2]));
+		plane->get_red_arrow()->set_rotation_speed(glm::vec3(0, 0.0f, 0.0f));
+	}
+
+	if (keys[GLFW_KEY_F]) {
+		plane->show_debug = !plane->show_debug;
+	}
+
+	if (keys[GLFW_KEY_R]) {
+		camera->first_person = !camera->first_person;
+	}
 }
 
-void Application::resize_callback(int width, int height) { if(frame_buffer) frame_buffer->resize(); }
+void Application::resize_callback(int width, int height) { if (frame_buffer) frame_buffer->resize(); }
 
 void Application::scroll_callback(double x_offset, double y_offset) {
 	camera->process_mouse_scroll(y_offset);
@@ -161,6 +212,11 @@ void Application::do_movement() {
 	if (keys[GLFW_KEY_S] || keys[GLFW_KEY_DOWN]) this->camera->process_keyboard(BACKWARD, delta_time);
 	if (keys[GLFW_KEY_A] || keys[GLFW_KEY_LEFT]) this->camera->process_keyboard(LEFT, delta_time);
 	if (keys[GLFW_KEY_D] || keys[GLFW_KEY_RIGHT]) this->camera->process_keyboard(RIGHT, delta_time);
+
+
+	if (keys[GLFW_KEY_E]) this->camera->process_keyboard(ROLL_RIGHT, delta_time);
+	if (keys[GLFW_KEY_Q]) this->camera->process_keyboard(ROLL_LEFT, delta_time);
+	
 	if (!(keys[GLFW_KEY_W] || keys[GLFW_KEY_UP]) &&
 		!(keys[GLFW_KEY_S] || keys[GLFW_KEY_DOWN]) &&
 		!(keys[GLFW_KEY_A] || keys[GLFW_KEY_LEFT]) &&

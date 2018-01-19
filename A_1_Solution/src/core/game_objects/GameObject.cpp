@@ -19,7 +19,7 @@ void GameObject::set_shader_program(LightingShader* shader_program) {
 
 void GameObject::set_initial_shader_values() {
 	shader_program->start();
-	shader_program->set_ambient_strength(0.02f);
+	shader_program->set_ambient_strength(.02f);
 	shader_program->set_specular_strength(0.1f);
 	shader_program->set_mix_power(0.0f);
 	shader_program->set_specular_power(4);
@@ -45,15 +45,20 @@ void GameObject::update(float delta_time) {
 	if (glm::all(glm::lessThan(new_rotation_speed, this->max_rotation_speed))) this->rotation_speed = new_rotation_speed;
 	this->rotation += this->rotation_speed * delta_time;
 	this->set_rotation(this->rotation);
-
 	this->update_model_mat();
 }
 
 void GameObject::update_model_mat() {
 	this->model_mat = glm::scale(glm::mat4(1.0f), this->scale);
-	this->model_mat = glm::rotate(this->model_mat, glm::radians(rotation[0]), glm::vec3(1.0f, 0.0f, 0.0f));
-	this->model_mat = glm::rotate(this->model_mat, glm::radians(rotation[1]), glm::vec3(0.0f, 1.0f, 0.0f));
-	this->model_mat = glm::rotate(this->model_mat, glm::radians(rotation[2]), glm::vec3(0.0f, 0.0f, 1.0f));
+	glm::quat myquaternion = glm::quat(glm::vec3(glm::radians(rotation[0]), glm::radians(rotation[1]), glm::radians(rotation[2])));
+	glm::mat4 rotation_mat = glm::toMat4(myquaternion);
+	this->model_mat = rotation_mat * model_mat;
+
+	//this->model_mat = glm::rotate(this->model_mat, glm::radians(rotation[0]), glm::vec3(1.0f, 0.0f, 0.0f));
+	//this->model_mat = glm::rotate(this->model_mat, glm::radians(rotation[1]), glm::vec3(0.0f, 1.0f, 0.0f));
+	//this->model_mat = glm::rotate(this->model_mat, glm::radians(rotation[2]), glm::vec3(0.0f, 0.0f, 1.0f));
+
+
 	this->model_mat[3][0] = this->position[0];
 	this->model_mat[3][1] = this->position[1];
 	this->model_mat[3][2] = this->position[2];
@@ -62,24 +67,25 @@ void GameObject::update_model_mat() {
 }
 
 void GameObject::render() {
-	shader_program->start();
+	this->shader_program->start();
 
 	glm::mat4 view = this->camera->get_view_matrix();
 	glm::mat4 perspective_proj = this->camera->get_persp_proj_matrix();
 
-	shader_program->set_view_matrix(view);
-	shader_program->set_proj_matrix(perspective_proj);
-	shader_program->set_model_matrix(model_mat);
+	this->shader_program->set_view_matrix(view);
+	this->shader_program->set_proj_matrix(perspective_proj);
+	this->shader_program->set_model_matrix(model_mat);
 
-	shader_program->set_object_color(object_color);
-	shader_program->set_mix_power(mix_power);
+	this->shader_program->set_object_color(object_color);
+	this->shader_program->set_mix_power(mix_power);
 
-	if (app->is_debug()) { // TODO: Make this work again
-		model->draw(nullptr, GL_LINES);
-	} else model->draw(this->shader_program);
+	if (this->app->is_debug()) { // TODO: Make this work again
+		this->model->draw(nullptr, GL_LINES);
+	}
+	else this->model->draw(this->shader_program);
 
 
-	shader_program->stop();
+	this->shader_program->stop();
 }
 
 #pragma region PROPERTIES_SETTERS
@@ -131,6 +137,11 @@ glm::vec3 GameObject::get_rotation_speed() {
 	return this->rotation_speed;
 }
 
+glm::mat4 GameObject::get_model_mat()
+{
+	return this->model_mat;
+}
+
 void GameObject::set_scale(glm::vec3 scale) {
 	this->scale = scale;
 }
@@ -163,6 +174,10 @@ void GameObject::set_mix_power(float mix_power) {
 
 void GameObject::set_parent(GameObject* parent) {
 	this->parent = parent;
+}
+
+void GameObject::set_model_mat(glm::mat4 model_mat) {
+	this->model_mat = model_mat;
 }
 
 #pragma endregion

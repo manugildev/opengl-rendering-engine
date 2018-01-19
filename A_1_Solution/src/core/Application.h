@@ -33,8 +33,8 @@ public:
 	Camera* get_camera();
 	Window* get_window();
 
-	void key_callback(int key, int scancode, int action, int mode); 
-	void scroll_callback(double x_offset, double y_offset); 
+	void key_callback(int key, int scancode, int action, int mode);
+	void scroll_callback(double x_offset, double y_offset);
 	void mouse_callback(double x_pos, double y_pos);
 	void resize_callback(int width, int height);
 
@@ -54,14 +54,14 @@ public:
 
 	FrameBuffer* frame_buffer;
 private:
-	Window* window;
-	Camera* camera; 
+	Window * window;
+	Camera* camera;
 	CubeMap* cube_map;
 	std::vector<GameObject*> game_objects;
 	GuiRenderer* gui_renderer;
 	std::vector<PointLight*> point_lights;
 	DirLight* dir_light;
-	
+
 	bool keys[1024];
 	bool first_mouse = true;
 
@@ -71,5 +71,5 @@ private:
 	float x_offset = 0, y_offset = 0;
 	float debug = false;
 
-			
+
 };
