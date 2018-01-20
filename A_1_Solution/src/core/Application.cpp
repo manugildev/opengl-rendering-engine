@@ -151,11 +151,11 @@ void Application::key_callback(int key, int scancode, int action, int mode) {
 
 	if (keys[GLFW_KEY_C]) {
 		//plane->set_rotation_speed(glm::vec3(plane->get_rotation_speed()[0], plane->get_rotation_speed()[1], -30.0f));
-		plane->get_blue_arrow()->set_rotation_speed(glm::vec3(0, -30.0f, 0.0f));
+		plane->get_blue_arrow()->set_rotation_speed(glm::vec3(0, 0.0f,-30.0f));
 	}
 	if (keys[GLFW_KEY_V]) {
 		//plane->set_rotation_speed(glm::vec3(plane->get_rotation_speed()[0], plane->get_rotation_speed()[1], 30.0f));
-		plane->get_blue_arrow()->set_rotation_speed(glm::vec3(0, 30.0f, 00.0f));
+		plane->get_blue_arrow()->set_rotation_speed(glm::vec3(0, 0.0f, 30.0f));
 	}
 	if (!keys[GLFW_KEY_C] && !keys[GLFW_KEY_V]) {
 		//plane->set_rotation_speed(glm::vec3(plane->get_rotation_speed()[0], plane->get_rotation_speed()[1], 0.0f));
@@ -164,11 +164,11 @@ void Application::key_callback(int key, int scancode, int action, int mode) {
 
 	if (keys[GLFW_KEY_B]) {
 		//plane->set_rotation_speed(glm::vec3(-30.0f, plane->get_rotation_speed()[1], plane->get_rotation_speed()[2]));
-		plane->get_red_arrow()->set_rotation_speed(glm::vec3(0, -30.0f, 0.0f));
+		plane->get_red_arrow()->set_rotation_speed(glm::vec3(0, 0.0f, -30.0f));
 	}
 	if (keys[GLFW_KEY_N]) {
 		//plane->set_rotation_speed(glm::vec3(30.0f, plane->get_rotation_speed()[1], plane->get_rotation_speed()[2]));
-		plane->get_red_arrow()->set_rotation_speed(glm::vec3(0.0f, 30.0f, 0.0f));
+		plane->get_red_arrow()->set_rotation_speed(glm::vec3(0.0f, 0.0f, 30.0f));
 	}
 	if (!keys[GLFW_KEY_B] && !keys[GLFW_KEY_N]) {
 		//plane->set_rotation_speed(glm::vec3(0.0f, plane->get_rotation_speed()[1], plane->get_rotation_speed()[2]));

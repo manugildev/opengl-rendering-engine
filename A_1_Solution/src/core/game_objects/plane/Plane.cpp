@@ -46,13 +46,13 @@ void Plane::attach_arrows(Application * app) {
 	blue_arrow->set_pos(glm::vec3(0.0f, 0.0f, 0.0f));
 	blue_arrow->set_parent(green_arrow);
 	blue_arrow->set_scale(glm::vec3(0.90f, 0.90f, 0.90f));
-	blue_arrow->set_rotation(glm::vec3(0, -90, 0));
+	blue_arrow->set_rotation(glm::vec3(90, 0, -90));
 
 	red_arrow = new GameObject(app, green_arrow_model, glm::vec3(1.0f, 0.0f, 0.0f));
 	red_arrow->set_pos(glm::vec3(0.0f, 0.0f, 0.0f));
 	red_arrow->set_parent(blue_arrow);
 	red_arrow->set_scale(glm::vec3(0.90f, 0.90f, 0.90f));
-	red_arrow->set_rotation(glm::vec3(-90, 90, 0));
+	red_arrow->set_rotation(glm::vec3(-90, 0, -90));
 }
 
 void Plane::update(float delta_time) {
@@ -85,6 +85,7 @@ void Plane::update(float delta_time) {
 	GameObject::update(delta_time);
 	wheels->update(delta_time);
 	propeller->update(delta_time);
+	std::cout << glm::to_string(red_arrow->get_rotation()) << std::endl;
 
 
 }
