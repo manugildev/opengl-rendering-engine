@@ -91,7 +91,7 @@ int main(void) {
 	plane->set_parent(city);
 	plane->set_shader_program(shader_program);
 	plane->set_scale(glm::vec3(0.3f));
-	plane->set_pos(glm::vec3(0.0f, 0.0f, 0.0f));
+	//plane->set_pos(glm::vec3(0.0f, 0.0f, 0.0f));
 	plane->set_rotation(glm::vec3(90, 180, 90));
 
 	std::vector<GameObject*> objects = { city, car1, car2, car3, car4, car5, car6, car7, car8, plane };

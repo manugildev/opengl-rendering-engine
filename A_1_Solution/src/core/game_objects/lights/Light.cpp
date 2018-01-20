@@ -4,7 +4,7 @@
 #include <glm\ext.hpp>
 
 Light::Light(Application* app, glm::vec3 light_position, glm::vec3 light_color) : GameObject(app, new Model("models/sphere.obj")), light_position(light_position), light_color(light_color) {
-	this->model_mat = glm::translate(glm::mat4(1.0f), light_position);
+	this->set_model_mat(glm::translate(glm::mat4(1.0f), light_position));
 	this->set_pos(light_position);
 	this->set_scale(glm::vec3(0.3f));
 }
@@ -28,7 +28,7 @@ void Light::render() {
 	shader_program->set_object_color(light_color);
 	shader_program->set_view_matrix(view);
 	shader_program->set_proj_matrix(perspective_proj);
-	shader_program->set_model_matrix(model_mat);
+	shader_program->set_model_matrix(get_model_mat());
 
 	if (app->is_debug()) {
 		model->draw(nullptr, GL_LINES);
@@ -44,7 +44,7 @@ void Light::update(float delta_time) {
 }
 
 glm::vec3 Light::get_light_position() {
-	return glm::vec3(model_mat[3][0], model_mat[3][1], model_mat[3][2]);
+	return glm::vec3(get_model_mat()[3][0], get_model_mat()[3][1], get_model_mat()[3][2]);
 }
 
 glm::vec3 Light::get_light_color() {

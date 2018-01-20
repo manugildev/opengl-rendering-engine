@@ -44,21 +44,26 @@ void GameObject::update(float delta_time) {
 	glm::vec3 new_rotation_speed = this->rotation_speed + (this->rotation_acceleration * delta_time);
 	if (glm::all(glm::lessThan(new_rotation_speed, this->max_rotation_speed))) this->rotation_speed = new_rotation_speed;
 	this->rotation += this->rotation_speed * delta_time;
-	this->set_rotation(this->rotation);
+
+	glm::quat rotX = glm::angleAxis(glm::radians(rotation[0]), glm::vec3(1.f, 0.f, 0.f));
+	glm::quat rotY = glm::angleAxis(glm::radians(rotation[1]), glm::vec3(0.f, 1.f, 0.f));
+	glm::quat rotZ = glm::angleAxis(glm::radians(rotation[2]), glm::vec3(0.f, 0.f, 1.f));
+
+	quaternion = rotZ * rotY * rotX;
+
 	this->update_model_mat();
 }
 
 void GameObject::update_model_mat() {
 	this->model_mat = glm::scale(glm::mat4(1.0f), this->scale);
-	glm::quat myquaternion = glm::quat(glm::vec3(glm::radians(rotation[0]), glm::radians(rotation[1]), glm::radians(rotation[2])));
-	glm::mat4 rotation_mat = glm::toMat4(myquaternion);
+
+	glm::mat4 rotation_mat = glm::toMat4(quaternion);
 	this->model_mat = rotation_mat * model_mat;
 
 	//this->model_mat = glm::rotate(this->model_mat, glm::radians(rotation[2]), glm::vec3(0.0f, 0.0f, 1.0f));
 	//this->model_mat = glm::rotate(this->model_mat, glm::radians(rotation[1]), glm::vec3(0.0f, 1.0f, 0.0f));
 	//this->model_mat = glm::rotate(this->model_mat, glm::radians(rotation[0]), glm::vec3(1.0f, 0.0f, 0.0f));
-
-
+	
 	this->model_mat[3][0] = this->position[0];
 	this->model_mat[3][1] = this->position[1];
 	this->model_mat[3][2] = this->position[2];
@@ -106,6 +111,12 @@ void GameObject::set_max_speed(glm::vec3 max_speed) {
 }
 
 void GameObject::set_rotation(glm::vec3 rotation) {
+	glm::quat qPitch = glm::angleAxis(glm::radians(rotation[0]), glm::vec3(1, 0, 0));
+	glm::quat qYaw = glm::angleAxis(glm::radians(rotation[1]), glm::vec3(0, 1, 0));
+	glm::quat qRoll = glm::angleAxis(glm::radians(rotation[2]), glm::vec3(0, 0, 1));
+
+	quaternion = qYaw * qPitch * qRoll;
+
 	this->rotation = rotation;
 }
 
@@ -141,6 +152,8 @@ glm::mat4 GameObject::get_model_mat()
 {
 	return this->model_mat;
 }
+
+glm::quat GameObject::get_quaternion() { return this->quaternion; }
 
 void GameObject::set_scale(glm::vec3 scale) {
 	this->scale = scale;
@@ -180,11 +193,20 @@ void GameObject::set_model_mat(glm::mat4 model_mat) {
 	this->model_mat = model_mat;
 }
 
+void GameObject::set_quaternion(glm::quat quaternion) {
+	this->quaternion = quaternion; 
+}
+
+
+
 #pragma endregion
 
 GameObject::~GameObject() {
 	delete camera;
 	delete shader_program;
+	delete model;
 	camera = NULL;
 	shader_program = NULL;
+	model = NULL;
+
 }

@@ -12,6 +12,9 @@ Plane::Plane(Application * app, Model* model, Camera* camera) : GameObject(app, 
 	this->attach_propeller(app);
 	this->attach_wheels(app);
 	this->attach_arrows(app);
+
+	this->transform = glm::angleAxis(glm::radians(-90.0f), forwardVector); // We init the transform quaternion to 0.0f in the forward vector
+	this->transform = transform * glm::angleAxis(glm::radians(90.0f), barrel);
 }
 
 void Plane::attach_wheels(Application * app) {
@@ -60,6 +63,8 @@ void Plane::update(float delta_time) {
 	green_arrow->set_pos(glm::vec3(0, 25, 0));
 	set_pos(glm::vec3(0, 0, 0));
 
+
+	std::cout << glm::to_string(forwardVector) << std::endl;
 	if (app->get_camera()->first_person) {
 		green_arrow->set_pos(app->get_camera()->get_pos() + glm::vec3(0, -2.0f, .0f));
 		set_pos(glm::vec3(-0.6f,0,0));		
@@ -83,6 +88,10 @@ void Plane::update(float delta_time) {
 	blue_arrow->update(delta_time);
 	red_arrow->update(delta_time);
 	GameObject::update(delta_time);
+
+	this->set_quaternion(transform);
+	this->update_model_mat();
+
 	wheels->update(delta_time);
 	propeller->update(delta_time);
 	std::cout << glm::to_string(red_arrow->get_rotation()) << std::endl;
@@ -123,7 +132,6 @@ GameObject* Plane::get_blue_arrow() {
 GameObject* Plane::get_red_arrow() {
 	return this->red_arrow;
 }
-
 
 Plane::~Plane() {
 }
