@@ -3,6 +3,7 @@
 #include <glm\gtc\matrix_transform.hpp>
 #include <glm/ext.hpp>
 #include <glm/gtx/matrix_decompose.hpp>
+#include <tween\tween.h>
 
 
 
@@ -59,42 +60,50 @@ void Plane::attach_arrows(Application * app) {
 }
 
 void Plane::update(float delta_time) {
+
+	elapsed += delta_time;
+	tween::Tween::updateTweens(elapsed);
+
+	if (animation_start) {
+		//interpolation_value = (elapsed / finish_time);
+		//std::cout << interpolation_value << std::endl;
+		//if (elapsed >= finish_time) {
+		//	animation_start = false;
+		//	elapsed = 0;
+		//	interpolation_value = to;
+		//}
+		transform = glm::slerp(transform, new_transform, interpolation_value);
+		if (interpolation_value >= to) animation_start = false;
+
+	}
+
 	this->set_parent(red_arrow);
 	green_arrow->set_pos(glm::vec3(0, 25, 0));
 	set_pos(glm::vec3(0, 0, 0));
+	//std::cout << glm::to_string(transform) << std::endl;
 
-
-	std::cout << glm::to_string(forwardVector) << std::endl;
-	if (app->get_camera()->first_person) {
-		green_arrow->set_pos(app->get_camera()->get_pos() + glm::vec3(0, -2.0f, .0f));
-		set_pos(glm::vec3(-0.6f,0,0));		
-		glm::vec3 scale;
-		glm::quat rotation;
-		glm::vec3 translation;
-		glm::vec3 skew;
-		glm::vec4 perspective;
-
-		glm::decompose(camera->get_view_matrix(), scale, rotation, translation, skew, perspective);
-		glm::vec3 angles = glm::degrees(glm::eulerAngles(rotation));
-
-		std::cout << glm::to_string(angles) << std::endl;
-		
-		green_arrow->set_rotation(glm::vec3(0,- camera->yaw-90, 0));
-		app->get_camera()->field_of_view = 45.0f;
-	}
 	
 	/* Update Following the Hierarchy that we have decided*/
 	green_arrow->update(delta_time);
 	blue_arrow->update(delta_time);
 	red_arrow->update(delta_time);
+
 	GameObject::update(delta_time);
 
-	this->set_quaternion(transform);
-	this->update_model_mat();
+	if (with_quaternions) {
+		this->set_quaternion(transform);
+		this->update_model_mat();
+	}	
+	
+	if (app->get_camera()->first_person) {
+		//app->get_camera()->roll = 180-blue_arrow->get_rotation()[2]+90;
+		//app->get_camera()->yaw = 180 - green_arrow->get_rotation()[1] + 90;
+		//app->get_camera()->pitch = 180 - red_arrow->get_rotation()[2]+90;
+	}
 
 	wheels->update(delta_time);
 	propeller->update(delta_time);
-	std::cout << glm::to_string(red_arrow->get_rotation()) << std::endl;
+	//std::cout << glm::to_string(red_arrow->get_rotation()) << std::endl;
 
 
 }
@@ -135,3 +144,35 @@ GameObject* Plane::get_red_arrow() {
 
 Plane::~Plane() {
 }
+
+void Plane::start_roll() {
+	if (!with_quaternions) return;
+
+	if (!animation_start) {
+		interpolation_value = 0;
+		tween::Tween::make().to(interpolation_value, to).seconds(1.0);
+		axis1 = glm::angleAxis(glm::radians(180.0f), forwardVector);	 //set quaternion about forwardVector vector, set angle
+		barrel = axis1 * barrel;   //apply quaternion to the barrel vector
+		normal = axis1 * normal;
+		axis1 = glm::normalize(axis1);					//normalize the quaternions
+		new_transform = glm::normalize(transform);
+		new_transform = new_transform * axis1;      //update the transform quaternion	
+		animation_start = true;
+	}
+}
+
+
+void Plane::start_yaw() {
+	if (!with_quaternions) return;
+
+	if (!animation_start) {
+		interpolation_value = 0;
+		tween::Tween::make().to(interpolation_value, to).seconds(1.0);
+		axis2 = glm::angleAxis(glm::radians(180.0f), barrel);	 //set quaternion about forwardVector vector, set angle
+		axis2 = glm::normalize(axis2);					//normalize the quaternions
+		new_transform = glm::normalize(transform);
+		new_transform = new_transform * axis2;      //update the transform quaternion
+		animation_start = true;
+	}
+}
+

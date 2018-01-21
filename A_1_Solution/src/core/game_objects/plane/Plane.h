@@ -1,5 +1,6 @@
 #pragma once
 #include "..\GameObject.h"
+#include <tween\tween.h>
 
 class Application;
 
@@ -20,8 +21,6 @@ public:
 	bool show_debug = false;
 
 	~Plane();
-	
-
 
 	glm::vec3 normal = glm::vec3(0, 1, 0);			//inital vectors of the plane, defines coordinate space for plane
 	glm::vec3 forwardVector = glm::vec3(0, 0, 1);
@@ -30,6 +29,21 @@ public:
 	glm::quat axis1;								//forwardVector axis quaterion
 	glm::quat axis2;								//horizaontal axis quaternion
 	glm::quat axis3;								//top axis quaternion
+
+	bool with_quaternions = true;
+
+	void start_roll();
+	void start_yaw();
+
+	float start_time = 0.0f;
+	float elapsed = 0.0f;
+	float finish_time = 1.0f;
+	float from = 0.0f;
+	float to = 1.0f;
+	float interpolation_value = 0.0f; 
+	bool animation_start = false;
+
+	glm::quat new_transform;
 
 private:
 	GameObject * propeller;
