@@ -19,8 +19,6 @@ Camera::Camera(glm::vec3 position, glm::vec3 up, GLfloat yaw, GLfloat pitch, glm
 void Camera::process_keyboard(Camera_Movement direction, GLfloat delta_time) {
 	movement_speed = this->movement_speed + (this->acceleration * delta_time);
 	if (movement_speed >= max_velocity) movement_speed = max_velocity;
-	//movement_speed = max_velocity;
-	//printf("Velocity: %f\n", movement_speed);
 	
 	if (direction == FORWARD) this->position += this->front * movement_speed;
 	if (direction == BACKWARD) this->position -= this->front * movement_speed;
@@ -42,8 +40,8 @@ void Camera::process_mouse(GLfloat x_offset, GLfloat y_offset, GLboolean constra
 		this->pitch += y_offset;
 
 		if (constrain_pitch) {
-			if (this->pitch > 89.0f) this->pitch = 89.0f;
-			if (this->pitch < -89.0f) this->pitch = -89.0f;
+		 if (this->pitch > 89.0f) this->pitch = 89.0f;
+		 if (this->pitch < -89.0f) this->pitch = -89.0f;
 		}
 		this->update_camera_vectors();
 	
@@ -94,6 +92,7 @@ void Camera::set_view_matrix(glm::mat4 view_matrix) {
 }
 
 void Camera::update_view_matrix() {
+	this->update_camera_vectors();
 	glm::mat4 model_mat = glm::mat4(1.0f);
 	model_mat = glm::rotate(model_mat, glm::radians(roll), glm::vec3(0.0f, 0.0f, 1.0f));
 	this->view_matrix = model_mat * glm::lookAt(this->position, this->position + this->front, this->up);

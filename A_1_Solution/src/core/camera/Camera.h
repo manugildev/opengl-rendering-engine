@@ -52,9 +52,6 @@ public:
 
 	bool first_person = false;
 
-private:
-	glm::mat4 persp_proj_matrix;
-	glm::mat4 view_matrix;
 
 	glm::vec3 front;
 	glm::vec3 position;
@@ -62,8 +59,10 @@ private:
 	glm::vec3 right;
 	glm::vec3 up;
 
-
-
+private:
+	glm::mat4 persp_proj_matrix;
+	glm::mat4 view_matrix;
+	
 	/* Camera Options */
 	GLfloat movement_speed;
 	GLfloat acceleration = 3.0f;
