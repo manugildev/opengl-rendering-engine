@@ -65,13 +65,6 @@ void Plane::update(float delta_time) {
 	tween::Tween::updateTweens(elapsed);
 
 	if (animation_start) {
-		//interpolation_value = (elapsed / finish_time);
-		//std::cout << interpolation_value << std::endl;
-		//if (elapsed >= finish_time) {
-		//	animation_start = false;
-		//	elapsed = 0;
-		//	interpolation_value = to;
-		//}
 		transform = glm::slerp(transform, new_transform, interpolation_value);
 		if (interpolation_value >= to) animation_start = false;
 
@@ -80,32 +73,26 @@ void Plane::update(float delta_time) {
 	this->set_parent(red_arrow);
 	green_arrow->set_pos(glm::vec3(0, 25, 0));
 	set_pos(glm::vec3(0, 0, 0));
-	//std::cout << glm::to_string(transform) << std::endl;
 
-	
+
 	/* Update Following the Hierarchy that we have decided*/
 	green_arrow->update(delta_time);
 	blue_arrow->update(delta_time);
 	red_arrow->update(delta_time);
 
 	GameObject::update(delta_time);
-
 	if (with_quaternions) {
+		this->update_quaternion_speed(delta_time);
 		this->set_quaternion(transform);
 		this->update_model_mat();
-	}	
-	
-	if (app->get_camera()->first_person) {
-		//app->get_camera()->roll = 180-blue_arrow->get_rotation()[2]+90;
-		//app->get_camera()->yaw = 180 - green_arrow->get_rotation()[1] + 90;
-		//app->get_camera()->pitch = 180 - red_arrow->get_rotation()[2]+90;
 	}
+	if (app->get_camera()->first_person) {
+		app->get_camera()->set_parent_model_mat(get_model_mat());
+	}
+
 
 	wheels->update(delta_time);
 	propeller->update(delta_time);
-	//std::cout << glm::to_string(red_arrow->get_rotation()) << std::endl;
-
-
 }
 
 void Plane::render() {
@@ -142,37 +129,75 @@ GameObject* Plane::get_red_arrow() {
 	return this->red_arrow;
 }
 
-Plane::~Plane() {
-}
-
 void Plane::start_roll() {
 	if (!with_quaternions) return;
 
-	if (!animation_start) {
-		interpolation_value = 0;
-		tween::Tween::make().to(interpolation_value, to).seconds(1.0);
-		axis1 = glm::angleAxis(glm::radians(180.0f), forwardVector);	 //set quaternion about forwardVector vector, set angle
-		barrel = axis1 * barrel;   //apply quaternion to the barrel vector
-		normal = axis1 * normal;
-		axis1 = glm::normalize(axis1);					//normalize the quaternions
-		new_transform = glm::normalize(transform);
-		new_transform = new_transform * axis1;      //update the transform quaternion	
-		animation_start = true;
-	}
+	if (animation_start) return;
+
+	interpolation_value = 0;
+	tween::Tween::make().to(interpolation_value, to).seconds(1.0);
+	axis1 = glm::angleAxis(glm::radians(180.0f), forwardVector);
+	barrel = axis1 * barrel;
+	normal = axis1 * normal;
+	axis1 = glm::normalize(axis1);
+	new_transform = glm::normalize(transform);
+	new_transform = new_transform * axis1;
+	animation_start = true;
+
 }
 
 
 void Plane::start_yaw() {
 	if (!with_quaternions) return;
+	if (animation_start) return;
 
-	if (!animation_start) {
-		interpolation_value = 0;
-		tween::Tween::make().to(interpolation_value, to).seconds(1.0);
-		axis2 = glm::angleAxis(glm::radians(180.0f), barrel);	 //set quaternion about forwardVector vector, set angle
-		axis2 = glm::normalize(axis2);					//normalize the quaternions
-		new_transform = glm::normalize(transform);
-		new_transform = new_transform * axis2;      //update the transform quaternion
-		animation_start = true;
-	}
+	interpolation_value = 0;
+	tween::Tween::make().to(interpolation_value, to).seconds(1.0);
+	axis2 = glm::angleAxis(glm::radians(180.0f), barrel);
+	axis2 = glm::normalize(axis2);
+	new_transform = glm::normalize(transform);
+	new_transform = new_transform * axis2;
+	animation_start = true;
+
 }
 
+void Plane::update_quaternion_speed(float delta_time) {
+	/* Along Y Axis*/
+	axis3 = glm::angleAxis(glm::radians(quaternion_speed.y*delta_time), normal);
+	axis3 = glm::normalize(axis3);
+	transform = glm::normalize(transform);
+	transform = transform * axis3;
+
+	/* Along Z Axis*/
+	axis1 = glm::angleAxis(glm::radians(quaternion_speed.z*delta_time), forwardVector);
+	barrel = axis1 * barrel;
+	normal = axis1 * normal;
+	axis1 = glm::normalize(axis1);
+	transform = glm::normalize(transform);
+	transform = transform * axis1;
+
+	/* Along X Axis*/
+	axis2 = glm::angleAxis(glm::radians(quaternion_speed.x*delta_time), barrel);
+	axis2 = glm::normalize(axis2);
+	transform = glm::normalize(transform);
+	transform = transform * axis2;
+
+
+}
+
+void Plane::set_speed_x(float speed) {
+	this->quaternion_speed = glm::vec3(speed, quaternion_speed.y, quaternion_speed.z);
+}
+
+void Plane::set_speed_y(float speed) {
+	this->quaternion_speed = glm::vec3(quaternion_speed.x, speed, quaternion_speed.z);
+}
+
+void Plane::set_speed_z(float speed) {
+	this->quaternion_speed = glm::vec3(quaternion_speed.x, quaternion_speed.y, speed);
+}
+
+
+Plane::~Plane() {
+
+}

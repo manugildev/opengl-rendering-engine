@@ -19,8 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="C:\Users\ManuGil\Desktop\tween-master\tween-master\callback.h" />
-    <ClInclude Include="C:\Users\ManuGil\Desktop\tween-master\tween-master\tween.h" />
     <ClInclude Include="include\assimp\ai_assert.h" />
     <ClInclude Include="include\assimp\anim.h" />
     <ClInclude Include="include\assimp\camera.h" />
@@ -252,7 +250,6 @@
     <ClInclude Include="src\core\Window.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="C:\Users\ManuGil\Desktop\tween-master\tween-master\tween.cpp" />
     <ClCompile Include="include\glm\detail\glm.cpp" />
     <ClCompile Include="include\tween\tween.cpp" />
     <ClCompile Include="src\core\game_objects\plane\Plane.cpp" />

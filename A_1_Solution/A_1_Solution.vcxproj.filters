@@ -696,12 +696,6 @@
     <ClInclude Include="include\std_image\stb_image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\ManuGil\Desktop\tween-master\tween-master\callback.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="C:\Users\ManuGil\Desktop\tween-master\tween-master\tween.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\tween\callback.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -789,9 +783,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="include\glm\detail\glm.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="C:\Users\ManuGil\Desktop\tween-master\tween-master\tween.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="include\tween\tween.cpp">

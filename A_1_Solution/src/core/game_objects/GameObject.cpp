@@ -59,11 +59,7 @@ void GameObject::update_model_mat() {
 
 	glm::mat4 rotation_mat = glm::toMat4(quaternion);
 	this->model_mat = rotation_mat * model_mat;
-
-	//this->model_mat = glm::rotate(this->model_mat, glm::radians(rotation[2]), glm::vec3(0.0f, 0.0f, 1.0f));
-	//this->model_mat = glm::rotate(this->model_mat, glm::radians(rotation[1]), glm::vec3(0.0f, 1.0f, 0.0f));
-	//this->model_mat = glm::rotate(this->model_mat, glm::radians(rotation[0]), glm::vec3(1.0f, 0.0f, 0.0f));
-	
+		
 	this->model_mat[3][0] = this->position[0];
 	this->model_mat[3][1] = this->position[1];
 	this->model_mat[3][2] = this->position[2];

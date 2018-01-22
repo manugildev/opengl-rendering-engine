@@ -2,6 +2,7 @@
 #include <iostream>
 #include <glm\ext.hpp>
 #include <glm\gtc\matrix_transform.hpp>
+#include <glm/gtx/matrix_decompose.hpp>
 
 Camera::Camera(glm::vec3 position, glm::vec3 up, GLfloat yaw, GLfloat pitch, glm::vec3 front,
 	GLfloat movement_speed, GLfloat mouse_sensitivity, GLfloat zoom) {
@@ -95,7 +96,34 @@ void Camera::update_view_matrix() {
 	this->update_camera_vectors();
 	glm::mat4 model_mat = glm::mat4(1.0f);
 	model_mat = glm::rotate(model_mat, glm::radians(roll), glm::vec3(0.0f, 0.0f, 1.0f));
-	this->view_matrix = model_mat * glm::lookAt(this->position, this->position + this->front, this->up);
+
+
+	if (this->first_person) {
+		glm::vec3 scale;
+		glm::vec3 translation;
+		glm::quat rotation;
+		glm::vec3 skew;
+		glm::vec4 perspective;
+		glm::decompose(parent_model_mat, scale, rotation, translation, skew, perspective);
+
+		glm::vec3 euler_angles = glm::eulerAngles(rotation);
+
+		glm::mat4 rotation_mat = glm::toMat4(rotation);
+		model_mat = rotation_mat * glm::mat4(1.0f);
+		roll = 0;
+		yaw = -90;
+		pitch = 0;
+
+
+		this->update_camera_vectors();
+		glm::mat4 new_mat = parent_model_mat * glm::translate(glm::mat4(1.0f), glm::vec3(0, 1, 0));
+		glm::decompose(new_mat, scale, rotation, translation, skew, perspective);
+		this->position = translation;
+	}
+
+	this->view_matrix = glm::lookAt(this->position, this->position + this->front, this->up);
+	this->view_matrix = model_mat * view_matrix;
+	
 }
 
 void Camera::update_view_matrix_second_viewport(glm::vec3 front) {
@@ -117,6 +145,10 @@ GLfloat Camera::get_field_of_view() {
 
 void Camera::set_aspect_ratio(float aspect_ratio) {
 	this->aspect_ratio = aspect_ratio;
+}
+
+void Camera::set_parent_model_mat(glm::mat4  parent_model_mat) {
+	this->parent_model_mat = parent_model_mat;
 }
 
 Camera::~Camera() {}

@@ -12,7 +12,7 @@
 
 int main(void) {
 	/* Camera */
-	Camera camera(glm::vec3(0.0f, 10.0f, 30.0f));
+	Camera camera(glm::vec3(0.0f, 26.0f, 0.0f));
 
 	/* Application */
 	Application *app = new Application(&camera);

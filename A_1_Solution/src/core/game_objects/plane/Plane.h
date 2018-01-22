@@ -45,12 +45,20 @@ public:
 
 	glm::quat new_transform;
 
+	void set_speed_x(float speed);
+	void set_speed_y(float speed);
+	void set_speed_z(float speed);
+	void update_quaternion_speed(float delta_time);
+
 private:
 	GameObject * propeller;
 	GameObject * wheels;
 	GameObject * green_arrow;
 	GameObject * blue_arrow;
 	GameObject * red_arrow;
+
+	glm::vec3 quaternion_speed;
+
 
 };
 

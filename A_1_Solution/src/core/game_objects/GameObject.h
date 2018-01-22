@@ -59,6 +59,7 @@ protected:
 	Model* model;
 	Application* app;
 	GameObject* parent;
+	glm::mat4 model_mat;
 
 private:
 	glm::vec3 object_color;
@@ -71,7 +72,6 @@ private:
 	glm::vec3 speed = glm::vec3(0.0f);
 	glm::vec3 acceleration = glm::vec3(0.0f);
 	glm::quat quaternion;
-	glm::mat4 model_mat;
 	glm::vec3 max_speed = glm::vec3(std::numeric_limits<float>::max());
 
 	glm::vec3 rotation_speed = glm::vec3(0.0f);

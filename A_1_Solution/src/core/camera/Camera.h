@@ -43,6 +43,7 @@ public:
 	void update_view_matrix_second_viewport(glm::vec3 front);
 	void update_persp_proj_matrix();
 	void set_aspect_ratio(float aspect_ratio);
+	void set_parent_model_mat(glm::mat4 parent_model_mat);
 	
 	/* Euler Angles */
 	GLfloat yaw = 0;
@@ -51,7 +52,6 @@ public:
 	GLfloat field_of_view;
 
 	bool first_person = false;
-
 
 	glm::vec3 front;
 	glm::vec3 position;
@@ -62,13 +62,14 @@ public:
 private:
 	glm::mat4 persp_proj_matrix;
 	glm::mat4 view_matrix;
-	
 	/* Camera Options */
 	GLfloat movement_speed;
 	GLfloat acceleration = 3.0f;
 	GLfloat max_velocity = 0.6f;
 	GLfloat mouse_sensitivity;
-
+	
+	glm::mat4 parent_model_mat;
 	float aspect_ratio;
+
 };
 

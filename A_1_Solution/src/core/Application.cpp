@@ -81,12 +81,16 @@ void Application::update() {
 
 	/* Poll for and process events */
 	glfwPollEvents();
-	this->do_movement();
+	for (int i = 0; i < game_objects.size(); i++) game_objects[i]->update(delta_time);
 
+	/* Updating the camera aftwerwards because of the FPV*/
+	this->do_movement();
 	this->camera->update_view_matrix();
 	this->camera->set_persp_proj_matrix(glm::perspective(glm::radians(camera->get_field_of_view()), camera->get_aspect_ratio(), 0.1f, 10000.0f));
-	for (int i = 0; i < game_objects.size(); i++) game_objects[i]->update(delta_time);
+
 	for (int i = 0; i < point_lights.size(); i++) point_lights[i]->update(delta_time);
+
+
 	this->dir_light->update(delta_time);
 }
 
@@ -136,65 +140,42 @@ void Application::key_callback(int key, int scancode, int action, int mode) {
 	/* Plane Rotation */ //Todo: Get direction instead of pointer
 	Plane* plane = dynamic_cast <Plane*>(game_objects[game_objects.size() - 1]);
 	if (keys[GLFW_KEY_Z]) {
-		plane->axis3 = glm::angleAxis(0.04f, plane->normal);	 //set quaternion about forwardVector vector, set angle
-		plane->axis3 = glm::normalize(plane->axis3);	
-		plane->transform = glm::normalize(plane->transform);
-		plane->transform = plane->transform * plane->axis3;      //update the transform quaternion
+		plane->set_speed_y(60.0f);
 
-		if (!plane->with_quaternions) plane->get_green_arrow()->set_rotation_speed(glm::vec3(0, 30.0f, 0.0f));
+		if (!plane->with_quaternions) plane->get_green_arrow()->set_rotation_speed(glm::vec3(0, 60.0f, 0.0f));
 	}
 	if (keys[GLFW_KEY_X]) {
-		plane->axis3 = glm::angleAxis(-0.04f, plane->normal);	 //set quaternion about forwardVector vector, set angle
-		plane->axis3 = glm::normalize(plane->axis3);
-		plane->transform = glm::normalize(plane->transform);
-		plane->transform = plane->transform * plane->axis3;      //update the transform quaternion
-
-		if (!plane->with_quaternions) plane->get_green_arrow()->set_rotation_speed(glm::vec3(0, -30.0f, 0.0f));
+		plane->set_speed_y(-60.0f);
+		if (!plane->with_quaternions) plane->get_green_arrow()->set_rotation_speed(glm::vec3(0, -60.0f, 0.0f));
 	}
 	if (!keys[GLFW_KEY_Z] && !keys[GLFW_KEY_X]) {
+		plane->set_speed_y(0);
 		if (!plane->with_quaternions) plane->get_green_arrow()->set_rotation_speed(glm::vec3(0, 0.0f, 0.0f));
 	}
 
 	if (keys[GLFW_KEY_C]) {
-		plane->axis1 = glm::angleAxis(-0.04f, plane->forwardVector);	 //set quaternion about forwardVector vector, set angle
-		plane->barrel = plane->axis1 * plane->barrel;   //apply quaternion to the barrel vector
-		plane->normal = plane->axis1 * plane->normal;
-		plane->axis1 = glm::normalize(plane->axis1);					//normalize the quaternions
-		plane->transform = glm::normalize(plane->transform);
-		plane->transform = plane->transform * plane->axis1;      //update the transform quaternion	
-		
-		if (!plane->with_quaternions) plane->get_blue_arrow()->set_rotation_speed(glm::vec3(0, 0.0f, 30.0f));
+		plane->set_speed_z(-60.0f);		
+		if (!plane->with_quaternions) plane->get_blue_arrow()->set_rotation_speed(glm::vec3(0, 0.0f, 60.0f));
 	}
 	if (keys[GLFW_KEY_V]) {
-		plane->axis1 = glm::angleAxis(0.04f, plane->forwardVector);	 //set quaternion about forwardVector vector, set angle
-		plane->barrel = plane->axis1 * plane->barrel;   //apply quaternion to the barrel vector
-		plane->normal = plane->axis1 * plane->normal;
-		plane->axis1 = glm::normalize(plane->axis1);					//normalize the quaternions
-		plane->transform = glm::normalize(plane->transform);
-		plane->transform = plane->transform * plane->axis1;      //update the transform quaternion		
-
-		if (!plane->with_quaternions) plane->get_blue_arrow()->set_rotation_speed(glm::vec3(0, 0.0f, -30.0f));
+		plane->set_speed_z(60.0f); 
+		if (!plane->with_quaternions) plane->get_blue_arrow()->set_rotation_speed(glm::vec3(0, 0.0f, -60.0f));
 	}
 	if (!keys[GLFW_KEY_C] && !keys[GLFW_KEY_V]) {
+		plane->set_speed_z(0);
 		if (!plane->with_quaternions) plane->get_blue_arrow()->set_rotation_speed(glm::vec3(0, 0.0f, 0.0f));
 	}
 
 	if (keys[GLFW_KEY_B]) {
-		plane->axis2 = glm::angleAxis(+0.04f, plane->barrel);	 //set quaternion about forwardVector vector, set angle
-		plane->axis2 = glm::normalize(plane->axis2);
-		plane->transform = glm::normalize(plane->transform);
-		plane->transform = plane->transform * plane->axis2;      //update the transform quaternion
-
-		if (!plane->with_quaternions) plane->get_red_arrow()->set_rotation_speed(glm::vec3(0, 0.0f, 30.0f));
+		plane->set_speed_x(60.0f);
+		if (!plane->with_quaternions) plane->get_red_arrow()->set_rotation_speed(glm::vec3(0, 0.0f, 60.0f));
 	}
 	if (keys[GLFW_KEY_N]) {
-		plane->axis2 = glm::angleAxis(-0.04f, plane->barrel);	 //set quaternion about forwardVector vector, set angle
-		plane->axis2 = glm::normalize(plane->axis2);
-		plane->transform = glm::normalize(plane->transform);
-		plane->transform = plane->transform * plane->axis2;      //update the transform quaternion
-		if (!plane->with_quaternions) plane->get_red_arrow()->set_rotation_speed(glm::vec3(0.0f, 0.0f, -30.0f));
+		plane->set_speed_x(-60.0f);
+		if (!plane->with_quaternions) plane->get_red_arrow()->set_rotation_speed(glm::vec3(0.0f, 0.0f, -60.0f));
 	}
 	if (!keys[GLFW_KEY_B] && !keys[GLFW_KEY_N]) {
+		plane->set_speed_x(0);
 		if (!plane->with_quaternions) plane->get_red_arrow()->set_rotation_speed(glm::vec3(0, 0.0f, 0.0f));
 	}
 
@@ -205,7 +186,6 @@ void Application::key_callback(int key, int scancode, int action, int mode) {
 	if (keys[GLFW_KEY_M]) {
 		plane->with_quaternions = !plane->with_quaternions;
 		plane->show_debug = !plane->show_debug;
-
 		plane->transform = glm::angleAxis(glm::radians(-90.0f), glm::vec3(0,0,1)); // We init the transform quaternion to 0.0f in the forward vector
 		plane->transform = plane->transform * glm::angleAxis(glm::radians(90.0f), glm::vec3(-1, 0, 0));
 	}
