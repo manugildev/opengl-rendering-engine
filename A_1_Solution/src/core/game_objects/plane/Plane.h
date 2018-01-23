@@ -26,9 +26,9 @@ public:
 	glm::vec3 forwardVector = glm::vec3(0, 0, 1);
 	glm::vec3 barrel = glm::vec3(-1, 0, 0);
 	glm::quat transform;							//transofmration quaternion
-	glm::quat axis1;								//forwardVector axis quaterion
-	glm::quat axis2;								//horizaontal axis quaternion
-	glm::quat axis3;								//top axis quaternion
+	glm::quat axis_z;								//forwardVector axis quaterion
+	glm::quat axis_x;								//horizaontal axis quaternion
+	glm::quat axis_y;								//top axis quaternion
 
 	bool with_quaternions = true;
 

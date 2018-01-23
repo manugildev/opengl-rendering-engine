@@ -77,7 +77,6 @@ int main(void) {
 	car4->set_initial_pos(glm::vec3(-5.0f, 1.0f, 0.0f));
 	car4->set_rotation(glm::vec3(0.0f, -180.0f, 0.0f));
 	car4->set_shader_program(shader_program);
-	car4->set_mix_power(1.0f);
 	car4->set_acceleration(glm::vec3(0.0f, 0.0f, Util::random_range(0.5f, 2.0f)));
 
 	Car *car8 = new Car(app, car_model, glm::vec3(0.97f, 0.42f, 0.56f));
@@ -107,7 +106,7 @@ int main(void) {
 	PointLight* p_light_6 = new PointLight(app, glm::vec3(-40.0f, 2.0f, 8.0f), glm::vec3(1.0f, 1.0f, 0.0f), .3f, 0.8f, 0.1f);
 	PointLight* p_light_7 = new PointLight(app, glm::vec3(-13.0f, 2.0f, -40.0f), glm::vec3(1.0f, .0f, 0.0f), .3f, 0.8f, 0.1f);
 	PointLight* p_light_8 = new PointLight(app, glm::vec3(8.0f, 2.0f, 40.0f), glm::vec3(0.0f, 1.0f, 0.0f), .3f, 0.8f, 0.1f);
-	PointLight* p_light_9 = new PointLight(app, glm::vec3(0.0f, 5.0f, 0.0f), glm::vec3(1.0f), .3f, 0.8f, 0.1f);
+	PointLight* p_light_9 = new PointLight(app, glm::vec3(0.0f, 5.0f, 0.0f), glm::vec3(1.0f), .3f, 0.8f, 0.01f);
 
 	std::vector<PointLight*> point_lights = { p_light_1, p_light_2, p_light_3, p_light_4, p_light_5, p_light_6, p_light_7, p_light_8, p_light_9 };
 	for (int i = 0; i < point_lights.size(); i++) point_lights[i]->set_parent(city);

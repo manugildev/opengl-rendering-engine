@@ -136,12 +136,12 @@ void Plane::start_roll() {
 
 	interpolation_value = 0;
 	tween::Tween::make().to(interpolation_value, to).seconds(1.0);
-	axis1 = glm::angleAxis(glm::radians(180.0f), forwardVector);
-	barrel = axis1 * barrel;
-	normal = axis1 * normal;
-	axis1 = glm::normalize(axis1);
+	axis_z = glm::angleAxis(glm::radians(180.0f), forwardVector);
+	barrel = axis_z * barrel;
+	normal = axis_z * normal;
+	axis_z = glm::normalize(axis_z);
 	new_transform = glm::normalize(transform);
-	new_transform = new_transform * axis1;
+	new_transform = new_transform * axis_z;
 	animation_start = true;
 
 }
@@ -153,36 +153,36 @@ void Plane::start_yaw() {
 
 	interpolation_value = 0;
 	tween::Tween::make().to(interpolation_value, to).seconds(1.0);
-	axis2 = glm::angleAxis(glm::radians(180.0f), barrel);
-	axis2 = glm::normalize(axis2);
+	axis_x = glm::angleAxis(glm::radians(180.0f), barrel);
+	//forwardVector = axis_x * forwardVector;
+	//normal = axis_x * normal;
+	axis_x = glm::normalize(axis_x);
 	new_transform = glm::normalize(transform);
-	new_transform = new_transform * axis2;
+	new_transform = new_transform * axis_x;
 	animation_start = true;
 
 }
 
 void Plane::update_quaternion_speed(float delta_time) {
 	/* Along Y Axis*/
-	axis3 = glm::angleAxis(glm::radians(quaternion_speed.y*delta_time), normal);
-	axis3 = glm::normalize(axis3);
+	axis_y = glm::angleAxis(glm::radians(quaternion_speed.y*delta_time), normal);
+	axis_y = glm::normalize(axis_y);
 	transform = glm::normalize(transform);
-	transform = transform * axis3;
+	transform = transform * axis_y;
 
 	/* Along Z Axis*/
-	axis1 = glm::angleAxis(glm::radians(quaternion_speed.z*delta_time), forwardVector);
-	barrel = axis1 * barrel;
-	normal = axis1 * normal;
-	axis1 = glm::normalize(axis1);
+	axis_z = glm::angleAxis(glm::radians(quaternion_speed.z*delta_time), forwardVector);
+	barrel = axis_z * barrel;
+	normal = axis_z * normal;
+	axis_z = glm::normalize(axis_z);
 	transform = glm::normalize(transform);
-	transform = transform * axis1;
+	transform = transform * axis_z;
 
 	/* Along X Axis*/
-	axis2 = glm::angleAxis(glm::radians(quaternion_speed.x*delta_time), barrel);
-	axis2 = glm::normalize(axis2);
+	axis_x = glm::angleAxis(glm::radians(quaternion_speed.x*delta_time), barrel);
+	axis_x = glm::normalize(axis_x);
 	transform = glm::normalize(transform);
-	transform = transform * axis2;
-
-
+	transform = transform * axis_x;
 }
 
 void Plane::set_speed_x(float speed) {

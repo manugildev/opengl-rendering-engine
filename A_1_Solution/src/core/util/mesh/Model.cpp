@@ -50,6 +50,8 @@ void Model::processNode(aiNode* node, const aiScene* scene) {
 		aiGetMaterialColor(pMaterial, AI_MATKEY_COLOR_SPECULAR, &specular_color);
 		aiGetMaterialFloat(pMaterial, AI_MATKEY_SHININESS, &shininess);
 
+		std::cout << "Has Materials " << file_name << " " << scene->HasMaterials() << std::endl;
+
 		// TODO: Save colors
 		// TODO: Add more Texture Types
 		if (pMaterial->GetTextureCount(aiTextureType_DIFFUSE) > 0) {

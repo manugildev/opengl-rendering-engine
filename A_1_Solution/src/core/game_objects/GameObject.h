@@ -51,7 +51,6 @@ public:
 
 	void update_lights();
 	void update_model_mat();
-	LightingShader* shader_program;
 	glm::vec3 rotation = glm::vec3(0.0f); //TODO: Change this
 
 protected:
@@ -60,10 +59,11 @@ protected:
 	Application* app;
 	GameObject* parent;
 	glm::mat4 model_mat;
-
-private:
 	glm::vec3 object_color;
 	float mix_power;
+	LightingShader* shader_program;
+
+private:
 	CubeModel cube_mesh;
 
 	glm::vec3 scale = glm::vec3(1.0f);

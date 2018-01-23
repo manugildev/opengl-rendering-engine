@@ -77,7 +77,7 @@ vec3 calc_dir_light(DirLight light, vec3 normal, vec3 view_dir) {
 
 	// Diffuse Lighting
 	float diff = max(dot(normal, light_dir), 0.0f);	
-	vec3 diffuse = light.light_color * diff * texture_blend * material.diffuse_color;
+	vec3 diffuse = light.light_color * diff * texture_blend * mix(material.diffuse_color, object_color, mix_power);
 
 	// Specular Lighting
 	vec3 reflect_dir = reflect(-light_dir, normal);

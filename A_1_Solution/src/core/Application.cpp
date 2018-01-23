@@ -89,8 +89,6 @@ void Application::update() {
 	this->camera->set_persp_proj_matrix(glm::perspective(glm::radians(camera->get_field_of_view()), camera->get_aspect_ratio(), 0.1f, 10000.0f));
 
 	for (int i = 0; i < point_lights.size(); i++) point_lights[i]->update(delta_time);
-
-
 	this->dir_light->update(delta_time);
 }
 

@@ -1,5 +1,8 @@
 #include "Car.h"
 #include <glm\ext.hpp>
+#include "..\GameObject.h"
+#include "..\..\util\shaders\lighting\LightingShader.h"
+#include "..\..\Application.h"
 
 Car::Car(Application * app, Model* model, glm::vec3 object_color) : GameObject(app, model, object_color) {
 	this->initial_position = this->get_pos();
@@ -50,5 +53,27 @@ void Car::stop_turn_around_animation() {
 	set_speed(initial_speed * -1.0f);
 	animation_running = false;
 }
+
+void Car::render() {
+	this->shader_program->start();
+
+	glm::mat4 view = this->camera->get_view_matrix();
+	glm::mat4 perspective_proj = this->camera->get_persp_proj_matrix();
+
+	this->shader_program->set_view_matrix(view);
+	this->shader_program->set_proj_matrix(perspective_proj);
+	this->shader_program->set_model_matrix(model_mat);
+
+	this->shader_program->set_object_color(this->object_color);
+	this->shader_program->set_mix_power(this->mix_power);
+
+	this->model->materials[2].diffuse_color = object_color;
+	if (this->app->is_debug()) { // TODO: Make this work again
+		this->model->draw(nullptr, GL_LINES);
+	}
+	else this->model->draw(this->shader_program);
+	this->shader_program->stop();
+}
+
 
 Car::~Car() {}
