@@ -21,19 +21,19 @@ Plane::Plane(Application * app, Model* model, Camera* camera) : GameObject(app, 
 void Plane::attach_wheels(Application * app) {
 	Model* wheels_model = new Model("models/plane/wheels.obj");
 	wheels = new GameObject(app, wheels_model);
-	wheels->set_pos(glm::vec3(0.0f, -1.02f, 1.7f));
+	wheels->set_pos(glm::vec3(0.0f, -1.02f, -1.7f));
 	wheels->set_parent(this);
 	wheels->set_scale(glm::vec3(1.0f, 1.1f, 1.1f));
-	wheels->set_rotation_speed(glm::vec3(300.0f, 00.0f, 0.0f));
+	wheels->set_rotation_speed(glm::vec3(-300.0f, 00.0f, 0.0f));
 }
 
 void Plane::attach_propeller(Application * app) {
-	Model* propeller_model = new Model("models/plane/propeller.obj");
+	Model* propeller_model = new Model("models/plane/propeller_1.obj");
 	propeller = new GameObject(app, propeller_model);
-	propeller->set_pos(glm::vec3(0.0f, -0.0f, 3.19f));
+	propeller->set_pos(glm::vec3(0.0f, -0.0f, -3.19f));
 	propeller->set_parent(this);
 	propeller->set_scale(glm::vec3(1.1f, 1.1f, 1.1f));
-	propeller->set_rotation_speed(glm::vec3(0.0f, 0.0f, 900.0f));
+	propeller->set_rotation_speed(glm::vec3(0.0f, 0.0f, -900.0f));
 }
 
 void Plane::attach_arrows(Application * app) {
@@ -57,10 +57,10 @@ void Plane::attach_arrows(Application * app) {
 	red_arrow->set_parent(blue_arrow);
 	red_arrow->set_scale(glm::vec3(0.90f, 0.90f, 0.90f));
 	red_arrow->set_rotation(glm::vec3(-90, 0, -90));
+
 }
 
 void Plane::update(float delta_time) {
-
 	elapsed += delta_time;
 	tween::Tween::updateTweens(elapsed);
 
@@ -82,7 +82,10 @@ void Plane::update(float delta_time) {
 
 	GameObject::update(delta_time);
 	if (with_quaternions) {
-		this->update_quaternion_speed(delta_time);
+		if (!animation_start) {
+			this->update_quaternion_speed(delta_time);
+			this->update_quaternion_axis(transform);
+		}
 		this->set_quaternion(transform);
 		this->update_model_mat();
 	}
@@ -131,19 +134,13 @@ GameObject* Plane::get_red_arrow() {
 
 void Plane::start_roll() {
 	if (!with_quaternions) return;
-
 	if (animation_start) return;
 
 	interpolation_value = 0;
 	tween::Tween::make().to(interpolation_value, to).seconds(1.0);
-	axis_z = glm::angleAxis(glm::radians(180.0f), forwardVector);
-	barrel = axis_z * barrel;
-	normal = axis_z * normal;
-	axis_z = glm::normalize(axis_z);
-	new_transform = glm::normalize(transform);
-	new_transform = new_transform * axis_z;
+	glm::quat new_quat = glm::angleAxis(glm::radians(180.0f), axis_z);
+	transform = new_quat * transform;
 	animation_start = true;
-
 }
 
 
@@ -153,36 +150,31 @@ void Plane::start_yaw() {
 
 	interpolation_value = 0;
 	tween::Tween::make().to(interpolation_value, to).seconds(1.0);
-	axis_x = glm::angleAxis(glm::radians(180.0f), barrel);
-	//forwardVector = axis_x * forwardVector;
-	//normal = axis_x * normal;
-	axis_x = glm::normalize(axis_x);
-	new_transform = glm::normalize(transform);
-	new_transform = new_transform * axis_x;
+	glm::quat new_quat = glm::angleAxis(glm::radians(180.0f), barrel);
+	transform = new_quat * transform;
 	animation_start = true;
-
 }
 
 void Plane::update_quaternion_speed(float delta_time) {
 	/* Along Y Axis*/
-	axis_y = glm::angleAxis(glm::radians(quaternion_speed.y*delta_time), normal);
-	axis_y = glm::normalize(axis_y);
-	transform = glm::normalize(transform);
-	transform = transform * axis_y;
+	glm::quat new_quat = glm::angleAxis(glm::radians(quaternion_speed.y *delta_time), axis_y);
+	transform = new_quat * transform;
 
-	/* Along Z Axis*/
-	axis_z = glm::angleAxis(glm::radians(quaternion_speed.z*delta_time), forwardVector);
-	barrel = axis_z * barrel;
-	normal = axis_z * normal;
-	axis_z = glm::normalize(axis_z);
-	transform = glm::normalize(transform);
-	transform = transform * axis_z;
 
-	/* Along X Axis*/
-	axis_x = glm::angleAxis(glm::radians(quaternion_speed.x*delta_time), barrel);
-	axis_x = glm::normalize(axis_x);
-	transform = glm::normalize(transform);
-	transform = transform * axis_x;
+	new_quat = glm::angleAxis(glm::radians(quaternion_speed.x *delta_time), axis_x);
+	transform = new_quat * transform;
+
+	new_quat = glm::angleAxis(glm::radians(quaternion_speed.z *delta_time), axis_z);
+	transform = new_quat * transform;
+
+	// Rotate on Y axis
+	this->update_quaternion_axis(transform);
+}
+
+void Plane::update_quaternion_axis(glm::quat transform) {
+	axis_x = transform * barrel;
+	axis_y = transform * normal;
+	axis_z = transform * forwardVector;
 }
 
 void Plane::set_speed_x(float speed) {

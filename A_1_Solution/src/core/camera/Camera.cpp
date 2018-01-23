@@ -97,7 +97,7 @@ void Camera::update_view_matrix() {
 	glm::mat4 model_mat = glm::mat4(1.0f);
 	model_mat = glm::rotate(model_mat, glm::radians(roll), glm::vec3(0.0f, 0.0f, 1.0f));
 
-
+	this->field_of_view = 60;
 	if (this->first_person) {
 		glm::vec3 scale;
 		glm::vec3 translation;
@@ -105,25 +105,27 @@ void Camera::update_view_matrix() {
 		glm::vec3 skew;
 		glm::vec4 perspective;
 		glm::decompose(parent_model_mat, scale, rotation, translation, skew, perspective);
-
 		glm::vec3 euler_angles = glm::eulerAngles(rotation);
 
-		glm::mat4 rotation_mat = glm::toMat4(rotation);
+		std::cout << glm::to_string(glm::degrees(euler_angles)) << std::endl;
+
+		glm::mat4 rotation_mat = glm::toMat4(rotation);		
 		model_mat = rotation_mat * glm::mat4(1.0f);
+
 		roll = 0;
 		yaw = -90;
 		pitch = 0;
 
-
 		this->update_camera_vectors();
-		glm::mat4 new_mat = parent_model_mat * glm::translate(glm::mat4(1.0f), glm::vec3(0, 1, 0));
+		glm::mat4 new_mat = parent_model_mat * glm::translate(glm::mat4(1.0f), glm::vec3(0, 0.9, -1.55));
 		glm::decompose(new_mat, scale, rotation, translation, skew, perspective);
 		this->position = translation;
+
+		this->field_of_view = 85;
 	}
 
-	this->view_matrix = glm::lookAt(this->position, this->position + this->front, this->up);
+	this->view_matrix = glm::lookAt(this->position, this->position + (this->front*glm::vec3(1, 1, 1)), this->up);
 	this->view_matrix = model_mat * view_matrix;
-	
 }
 
 void Camera::update_view_matrix_second_viewport(glm::vec3 front) {

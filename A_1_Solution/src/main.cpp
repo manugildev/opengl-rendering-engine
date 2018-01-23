@@ -3,6 +3,7 @@
 #include "core\game_objects\GameObject.h"
 #include "core\game_objects\car\Car.h"
 #include "core\game_objects\plane\Plane.h"
+#include "core\game_objects\plane\PlaneDemo.h"
 #include "core\util\texture\Texture.h"
 #include "core\util\shaders\lighting\LightingShader.h"
 #include <iostream>
@@ -20,7 +21,7 @@ int main(void) {
 	/* Models */
 	Model* city_model = new Model("models/street/street.obj");
 	Model* car_model = new Model("models/volks.obj");
-	Model* plane_model = new Model("models/plane/piper_pa18.obj");
+	Model* plane_model = new Model("models/plane/piper_pa18_1.obj");
 
 	/* GameObjects */
 	LightingShader* shader_program = LightingShader::create();
@@ -86,14 +87,28 @@ int main(void) {
 	car8->set_shader_program(shader_program);
 	car8->set_acceleration(glm::vec3(0.0f, 0.0f, Util::random_range(0.5f, 2.0f)));
 
-	Plane* plane = new Plane(app, plane_model, app->get_camera());
-	plane->set_parent(city);
-	plane->set_shader_program(shader_program);
-	plane->set_scale(glm::vec3(0.3f));
+	Plane* main_plane = new Plane(app, plane_model, app->get_camera());
+	main_plane->set_parent(city);
+	main_plane->set_shader_program(shader_program);
+	main_plane->set_scale(glm::vec3(0.3f));
 	//plane->set_pos(glm::vec3(0.0f, 0.0f, 0.0f));
-	plane->set_rotation(glm::vec3(90, 180, 90));
+	main_plane->set_rotation(glm::vec3(90, 180, 90));
+	
+	GameObject * cube = new GameObject(app, new Model(), glm::vec3(0.32f,0.33f,0.34f));
+	cube->set_parent(city);
+	cube->set_shader_program(shader_program);
+	cube->set_scale(glm::vec3(30, 0.2f, 5));
+	cube->set_pos(glm::vec3(0, 10, 60));
+	cube->set_mix_power(.6f);
 
-	std::vector<GameObject*> objects = { city, car1, car2, car3, car4, car5, car6, car7, car8, plane };
+	PlaneDemo* plane1 = new PlaneDemo(app, plane_model, app->get_camera());
+	plane1->set_parent(city);
+	plane1->set_shader_program(shader_program);
+	plane1->set_scale(glm::vec3(.5f));
+	plane1->set_pos(glm::vec3(0, 10.65, 60));
+	plane1->set_rotation(glm::vec3(11.5, 0, 0));
+
+	std::vector<GameObject*> objects = { city, car1, car2, car3, car4, car5, car6, car7, car8, cube, plane1, main_plane };
 
 
 	/* Lights */

@@ -215,6 +215,7 @@
     <ClInclude Include="include\tween\tween.h" />
     <ClInclude Include="src\core\camera\Camera.h" />
     <ClInclude Include="src\core\game_objects\plane\Plane.h" />
+    <ClInclude Include="src\core\game_objects\plane\PlaneDemo.h" />
     <ClInclude Include="src\core\util\framebuffer\FrameBuffer.h" />
     <ClInclude Include="src\core\util\shaders\gui\GuiShader.h" />
     <ClInclude Include="src\core\util\gui\GuiRenderer.h" />
@@ -253,6 +254,7 @@
     <ClCompile Include="include\glm\detail\glm.cpp" />
     <ClCompile Include="include\tween\tween.cpp" />
     <ClCompile Include="src\core\game_objects\plane\Plane.cpp" />
+    <ClCompile Include="src\core\game_objects\plane\PlaneDemo.cpp" />
     <ClCompile Include="src\core\util\framebuffer\FrameBuffer.cpp" />
     <ClCompile Include="src\core\util\shaders\gui\GuiShader.cpp" />
     <ClCompile Include="src\core\util\gui\GuiRenderer.cpp" />

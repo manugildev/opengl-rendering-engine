@@ -138,13 +138,13 @@ void Application::key_callback(int key, int scancode, int action, int mode) {
 	/* Plane Rotation */ //Todo: Get direction instead of pointer
 	Plane* plane = dynamic_cast <Plane*>(game_objects[game_objects.size() - 1]);
 	if (keys[GLFW_KEY_Z]) {
-		plane->set_speed_y(60.0f);
+		plane->set_speed_y(-60.0f);
 
-		if (!plane->with_quaternions) plane->get_green_arrow()->set_rotation_speed(glm::vec3(0, 60.0f, 0.0f));
+		if (!plane->with_quaternions) plane->get_green_arrow()->set_rotation_speed(glm::vec3(0, -60.0f, 0.0f));
 	}
 	if (keys[GLFW_KEY_X]) {
-		plane->set_speed_y(-60.0f);
-		if (!plane->with_quaternions) plane->get_green_arrow()->set_rotation_speed(glm::vec3(0, -60.0f, 0.0f));
+		plane->set_speed_y(60.0f);
+		if (!plane->with_quaternions) plane->get_green_arrow()->set_rotation_speed(glm::vec3(0, 60.0f, 0.0f));
 	}
 	if (!keys[GLFW_KEY_Z] && !keys[GLFW_KEY_X]) {
 		plane->set_speed_y(0);
@@ -152,12 +152,12 @@ void Application::key_callback(int key, int scancode, int action, int mode) {
 	}
 
 	if (keys[GLFW_KEY_C]) {
-		plane->set_speed_z(-60.0f);		
-		if (!plane->with_quaternions) plane->get_blue_arrow()->set_rotation_speed(glm::vec3(0, 0.0f, 60.0f));
+		plane->set_speed_z(60.0f);		
+		if (!plane->with_quaternions) plane->get_blue_arrow()->set_rotation_speed(glm::vec3(0, 0.0f, -60.0f));
 	}
 	if (keys[GLFW_KEY_V]) {
-		plane->set_speed_z(60.0f); 
-		if (!plane->with_quaternions) plane->get_blue_arrow()->set_rotation_speed(glm::vec3(0, 0.0f, -60.0f));
+		plane->set_speed_z(-60.0f); 
+		if (!plane->with_quaternions) plane->get_blue_arrow()->set_rotation_speed(glm::vec3(0, 0.0f, 60.0f));
 	}
 	if (!keys[GLFW_KEY_C] && !keys[GLFW_KEY_V]) {
 		plane->set_speed_z(0);
@@ -165,12 +165,12 @@ void Application::key_callback(int key, int scancode, int action, int mode) {
 	}
 
 	if (keys[GLFW_KEY_B]) {
-		plane->set_speed_x(60.0f);
-		if (!plane->with_quaternions) plane->get_red_arrow()->set_rotation_speed(glm::vec3(0, 0.0f, 60.0f));
+		plane->set_speed_x(-60.0f);
+		if (!plane->with_quaternions) plane->get_red_arrow()->set_rotation_speed(glm::vec3(0, 0.0f, -60.0f));
 	}
 	if (keys[GLFW_KEY_N]) {
-		plane->set_speed_x(-60.0f);
-		if (!plane->with_quaternions) plane->get_red_arrow()->set_rotation_speed(glm::vec3(0.0f, 0.0f, -60.0f));
+		plane->set_speed_x(60.0f);
+		if (!plane->with_quaternions) plane->get_red_arrow()->set_rotation_speed(glm::vec3(0.0f, 0.0f, 60.0f));
 	}
 	if (!keys[GLFW_KEY_B] && !keys[GLFW_KEY_N]) {
 		plane->set_speed_x(0);

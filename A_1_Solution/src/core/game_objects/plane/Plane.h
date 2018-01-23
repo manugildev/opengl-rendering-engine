@@ -1,6 +1,7 @@
 #pragma once
 #include "..\GameObject.h"
 #include <tween\tween.h>
+#include <glm/gtx/matrix_decompose.hpp>
 
 class Application;
 
@@ -23,12 +24,12 @@ public:
 	~Plane();
 
 	glm::vec3 normal = glm::vec3(0, 1, 0);			//inital vectors of the plane, defines coordinate space for plane
-	glm::vec3 forwardVector = glm::vec3(0, 0, 1);
+	glm::vec3 forwardVector = glm::vec3(0, 0, -1);
 	glm::vec3 barrel = glm::vec3(-1, 0, 0);
 	glm::quat transform;							//transofmration quaternion
-	glm::quat axis_z;								//forwardVector axis quaterion
-	glm::quat axis_x;								//horizaontal axis quaternion
-	glm::quat axis_y;								//top axis quaternion
+	glm::vec3 axis_z;								//forwardVector axis quaterion
+	glm::vec3 axis_x;								//horizaontal axis quaternion
+	glm::vec3 axis_y;								//top axis quaternion
 
 	bool with_quaternions = true;
 
@@ -48,7 +49,6 @@ public:
 	void set_speed_x(float speed);
 	void set_speed_y(float speed);
 	void set_speed_z(float speed);
-	void update_quaternion_speed(float delta_time);
 
 private:
 	GameObject * propeller;
@@ -58,7 +58,7 @@ private:
 	GameObject * red_arrow;
 
 	glm::vec3 quaternion_speed;
-
-
+	void update_quaternion_axis(glm::quat transform);
+	void update_quaternion_speed(float delta_time);
 };
 
