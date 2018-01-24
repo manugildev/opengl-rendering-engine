@@ -18,7 +18,7 @@ void PlaneDemo::attach_wheels(Application * app) {
 	wheels->set_pos(glm::vec3(0.0f, -1.02f, -1.7f));
 	wheels->set_parent(this);
 	wheels->set_scale(glm::vec3(1.0f, 1.1f, 1.1f));
-	wheels->set_rotation_speed(glm::vec3(-300.0f, 00.0f, 0.0f));
+	//wheels->set_rotation_speed(glm::vec3(-300.0f, 00.0f, 0.0f));
 }
 
 void PlaneDemo::attach_propeller(Application * app) {
@@ -27,7 +27,7 @@ void PlaneDemo::attach_propeller(Application * app) {
 	propeller->set_pos(glm::vec3(0.0f, -0.0f, -3.19f));
 	propeller->set_parent(this);
 	propeller->set_scale(glm::vec3(1.1f, 1.1f, 1.1f));
-	//propeller->set_rotation_speed(glm::vec3(0.0f, 0.0f, -900.0f));
+	propeller->set_rotation_speed(glm::vec3(0.0f, 0.0f, -900.0f));
 }
 
 
