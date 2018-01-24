@@ -49,11 +49,15 @@ vec3 limit(float value, vec3 color);
 
 vec3 texture_blend;
 
-const float levels = 3.0f;
+const float levels = 5.0f;
 const float offset = 1.0 / 128.0;
+float spec_power = 1;
+
 
 void main(){
 	texture_blend = mix(vec3(texture(texture_0, tex_coords)), object_color, mix_power);
+	if(specular_power > 1) spec_power = specular_power;
+	else spec_power = material.shininess;
 
 	vec3 norm = normalize(normal);
 	vec3 view_dir = normalize(view_pos - frag_pos);
@@ -77,11 +81,11 @@ vec3 calc_dir_light(DirLight light, vec3 normal, vec3 view_dir) {
 	vec3 light_dir = normalize(-light.direction);
 	
 	// Ambient Lighting
-	vec3 ambient = light.light_color * texture_blend * material.ambient_color;
+	vec3 ambient = ambient_strength * light.light_color * texture_blend * material.ambient_color;
 
 	// Diffuse Lighting
 	float diff = max(dot(normal, light_dir), 0.0f);	
-
+	//diff = floor(diff * levels) / levels;
 	vec3 color = mix(material.diffuse_color, object_color, mix_power);
 	if (toon) color = limit(diff, color);
 	
@@ -89,10 +93,13 @@ vec3 calc_dir_light(DirLight light, vec3 normal, vec3 view_dir) {
 
 	// Specular Lighting
 	vec3 reflect_dir = reflect(-light_dir, normal);
-	float spec = pow(max(dot(view_dir, reflect_dir), 0.0), material.shininess);	// TODO: Change material specular to  power shininess
+	float spec = pow(max(dot(view_dir, reflect_dir), 0.0), spec_power);	// TODO: Change material specular to  power shininess
+	//spec = floor(spec * levels) / levels;
 	color = material.specular_color;
 	if (toon) color = limit(spec, color);
-	vec3 specular = light.light_color * spec * texture_blend * color;
+
+	vec3 specular;
+	if (diff > 0.0f) specular = light.light_color * spec * texture_blend * color * specular_strength;
 	return (ambient + diffuse + specular);
 }
 
@@ -104,35 +111,37 @@ vec3 calc_point_light(PointLight light, vec3 normal, vec3 frag_pos, vec3 view_di
 	float attenuation = 1.0f / (light.constant + (light.linear * distance) + (light.quadratic * (distance * distance)));
 			
 	// Ambient Lighting
-	vec3 ambient = light.light_color * texture_blend * material.ambient_color;
+	vec3 ambient = ambient_strength * light.light_color * texture_blend * material.ambient_color;
 	ambient *= attenuation;
 
 	// Diffuse Lighting
 	float diff = max(dot(normal, light_dir), 0.0f);	
 	vec3 color = mix(material.diffuse_color, object_color, mix_power);
+	//diff = floor(diff * levels) / levels;
 	if (toon) color = limit (diff, color);
 	vec3 diffuse = diff * light.light_color * texture_blend * color;
 	diffuse *= attenuation;
 
 	// Specular Lighting
 	vec3 reflect_dir = reflect(-light_dir, normal);
-	float spec = pow(max(dot(view_dir, reflect_dir), 0.0), material.shininess);
+	float spec = pow(max(dot(view_dir, reflect_dir), 0.0), spec_power);
+	//spec = floor(spec * levels) / levels;
 	color = material.specular_color;
 	if (toon) color = limit (spec, color);
-	vec3 specular = spec * light.light_color * texture_blend * color;
-	specular *= attenuation;
 
+	vec3 specular;
+	if (diff > 0.0f) {
+		specular = spec * light.light_color * texture_blend * color * specular_strength;
+		specular *= attenuation;
+	}
+	
 	return (ambient + diffuse + specular);
 }
 
 vec3 limit(float value, vec3 color){
-	if (value > 0.95) 
-		color = vec3(1.0, 1.0, 1.0) * color;
-	else if (value > 0.5) 
-		color = vec3(0.7, 0.7, 0.7) * color;
-	else if (value > 0.05) 
-		color = vec3(0.35, 0.35, 0.35) * color;
-	else 
-		color = vec3(0.1, 0.1, 0.1) * color;
+	if (value > 0.95) color = vec3(1.0, 1.0, 1.0) * color;
+	else if (value > 0.5) color = vec3(0.7, 0.7, 0.7) * color;
+	else if (value > 0.05) color = vec3(0.35, 0.35, 0.35) * color;
+	else color = vec3(0.1, 0.1, 0.1) * color;
 	return color;
 }

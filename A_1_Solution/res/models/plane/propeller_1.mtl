@@ -1,7 +1,7 @@
 # Blender MTL File: 'None'
 # Material Count: 2
 
-newmtl base.001
+newmtl base
 Ns 92.156863
 Ka 0.300000 0.300000 0.300000
 Kd 0.683972 0.355875 0.000000

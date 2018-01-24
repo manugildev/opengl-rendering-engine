@@ -1,4 +1,4 @@
-# Blender MTL File: 'None'
+# Blender MTL File: 'teapot.obj'
 # Material Count: 10
 
 newmtl base
@@ -14,10 +14,10 @@ map_Kd textures\piper_diffuse.jpg
 map_Bump textures\\piper_bump.jpg
 
 newmtl base_NONE
-Ns 92.156863
+Ns 445.098039
 Ka 0.300000 0.300000 0.300000
 Kd 0.683972 0.355875 0.000000
-Ks 0.500000 0.500000 0.500000
+Ks 0.447996 0.500000 0.470390
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
@@ -26,7 +26,7 @@ map_Kd textures\piper_diffuse.jpg
 map_Bump textures\\piper_bump.jpg
 
 newmtl base_NONE_piper_diffuse.jpg.001
-Ns 92.156863
+Ns 1000.000000
 Ka 0.300000 0.300000 0.300000
 Kd 0.683972 0.355875 0.000000
 Ks 0.500000 0.500000 0.500000

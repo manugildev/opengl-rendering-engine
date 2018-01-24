@@ -7,6 +7,7 @@
 #include "..\util\mesh\Mesh.h"
 #include "..\util\mesh\Model.h"
 #include "..\util\mesh\CubeModel.h"
+#include "..\util\shaders\outline\OutlineShader.h"
 
 class Application;
 class LightingShader;
@@ -41,13 +42,15 @@ public:
 	glm::vec3 get_rotation_speed();
 	glm::mat4 get_model_mat();
 	glm::quat get_quaternion();
+	float get_specular_power();
+	float get_specular_strength();
 
 	void set_scale(glm::vec3 scale);
 	void set_ambient_strength(float ambient_strength);
 	void set_specular_strength(float specular_strength);
 	void set_specular_power(int specular_power);
 	void set_mix_power(float mix_power);
-	void set_toon_shading(bool toon_shading);
+	virtual void set_toon_shading(bool toon_shading);
 
 	virtual void set_shader_program(LightingShader* shader_program);
 
@@ -64,6 +67,7 @@ protected:
 	glm::vec3 object_color;
 	float mix_power;
 	LightingShader* shader_program;
+	OutlineShader* outline_shader_program;
 
 private:
 	CubeModel cube_mesh;
@@ -81,4 +85,7 @@ private:
 	glm::vec3 max_rotation_speed = glm::vec3(std::numeric_limits<float>::max());
 
 	bool toon_shading = false;
+	float specular_strength = 1;
+	float ambient_strength = 0.8f;
+	float specular_power = 0;
 };

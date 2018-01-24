@@ -92,8 +92,7 @@ void Plane::update(float delta_time) {
 	if (app->get_camera()->first_person) {
 		app->get_camera()->set_parent_model_mat(get_model_mat());
 	}
-
-
+	
 	wheels->update(delta_time);
 	propeller->update(delta_time);
 }
@@ -160,7 +159,6 @@ void Plane::update_quaternion_speed(float delta_time) {
 	glm::quat new_quat = glm::angleAxis(glm::radians(quaternion_speed.y *delta_time), axis_y);
 	transform = new_quat * transform;
 
-
 	new_quat = glm::angleAxis(glm::radians(quaternion_speed.x *delta_time), axis_x);
 	transform = new_quat * transform;
 
@@ -189,6 +187,11 @@ void Plane::set_speed_z(float speed) {
 	this->quaternion_speed = glm::vec3(quaternion_speed.x, quaternion_speed.y, speed);
 }
 
+void Plane::set_toon_shading(bool toon_shading){
+	GameObject::set_toon_shading(toon_shading);
+	wheels->set_toon_shading(toon_shading);
+	propeller->set_toon_shading(toon_shading);
+}
 
 Plane::~Plane() {
 

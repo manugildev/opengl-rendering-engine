@@ -68,18 +68,20 @@ void GameObject::update_model_mat() {
 }
 
 void GameObject::render() {
-	this->shader_program->start();
-
-	if (toon_shading) shader_program->set_toon_shading(toon_shading);
 
 	glm::mat4 view = this->camera->get_view_matrix();
 	glm::mat4 perspective_proj = this->camera->get_persp_proj_matrix();
 
+	this->shader_program->start();	
 	this->shader_program->set_view_matrix(view);
 	this->shader_program->set_proj_matrix(perspective_proj);
 	this->shader_program->set_model_matrix(model_mat);
 
+	this->shader_program->set_toon_shading(toon_shading);
 	this->shader_program->set_object_color(object_color);
+	this->shader_program->set_specular_strength(specular_strength);
+	this->shader_program->set_ambient_strength(ambient_strength);
+	this->shader_program->set_specular_power(specular_power);
 	this->shader_program->set_mix_power(mix_power);
 
 	if (this->app->is_debug()) { // TODO: Make this work again
@@ -87,7 +89,7 @@ void GameObject::render() {
 	}
 	else this->model->draw(this->shader_program);
 	
-	if (toon_shading) shader_program->set_toon_shading(!toon_shading);
+	this->shader_program->set_toon_shading(false);	
 	this->shader_program->stop();
 }
 
@@ -153,40 +155,37 @@ glm::mat4 GameObject::get_model_mat()
 
 glm::quat GameObject::get_quaternion() { return this->quaternion; }
 
+float GameObject::get_specular_power() {
+	return this->specular_power;
+}
+
+float GameObject::get_specular_strength(){
+	return this->specular_strength;
+}
+
 void GameObject::set_scale(glm::vec3 scale) {
 	this->scale = scale;
 }
 
 void GameObject::set_ambient_strength(float ambient_strength) {
-	shader_program->start();
-	shader_program->set_ambient_strength(ambient_strength);
-	shader_program->stop();
+	this->ambient_strength = ambient_strength;
 }
 
 void GameObject::set_specular_strength(float specular_strength) {
-	shader_program->start();
-	shader_program->set_specular_strength(specular_strength);
-	shader_program->stop();
+	if (specular_strength > 1 || specular_strength < 0) return;
+	this->specular_strength = specular_strength;
 }
 
 void GameObject::set_specular_power(int specular_power) {
-	// This number has to be like 32 or something like that
-	shader_program->start();
-	shader_program->set_specular_power(specular_power);
-	shader_program->stop();
+	if (specular_power <= 1) return; // Limit it
+	this->specular_power = specular_power;
 }
 
 void GameObject::set_mix_power(float mix_power) {
-	shader_program->start();
-	shader_program->set_mix_power(mix_power);
-	shader_program->stop();
 	this->mix_power = mix_power;
 }
 
 void GameObject::set_toon_shading(bool toon_shading) {
-	shader_program->start();
-	shader_program->set_toon_shading(toon_shading);
-	shader_program->stop();
 	this->toon_shading = toon_shading;
 }
 

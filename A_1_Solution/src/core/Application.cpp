@@ -188,7 +188,6 @@ void Application::key_callback(int key, int scancode, int action, int mode) {
 		plane->transform = plane->transform * glm::angleAxis(glm::radians(90.0f), glm::vec3(-1, 0, 0));
 	}
 
-
 	if (keys[GLFW_KEY_RIGHT]) {
 		plane->start_roll();
 	}
@@ -201,6 +200,18 @@ void Application::resize_callback(int width, int height) { if (frame_buffer) fra
 
 void Application::scroll_callback(double x_offset, double y_offset) {
 	camera->process_mouse_scroll(y_offset);
+	if (!keys[GLFW_KEY_SPACE]) {
+		float specular_power = game_objects[game_objects.size() - 2]->get_specular_power() + y_offset;
+		game_objects[game_objects.size() - 2]->set_specular_power(specular_power);
+		game_objects[game_objects.size() - 3]->set_specular_power(specular_power);
+		game_objects[game_objects.size() - 4]->set_specular_power(specular_power);
+	}	else {
+		float specular_strength = game_objects[game_objects.size() - 2]->get_specular_strength() + (y_offset/10);
+		game_objects[game_objects.size() - 2]->set_specular_strength(specular_strength);
+		game_objects[game_objects.size() - 3]->set_specular_strength(specular_strength);
+		game_objects[game_objects.size() - 4]->set_specular_strength(specular_strength);
+	}
+	
 }
 
 void Application::mouse_callback(double x_pos, double y_pos) {

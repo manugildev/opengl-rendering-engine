@@ -43,18 +43,19 @@ void Model::processNode(aiNode* node, const aiScene* scene) {
 		aiColor4D ambient_color;
 		aiColor4D diffuse_color;
 		aiColor4D specular_color;
-		float shininess;
-		float shininess_strengh;
+		float shininess = 0;
+		float shininess_strengh = 0;
 
 		aiGetMaterialColor(pMaterial, AI_MATKEY_COLOR_AMBIENT, &ambient_color);
 		aiGetMaterialColor(pMaterial, AI_MATKEY_COLOR_DIFFUSE, &diffuse_color);
 		aiGetMaterialColor(pMaterial, AI_MATKEY_COLOR_SPECULAR, &specular_color);
 		aiGetMaterialFloat(pMaterial, AI_MATKEY_SHININESS, &shininess);
 		aiGetMaterialFloat(pMaterial, AI_MATKEY_SHININESS_STRENGTH, &shininess_strengh);
-		std::cout << shininess << std::endl;
-		if (shininess == 0) shininess = 2;
+		if (shininess == 0) shininess = 1;
 
-		std::cout << "Has Materials " << file_name << " " << scene->HasMaterials() << std::endl;
+		//std::cout << shininess_strengh << std::endl;
+
+		//std::cout << "Has Materials " << file_name << " " << scene->HasMaterials() << std::endl;
 
 		// TODO: Save colors
 		// TODO: Add more Texture Types
@@ -165,11 +166,11 @@ Texture * Model::texture_is_loaded(std::string full_path) {
 	return nullptr;
 }
 
-void Model::draw(LightingShader* shader_program, GLenum mode) { //TODO: Maybe bring shader_program here to bind the correct texture in case we have 2 loaded for the same model eg (diffuse, ambient)
+void Model::draw(ShaderProgram* shader_program, GLenum mode) { //TODO: Maybe bring shader_program here to bind the correct texture in case we have 2 loaded for the same model eg (diffuse, ambient)
 	for (GLuint i = 0; i < this->meshes.size(); i++) {
 		const unsigned int m_index = meshes[i].get_material_index();
-		if (shader_program != nullptr)
-			shader_program->set_material(materials[m_index]);
+		LightingShader* derived = dynamic_cast<LightingShader*>(shader_program);
+		if (derived) derived->set_material(materials[m_index]);
 		// We check first if it's a nullptr
 		if (textures[m_index]) 	textures[m_index]->bind(0);
 		this->meshes[i].draw(mode);

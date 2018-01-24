@@ -9,6 +9,7 @@
 #include <assimp\Importer.hpp>
 #include <assimp\scene.h>
 #include <assimp\postprocess.h>
+#include "..\shaders\ShaderProgram.h"
 
 class LightingShader;
 
@@ -28,7 +29,7 @@ public:
 	Model(const std::string & file_name = "models/cube.obj");
 
 	void load_model(const char* file_name);
-	void draw(LightingShader* shader_program = nullptr, GLenum mode = GL_TRIANGLES);
+	void draw(ShaderProgram* shader_program = nullptr, GLenum mode = GL_TRIANGLES);
 
 	~Model();
 	void processNode(aiNode* node, const aiScene* scene);

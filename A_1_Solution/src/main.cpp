@@ -13,7 +13,7 @@
 
 int main(void) {
 	/* Camera */
-	Camera camera(glm::vec3(0.0f, 26.0f, 0.0f));
+	Camera camera(glm::vec3(0.0f, 7.0f,10.0f));
 
 	/* Application */
 	Application *app = new Application(&camera);
@@ -100,25 +100,35 @@ int main(void) {
 	cube->set_scale(glm::vec3(30, 0.2f, 5));
 	cube->set_pos(glm::vec3(0, 10, 60));
 	cube->set_mix_power(.6f);
-
-	PlaneDemo* plane1 = new PlaneDemo(app, plane_model, app->get_camera());
-	plane1->set_parent(city);
-	plane1->set_shader_program(shader_program);
-	plane1->set_scale(glm::vec3(.5f));
-	plane1->set_pos(glm::vec3(0, 10.65, 60));
-	plane1->set_rotation(glm::vec3(11.5, 0, 0));
-
-	GameObject * teapot = new GameObject(app, new Model("models/monkey.obj"), glm::vec3(0.15f, 0.68f, 0.37f));
+	
+	GameObject * teapot = new GameObject(app, new Model("models/teapot.obj"), glm::vec3(0.15f, 0.68f, 0.37f));
 	teapot->set_parent(city);
 	teapot->set_shader_program(shader_program);
 	teapot->set_scale(glm::vec3(.9f));
-	teapot->set_pos(glm::vec3(0, 7, 0));
+	teapot->set_pos(glm::vec3(0, 10, 60));
 	teapot->set_rotation_speed(glm::vec3(0, 20, 0));
 	teapot->set_mix_power(.6f);
-	teapot->set_toon_shading(false);
+	teapot->set_toon_shading(true);
 
-	std::vector<GameObject*> objects = { city, car1, car2, car3, car4, car5, car6, car7, car8, cube, plane1, teapot, main_plane };
+	GameObject * teapot1 = new GameObject(app, new Model("models/teapot.obj"), glm::vec3(0.15f, 0.68f, 0.37f));
+	teapot1->set_parent(city);
+	teapot1->set_shader_program(shader_program);
+	teapot1->set_scale(glm::vec3(.9f));
+	teapot1->set_pos(glm::vec3(8, 10, 60));
+	teapot1->set_rotation_speed(glm::vec3(0, 20, 0));
+	teapot1->set_mix_power(.6f);
+	teapot1->set_toon_shading(false);
 
+	GameObject * teapot2 = new GameObject(app, new Model("models/teapot.obj"), glm::vec3(0.15f, 0.68f, 0.37f));
+	teapot2->set_parent(city);
+	teapot2->set_shader_program(shader_program);
+	teapot2->set_scale(glm::vec3(.9f));
+	teapot2->set_pos(glm::vec3(-8, 10, 60));
+	teapot2->set_rotation_speed(glm::vec3(0, 20, 0));
+	teapot2->set_mix_power(.6f);
+	teapot2->set_toon_shading(false);
+
+	std::vector<GameObject*> objects = { city, car1, car2, car3, car4, car5, car6, car7, car8, cube, teapot, teapot1, teapot2, main_plane };
 
 	/* Lights */
 	LampShader* shader_program1 = LampShader::create();
@@ -136,7 +146,7 @@ int main(void) {
 	for (int i = 0; i < point_lights.size(); i++) point_lights[i]->set_parent(city);
 	for (int i = 0; i < point_lights.size(); i++) point_lights[i]->set_shader_program(shader_program1);
 
-	DirLight* d_light = new DirLight(app, glm::vec3(1.0f, -1.0f, -0.0f), glm::vec3(1.0f));
+	DirLight* d_light = new DirLight(app, glm::vec3(.1f, -1.0f, -0.0f), glm::vec3(1.0f));
 	d_light->set_shader_program(shader_program1);
 
 	/* CubeMap */
