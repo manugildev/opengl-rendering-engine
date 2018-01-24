@@ -44,11 +44,15 @@ void Model::processNode(aiNode* node, const aiScene* scene) {
 		aiColor4D diffuse_color;
 		aiColor4D specular_color;
 		float shininess;
+		float shininess_strengh;
 
 		aiGetMaterialColor(pMaterial, AI_MATKEY_COLOR_AMBIENT, &ambient_color);
 		aiGetMaterialColor(pMaterial, AI_MATKEY_COLOR_DIFFUSE, &diffuse_color);
 		aiGetMaterialColor(pMaterial, AI_MATKEY_COLOR_SPECULAR, &specular_color);
 		aiGetMaterialFloat(pMaterial, AI_MATKEY_SHININESS, &shininess);
+		aiGetMaterialFloat(pMaterial, AI_MATKEY_SHININESS_STRENGTH, &shininess_strengh);
+		std::cout << shininess << std::endl;
+		if (shininess == 0) shininess = 2;
 
 		std::cout << "Has Materials " << file_name << " " << scene->HasMaterials() << std::endl;
 
@@ -67,6 +71,7 @@ void Model::processNode(aiNode* node, const aiScene* scene) {
 		mat.diffuse_color = glm::vec3(diffuse_color.r, diffuse_color.g, diffuse_color.b);
 		mat.specular_color = glm::vec3(specular_color.r, specular_color.g, specular_color.b);
 		mat.shininess = shininess;
+		mat.shininess_strengh = shininess_strengh;
 		mat.diffuse_texture = textures[i];
 		materials.push_back(mat);
 	}

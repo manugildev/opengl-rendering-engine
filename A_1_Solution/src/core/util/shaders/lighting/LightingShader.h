@@ -27,6 +27,7 @@ struct Material_Location {
 	GLuint diffuse_color;
 	GLuint specular_color;
 	GLuint shininess;
+	GLuint shininess_strength;
 };
 
 
@@ -53,6 +54,7 @@ public:
 	void set_specular_power(int value);
 	void set_texture(int value);
 	void set_mix_power(float value);
+	void set_toon_shading(bool value);
 
 	void set_directional_light(DirLight* dir_light);
 	void set_point_lights(std::vector<PointLight*> point_lights);
@@ -63,7 +65,7 @@ private:
 	GLuint location_model_mat, location_view_mat, location_proj_mat;
 	GLuint location_object_color, location_light_pos, location_light_color;
 	GLuint location_ambient_strength, location_specular_strength, location_specular_power;
-	GLuint location_texture_0, location_mix_power;
+	GLuint location_texture_0, location_mix_power, location_toon_shading;
 
 	DLight_Location location_dir_light;
 	PLight_Location location_point_light[MAX_LIGHTS];

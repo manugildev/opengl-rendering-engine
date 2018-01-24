@@ -70,6 +70,8 @@ void GameObject::update_model_mat() {
 void GameObject::render() {
 	this->shader_program->start();
 
+	if (toon_shading) shader_program->set_toon_shading(toon_shading);
+
 	glm::mat4 view = this->camera->get_view_matrix();
 	glm::mat4 perspective_proj = this->camera->get_persp_proj_matrix();
 
@@ -84,8 +86,8 @@ void GameObject::render() {
 		this->model->draw(nullptr, GL_LINES);
 	}
 	else this->model->draw(this->shader_program);
-
-
+	
+	if (toon_shading) shader_program->set_toon_shading(!toon_shading);
 	this->shader_program->stop();
 }
 
@@ -168,17 +170,24 @@ void GameObject::set_specular_strength(float specular_strength) {
 }
 
 void GameObject::set_specular_power(int specular_power) {
+	// This number has to be like 32 or something like that
 	shader_program->start();
 	shader_program->set_specular_power(specular_power);
 	shader_program->stop();
 }
-
 
 void GameObject::set_mix_power(float mix_power) {
 	shader_program->start();
 	shader_program->set_mix_power(mix_power);
 	shader_program->stop();
 	this->mix_power = mix_power;
+}
+
+void GameObject::set_toon_shading(bool toon_shading) {
+	shader_program->start();
+	shader_program->set_toon_shading(toon_shading);
+	shader_program->stop();
+	this->toon_shading = toon_shading;
 }
 
 void GameObject::set_parent(GameObject* parent) {

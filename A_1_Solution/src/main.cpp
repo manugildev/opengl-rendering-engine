@@ -108,7 +108,16 @@ int main(void) {
 	plane1->set_pos(glm::vec3(0, 10.65, 60));
 	plane1->set_rotation(glm::vec3(11.5, 0, 0));
 
-	std::vector<GameObject*> objects = { city, car1, car2, car3, car4, car5, car6, car7, car8, cube, plane1, main_plane };
+	GameObject * teapot = new GameObject(app, new Model("models/monkey.obj"), glm::vec3(0.15f, 0.68f, 0.37f));
+	teapot->set_parent(city);
+	teapot->set_shader_program(shader_program);
+	teapot->set_scale(glm::vec3(.9f));
+	teapot->set_pos(glm::vec3(0, 7, 0));
+	teapot->set_rotation_speed(glm::vec3(0, 20, 0));
+	teapot->set_mix_power(.6f);
+	teapot->set_toon_shading(false);
+
+	std::vector<GameObject*> objects = { city, car1, car2, car3, car4, car5, car6, car7, car8, cube, plane1, teapot, main_plane };
 
 
 	/* Lights */
@@ -121,13 +130,13 @@ int main(void) {
 	PointLight* p_light_6 = new PointLight(app, glm::vec3(-40.0f, 2.0f, 8.0f), glm::vec3(1.0f, 1.0f, 0.0f), .3f, 0.8f, 0.1f);
 	PointLight* p_light_7 = new PointLight(app, glm::vec3(-13.0f, 2.0f, -40.0f), glm::vec3(1.0f, .0f, 0.0f), .3f, 0.8f, 0.1f);
 	PointLight* p_light_8 = new PointLight(app, glm::vec3(8.0f, 2.0f, 40.0f), glm::vec3(0.0f, 1.0f, 0.0f), .3f, 0.8f, 0.1f);
-	PointLight* p_light_9 = new PointLight(app, glm::vec3(0.0f, 5.0f, 0.0f), glm::vec3(1.0f), .3f, 0.8f, 0.01f);
+	PointLight* p_light_9 = new PointLight(app, glm::vec3(0.0f, 5.0f, 0.0f), glm::vec3(1.0f), .3f, 0.8f, 0.1f);
 
 	std::vector<PointLight*> point_lights = { p_light_1, p_light_2, p_light_3, p_light_4, p_light_5, p_light_6, p_light_7, p_light_8, p_light_9 };
 	for (int i = 0; i < point_lights.size(); i++) point_lights[i]->set_parent(city);
 	for (int i = 0; i < point_lights.size(); i++) point_lights[i]->set_shader_program(shader_program1);
 
-	DirLight* d_light = new DirLight(app, glm::vec3(0.0f, -1.0f, -0.0f), glm::vec3(1.0f));
+	DirLight* d_light = new DirLight(app, glm::vec3(1.0f, -1.0f, -0.0f), glm::vec3(1.0f));
 	d_light->set_shader_program(shader_program1);
 
 	/* CubeMap */

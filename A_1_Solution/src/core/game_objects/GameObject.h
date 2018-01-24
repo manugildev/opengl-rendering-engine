@@ -47,6 +47,8 @@ public:
 	void set_specular_strength(float specular_strength);
 	void set_specular_power(int specular_power);
 	void set_mix_power(float mix_power);
+	void set_toon_shading(bool toon_shading);
+
 	virtual void set_shader_program(LightingShader* shader_program);
 
 	void update_lights();
@@ -77,4 +79,6 @@ private:
 	glm::vec3 rotation_speed = glm::vec3(0.0f);
 	glm::vec3 rotation_acceleration = glm::vec3(0.0f);
 	glm::vec3 max_rotation_speed = glm::vec3(std::numeric_limits<float>::max());
+
+	bool toon_shading = false;
 };

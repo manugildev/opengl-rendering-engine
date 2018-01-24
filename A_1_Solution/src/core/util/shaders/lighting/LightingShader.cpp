@@ -29,6 +29,7 @@ void LightingShader::get_all_uniform_locations() {
 	location_specular_power = get_uniform_location("specular_power");
 	location_texture_0 = get_uniform_location("texture_0");
 	location_mix_power = get_uniform_location("mix_power");
+	location_toon_shading = get_uniform_location("toon");
 
 
 	/* Locations for Lights */
@@ -51,6 +52,7 @@ void LightingShader::get_all_uniform_locations() {
 	location_material.diffuse_color = get_uniform_location("material.diffuse_color");
 	location_material.specular_color = get_uniform_location("material.specular_color");
 	location_material.shininess = get_uniform_location("material.shininess");
+	location_material.shininess_strength = get_uniform_location("material.shininess_strength");
 }
 
 void LightingShader::set_object_color(glm::vec3 object_color) { modify_vec3(location_object_color, object_color); }
@@ -70,6 +72,8 @@ void LightingShader::set_ambient_strength(float value) { modify_float(location_a
 void LightingShader::set_specular_strength(float value) { modify_float(location_specular_strength, value); }
 
 void LightingShader::set_specular_power(int value) { modify_int(location_specular_power, value); }
+
+void LightingShader::set_toon_shading(bool value) { modify_boolean(location_toon_shading, value); }
 
 void LightingShader::set_texture(int number) { modify_texture(location_texture_0, number); }
 
