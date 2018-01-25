@@ -167,27 +167,19 @@ float beckmannDistribution(float x, float cook_r) {
   return exp(tan2Alpha / cook_r2) / denom;
 }
 
-float cookTorranceSpecular(vec3 lightDirection,vec3 viewDirection, vec3 surfaceNormal, float cook_r, float fresnel) {
-  float VdotN = max(dot(surfaceNormal, viewDirection), 0.0);
-  float LdotN = max(dot(surfaceNormal, lightDirection), 0.0);
+float cookTorranceSpecular(vec3 lightDirection,vec3 viewDirection, vec3 surfaceNormal, float roughness, float albedo) {
+  float LdotV = dot(lightDirection, viewDirection);
+  float NdotL = dot(lightDirection, surfaceNormal);
+  float NdotV = dot(surfaceNormal, viewDirection);
 
-  //Half angle vector
-  vec3 H = normalize(lightDirection + viewDirection);
+  float s = LdotV - NdotL * NdotV;
+  float t = mix(1.0, max(NdotL, NdotV), step(0.0, s));
 
-  //Geometric term
-  float NdotH = max(dot(surfaceNormal, H), 0.0);
-  float VdotH = max(dot(viewDirection, H), 0.000001);
-  float x = 2.0 * NdotH / VdotH;
-  float G = min(1.0, min(x * VdotN, x * LdotN));
-  
-  //Distribution term
-  float D = beckmannDistribution(NdotH, cook_r);
+  float sigma2 = roughness * roughness;
+  float A = 1.0 + sigma2 * (albedo / (sigma2 + 0.13) + 0.5 / (sigma2 + 0.33));
+  float B = 0.45 * sigma2 / (sigma2 + 0.09);
 
-  //Fresnel term
-  float F = pow(1.0 - VdotH, fresnel);
-
-  //Multiply terms and done
-  return  G * F * D / (PI * VdotN * LdotN);
+  return albedo * max(0.0, NdotL) * (A + B * s / t) / PI;
 }
 
 
@@ -195,7 +187,7 @@ vec3 calc_dir_light_cook(DirLight light, vec3 normal, vec3 view_dir){
 	vec3 light_dir = normalize(-light.direction);
 	float NdotL = max(0, dot(normal, light_dir));
 	float power = 0.0f;
-	if (NdotL > 0.0f) power = cookTorranceSpecular(light_dir, view_dir, normal, cook_r, cook_f);
+	power = cookTorranceSpecular(light_dir, view_dir, normal, cook_r, cook_f);
 	float cook_value = (cook_k + power * (1.0 - cook_k));
 		
 	// Ambient Lighting
@@ -208,10 +200,10 @@ vec3 calc_dir_light_cook(DirLight light, vec3 normal, vec3 view_dir){
 
 	// Specular Lighting
 	vec3 reflect_dir = reflect(-light_dir, normal);
-	float spec = pow(max(dot(view_dir, reflect_dir), 0.0), spec_power);
+	float spec = pow(max(dot(view_dir, reflect_dir), 0.0), specular_power);
 	color = material.specular_color;
 	vec3 specular;
-	if (diff > 0.0f) specular = light.light_color * texture_blend * color * cook_value * specular_strength;
+	if (diff > 0.0f) specular = (light.light_color * texture_blend * color * 1 * cook_value);
 
 	return (ambient + diffuse + specular);
 

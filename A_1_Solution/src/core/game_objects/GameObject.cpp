@@ -88,7 +88,6 @@ void GameObject::render() {
 		this->shader_program->set_cook_r(cook_r);
 		this->shader_program->set_cook_f(cook_f0);
 		this->shader_program->set_cook_k(cook_k);
-		std::cout << cook_r << " " << cook_k << " " << cook_f0 << std::endl;
 	}
 
 	if (this->app->is_debug()) { // TODO: Make this work again
