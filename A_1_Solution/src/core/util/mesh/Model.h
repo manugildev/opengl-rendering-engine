@@ -14,9 +14,9 @@
 class LightingShader;
 
 struct Material {
-	glm::vec3 ambient_color = glm::vec3(0.0f);
-	glm::vec3 diffuse_color = glm::vec3(0.0f);
-	glm::vec3 specular_color = glm::vec3(0.0f);
+	glm::vec3 ambient_color = glm::vec3(1.0f);
+	glm::vec3 diffuse_color = glm::vec3(1.0f);
+	glm::vec3 specular_color = glm::vec3(1.0f);
 	float shininess = 8.0f;
 	float shininess_strengh = 0.0f;
 	Texture* diffuse_texture = nullptr;

@@ -147,7 +147,7 @@ int main(void) {
 	for (int i = 0; i < point_lights.size(); i++) point_lights[i]->set_parent(city);
 	for (int i = 0; i < point_lights.size(); i++) point_lights[i]->set_shader_program(shader_program1);
 
-	DirLight* d_light = new DirLight(app, glm::vec3(.1f, -1.0f, -0.0f), glm::vec3(1.0f));
+	DirLight* d_light = new DirLight(app, glm::vec3(1.0f, -1.0f, -0.0f), glm::vec3(1.0f));
 	d_light->set_shader_program(shader_program1);
 
 	/* CubeMap */

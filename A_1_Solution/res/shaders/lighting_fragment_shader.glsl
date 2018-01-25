@@ -23,11 +23,11 @@ struct Material {
     vec3 specular_color;
     float shininess;
 }; 
-  
-
+ 
 out vec4 frag_color;
 
 in vec3 frag_pos;
+in vec3 eye_dir;
 in vec3 normal;
 in vec2 tex_coords;
 
@@ -69,7 +69,7 @@ void main(){
 	else spec_power = material.shininess;
 
 	vec3 norm = normalize(normal);
-	vec3 view_dir = normalize(view_pos - frag_pos);
+	vec3 view_dir = normalize(view_pos - eye_dir);
 
 	// Directional Lighting
 	vec3 dir_lighting = vec3(0.0f, 0.0f, 0.0f);
@@ -203,7 +203,7 @@ vec3 calc_dir_light_cook(DirLight light, vec3 normal, vec3 view_dir){
 	float spec = pow(max(dot(view_dir, reflect_dir), 0.0), specular_power);
 	color = material.specular_color;
 	vec3 specular;
-	if (diff > 0.0f) specular = (light.light_color * texture_blend * color * 1 * cook_value);
+	if (diff > 0.0f) specular = (light.light_color * texture_blend * color * cook_value);
 
 	return (ambient + diffuse + specular);
 
