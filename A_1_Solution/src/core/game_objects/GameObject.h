@@ -44,13 +44,20 @@ public:
 	glm::quat get_quaternion();
 	float get_specular_power();
 	float get_specular_strength();
+	float get_cook_f0();
+	float get_cook_r();
+	float get_cook_k();
 
 	void set_scale(glm::vec3 scale);
 	void set_ambient_strength(float ambient_strength);
 	void set_specular_strength(float specular_strength);
 	void set_specular_power(int specular_power);
 	void set_mix_power(float mix_power);
+	void set_cook_f0(float value);
+	void set_cook_r(float value);
+	void set_cook_k(float value);
 	virtual void set_toon_shading(bool toon_shading);
+	virtual void set_cook_shading(bool cook_shading);
 
 	virtual void set_shader_program(LightingShader* shader_program);
 
@@ -85,7 +92,11 @@ private:
 	glm::vec3 max_rotation_speed = glm::vec3(std::numeric_limits<float>::max());
 
 	bool toon_shading = false;
+	bool cook_shading = false;
 	float specular_strength = 1;
-	float ambient_strength = 0.8f;
+	float ambient_strength = 0.6f;
 	float specular_power = 0;
+	float cook_k = 0;
+	float cook_f0 = 0;
+	float cook_r = 0;
 };

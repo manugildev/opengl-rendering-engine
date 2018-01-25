@@ -30,6 +30,10 @@ void LightingShader::get_all_uniform_locations() {
 	location_texture_0 = get_uniform_location("texture_0");
 	location_mix_power = get_uniform_location("mix_power");
 	location_toon_shading = get_uniform_location("toon");
+	location_cook_shading = get_uniform_location("cook");
+	location_cook_r = get_uniform_location("cook_r");
+	location_cook_k = get_uniform_location("cook_k");
+	location_cook_f = get_uniform_location("cook_f");
 
 
 	/* Locations for Lights */
@@ -75,10 +79,23 @@ void LightingShader::set_specular_power(int value) { modify_int(location_specula
 
 void LightingShader::set_toon_shading(bool value) { modify_boolean(location_toon_shading, value); }
 
+void LightingShader::set_cook_shading(bool value) { modify_boolean(location_cook_shading, value); }
+
 void LightingShader::set_texture(int number) { modify_texture(location_texture_0, number); }
 
 void LightingShader::set_mix_power(float value) {
 	modify_float(location_mix_power, value);
+}
+
+void LightingShader::set_cook_r(float value){
+	modify_float(location_cook_r, value);
+}
+
+void LightingShader::set_cook_k(float value){
+	modify_float(location_cook_k, value);
+}
+void LightingShader::set_cook_f(float value){
+	modify_float(location_cook_f, value);
 }
 
 void LightingShader::set_directional_light(DirLight* dir_light) {

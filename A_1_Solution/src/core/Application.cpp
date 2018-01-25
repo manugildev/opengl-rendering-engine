@@ -211,7 +211,22 @@ void Application::scroll_callback(double x_offset, double y_offset) {
 		game_objects[game_objects.size() - 3]->set_specular_strength(specular_strength);
 		game_objects[game_objects.size() - 4]->set_specular_strength(specular_strength);
 	}
-	
+
+	if (keys[GLFW_KEY_1]) {
+		float cook_r = game_objects[game_objects.size() - 2]->get_cook_r() + (y_offset / 10);
+		game_objects[game_objects.size() - 2]->set_cook_r(cook_r);
+	}
+
+	if (keys[GLFW_KEY_2]) {
+		float cook_f0 = game_objects[game_objects.size() - 2]->get_cook_f0() + (y_offset / 10);
+		game_objects[game_objects.size() - 2]->set_cook_f0(cook_f0);
+	}
+
+	if (keys[GLFW_KEY_3]) {
+		float cook_k = game_objects[game_objects.size() - 2]->get_cook_k() + (y_offset / 10);
+		game_objects[game_objects.size() - 2]->set_cook_k(cook_k);
+	}
+
 }
 
 void Application::mouse_callback(double x_pos, double y_pos) {

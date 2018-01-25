@@ -83,6 +83,13 @@ void GameObject::render() {
 	this->shader_program->set_ambient_strength(ambient_strength);
 	this->shader_program->set_specular_power(specular_power);
 	this->shader_program->set_mix_power(mix_power);
+	this->shader_program->set_cook_shading(cook_shading);
+	if (cook_shading) {
+		this->shader_program->set_cook_r(cook_r);
+		this->shader_program->set_cook_f(cook_f0);
+		this->shader_program->set_cook_k(cook_k);
+		std::cout << cook_r << " " << cook_k << " " << cook_f0 << std::endl;
+	}
 
 	if (this->app->is_debug()) { // TODO: Make this work again
 		this->model->draw(nullptr, GL_LINES);
@@ -163,6 +170,18 @@ float GameObject::get_specular_strength(){
 	return this->specular_strength;
 }
 
+float GameObject::get_cook_f0() {
+	return this->cook_f0;
+}
+
+float GameObject::get_cook_r() {
+	return this->cook_r;
+}
+
+float GameObject::get_cook_k() {
+	return this->cook_k;
+}
+
 void GameObject::set_scale(glm::vec3 scale) {
 	this->scale = scale;
 }
@@ -185,9 +204,32 @@ void GameObject::set_mix_power(float mix_power) {
 	this->mix_power = mix_power;
 }
 
+void GameObject::set_cook_f0(float value){
+	if (cook_f0 > 1) { cook_f0 = 1; return; }
+	if (cook_f0 < 0) { cook_f0 = 0; return; }
+	this->cook_f0 = value;
+}
+
+void GameObject::set_cook_r(float value){
+	if (cook_r > 1) { cook_r = 1; return; }
+	if (cook_r < 0) { cook_r = 0; return; }
+	this->cook_r = value;
+}
+
+void GameObject::set_cook_k(float value){
+	if (cook_k > 1) { cook_k = 1; return; }
+	if (cook_k < 0) { cook_k = 0; return; }
+	this->cook_k = value;
+}
+
 void GameObject::set_toon_shading(bool toon_shading) {
 	this->toon_shading = toon_shading;
 }
+
+void GameObject::set_cook_shading(bool cook_shading) {
+	this->cook_shading = cook_shading;
+}
+
 
 void GameObject::set_parent(GameObject* parent) {
 	this->parent = parent;

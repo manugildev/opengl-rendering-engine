@@ -5,7 +5,7 @@
 #include <std_image\stb_image.h>
 
 Texture::Texture(const std::string & file_name, GLenum texture_target, int num_of_textures) : texture_target(texture_target), file_name(file_name), num_of_textures(num_of_textures) {
-	LOG_MESSAGE("Importing: " + file_name);
+	//LOG_MESSAGE("Importing: " + file_name);
 	this->texture_id = new GLuint[num_of_textures];
 	this->load();
 }

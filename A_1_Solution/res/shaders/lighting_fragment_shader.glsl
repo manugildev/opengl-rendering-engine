@@ -2,6 +2,8 @@
 
 #define number_of_point_lights 9
 
+#define PI 3.14159265
+
 struct DirLight {
 	vec3 direction;
 	vec3 light_color;
@@ -36,6 +38,11 @@ uniform float specular_strength;
 uniform int specular_power;
 uniform float mix_power;
 uniform bool toon;
+uniform bool cook = false;
+
+uniform float cook_f = 0.1;
+uniform float cook_r = 0.1;
+uniform float cook_k = 0.7;
 
 uniform DirLight dir_light;
 uniform PointLight point_lights[number_of_point_lights];
@@ -43,8 +50,10 @@ uniform Material material;
 
 uniform sampler2D texture_0;
 
-vec3 calc_dir_light(DirLight light, vec3 normal, vec3 view_dir);
-vec3 calc_point_light(PointLight light, vec3 normal, vec3 frag_pos, vec3 view_dir);
+vec3 calc_dir_light_phong(DirLight light, vec3 normal, vec3 view_dir);
+vec3 calc_dir_light_cook(DirLight light, vec3 normal, vec3 view_dir);
+vec3 calc_point_light_phong(PointLight light, vec3 normal, vec3 frag_pos, vec3 view_dir);
+vec3 calc_point_light_cook(PointLight light, vec3 normal, vec3 frag_pos, vec3 view_dir);
 vec3 limit(float value, vec3 color);
 
 vec3 texture_blend;
@@ -63,12 +72,15 @@ void main(){
 	vec3 view_dir = normalize(view_pos - frag_pos);
 
 	// Directional Lighting
-	vec3 dir_lighting = calc_dir_light(dir_light, norm, view_dir);
+	vec3 dir_lighting = vec3(0.0f, 0.0f, 0.0f);
+	if (!cook) dir_lighting = calc_dir_light_phong(dir_light, norm, view_dir);
+	else dir_lighting = calc_dir_light_cook(dir_light, norm, view_dir);
 
 	// Point Lights
 	vec3 point_lighting = vec3(0.0f, 0.0f, 0.0f);
 	for (int i = 0; i < number_of_point_lights; i++) {
-		point_lighting += calc_point_light(point_lights[i], norm, frag_pos, view_dir);
+		if(!cook) point_lighting += calc_point_light_phong(point_lights[i], norm, frag_pos, view_dir);
+		//else point_lighting += calc_point_light_cook(point_lights[i], norm, frag_pos, view_dir);
 	}
 
 	// Calculate Result
@@ -77,7 +89,7 @@ void main(){
 
 }
 
-vec3 calc_dir_light(DirLight light, vec3 normal, vec3 view_dir) {
+vec3 calc_dir_light_phong(DirLight light, vec3 normal, vec3 view_dir) {
 	vec3 light_dir = normalize(-light.direction);
 	
 	// Ambient Lighting
@@ -103,7 +115,7 @@ vec3 calc_dir_light(DirLight light, vec3 normal, vec3 view_dir) {
 	return (ambient + diffuse + specular);
 }
 
-vec3 calc_point_light(PointLight light, vec3 normal, vec3 frag_pos, vec3 view_dir) {
+vec3 calc_point_light_phong(PointLight light, vec3 normal, vec3 frag_pos, vec3 view_dir) {
 	vec3 light_dir = normalize(light.position - frag_pos);
 
 	// Attenuation 
@@ -144,4 +156,98 @@ vec3 limit(float value, vec3 color){
 	else if (value > 0.05) color = vec3(0.35, 0.35, 0.35) * color;
 	else color = vec3(0.1, 0.1, 0.1) * color;
 	return color;
+}
+
+float beckmannDistribution(float x, float cook_r) {
+  float NdotH = max(x, 0.0001);
+  float cos2Alpha = NdotH * NdotH;
+  float tan2Alpha = (cos2Alpha - 1.0) / cos2Alpha;
+  float cook_r2 = cook_r * cook_r;
+  float denom = 3.141592653589793 * cook_r2 * cos2Alpha * cos2Alpha;
+  return exp(tan2Alpha / cook_r2) / denom;
+}
+
+float cookTorranceSpecular(vec3 lightDirection,vec3 viewDirection, vec3 surfaceNormal, float cook_r, float fresnel) {
+  float VdotN = max(dot(surfaceNormal, viewDirection), 0.0);
+  float LdotN = max(dot(surfaceNormal, lightDirection), 0.0);
+
+  //Half angle vector
+  vec3 H = normalize(lightDirection + viewDirection);
+
+  //Geometric term
+  float NdotH = max(dot(surfaceNormal, H), 0.0);
+  float VdotH = max(dot(viewDirection, H), 0.000001);
+  float x = 2.0 * NdotH / VdotH;
+  float G = min(1.0, min(x * VdotN, x * LdotN));
+  
+  //Distribution term
+  float D = beckmannDistribution(NdotH, cook_r);
+
+  //Fresnel term
+  float F = pow(1.0 - VdotH, fresnel);
+
+  //Multiply terms and done
+  return  G * F * D / (PI * VdotN * LdotN);
+}
+
+
+vec3 calc_dir_light_cook(DirLight light, vec3 normal, vec3 view_dir){
+	vec3 light_dir = normalize(-light.direction);
+	float NdotL = max(0, dot(normal, light_dir));
+	float power = 0.0f;
+	if (NdotL > 0.0f) power = cookTorranceSpecular(light_dir, view_dir, normal, cook_r, cook_f);
+	float cook_value = (cook_k + power * (1.0 - cook_k));
+		
+	// Ambient Lighting
+	vec3 ambient = ambient_strength * light.light_color * texture_blend * material.ambient_color;
+
+	// Diffuse Lighting
+	float diff = max(dot(normal, light_dir), 0.0f);	
+	vec3 color = mix(material.diffuse_color, object_color, mix_power);	
+	vec3 diffuse = light.light_color * diff * texture_blend * color;
+
+	// Specular Lighting
+	vec3 reflect_dir = reflect(-light_dir, normal);
+	float spec = pow(max(dot(view_dir, reflect_dir), 0.0), spec_power);
+	color = material.specular_color;
+	vec3 specular;
+	if (diff > 0.0f) specular = light.light_color * texture_blend * color * cook_value * specular_strength;
+
+	return (ambient + diffuse + specular);
+
+}
+
+vec3 calc_point_light_cook(PointLight light, vec3 normal, vec3 frag_pos, vec3 view_dir){
+	vec3 light_dir = normalize(light.position - frag_pos);
+
+	// Attenuation 
+	float distance = length(light.position - frag_pos);
+	float attenuation = 1.0f / (light.constant + (light.linear * distance) + (light.quadratic * (distance * distance)));
+			
+	// Ambient Lighting
+	vec3 ambient = ambient_strength * light.light_color * texture_blend * material.ambient_color;
+	ambient *= attenuation;
+
+	// Diffuse Lighting
+	float diff = max(dot(normal, light_dir), 0.0f);	
+	vec3 color = mix(material.diffuse_color, object_color, mix_power);
+	//diff = floor(diff * levels) / levels;
+	if (toon) color = limit (diff, color);
+	vec3 diffuse = diff * light.light_color * texture_blend * color;
+	diffuse *= attenuation;
+
+	// Specular Lighting
+	vec3 reflect_dir = reflect(-light_dir, normal);
+	float spec = pow(max(dot(view_dir, reflect_dir), 0.0), spec_power);
+	//spec = floor(spec * levels) / levels;
+	color = material.specular_color;
+	if (toon) color = limit (spec, color);
+
+	vec3 specular;
+	if (diff > 0.0f) {
+		specular = spec * light.light_color * texture_blend * color * specular_strength;
+		specular *= attenuation;
+	}
+	
+	return (ambient + diffuse + specular);
 }

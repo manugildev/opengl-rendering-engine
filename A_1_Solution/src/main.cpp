@@ -93,6 +93,7 @@ int main(void) {
 	main_plane->set_scale(glm::vec3(0.3f));
 	//plane->set_pos(glm::vec3(0.0f, 0.0f, 0.0f));
 	main_plane->set_rotation(glm::vec3(90, 180, 90));
+	main_plane->set_cook_shading(true);
 	
 	GameObject * cube = new GameObject(app, new Model(), glm::vec3(0.32f,0.33f,0.34f));
 	cube->set_parent(city);
@@ -126,7 +127,7 @@ int main(void) {
 	teapot2->set_pos(glm::vec3(-8, 10, 60));
 	teapot2->set_rotation_speed(glm::vec3(0, 20, 0));
 	teapot2->set_mix_power(.6f);
-	teapot2->set_toon_shading(false);
+	teapot2->set_cook_shading(true);
 
 	std::vector<GameObject*> objects = { city, car1, car2, car3, car4, car5, car6, car7, car8, cube, teapot, teapot1, teapot2, main_plane };
 
