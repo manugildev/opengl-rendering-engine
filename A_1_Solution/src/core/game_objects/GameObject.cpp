@@ -17,6 +17,7 @@ void GameObject::set_shader_program(LightingShader* shader_program) {
 	this->set_initial_shader_values();
 }
 
+
 void GameObject::set_initial_shader_values() {
 	shader_program->start();
 	shader_program->set_ambient_strength(.02f);
@@ -35,11 +36,14 @@ void GameObject::update_lights() {
 }
 
 void GameObject::update(float delta_time) {
+	this->position -= rotation_factor;
+	if (distance_from_center != 0) this->circular_angle += this->circular_speed * delta_time;
 	//model_mat = glm::rotate(model_mat, glm::radians(1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 	glm::vec3 new_speed = this->speed + (this->acceleration * delta_time);
 	if (glm::all(glm::lessThan(new_speed, this->max_speed))) this->speed = new_speed;
 	this->position += this->speed * delta_time;
-	this->set_pos(this->position);
+	if (distance_from_center != 0) rotation_factor = this->calculate_rotation_position();	
+	this->set_pos(this->position + rotation_factor);
 
 	glm::vec3 new_rotation_speed = this->rotation_speed + (this->rotation_acceleration * delta_time);
 	if (glm::all(glm::lessThan(new_rotation_speed, this->max_rotation_speed))) this->rotation_speed = new_rotation_speed;
@@ -48,7 +52,6 @@ void GameObject::update(float delta_time) {
 	glm::quat rotX = glm::angleAxis(glm::radians(rotation[0]), glm::vec3(1.f, 0.f, 0.f));
 	glm::quat rotY = glm::angleAxis(glm::radians(rotation[1]), glm::vec3(0.f, 1.f, 0.f));
 	glm::quat rotZ = glm::angleAxis(glm::radians(rotation[2]), glm::vec3(0.f, 0.f, 1.f));
-
 	quaternion = rotZ * rotY * rotX;
 
 	this->update_model_mat();
@@ -56,13 +59,11 @@ void GameObject::update(float delta_time) {
 
 void GameObject::update_model_mat() {
 	this->model_mat = glm::scale(glm::mat4(1.0f), this->scale);
-
 	glm::mat4 rotation_mat = glm::toMat4(quaternion);
 	this->model_mat = rotation_mat * model_mat;
-		
-	this->model_mat[3][0] = this->position[0];
-	this->model_mat[3][1] = this->position[1];
-	this->model_mat[3][2] = this->position[2];
+	this->model_mat[3][0] = this->get_pos()[0];
+	this->model_mat[3][1] = this->get_pos()[1];
+	this->model_mat[3][2] = this->get_pos()[2];
 	//this->model_mat = glm::translate(this->model_mat, this->position);
 	if (parent != nullptr) this->model_mat = parent->model_mat * this->model_mat;
 }
@@ -221,6 +222,18 @@ void GameObject::set_cook_k(float value){
 	this->cook_k = value;
 }
 
+void GameObject::set_circular_speed(glm::vec2 value){
+	this->circular_speed = value;
+}
+
+void GameObject::set_distance_from_center(float value){
+	this->distance_from_center = value;
+}
+
+void GameObject::set_circular_angle(glm::vec2 value){
+	this->circular_angle = value;
+}
+
 void GameObject::set_toon_shading(bool toon_shading) {
 	this->toon_shading = toon_shading;
 }
@@ -242,6 +255,13 @@ void GameObject::set_quaternion(glm::quat quaternion) {
 	this->quaternion = quaternion; 
 }
 
+glm::vec3 GameObject::calculate_rotation_position() {	
+	glm::vec2 radian_angle = glm::radians(circular_angle);
+	float new_x = distance_from_center * glm::cos(radian_angle.x) * glm::sin(radian_angle.y);
+	float new_y = distance_from_center * glm::sin(radian_angle.x) * glm::sin(radian_angle.y);
+	float new_z = distance_from_center * glm::cos(radian_angle.y);
+	return glm::vec3(new_x, new_y, new_z);
+}
 
 
 #pragma endregion

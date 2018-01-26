@@ -93,20 +93,20 @@ int main(void) {
 	main_plane->set_scale(glm::vec3(0.3f));
 	//plane->set_pos(glm::vec3(0.0f, 0.0f, 0.0f));
 	main_plane->set_rotation(glm::vec3(90, 180, 90));
-	main_plane->set_cook_shading(true);
 	
-	GameObject * cube = new GameObject(app, new Model(), glm::vec3(0.32f,0.33f,0.34f));
+	GameObject * cube = new GameObject(app, new Model(), glm::vec3(0.16f,0.50f,0.72f));
 	cube->set_parent(city);
 	cube->set_shader_program(shader_program);
-	cube->set_scale(glm::vec3(30, 0.2f, 5));
-	cube->set_pos(glm::vec3(0, 10, 60));
-	cube->set_mix_power(.6f);
+	cube->set_scale(glm::vec3(5, 0.2f, 30));
+	cube->set_pos(glm::vec3(60, 10, 0));
+	cube->set_mix_power(.9f);
+	cube->set_specular_strength(0.0f);
 	
 	GameObject * teapot = new GameObject(app, new Model("models/teapot.obj"), glm::vec3(0.15f, 0.68f, 0.37f));
 	teapot->set_parent(city);
 	teapot->set_shader_program(shader_program);
-	teapot->set_scale(glm::vec3(.9f));
-	teapot->set_pos(glm::vec3(0, 10, 60));
+	teapot->set_scale(glm::vec3(1.0f));
+	teapot->set_pos(glm::vec3(60, 10, 0));
 	teapot->set_rotation_speed(glm::vec3(0, 20, 0));
 	teapot->set_mix_power(.6f);
 	teapot->set_toon_shading(true);
@@ -114,8 +114,8 @@ int main(void) {
 	GameObject * teapot1 = new GameObject(app, new Model("models/teapot.obj"), glm::vec3(0.15f, 0.68f, 0.37f));
 	teapot1->set_parent(city);
 	teapot1->set_shader_program(shader_program);
-	teapot1->set_scale(glm::vec3(.9f));
-	teapot1->set_pos(glm::vec3(8, 10, 60));
+	teapot1->set_scale(glm::vec3(1.0f));
+	teapot1->set_pos(glm::vec3(60, 10, 8));
 	teapot1->set_rotation_speed(glm::vec3(0, 20, 0));
 	teapot1->set_mix_power(.6f);
 	teapot1->set_toon_shading(false);
@@ -123,13 +123,13 @@ int main(void) {
 	GameObject * teapot2 = new GameObject(app, new Model("models/teapot.obj"), glm::vec3(0.15f, 0.68f, 0.37f));
 	teapot2->set_parent(city);
 	teapot2->set_shader_program(shader_program);
-	teapot2->set_scale(glm::vec3(.9f));
-	teapot2->set_pos(glm::vec3(-8, 10, 60));
+	teapot2->set_scale(glm::vec3(1.0f));
+	teapot2->set_pos(glm::vec3(60, 10, -8));
+	teapot2->set_scale(glm::vec3(1.0f));
 	teapot2->set_rotation_speed(glm::vec3(0, 20, 0));
-	teapot2->set_mix_power(.6f);
 	teapot2->set_cook_shading(true);
 
-	std::vector<GameObject*> objects = { city, car1, car2, car3, car4, car5, car6, car7, car8, cube, teapot, teapot1, teapot2, main_plane };
+	std::vector<GameObject*> objects = { city, car1, car2, car3, car4, car5, car6, car7, car8, teapot, teapot1, teapot2, main_plane };
 
 	/* Lights */
 	LampShader* shader_program1 = LampShader::create();
@@ -139,9 +139,17 @@ int main(void) {
 	PointLight* p_light_4 = new PointLight(app, glm::vec3(-13.0f, 2.0f, 40.0f), glm::vec3(0.0f, 1.0f, 0.0f), .3f, 0.8f, 0.1f);
 	PointLight* p_light_5 = new PointLight(app, glm::vec3(40.0f, 2.0f, -13.0f), glm::vec3(1.0f, 0.0f, 1.0f), .3f, 0.8f, 0.1f);
 	PointLight* p_light_6 = new PointLight(app, glm::vec3(-40.0f, 2.0f, 8.0f), glm::vec3(1.0f, 1.0f, 0.0f), .3f, 0.8f, 0.1f);
-	PointLight* p_light_7 = new PointLight(app, glm::vec3(-13.0f, 2.0f, -40.0f), glm::vec3(1.0f, .0f, 0.0f), .3f, 0.8f, 0.1f);
-	PointLight* p_light_8 = new PointLight(app, glm::vec3(8.0f, 2.0f, 40.0f), glm::vec3(0.0f, 1.0f, 0.0f), .3f, 0.8f, 0.1f);
-	PointLight* p_light_9 = new PointLight(app, glm::vec3(0.0f, 5.0f, 0.0f), glm::vec3(1.0f), .3f, 0.8f, 0.1f);
+
+	PointLight* p_light_7 = new PointLight(app, glm::vec3(60, 10, 8), glm::vec3(1.0f, .0f, 0.0f), .3f, 0.8f, 0.1f);
+	PointLight* p_light_8 = new PointLight(app, glm::vec3(60, 10, 0), glm::vec3(0.0f, 1.0f, 0.0f), .3f, 0.8f, 0.1f);
+	PointLight* p_light_9 = new PointLight(app, glm::vec3(60, 10, -8), glm::vec3(1.0f), .3f, 0.8f, 0.1f);
+
+	p_light_8->set_circular_speed(glm::vec2(40, 40));
+	p_light_8->set_distance_from_center(5);
+	p_light_7->set_circular_speed(glm::vec2(40, 40));
+	p_light_7->set_distance_from_center(5);
+	p_light_9->set_circular_speed(glm::vec2(40, 40));
+	p_light_9->set_distance_from_center(5);
 
 	std::vector<PointLight*> point_lights = { p_light_1, p_light_2, p_light_3, p_light_4, p_light_5, p_light_6, p_light_7, p_light_8, p_light_9 };
 	for (int i = 0; i < point_lights.size(); i++) point_lights[i]->set_parent(city);
@@ -158,13 +166,13 @@ int main(void) {
 	/* GUI */
 	GuiRenderer* gui_renderer = new GuiRenderer();
 
-	GuiTexture* first_gui = new GuiTexture(gui_renderer->get_shader_program());
+	GuiTexture* first_gui = new GuiTexture(app, gui_renderer->get_shader_program());
 	first_gui->set_scale(glm::vec2(0.2f, 0.2f));
 	first_gui->set_position(glm::vec2(0.80f, 0.80f));
 
-	GuiTexture* second_gui = new GuiTexture(gui_renderer->get_shader_program(), "textures/logo.png");
-	second_gui->set_scale(glm::vec2(0.075f, 0.1f));
-	second_gui->set_position(glm::vec2(0.90f, -0.90f));
+	GuiTexture* second_gui = new GuiTexture(app, gui_renderer->get_shader_program(), "textures/logo.png");
+	second_gui->set_scale(glm::vec2(0.03f, 0.03f));
+	second_gui->set_position(glm::vec2(0.0f, -0.0f));
 
 	//gui_renderer->add_gui_texture(first_gui);
 	gui_renderer->add_gui_texture(second_gui);

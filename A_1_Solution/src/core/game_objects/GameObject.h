@@ -56,10 +56,16 @@ public:
 	void set_cook_f0(float value);
 	void set_cook_r(float value);
 	void set_cook_k(float value);
+	void set_circular_speed(glm::vec2 value);
+	void set_distance_from_center(float value);
+	void set_circular_angle(glm::vec2 value);
+	void set_circular_center(glm::vec3 value);
 	virtual void set_toon_shading(bool toon_shading);
 	virtual void set_cook_shading(bool cook_shading);
 
 	virtual void set_shader_program(LightingShader* shader_program);
+
+	glm::vec3 calculate_rotation_position();
 
 	void update_lights();
 	void update_model_mat();
@@ -94,9 +100,16 @@ private:
 	bool toon_shading = false;
 	bool cook_shading = false;
 	float specular_strength = 1;
-	float ambient_strength = 0.6f;
+	float ambient_strength = 0.9f;
 	float specular_power = 0;
 	float cook_k = 0;
 	float cook_f0 = 0;
 	float cook_r = 0;
+
+	float distance_from_center = 0;
+	glm::vec2 circular_angle = glm::vec2(0.0f);
+	glm::vec2 circular_speed = glm::vec2(0.0f);
+	unsigned int fixed_axis = 0; // Can be 0,1,2 (x,y,z) //TODO: probably its better to do an implementation where you set the velocity of the different axis
+	glm::vec3 rotation_factor;
+
 };

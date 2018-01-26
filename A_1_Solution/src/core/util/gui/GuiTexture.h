@@ -4,9 +4,11 @@
 #include "Quad.h"
 #include "..\texture\Texture.h"
 
+class Application;
+
 class GuiTexture : public Texture {
 public:
-	GuiTexture(GuiShader* shader_program, const std::string &file_name = TEXTURE_WHITE_PIXEL);
+	GuiTexture(Application* app, GuiShader* shader_program, const std::string &file_name = TEXTURE_WHITE_PIXEL);
 	~GuiTexture();
 
 	void update();
@@ -18,8 +20,11 @@ public:
 
 	void set_position(glm::vec2 position);
 	void set_scale(glm::vec2 scale);
-private:
 
+protected:
+	Application * app;
+
+private:
 	GuiShader* shader_program;
 	Quad* quad;
 	glm::vec2 position = glm::vec2(0.0f);

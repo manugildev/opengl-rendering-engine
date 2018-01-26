@@ -3,6 +3,8 @@
 #include "GuiTexture.h"
 #include "..\shaders\gui\GuiShader.h"
 
+class Application;
+
 class GuiRenderer {
 public:
 	GuiRenderer();

@@ -1,7 +1,8 @@
 #include "GuiTexture.h"
 #include <glm\gtc\matrix_transform.hpp>
 
-GuiTexture::GuiTexture(GuiShader* shader_program, const std::string &file_name) : Texture(file_name), shader_program(shader_program) {
+#include "..\..\Application.h"
+GuiTexture::GuiTexture(Application * app, GuiShader* shader_program, const std::string &file_name) : Texture(file_name), app(app), shader_program(shader_program) {
 	this->quad = new Quad(shader_program);
 	this->update_transformation_matrix();
 }
@@ -35,7 +36,8 @@ void GuiTexture::set_position(glm::vec2 position) {
 }
 
 void GuiTexture::set_scale(glm::vec2 scale) {
-	this->scale = scale;
+	float aspect_ratio = app->get_window()->get_aspect_ratio();
+	this->scale = glm::vec2(scale.x/ aspect_ratio, scale.y);
 	this->update_transformation_matrix();
 }
 

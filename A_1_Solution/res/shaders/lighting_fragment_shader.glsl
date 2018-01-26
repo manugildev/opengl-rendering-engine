@@ -58,7 +58,7 @@ vec3 limit(float value, vec3 color);
 
 vec3 texture_blend;
 
-const float levels = 5.0f;
+const float levels = 4.0f;
 const float offset = 1.0 / 128.0;
 float spec_power = 1;
 
@@ -80,7 +80,7 @@ void main(){
 	vec3 point_lighting = vec3(0.0f, 0.0f, 0.0f);
 	for (int i = 0; i < number_of_point_lights; i++) {
 		if(!cook) point_lighting += calc_point_light_phong(point_lights[i], norm, frag_pos, view_dir);
-		//else point_lighting += calc_point_light_cook(point_lights[i], norm, frag_pos, view_dir);
+		else point_lighting += calc_point_light_cook(point_lights[i], norm, frag_pos, view_dir);
 	}
 
 	// Calculate Result
@@ -97,8 +97,7 @@ vec3 calc_dir_light_phong(DirLight light, vec3 normal, vec3 view_dir) {
 
 	// Diffuse Lighting
 	float diff = max(dot(normal, light_dir), 0.0f);	
-	//diff = floor(diff * levels) / levels;
-	vec3 color = mix(material.diffuse_color, object_color, mix_power);
+	vec3 color = material.diffuse_color;
 	if (toon) color = limit(diff, color);
 	
 	vec3 diffuse = light.light_color * diff * texture_blend * color;
@@ -106,7 +105,6 @@ vec3 calc_dir_light_phong(DirLight light, vec3 normal, vec3 view_dir) {
 	// Specular Lighting
 	vec3 reflect_dir = reflect(-light_dir, normal);
 	float spec = pow(max(dot(view_dir, reflect_dir), 0.0), spec_power);	// TODO: Change material specular to  power shininess
-	//spec = floor(spec * levels) / levels;
 	color = material.specular_color;
 	if (toon) color = limit(spec, color);
 
@@ -128,8 +126,8 @@ vec3 calc_point_light_phong(PointLight light, vec3 normal, vec3 frag_pos, vec3 v
 
 	// Diffuse Lighting
 	float diff = max(dot(normal, light_dir), 0.0f);	
-	vec3 color = mix(material.diffuse_color, object_color, mix_power);
 	//diff = floor(diff * levels) / levels;
+	vec3 color = material.diffuse_color;
 	if (toon) color = limit (diff, color);
 	vec3 diffuse = diff * light.light_color * texture_blend * color;
 	diffuse *= attenuation;
@@ -154,7 +152,7 @@ vec3 limit(float value, vec3 color){
 	if (value > 0.95) color = vec3(1.0, 1.0, 1.0) * color;
 	else if (value > 0.5) color = vec3(0.7, 0.7, 0.7) * color;
 	else if (value > 0.05) color = vec3(0.35, 0.35, 0.35) * color;
-	else color = vec3(0.1, 0.1, 0.1) * color;
+	else color = vec3(0.1, 0.1, 0.0) * color;
 	return color;
 }
 
@@ -194,16 +192,14 @@ vec3 calc_dir_light_cook(DirLight light, vec3 normal, vec3 view_dir){
 	vec3 ambient = ambient_strength * light.light_color * texture_blend * material.ambient_color;
 
 	// Diffuse Lighting
-	float diff = max(dot(normal, light_dir), 0.0f);	
-	vec3 color = mix(material.diffuse_color, object_color, mix_power);	
-	vec3 diffuse = light.light_color * diff * texture_blend * color;
+	float diff = max(dot(normal, light_dir), 0.0f);		
+	vec3 diffuse = light.light_color * diff * texture_blend * material.diffuse_color;
 
 	// Specular Lighting
 	vec3 reflect_dir = reflect(-light_dir, normal);
 	float spec = pow(max(dot(view_dir, reflect_dir), 0.0), specular_power);
-	color = material.specular_color;
 	vec3 specular;
-	if (diff > 0.0f) specular = (light.light_color * texture_blend * color * cook_value);
+	if (diff > 0.0f) specular = (light.light_color * texture_blend * material.specular_color * cook_value);
 
 	return (ambient + diffuse + specular);
 
@@ -211,6 +207,10 @@ vec3 calc_dir_light_cook(DirLight light, vec3 normal, vec3 view_dir){
 
 vec3 calc_point_light_cook(PointLight light, vec3 normal, vec3 frag_pos, vec3 view_dir){
 	vec3 light_dir = normalize(light.position - frag_pos);
+	float NdotL = max(0, dot(normal, light_dir));
+	float power = 0.0f;
+	power = cookTorranceSpecular(light_dir, view_dir, normal, cook_r, cook_f);
+	float cook_value = (cook_k + power * (1.0 - cook_k));
 
 	// Attenuation 
 	float distance = length(light.position - frag_pos);
@@ -222,22 +222,16 @@ vec3 calc_point_light_cook(PointLight light, vec3 normal, vec3 frag_pos, vec3 vi
 
 	// Diffuse Lighting
 	float diff = max(dot(normal, light_dir), 0.0f);	
-	vec3 color = mix(material.diffuse_color, object_color, mix_power);
-	//diff = floor(diff * levels) / levels;
-	if (toon) color = limit (diff, color);
-	vec3 diffuse = diff * light.light_color * texture_blend * color;
+	vec3 diffuse = diff * light.light_color * texture_blend * material.diffuse_color;
 	diffuse *= attenuation;
 
 	// Specular Lighting
 	vec3 reflect_dir = reflect(-light_dir, normal);
 	float spec = pow(max(dot(view_dir, reflect_dir), 0.0), spec_power);
-	//spec = floor(spec * levels) / levels;
-	color = material.specular_color;
-	if (toon) color = limit (spec, color);
 
 	vec3 specular;
 	if (diff > 0.0f) {
-		specular = spec * light.light_color * texture_blend * color * specular_strength;
+		specular = (light.light_color * texture_blend * material.specular_color * cook_value);
 		specular *= attenuation;
 	}
 	

@@ -16,11 +16,14 @@
 - Add shader loader and compiler
 - Add color to the logger and different type messages
 - Add text renderer
-- Add log file in logger
-- Add FullScreen Mode
+- Add log file in logger - done
+- Add FullScreen Mode - done
 - Add a tool to add Shader and Vertex variables on the go [Replacement]
-- Model can have materials as imports
-- Color class
+- Model can have materials as imports - done
+- Color class 
 
 ### GAME
 - Set a showcase scene
+
+
+###
