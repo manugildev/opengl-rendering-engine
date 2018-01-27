@@ -96,7 +96,8 @@ vec3 calc_dir_light_phong(DirLight light, vec3 normal, vec3 view_dir) {
 	vec3 ambient = ambient_strength * light.light_color * texture_blend * material.ambient_color;
 
 	// Diffuse Lighting
-	float diff = max(dot(normal, light_dir), 0.0f);	
+	float diff = max(dot(normal, light_dir), 0.2f);	
+	if (toon) diff = floor(diff * levels) / levels;
 	vec3 color = material.diffuse_color;
 	if (toon) color = limit(diff, color);
 	
@@ -105,7 +106,9 @@ vec3 calc_dir_light_phong(DirLight light, vec3 normal, vec3 view_dir) {
 	// Specular Lighting
 	vec3 reflect_dir = reflect(-light_dir, normal);
 	float spec = pow(max(dot(view_dir, reflect_dir), 0.0), spec_power);	// TODO: Change material specular to  power shininess
+	
 	color = material.specular_color;
+	if (toon) spec = floor(spec * levels) / levels;
 	if (toon) color = limit(spec, color);
 
 	vec3 specular;
@@ -125,8 +128,8 @@ vec3 calc_point_light_phong(PointLight light, vec3 normal, vec3 frag_pos, vec3 v
 	ambient *= attenuation;
 
 	// Diffuse Lighting
-	float diff = max(dot(normal, light_dir), 0.0f);	
-	//diff = floor(diff * levels) / levels;
+	float diff = max(dot(normal, light_dir), 0.2f);	
+	if (toon) diff = floor(diff * levels) / levels;
 	vec3 color = material.diffuse_color;
 	if (toon) color = limit (diff, color);
 	vec3 diffuse = diff * light.light_color * texture_blend * color;
@@ -135,7 +138,7 @@ vec3 calc_point_light_phong(PointLight light, vec3 normal, vec3 frag_pos, vec3 v
 	// Specular Lighting
 	vec3 reflect_dir = reflect(-light_dir, normal);
 	float spec = pow(max(dot(view_dir, reflect_dir), 0.0), spec_power);
-	//spec = floor(spec * levels) / levels;
+	if (toon) spec = floor(spec * levels) / levels;
 	color = material.specular_color;
 	if (toon) color = limit (spec, color);
 

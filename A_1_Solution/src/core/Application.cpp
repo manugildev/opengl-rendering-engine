@@ -128,8 +128,8 @@ void Application::key_callback(int key, int scancode, int action, int mode) {
 	}
 
 	/* City Rotation */
-	if (keys[GLFW_KEY_J]) game_objects[0]->set_rotation_speed(glm::vec3(0.0f, -10.0f, 0.0f));
-	if (keys[GLFW_KEY_L]) game_objects[0]->set_rotation_speed(glm::vec3(0.0f, 10.0f, 0.0f));
+	if (keys[GLFW_KEY_J]) game_objects[0]->set_rotation_speed(glm::vec3(0.0f, -30.0f, 0.0f));
+	if (keys[GLFW_KEY_L]) game_objects[0]->set_rotation_speed(glm::vec3(0.0f, 30.0f, 0.0f));
 	if (!keys[GLFW_KEY_L] && !keys[GLFW_KEY_J]) {
 		game_objects[0]->set_rotation_acceleration(glm::vec3(0.0f));
 		game_objects[0]->set_rotation_speed(glm::vec3(0.0f));
