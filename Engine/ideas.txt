@@ -6,19 +6,19 @@
 - Camera should also implement entity class
 - Extract movement calculations out of the gameobject class
 - Shadow Mapping
-	- Framebuffer class
-	- Multiple lights
-	- Apply to different objects and lights with colors
-- Implement toon shaders for the objects
+	- Framebuffer class - done
+	- Multiple lights - done
+	- Apply to different objects and lights with colors - done
+- Implement toon shaders for the objects - done
 
 
 # UTIL
-- Add shader loader and compiler
+- Add shader loader and compiler - done
 - Add color to the logger and different type messages
 - Add text renderer
 - Add log file in logger - done
 - Add FullScreen Mode - done
-- Add a tool to add Shader and Vertex variables on the go [Replacement]
+- Add a tool to add Shader and Vertex variables on the go - done
 - Model can have materials as imports - done
 - Color class 
 
