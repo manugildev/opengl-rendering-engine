@@ -1,7 +1,7 @@
-# Blender MTL File: 'teapot.obj'
+# Blender MTL File: 'None'
 # Material Count: 10
 
-newmtl base
+newmtl base.002
 Ns 92.156863
 Ka 0.300000 0.300000 0.300000
 Kd 0.683972 0.355875 0.000000
@@ -13,20 +13,8 @@ illum 5
 map_Kd textures\piper_diffuse.jpg
 map_Bump textures\\piper_bump.jpg
 
-newmtl base_NONE
-Ns 445.098039
-Ka 0.300000 0.300000 0.300000
-Kd 0.683972 0.355875 0.000000
-Ks 0.447996 0.500000 0.470390
-Ke 0.000000 0.000000 0.000000
-Ni 1.000000
-d 1.000000
-illum 5
-map_Kd textures\piper_diffuse.jpg
-map_Bump textures\\piper_bump.jpg
-
-newmtl base_NONE_piper_diffuse.jpg.001
-Ns 1000.000000
+newmtl base_NONE.001
+Ns 92.156863
 Ka 0.300000 0.300000 0.300000
 Kd 0.683972 0.355875 0.000000
 Ks 0.500000 0.500000 0.500000
@@ -37,7 +25,19 @@ illum 5
 map_Kd textures\piper_diffuse.jpg
 map_Bump textures\\piper_bump.jpg
 
-newmtl glass
+newmtl base_NONE_piper_diffuse.jpg.000
+Ns 92.156863
+Ka 0.300000 0.300000 0.300000
+Kd 0.683972 0.355875 0.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 5
+map_Kd textures\piper_diffuse.jpg
+map_Bump textures\\piper_bump.jpg
+
+newmtl glass.001
 Ns 92.156863
 Ka 0.080000 0.080000 0.080000
 Kd 0.683972 0.683972 0.683972
@@ -48,7 +48,7 @@ d 0.100000
 illum 7
 map_Kd textures\piper_diffuse.jpg
 
-newmtl glass_NONE
+newmtl glass_NONE.001
 Ns 92.156863
 Ka 0.080000 0.080000 0.080000
 Kd 0.683972 0.683972 0.683972
@@ -58,7 +58,7 @@ Ni 1.300000
 d 0.100000
 illum 7
 
-newmtl internals_alu
+newmtl internals_alu.001
 Ns 92.156863
 Ka 0.500000 0.500000 0.500000
 Kd 0.336015 0.336015 0.336015
@@ -69,7 +69,7 @@ d 1.000000
 illum 5
 map_Kd textures\piper_diffuse.jpg
 
-newmtl internals_alu_NONE
+newmtl internals_alu_NONE.001
 Ns 92.156863
 Ka 0.500000 0.500000 0.500000
 Kd 0.336015 0.336015 0.336015
@@ -79,7 +79,7 @@ Ni 1.000000
 d 1.000000
 illum 5
 
-newmtl internals_b
+newmtl internals_b.001
 Ns 92.156863
 Ka 0.100000 0.100000 0.100000
 Kd 0.007214 0.007214 0.007214
@@ -89,7 +89,7 @@ Ni 1.000000
 d 1.000000
 illum 3
 
-newmtl mirror
+newmtl mirror.001
 Ns 92.156863
 Ka 0.080000 0.080000 0.080000
 Kd 0.560000 0.560000 0.560000
@@ -99,7 +99,7 @@ Ni 1.000000
 d 0.200000
 illum 5
 
-newmtl tires
+newmtl tires.001
 Ns 92.156863
 Ka 1.000000 1.000000 1.000000
 Kd 0.005754 0.005754 0.005754
