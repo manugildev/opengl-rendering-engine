@@ -59,7 +59,6 @@ public:
 	void set_circular_speed(glm::vec2 value);
 	void set_distance_from_center(float value);
 	void set_circular_angle(glm::vec2 value);
-	void set_circular_center(glm::vec3 value);
 	virtual void set_toon_shading(bool toon_shading);
 	virtual void set_cook_shading(bool cook_shading);
 
@@ -83,6 +82,8 @@ protected:
 	OutlineShader* outline_shader_program;
 
 private:
+	std::string name; //TODO: Set a name for every gameobject
+
 	CubeModel cube_mesh;
 
 	glm::vec3 scale = glm::vec3(1.0f);

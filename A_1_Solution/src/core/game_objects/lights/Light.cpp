@@ -20,8 +20,9 @@ void Light::set_initial_shader_values() {
 }
 
 void Light::render() {
-	shader_program->start();
+	if (!shader_program) return;
 
+	shader_program->start();
 	glm::mat4 view = this->camera->get_view_matrix();
 	glm::mat4 perspective_proj = this->camera->get_persp_proj_matrix();
 
@@ -33,8 +34,6 @@ void Light::render() {
 	if (app->is_debug()) {
 		model->draw(nullptr, GL_LINES);
 	} else model->draw();
-
-
 	shader_program->stop();
 }
 

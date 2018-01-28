@@ -69,9 +69,10 @@ void GameObject::update_model_mat() {
 }
 
 void GameObject::render() {
-
 	glm::mat4 view = this->camera->get_view_matrix();
 	glm::mat4 perspective_proj = this->camera->get_persp_proj_matrix();
+
+	if (!shader_program) return;
 
 	this->shader_program->start();	
 	this->shader_program->set_view_matrix(view);
@@ -92,7 +93,7 @@ void GameObject::render() {
 	}
 
 	if (this->app->is_debug()) { // TODO: Make this work again
-		this->model->draw(nullptr, GL_LINES);
+		this->model->draw(this->shader_program, GL_LINES);
 	}
 	else this->model->draw(this->shader_program);
 	

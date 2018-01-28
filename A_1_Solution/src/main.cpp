@@ -102,34 +102,34 @@ int main(void) {
 	cube->set_mix_power(.9f);
 	cube->set_specular_strength(0.0f);
 	
-	GameObject * teapot = new GameObject(app, new Model("models/teapot.obj"), glm::vec3(0.15f, 0.68f, 0.37f));
+	GameObject * teapot = new GameObject(app, new Model("models/teapot.obj"), glm::vec3(0.90f, 0.29f, 0.23f));
 	teapot->set_parent(city);
 	teapot->set_shader_program(shader_program);
 	teapot->set_scale(glm::vec3(1.0f));
-	teapot->set_pos(glm::vec3(60, 10, 0));
+	teapot->set_pos(glm::vec3(60, 10, -8));
 	teapot->set_rotation_speed(glm::vec3(0, 20, 0));
 	teapot->set_mix_power(.6f);
-	teapot->set_toon_shading(true);
 
-	GameObject * teapot1 = new GameObject(app, new Model("models/teapot.obj"), glm::vec3(0.15f, 0.68f, 0.37f));
+	GameObject * teapot1 = new GameObject(app, new Model("models/teapot.obj"), glm::vec3(0.90f, 0.29f, 0.23f));
 	teapot1->set_parent(city);
 	teapot1->set_shader_program(shader_program);
 	teapot1->set_scale(glm::vec3(1.0f));
-	teapot1->set_pos(glm::vec3(60, 10, 8));
+	teapot1->set_pos(glm::vec3(60, 10, 0));
 	teapot1->set_rotation_speed(glm::vec3(0, 20, 0));
 	teapot1->set_mix_power(.6f);
-	teapot1->set_toon_shading(false);
+	teapot1->set_toon_shading(true);
 
-	GameObject * teapot2 = new GameObject(app, new Model("models/teapot.obj"), glm::vec3(0.15f, 0.68f, 0.37f));
+	GameObject * teapot2 = new GameObject(app, new Model("models/teapot.obj"), glm::vec3(0.90f, 0.29f, 0.23f));
 	teapot2->set_parent(city);
 	teapot2->set_shader_program(shader_program);
 	teapot2->set_scale(glm::vec3(1.0f));
-	teapot2->set_pos(glm::vec3(60, 10, -8));
+	teapot2->set_mix_power(.6f);
 	teapot2->set_scale(glm::vec3(1.0f));
+	teapot2->set_pos(glm::vec3(60, 10, 8));
 	teapot2->set_rotation_speed(glm::vec3(0, 20, 0));
 	teapot2->set_cook_shading(true);
 
-	std::vector<GameObject*> objects = { city, car1, car2, car3, car4, car5, car6, car7, car8, teapot, teapot1, teapot2, main_plane };
+	std::vector<GameObject*> objects = { city, car1, car2, car3, car4, car5, car6, car7, car8, teapot1, teapot, teapot2, main_plane };
 
 	/* Lights */
 	LampShader* shader_program1 = LampShader::create();
@@ -177,6 +177,8 @@ int main(void) {
 	//gui_renderer->add_gui_texture(first_gui);
 	gui_renderer->add_gui_texture(second_gui);
 
+	std::vector<ShaderProgram*> shaders = {shader_program, shader_program1, cube_map_shader};
+
 	FrameBuffer* frame_buffer = new FrameBuffer(app, first_gui);
 	app->set_frame_buffer(frame_buffer);
 
@@ -185,8 +187,8 @@ int main(void) {
 	app->set_directional_light(d_light);
 	app->set_point_lights(point_lights);
 	app->set_cube_map(cube_map);
-
 	app->set_gui_renderer(gui_renderer);
+	app->set_shaders(shaders);
 
 	/* Run the loop */
 	app->runMainGameLoop();

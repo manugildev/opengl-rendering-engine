@@ -10,7 +10,7 @@ Model::Model(const std::string & file_name) :file_name(file_name) {
 void Model::load_model(const char* file_name) {
 	// Read file via ASSIMP
 	Assimp::Importer importer;
-	const aiScene *scene = importer.ReadFile(file_name, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenNormals);
+	const aiScene *scene = importer.ReadFile(file_name, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenSmoothNormals);
 
 
 	// Check for errors
@@ -37,7 +37,6 @@ void Model::processNode(aiNode* node, const aiScene* scene) {
 	}
 
 	/* Process Materials */
-
 	for (unsigned int i = 0; i < scene->mNumMaterials; i++) {
 		const aiMaterial* pMaterial = scene->mMaterials[i];
 		aiColor4D ambient_color;
@@ -67,6 +66,7 @@ void Model::processNode(aiNode* node, const aiScene* scene) {
 			textures[i]->load();
 		}
 
+		// TODO: Check if maybe there is no material in the texture, and set a default one.
 		Material mat;
 		mat.ambient_color = glm::vec3(ambient_color.r, ambient_color.g, ambient_color.b);
 		mat.diffuse_color = glm::vec3(diffuse_color.r, diffuse_color.g, diffuse_color.b);
@@ -137,7 +137,7 @@ void Model::load_texture(int i, const aiMaterial* pMaterial, aiTextureType textu
 	aiString path;
 	if (pMaterial->GetTexture(texture_type, 0, &path, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS) {
 		std::string full_path = dir + "/" + path.data;
-
+		
 		Texture* t_loaded = texture_is_loaded(full_path);
 		if (!t_loaded) {
 			textures.push_back(new Texture(full_path.c_str()));
@@ -172,7 +172,7 @@ void Model::draw(ShaderProgram* shader_program, GLenum mode) { //TODO: Maybe bri
 		LightingShader* derived = dynamic_cast<LightingShader*>(shader_program);
 		if (derived) derived->set_material(materials[m_index]);
 		// We check first if it's a nullptr
-		if (textures[m_index]) 	textures[m_index]->bind(0);
+		if (textures[m_index])	textures[m_index]->bind(0);
 		this->meshes[i].draw(mode);
 		textures[m_index]->unbind();
 	}

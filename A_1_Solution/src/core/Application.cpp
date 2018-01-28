@@ -42,9 +42,10 @@ int Application::init() {
 	return 1;
 }
 
-
+// TODO: Abstract this to run it outside
 void Application::runMainGameLoop() {
 	while (!glfwWindowShouldClose(window->window_obj) && glfwGetKey(window->window_obj, GLFW_KEY_ESCAPE) != GLFW_PRESS) {
+		this->check_shaders();
 
 		/* Update */
 		this->update();
@@ -76,6 +77,7 @@ void Application::runMainGameLoop() {
 	}
 }
 
+// TODO: Abstract this to run it outside
 void Application::update() {
 	this->delta_time = calculate_delta_time();
 
@@ -92,6 +94,7 @@ void Application::update() {
 	this->dir_light->update(delta_time);
 }
 
+// TODO: Abstract this to run it outside
 void Application::render() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glClearColor(0.7f, 0.7f, 0.7f, 1.0f);
@@ -152,11 +155,11 @@ void Application::key_callback(int key, int scancode, int action, int mode) {
 	}
 
 	if (keys[GLFW_KEY_C]) {
-		plane->set_speed_z(60.0f);		
+		plane->set_speed_z(60.0f);
 		if (!plane->with_quaternions) plane->get_blue_arrow()->set_rotation_speed(glm::vec3(0, 0.0f, -60.0f));
 	}
 	if (keys[GLFW_KEY_V]) {
-		plane->set_speed_z(-60.0f); 
+		plane->set_speed_z(-60.0f);
 		if (!plane->with_quaternions) plane->get_blue_arrow()->set_rotation_speed(glm::vec3(0, 0.0f, 60.0f));
 	}
 	if (!keys[GLFW_KEY_C] && !keys[GLFW_KEY_V]) {
@@ -184,7 +187,7 @@ void Application::key_callback(int key, int scancode, int action, int mode) {
 	if (keys[GLFW_KEY_M]) {
 		plane->with_quaternions = !plane->with_quaternions;
 		plane->show_debug = !plane->show_debug;
-		plane->transform = glm::angleAxis(glm::radians(-90.0f), glm::vec3(0,0,1)); // We init the transform quaternion to 0.0f in the forward vector
+		plane->transform = glm::angleAxis(glm::radians(-90.0f), glm::vec3(0, 0, 1)); // We init the transform quaternion to 0.0f in the forward vector
 		plane->transform = plane->transform * glm::angleAxis(glm::radians(90.0f), glm::vec3(-1, 0, 0));
 	}
 
@@ -193,6 +196,10 @@ void Application::key_callback(int key, int scancode, int action, int mode) {
 	}
 	if (keys[GLFW_KEY_UP]) {
 		plane->start_yaw();
+	}
+
+	if (keys[GLFW_KEY_P]) {
+		debug = !debug;
 	}
 }
 
@@ -220,17 +227,25 @@ void Application::scroll_callback(double x_offset, double y_offset) {
 	}
 
 	if (!keys[GLFW_KEY_SPACE]) {
-		float specular_power = game_objects[game_objects.size() - 2]->get_specular_power() + y_offset;
-		game_objects[game_objects.size() - 2]->set_specular_power(specular_power);
-		game_objects[game_objects.size() - 3]->set_specular_power(specular_power);
-		game_objects[game_objects.size() - 4]->set_specular_power(specular_power);
-	}	else {
-		float specular_strength = game_objects[game_objects.size() - 2]->get_specular_strength() + (y_offset/10);
-		game_objects[game_objects.size() - 2]->set_specular_strength(specular_strength);
-		game_objects[game_objects.size() - 3]->set_specular_strength(specular_strength);
-		game_objects[game_objects.size() - 4]->set_specular_strength(specular_strength);
+		float specular_power;
+		if (keys[GLFW_KEY_4]) {
+			specular_power = game_objects[game_objects.size() -3]->get_specular_power() + y_offset;
+			game_objects[game_objects.size() - 3]->set_specular_power(specular_power);
+		}
+		else {
+			specular_power = game_objects[game_objects.size() - 4]->get_specular_power() + y_offset;
+			game_objects[game_objects.size() - 4]->set_specular_power(specular_power);
+		}
+	} else {
+		float specular_strength;
+		if (keys[GLFW_KEY_4]) {
+			specular_strength = game_objects[game_objects.size() - 3]->get_specular_strength() + (y_offset / 10);
+			game_objects[game_objects.size() - 3]->set_specular_strength(specular_strength);
+		} else {
+			specular_strength = game_objects[game_objects.size() - 4]->get_specular_strength() + (y_offset / 10);
+			game_objects[game_objects.size() - 4]->set_specular_strength(specular_strength);
+		}
 	}
-
 }
 
 void Application::mouse_callback(double x_pos, double y_pos) {
@@ -252,18 +267,24 @@ void Application::mouse_callback(double x_pos, double y_pos) {
 
 void Application::do_movement() {
 	if (keys[GLFW_KEY_W]) this->camera->process_keyboard(FORWARD, delta_time);
-	if (keys[GLFW_KEY_S] ) this->camera->process_keyboard(BACKWARD, delta_time);
+	if (keys[GLFW_KEY_S]) this->camera->process_keyboard(BACKWARD, delta_time);
 	if (keys[GLFW_KEY_A]) this->camera->process_keyboard(LEFT, delta_time);
-	if (keys[GLFW_KEY_D] ) this->camera->process_keyboard(RIGHT, delta_time);
+	if (keys[GLFW_KEY_D]) this->camera->process_keyboard(RIGHT, delta_time);
 
 
 	if (keys[GLFW_KEY_E]) this->camera->process_keyboard(ROLL_RIGHT, delta_time);
 	if (keys[GLFW_KEY_Q]) this->camera->process_keyboard(ROLL_LEFT, delta_time);
-	
+
 	if (!(keys[GLFW_KEY_W]) &&
 		!(keys[GLFW_KEY_S]) &&
 		!(keys[GLFW_KEY_A]) &&
 		!(keys[GLFW_KEY_D])) this->camera->process_keyboard(STOP, delta_time);
+}
+
+void Application::check_shaders() {
+	for (int i = 0; i < shaders.size(); i++) {
+		shaders[i]->check_if_modified();
+	}
 }
 
 void Application::set_game_objects(std::vector<GameObject*> game_objects) {
@@ -280,6 +301,10 @@ void Application::set_directional_light(DirLight* dir_light) {
 void Application::set_point_lights(std::vector<PointLight*> point_lights) {
 	this->point_lights = point_lights;
 	this->update_lights();
+}
+
+void Application::set_shaders(std::vector<ShaderProgram*> shaders){
+	this->shaders = shaders;
 }
 
 std::vector<GameObject*> Application::get_game_objects() {

@@ -15,10 +15,10 @@ uniform mat4 model_mat;
 uniform vec3 view_pos;
 
 void main(){
-	vec4 world_position = model_mat * vec4(vertex_positions, 1.0f);
+	vec4 world_position = model_mat * vec4(vertex_positions , 1.0f);
 	gl_Position = proj_mat * view_mat * world_position;	
 	tex_coords = vertex_tex_coords; 	
-	normal = normalize(mat3(model_mat) * vertex_normals);
+	normal = mat3(model_mat) * vertex_normals;
 
 	eye_dir = -(view_mat * world_position).xyz;
 	frag_pos = (model_mat * vec4(vertex_positions, 1.0f)).xyz;

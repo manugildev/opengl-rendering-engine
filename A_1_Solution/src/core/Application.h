@@ -42,6 +42,7 @@ public:
 	void set_gui_renderer(GuiRenderer* gui_renderer);
 	void set_directional_light(DirLight* dir_light);
 	void set_point_lights(std::vector<PointLight*> point_lights);
+	void set_shaders(std::vector<ShaderProgram*> shaders);
 	std::vector<GameObject*> get_game_objects();
 	DirLight* get_dir_light();
 	std::vector<PointLight*> get_point_lights();
@@ -50,6 +51,7 @@ public:
 
 	void update_lights();
 	void do_movement();
+	void check_shaders();
 	bool is_debug();
 
 	FrameBuffer* frame_buffer;
@@ -60,6 +62,7 @@ private:
 	std::vector<GameObject*> game_objects;
 	GuiRenderer* gui_renderer;
 	std::vector<PointLight*> point_lights;
+	std::vector<ShaderProgram* > shaders;
 	DirLight* dir_light;
 
 	bool keys[1024];
@@ -70,6 +73,4 @@ private:
 	float last_x = 0, last_y = 0;
 	float x_offset = 0, y_offset = 0;
 	float debug = false;
-
-
 };
