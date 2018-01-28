@@ -7,6 +7,7 @@
 #include <glm\glm.hpp>
 #include "util\gui\Quad.h"
 
+
 Application::Application(Camera* camera) : camera(camera) {
 	this->init();
 }
@@ -15,7 +16,6 @@ int Application::init() {
 
 	/* Initialize the library */
 	if (!glfwInit()) { LOG_MESSAGE("GLFW not initialized."); return -1; }
-
 	/* Create a windowed mode window and its OpenGL context */
 	window = new Window(this, 960, 540, "A_1");
 
@@ -229,19 +229,21 @@ void Application::scroll_callback(double x_offset, double y_offset) {
 	if (!keys[GLFW_KEY_SPACE]) {
 		float specular_power;
 		if (keys[GLFW_KEY_4]) {
-			specular_power = game_objects[game_objects.size() -3]->get_specular_power() + y_offset;
+			specular_power = game_objects[game_objects.size() - 3]->get_specular_power() + y_offset;
 			game_objects[game_objects.size() - 3]->set_specular_power(specular_power);
 		}
 		else {
 			specular_power = game_objects[game_objects.size() - 4]->get_specular_power() + y_offset;
 			game_objects[game_objects.size() - 4]->set_specular_power(specular_power);
 		}
-	} else {
+	}
+	else {
 		float specular_strength;
 		if (keys[GLFW_KEY_4]) {
 			specular_strength = game_objects[game_objects.size() - 3]->get_specular_strength() + (y_offset / 10);
 			game_objects[game_objects.size() - 3]->set_specular_strength(specular_strength);
-		} else {
+		}
+		else {
 			specular_strength = game_objects[game_objects.size() - 4]->get_specular_strength() + (y_offset / 10);
 			game_objects[game_objects.size() - 4]->set_specular_strength(specular_strength);
 		}
@@ -303,7 +305,7 @@ void Application::set_point_lights(std::vector<PointLight*> point_lights) {
 	this->update_lights();
 }
 
-void Application::set_shaders(std::vector<ShaderProgram*> shaders){
+void Application::set_shaders(std::vector<ShaderProgram*> shaders) {
 	this->shaders = shaders;
 }
 

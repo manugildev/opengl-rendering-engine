@@ -13,7 +13,7 @@
 
 int main(void) {
 	/* Camera */
-	Camera camera(glm::vec3(0.0f, 7.0f,10.0f));
+	Camera camera(glm::vec3(0.0f, 7.0f, 10.0f));
 
 	/* Application */
 	Application *app = new Application(&camera);
@@ -93,15 +93,15 @@ int main(void) {
 	main_plane->set_scale(glm::vec3(0.3f));
 	//plane->set_pos(glm::vec3(0.0f, 0.0f, 0.0f));
 	main_plane->set_rotation(glm::vec3(90, 180, 90));
-	
-	GameObject * cube = new GameObject(app, new Model(), glm::vec3(0.16f,0.50f,0.72f));
+
+	GameObject * cube = new GameObject(app, new Model(), glm::vec3(0.16f, 0.50f, 0.72f));
 	cube->set_parent(city);
 	cube->set_shader_program(shader_program);
 	cube->set_scale(glm::vec3(5, 0.2f, 30));
 	cube->set_pos(glm::vec3(60, 10, 0));
 	cube->set_mix_power(.9f);
 	cube->set_specular_strength(0.0f);
-	
+
 	GameObject * teapot = new GameObject(app, new Model("models/teapot.obj"), glm::vec3(0.90f, 0.29f, 0.23f));
 	teapot->set_parent(city);
 	teapot->set_shader_program(shader_program);
@@ -152,8 +152,8 @@ int main(void) {
 	p_light_9->set_distance_from_center(5);
 
 	std::vector<PointLight*> point_lights = { p_light_1, p_light_2, p_light_3, p_light_4, p_light_5, p_light_6, p_light_7, p_light_8, p_light_9 };
-	for (int i = 0; i < point_lights.size(); i++) point_lights[i]->set_parent(city);
-	for (int i = 0; i < point_lights.size(); i++) point_lights[i]->set_shader_program(shader_program1);
+	for (unsigned int i = 0; i < point_lights.size(); i++) point_lights[i]->set_parent(city);
+	for (unsigned int i = 0; i < point_lights.size(); i++) point_lights[i]->set_shader_program(shader_program1);
 
 	DirLight* d_light = new DirLight(app, glm::vec3(1.0f, -1.0f, -0.0f), glm::vec3(1.0f));
 	d_light->set_shader_program(shader_program1);
@@ -177,7 +177,7 @@ int main(void) {
 	//gui_renderer->add_gui_texture(first_gui);
 	gui_renderer->add_gui_texture(second_gui);
 
-	std::vector<ShaderProgram*> shaders = {shader_program, shader_program1, cube_map_shader};
+	std::vector<ShaderProgram*> shaders = { shader_program, shader_program1, cube_map_shader };
 
 	FrameBuffer* frame_buffer = new FrameBuffer(app, first_gui);
 	app->set_frame_buffer(frame_buffer);
