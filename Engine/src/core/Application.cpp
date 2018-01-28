@@ -20,10 +20,7 @@ int Application::init() {
 	window = new Window(this, 960, 540, "A_1");
 
 	get_camera()->set_aspect_ratio(window->get_aspect_ratio());
-
-	last_x = window->get_width() / 2.0f;
-	last_y = window->get_height() / 2.0f;
-
+	
 	glewExperimental = GL_TRUE;
 	glewInit();
 
@@ -86,7 +83,7 @@ void Application::update() {
 	for (int i = 0; i < game_objects.size(); i++) game_objects[i]->update(delta_time);
 
 	/* Updating the camera aftwerwards because of the FPV*/
-	this->do_movement();
+	this->camera->update(delta_time);
 	this->camera->update_view_matrix();
 	this->camera->set_persp_proj_matrix(glm::perspective(glm::radians(camera->get_field_of_view()), camera->get_aspect_ratio(), 0.1f, 10000.0f));
 
@@ -125,163 +122,20 @@ float Application::calculate_delta_time() {
 
 #pragma region INPUT_FUNCTIONS
 void Application::key_callback(int key, int scancode, int action, int mode) {
-	if (key >= 0 && key < 1024) {
-		if (action == GLFW_PRESS) keys[key] = true;
-		else if (action == GLFW_RELEASE) keys[key] = false;
-	}
-
-	/* City Rotation */
-	if (keys[GLFW_KEY_J]) game_objects[0]->set_rotation_speed(glm::vec3(0.0f, -30.0f, 0.0f));
-	if (keys[GLFW_KEY_L]) game_objects[0]->set_rotation_speed(glm::vec3(0.0f, 30.0f, 0.0f));
-	if (!keys[GLFW_KEY_L] && !keys[GLFW_KEY_J]) {
-		game_objects[0]->set_rotation_acceleration(glm::vec3(0.0f));
-		game_objects[0]->set_rotation_speed(glm::vec3(0.0f));
-	}
-
-	/* Plane Rotation */ //Todo: Get direction instead of pointer
-	Plane* plane = dynamic_cast <Plane*>(game_objects[game_objects.size() - 1]);
-	if (keys[GLFW_KEY_Z]) {
-		plane->set_speed_y(-60.0f);
-
-		if (!plane->with_quaternions) plane->get_green_arrow()->set_rotation_speed(glm::vec3(0, -60.0f, 0.0f));
-	}
-	if (keys[GLFW_KEY_X]) {
-		plane->set_speed_y(60.0f);
-		if (!plane->with_quaternions) plane->get_green_arrow()->set_rotation_speed(glm::vec3(0, 60.0f, 0.0f));
-	}
-	if (!keys[GLFW_KEY_Z] && !keys[GLFW_KEY_X]) {
-		plane->set_speed_y(0);
-		if (!plane->with_quaternions) plane->get_green_arrow()->set_rotation_speed(glm::vec3(0, 0.0f, 0.0f));
-	}
-
-	if (keys[GLFW_KEY_C]) {
-		plane->set_speed_z(60.0f);
-		if (!plane->with_quaternions) plane->get_blue_arrow()->set_rotation_speed(glm::vec3(0, 0.0f, -60.0f));
-	}
-	if (keys[GLFW_KEY_V]) {
-		plane->set_speed_z(-60.0f);
-		if (!plane->with_quaternions) plane->get_blue_arrow()->set_rotation_speed(glm::vec3(0, 0.0f, 60.0f));
-	}
-	if (!keys[GLFW_KEY_C] && !keys[GLFW_KEY_V]) {
-		plane->set_speed_z(0);
-		if (!plane->with_quaternions) plane->get_blue_arrow()->set_rotation_speed(glm::vec3(0, 0.0f, 0.0f));
-	}
-
-	if (keys[GLFW_KEY_B]) {
-		plane->set_speed_x(-60.0f);
-		if (!plane->with_quaternions) plane->get_red_arrow()->set_rotation_speed(glm::vec3(0, 0.0f, -60.0f));
-	}
-	if (keys[GLFW_KEY_N]) {
-		plane->set_speed_x(60.0f);
-		if (!plane->with_quaternions) plane->get_red_arrow()->set_rotation_speed(glm::vec3(0.0f, 0.0f, 60.0f));
-	}
-	if (!keys[GLFW_KEY_B] && !keys[GLFW_KEY_N]) {
-		plane->set_speed_x(0);
-		if (!plane->with_quaternions) plane->get_red_arrow()->set_rotation_speed(glm::vec3(0, 0.0f, 0.0f));
-	}
-
-	if (keys[GLFW_KEY_R]) {
-		camera->first_person = !camera->first_person;
-	}
-
-	if (keys[GLFW_KEY_M]) {
-		plane->with_quaternions = !plane->with_quaternions;
-		plane->show_debug = !plane->show_debug;
-		plane->transform = glm::angleAxis(glm::radians(-90.0f), glm::vec3(0, 0, 1)); // We init the transform quaternion to 0.0f in the forward vector
-		plane->transform = plane->transform * glm::angleAxis(glm::radians(90.0f), glm::vec3(-1, 0, 0));
-	}
-
-	if (keys[GLFW_KEY_RIGHT]) {
-		plane->start_roll();
-	}
-	if (keys[GLFW_KEY_UP]) {
-		plane->start_yaw();
-	}
-
-	if (keys[GLFW_KEY_P]) {
-		debug = !debug;
-	}
+	if (this->input_manager) this->input_manager->key_callback(key, scancode, action, mode);
 }
 
 void Application::resize_callback(int width, int height) { if (frame_buffer) frame_buffer->resize(); }
 
 void Application::scroll_callback(double x_offset, double y_offset) {
+	if (this->input_manager) this->input_manager->scroll_callback(x_offset, y_offset);
 	camera->process_mouse_scroll(y_offset);
-
-	if (keys[GLFW_KEY_1] || keys[GLFW_KEY_2] || keys[GLFW_KEY_3]) {
-		if (keys[GLFW_KEY_1]) {
-			float cook_r = game_objects[game_objects.size() - 2]->get_cook_r() + (y_offset / 10);
-			game_objects[game_objects.size() - 2]->set_cook_r(cook_r);
-		}
-
-		if (keys[GLFW_KEY_2]) {
-			float cook_f0 = game_objects[game_objects.size() - 2]->get_cook_f0() + (y_offset / 10);
-			game_objects[game_objects.size() - 2]->set_cook_f0(cook_f0);
-		}
-
-		if (keys[GLFW_KEY_3]) {
-			float cook_k = game_objects[game_objects.size() - 2]->get_cook_k() + (y_offset / 10);
-			game_objects[game_objects.size() - 2]->set_cook_k(cook_k);
-		}
-		return;
-	}
-
-	if (!keys[GLFW_KEY_SPACE]) {
-		float specular_power;
-		if (keys[GLFW_KEY_4]) {
-			specular_power = game_objects[game_objects.size() - 3]->get_specular_power() + y_offset;
-			game_objects[game_objects.size() - 3]->set_specular_power(specular_power);
-		}
-		else {
-			specular_power = game_objects[game_objects.size() - 4]->get_specular_power() + y_offset;
-			game_objects[game_objects.size() - 4]->set_specular_power(specular_power);
-		}
-	}
-	else {
-		float specular_strength;
-		if (keys[GLFW_KEY_4]) {
-			specular_strength = game_objects[game_objects.size() - 3]->get_specular_strength() + (y_offset / 10);
-			game_objects[game_objects.size() - 3]->set_specular_strength(specular_strength);
-		}
-		else {
-			specular_strength = game_objects[game_objects.size() - 4]->get_specular_strength() + (y_offset / 10);
-			game_objects[game_objects.size() - 4]->set_specular_strength(specular_strength);
-		}
-	}
 }
 
 void Application::mouse_callback(double x_pos, double y_pos) {
-	if (first_mouse) {
-		last_x = x_pos;
-		last_y = y_pos;
-		first_mouse = false;
-	}
-
-	x_offset = x_pos - last_x;
-	y_offset = last_y - y_pos;
-
-	last_x = x_pos;
-	last_y = y_pos;
-
-	camera->process_mouse(x_offset, y_offset);
+	if (this->input_manager) this->input_manager->mouse_callback(x_pos, y_pos);
 }
 #pragma endregion
-
-void Application::do_movement() {
-	if (keys[GLFW_KEY_W]) this->camera->process_keyboard(FORWARD, delta_time);
-	if (keys[GLFW_KEY_S]) this->camera->process_keyboard(BACKWARD, delta_time);
-	if (keys[GLFW_KEY_A]) this->camera->process_keyboard(LEFT, delta_time);
-	if (keys[GLFW_KEY_D]) this->camera->process_keyboard(RIGHT, delta_time);
-
-
-	if (keys[GLFW_KEY_E]) this->camera->process_keyboard(ROLL_RIGHT, delta_time);
-	if (keys[GLFW_KEY_Q]) this->camera->process_keyboard(ROLL_LEFT, delta_time);
-
-	if (!(keys[GLFW_KEY_W]) &&
-		!(keys[GLFW_KEY_S]) &&
-		!(keys[GLFW_KEY_A]) &&
-		!(keys[GLFW_KEY_D])) this->camera->process_keyboard(STOP, delta_time);
-}
 
 void Application::check_shaders() {
 	for (int i = 0; i < shaders.size(); i++) {
@@ -309,12 +163,20 @@ void Application::set_shaders(std::vector<ShaderProgram*> shaders) {
 	this->shaders = shaders;
 }
 
+void Application::set_input_manager(InputManager * input_manager) {
+	this->input_manager = input_manager;
+}
+
 std::vector<GameObject*> Application::get_game_objects() {
 	return this->game_objects;
 }
 
 DirLight* Application::get_dir_light() {
 	return this->dir_light;
+}
+
+bool Application::get_debug(){
+	return debug;
 }
 
 std::vector<PointLight*> Application::get_point_lights() {
@@ -327,6 +189,10 @@ void Application::set_cube_map(CubeMap * cube_map) {
 
 void Application::set_frame_buffer(FrameBuffer* frame_buffer) {
 	this->frame_buffer = frame_buffer;
+}
+
+void Application::set_debug(bool debug) {
+	this->debug = debug;
 }
 
 Camera* Application::get_camera() {

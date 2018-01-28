@@ -24,7 +24,9 @@ public:
 		   GLfloat field_of_view = FIELD_OF_VIEW);
 	~Camera();
 
-	void process_keyboard(Camera_Movement direction, GLfloat delta_time);
+	void update(float delta_time);
+
+	void process_keyboard(Camera_Movement direction);
 	void process_mouse(GLfloat x_offset, GLfloat y_offset, GLboolean constrain_pitch = true);
 	void process_mouse_scroll(GLfloat y_offset);
 
@@ -67,6 +69,7 @@ private:
 	GLfloat acceleration = 3.0f;
 	GLfloat max_velocity = 0.6f;
 	GLfloat mouse_sensitivity;
+	Camera_Movement direction;
 	
 	glm::mat4 parent_model_mat;
 	float aspect_ratio;

@@ -21,9 +21,7 @@ public:
 
 	virtual void update(float delta_time);
 	virtual void render();
-
 	virtual void set_initial_shader_values();
-
 	virtual void set_pos(glm::vec3 pos);
 	void set_acceleration(glm::vec3 acc);
 	void set_speed(glm::vec3 speed);

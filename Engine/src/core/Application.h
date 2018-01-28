@@ -12,7 +12,7 @@
 #include "game_objects\lights\PointLight.h"
 #include "game_objects\cube_map\CubeMap.h"
 #include "util\framebuffer\FrameBuffer.h"
-
+#include "util\input\InputManager.h"
 #include <vector>
 
 
@@ -20,57 +20,55 @@ class Application {
 public:
 	Application(Camera* camera);
 	~Application();
-
-	float calculate_delta_time();
-
+	
 	int init();
 	void runMainGameLoop();
 	void update();
 	void render();
 	void bindAsRenderTarget();
-	int window_width, window_height;
+	float calculate_delta_time();
 
+	/* Getters */
 	Camera* get_camera();
 	Window* get_window();
+	std::vector<GameObject*> get_game_objects();
+	std::vector<PointLight*> get_point_lights();
+	DirLight* get_dir_light();
+	bool get_debug();
 
 	void key_callback(int key, int scancode, int action, int mode);
 	void scroll_callback(double x_offset, double y_offset);
 	void mouse_callback(double x_pos, double y_pos);
 	void resize_callback(int width, int height);
 
-	void set_game_objects(std::vector<GameObject*> game_objects);
+	/* Setters */
+	void set_game_objects(std::vector<GameObject*> game_objects); 
 	void set_gui_renderer(GuiRenderer* gui_renderer);
 	void set_directional_light(DirLight* dir_light);
 	void set_point_lights(std::vector<PointLight*> point_lights);
 	void set_shaders(std::vector<ShaderProgram*> shaders);
-	std::vector<GameObject*> get_game_objects();
-	DirLight* get_dir_light();
-	std::vector<PointLight*> get_point_lights();
+	void set_input_manager(InputManager* input_manager);
 	void set_cube_map(CubeMap* cube_map);
 	void set_frame_buffer(FrameBuffer* frame_buffer);
+	void set_debug(bool debug);
 
 	void update_lights();
-	void do_movement();
 	void check_shaders();
 	bool is_debug();
 
 	FrameBuffer* frame_buffer;
+	float delta_time;
 private:
 	Window * window;
+	InputManager * input_manager;
 	Camera* camera;
 	CubeMap* cube_map;
 	std::vector<GameObject*> game_objects;
-	GuiRenderer* gui_renderer;
 	std::vector<PointLight*> point_lights;
-	std::vector<ShaderProgram* > shaders;
+	std::vector<ShaderProgram*> shaders;
+	GuiRenderer* gui_renderer;
 	DirLight* dir_light;
 
-	bool keys[1024];
-	bool first_mouse = true;
-
-	float delta_time;
 	float lastFrame = 0.0f;
-	float last_x = 0, last_y = 0;
-	float x_offset = 0, y_offset = 0;
 	float debug = false;
 };
