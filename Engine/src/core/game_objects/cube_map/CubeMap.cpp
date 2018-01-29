@@ -35,7 +35,6 @@ bool CubeMap::load_cube_map_side(GLuint texture, GLenum side_target, const char 
 	int x, y, n;
 	int force_channels = 4;
 	unsigned char *image_data = stbi_load(file_name, &x, &y, &n, force_channels);
-	std::cout << file_name << std::endl;
 	if (!image_data) {
 		fprintf(stderr, "ERROR: could not load %s\n", file_name);
 		return false;

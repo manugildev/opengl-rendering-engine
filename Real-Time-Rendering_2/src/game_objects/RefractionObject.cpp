@@ -21,13 +21,14 @@ void RefractionObject::render() {
 
 	RefractionShader* refraction_shader = dynamic_cast<RefractionShader*>(shader_program);
 	if (refraction_shader) {
-		refraction_shader->set_environment_map(1);
+		refraction_shader->set_environment_map(1); //TODO: Not efficient, renew this variables whenever we reload shaders
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, environment_map_id);
 
 		refraction_shader->set_view_matrix(view);
 		refraction_shader->set_proj_matrix(perspective_proj);
 		refraction_shader->set_model_matrix(model_mat);
+		refraction_shader->set_object_color(this->get_color());
 		refraction_shader->set_view_pos(this->camera->get_pos());
 	}
 	
@@ -37,6 +38,14 @@ void RefractionObject::render() {
 	else this->model->draw(this->shader_program);
 
 	this->shader_program->stop();
+}
+
+void RefractionObject::update_lights() {
+	shader_program->start();
+	RefractionShader* refraction_shader = dynamic_cast<RefractionShader*>(shader_program);
+	if (!refraction_shader) return;
+	refraction_shader->set_directional_light(app->get_dir_light());
+	shader_program->stop();
 }
 
 void RefractionObject::set_shader_program(ShaderProgram * shader_program) {

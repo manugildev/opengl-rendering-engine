@@ -1,5 +1,6 @@
 #pragma once
 #include "core\Application.h"
+#include "core\util\shaders\lighting\LightingShader.h" // Get the DLightLocation
 
 
 const std::string REFRACTION_VERTEX_FILE = "shaders/refraction/refraction_vertex_shader.glsl";
@@ -22,10 +23,14 @@ public:
 	void set_view_pos(glm::vec3 view_pos);
 	void set_texture_0(int number);
 	void set_environment_map(int number);
+	void set_object_color(glm::vec3 color);
+	void set_directional_light(DirLight* dir_light);
 
 private:
 	GLuint location_model_mat, location_view_mat, location_proj_mat, location_view_pos;
 	GLuint location_environment_map;
 	GLuint location_texture_0;
+	GLuint location_object_color;
+	DLight_Location location_dir_light;
 };
 

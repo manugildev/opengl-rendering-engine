@@ -8,6 +8,7 @@ public:
 
 	virtual void update(float delta_time);
 	virtual void render();
+	virtual void update_lights();
 	virtual void set_shader_program(ShaderProgram* shader_program);
 
 	void set_environment_map_id(GLuint environment_map_id);

@@ -23,7 +23,12 @@ void RefractionShader::get_all_uniform_locations() {
 	location_view_pos = get_uniform_location("view_pos");
 	location_texture_0 = get_uniform_location("texture_0");
 	location_environment_map = get_uniform_location("environment_map");
-	std::cout << location_environment_map << std::endl;
+	location_object_color = get_uniform_location("object_color");
+
+	/* Locations for Lights */
+	// Directional Lights
+	location_dir_light.direction = get_uniform_location("dir_light.direction");
+	location_dir_light.light_color = get_uniform_location("dir_light.light_color");
 }
 
 void RefractionShader::set_model_matrix(glm::mat4 matrix) {
@@ -39,3 +44,9 @@ void RefractionShader::set_texture_0(int number) { modify_texture(location_textu
 
 void RefractionShader::set_environment_map(int number) { modify_texture(location_environment_map, number); }
 
+void RefractionShader::set_object_color(glm::vec3 color){ modify_vec3(location_object_color, color);}
+
+void RefractionShader::set_directional_light(DirLight* dir_light) {
+	modify_vec3(location_dir_light.direction, dir_light->get_direction());
+	modify_vec3(location_dir_light.light_color, dir_light->get_light_color());
+}

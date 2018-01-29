@@ -192,6 +192,10 @@ float GameObject::get_mix_power(){
 	return this->mix_power;
 }
 
+glm::vec3 GameObject::get_color() {
+	return this->object_color;
+}
+
 void GameObject::set_scale(glm::vec3 scale) {
 	this->scale = scale;
 }

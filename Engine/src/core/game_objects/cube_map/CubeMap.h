@@ -18,7 +18,7 @@
 
 class CubeMap {
 public:
-	CubeMap(int size=10, std::string front=FRONT_CM, std::string back=BACK_CM, std::string top=TOP_CM, std::string bottom=BOTTOM_CM, std::string left=LEFT_CM, std::string right=RIGHT_CM);
+	CubeMap(int size=100, std::string front=FRONT_CM, std::string back=BACK_CM, std::string top=TOP_CM, std::string bottom=BOTTOM_CM, std::string left=LEFT_CM, std::string right=RIGHT_CM);
 	GLfloat points[108] = {
 			-1.0f, 1.0f, -1.0f, -1.0f, -1.0f, -1.0f, 1.0f, -1.0f, -1.0f,
 			1.0f, -1.0f, -1.0f, 1.0f, 1.0f, -1.0f, -1.0f, 1.0f, -1.0f,

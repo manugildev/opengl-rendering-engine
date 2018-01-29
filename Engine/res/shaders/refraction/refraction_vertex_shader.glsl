@@ -9,7 +9,6 @@ out vec3 frag_pos;
 out vec3 eye_dir;
 out vec2 tex_coords;
 out vec3 reflected_vector;
-out vec3 refracted_vector;
 
 uniform mat4 view_mat;
 uniform mat4 proj_mat;
@@ -22,11 +21,10 @@ void main(){
 	tex_coords = vertex_tex_coords;
 
 	normal = mat3(model_mat) * vertex_normals;
-	eye_dir = -(view_mat * world_position).xyz;
+	eye_dir = view_pos - world_position.xyz;
 	frag_pos = (model_mat * vec4(vertex_positions, 1.0f)).xyz;
 
 	vec3 unit_normal = normalize(normal);
-	vec3 view_vector = normalize(world_position.xyz - view_pos);
-	reflected_vector = reflect(view_vector, unit_normal);
-	refracted_vector = refract(view_vector, unit_normal, 1.0f/1.1f);
+	reflected_vector = reflect(-eye_dir, unit_normal);
+	//refracted_vector = refract(-eye_dir, unit_normal, 1.0f);
 }

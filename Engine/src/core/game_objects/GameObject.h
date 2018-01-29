@@ -38,6 +38,7 @@ public:
 	glm::vec3 get_rotation();
 	glm::vec3 get_speed();
 	glm::vec3 get_rotation_speed();
+	glm::vec3 get_color();
 	glm::mat4 get_model_mat();
 	glm::quat get_quaternion();
 	float get_specular_power();
@@ -65,7 +66,7 @@ public:
 
 	glm::vec3 calculate_rotation_position();
 
-	void update_lights();
+	virtual void update_lights();
 	void update_model_mat();
 	glm::vec3 rotation = glm::vec3(0.0f); //TODO: Change this
 
