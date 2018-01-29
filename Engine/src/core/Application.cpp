@@ -20,7 +20,7 @@ int Application::init() {
 	window = new Window(this, 960, 540, "A_1");
 
 	get_camera()->set_aspect_ratio(window->get_aspect_ratio());
-	
+
 	glewExperimental = GL_TRUE;
 	glewInit();
 
@@ -48,10 +48,12 @@ void Application::runMainGameLoop() {
 		this->update();
 
 		/* Render */
-		this->frame_buffer->bind();
-		glViewport(0, 0, window->get_width(), window->get_height());
-		//this->render();
-		this->frame_buffer->unbind();
+		if (this->frame_buffer) {
+			this->frame_buffer->bind();
+			glViewport(0, 0, window->get_width(), window->get_height());
+			//this->render();
+			this->frame_buffer->unbind();
+		}
 
 		glViewport(0, 0, window->get_width(), window->get_height());
 		this->render();
@@ -125,7 +127,10 @@ void Application::key_callback(int key, int scancode, int action, int mode) {
 	if (this->input_manager) this->input_manager->key_callback(key, scancode, action, mode);
 }
 
-void Application::resize_callback(int width, int height) { if (frame_buffer) frame_buffer->resize(); }
+void Application::resize_callback(int width, int height) {
+	if (frame_buffer) frame_buffer->resize();
+	if (gui_renderer) gui_renderer->update_window_size();
+}
 
 void Application::scroll_callback(double x_offset, double y_offset) {
 	if (this->input_manager) this->input_manager->scroll_callback(x_offset, y_offset);
@@ -175,8 +180,12 @@ DirLight* Application::get_dir_light() {
 	return this->dir_light;
 }
 
-bool Application::get_debug(){
+bool Application::get_debug() {
 	return debug;
+}
+
+GuiRenderer * Application::get_gui_renderer() {
+	return this->gui_renderer;
 }
 
 std::vector<PointLight*> Application::get_point_lights() {

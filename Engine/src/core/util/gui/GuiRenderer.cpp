@@ -19,6 +19,10 @@ void GuiRenderer::render() {
 	shader_program->stop();
 }
 
+void GuiRenderer::update_window_size() {
+	for (int i = 0; i < textures.size(); i++) textures[i]->update_window_size();
+}
+
 void GuiRenderer::add_gui_texture(GuiTexture* texture) {
 	textures.push_back(texture);
 }

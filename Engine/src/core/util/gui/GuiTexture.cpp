@@ -22,6 +22,12 @@ void GuiTexture::update_transformation_matrix() {
 	this->transformation_matrix[3][1] = this->position[1];
 }
 
+void GuiTexture::update_window_size() {
+	float aspect_ratio = app->get_window()->get_aspect_ratio();
+	this->scale = glm::vec2(initial_scale.x / aspect_ratio, initial_scale.y);
+	this->update_transformation_matrix();
+}
+
 glm::vec2 GuiTexture::get_position() {
 	return this->position;
 }
@@ -36,6 +42,7 @@ void GuiTexture::set_position(glm::vec2 position) {
 }
 
 void GuiTexture::set_scale(glm::vec2 scale) {
+	this->initial_scale = scale; // Not very elegant
 	float aspect_ratio = app->get_window()->get_aspect_ratio();
 	this->scale = glm::vec2(scale.x/ aspect_ratio, scale.y);
 	this->update_transformation_matrix();

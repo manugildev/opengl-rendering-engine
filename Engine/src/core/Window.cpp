@@ -3,19 +3,14 @@
 #include "util\Logger.h"
 #include "Application.h"
 
-Window::Window(Application* app, int width, int height, std::string title) {
-	this->app = app;
+Window::Window(Application* app, int width, int height, std::string title) : app(app) {
 
 	glfwWindowHint(GLFW_SAMPLES, 16);
 
 	// Move window to the upper left corner.
-	window_obj = glfwCreateWindow(940, 540, "A_1", NULL, NULL);
+	window_obj = glfwCreateWindow(940, 540, title.c_str(), NULL, NULL);
 
 	/* Activate this for FullScreen */
-	//GLFWmonitor* primary = glfwGetPrimaryMonitor();
-	//const GLFWvidmode* mode = glfwGetVideoMode(primary);
-	//glfwSetWindowSize(window_obj, mode->width, mode->height);
-
 	LOG_MESSAGE("Creating window");
 	if (!window_obj) {
 		LOG_MESSAGE("Window not created.");
@@ -42,11 +37,12 @@ void Window::window_size_callback(GLFWwindow * window, int width, int height) {
 	glfwGetWindowSize(window, &w->window_width, &w->window_height);
 	glViewport(0, 0, w->window_width, w->window_height);
 	w->app->get_camera()->set_aspect_ratio((float)width / (float)height);
+	w->set_aspect_ratio(((float)width) / height);
 
 	char temp[128];
-	sprintf_s(temp, "Window resize: %dx%d", width, height);
+	sprintf_s(temp, "Window_resize: %dx%d - Aspect_Ratio: %f", width, height, ((float)width) / height);
 	LOG_MESSAGE(temp);
-	w->app->resize_callback(width, height);
+	w->app->resize_callback(width, height); 
 
 }
 
@@ -76,7 +72,31 @@ int Window::get_height() {
 }
 
 float Window::get_aspect_ratio() {
-	return (float)this->window_width / (float)this->window_height;
+	return this->aspect_ratio;
+}
+
+void Window::set_full_screen(bool full_screen) {
+	this->full_screen = full_screen;
+	if (full_screen) {
+		GLFWmonitor* primary = glfwGetPrimaryMonitor();
+		const GLFWvidmode* mode = glfwGetVideoMode(primary);
+		glfwSetWindowSize(window_obj, mode->width, mode->height); //TODO: Hardcoded shit
+		glfwSetWindowPos(window_obj, 0, 0);
+	} else {
+		glfwSetWindowSize(window_obj, 940, 540);
+		glfwSetCursorPos(window_obj, window_width / 2, window_height / 2);
+		glfwSetWindowPos(window_obj, 600, 300);
+		glfwSetWindowAspectRatio(window_obj, 16, 9);
+	}
+
+}
+
+bool Window::get_full_screen() {
+	return this->full_screen;
+}
+
+void Window::set_aspect_ratio(float aspect_ratio) {
+	this->aspect_ratio = aspect_ratio;
 }
 
 Window::~Window() {

@@ -44,7 +44,7 @@ void PlaneDemo::render() {
 
 }
 
-void PlaneDemo::set_shader_program(LightingShader * shader_program) {
+void PlaneDemo::set_shader_program(ShaderProgram * shader_program) {
 	GameObject::set_shader_program(shader_program);
 	this->wheels->set_shader_program(shader_program);
 	this->propeller->set_shader_program(shader_program);

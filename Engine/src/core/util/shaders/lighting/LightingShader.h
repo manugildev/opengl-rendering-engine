@@ -6,7 +6,6 @@
 
 const std::string LAMP_VERTEX_FILE = "shaders/lighting_vertex_shader.glsl";
 const std::string LAMP_FRAGMENT_FILE = "shaders/lighting_fragment_shader.glsl";
-const int MAX_LIGHTS = 9;
 
 /* Structures for storing all the locations of the same light*/
 struct DLight_Location {
@@ -45,7 +44,8 @@ public:
 
 	void set_view_matrix(glm::mat4 matrix);
 	void set_model_matrix(glm::mat4 matrix);
-	void set_proj_matrix(glm::mat4 matrix);
+	void set_proj_matrix(glm::mat4 matrix); 
+	void set_view_pos(glm::vec3 view_pos);
 	void set_object_color(glm::vec3 object_color);
 	void set_light_pos(glm::vec3 light_pos);
 	void set_light_color(glm::vec3 light_color);
@@ -63,17 +63,19 @@ public:
 	void set_directional_light(DirLight* dir_light);
 	void set_point_lights(std::vector<PointLight*> point_lights);
 	void set_point_light(PointLight* dir_light, int index);
+	void set_point_lights_size(int size);
 	void set_material(Material material);
 
 private:
-	GLuint location_model_mat, location_view_mat, location_proj_mat;
+	GLuint location_model_mat, location_view_mat, location_proj_mat, location_view_pos;
 	GLuint location_object_color, location_light_pos, location_light_color;
 	GLuint location_ambient_strength, location_specular_strength, location_specular_power;
 	GLuint location_texture_0, location_mix_power, location_toon_shading, location_cook_shading;
 	GLuint location_cook_r, location_cook_f, location_cook_k;
+	GLuint location_point_lights_size;
 
 	DLight_Location location_dir_light;
-	PLight_Location location_point_light[MAX_LIGHTS];
 	Material_Location location_material;
+	std::vector<PLight_Location> locations_point_lights;
 
 };

@@ -76,23 +76,27 @@ void Input::key_callback(int key, int scancode, int action, int mode) {
 	if (keys[GLFW_KEY_P]) {
 		app->set_debug(!app->get_debug());
 	}
+
+	if (keys[GLFW_KEY_U]) {
+		app->get_window()->set_full_screen(!app->get_window()->get_full_screen());
+	}
 }
 
 void Input::scroll_callback(double x_offset, double y_offset) {
 	InputManager::scroll_callback(x_offset, y_offset);
 	if (keys[GLFW_KEY_1] || keys[GLFW_KEY_2] || keys[GLFW_KEY_3]) {
 		if (keys[GLFW_KEY_1]) {
-			float cook_r = app->get_game_objects()[app->get_game_objects().size() - 2]->get_cook_r() + (y_offset / 10);
+			float cook_r = app->get_game_objects()[app->get_game_objects().size() - 2]->get_cook_r() + ((float) y_offset / 10);
 			app->get_game_objects()[app->get_game_objects().size() - 2]->set_cook_r(cook_r);
 		}
 
 		if (keys[GLFW_KEY_2]) {
-			float cook_f0 = app->get_game_objects()[app->get_game_objects().size() - 2]->get_cook_f0() + (y_offset / 10);
+			float cook_f0 = app->get_game_objects()[app->get_game_objects().size() - 2]->get_cook_f0() + ((float) y_offset / 10);
 			app->get_game_objects()[app->get_game_objects().size() - 2]->set_cook_f0(cook_f0);
 		}
 
 		if (keys[GLFW_KEY_3]) {
-			float cook_k = app->get_game_objects()[app->get_game_objects().size() - 2]->get_cook_k() + (y_offset / 10);
+			float cook_k = app->get_game_objects()[app->get_game_objects().size() - 2]->get_cook_k() + ((float) y_offset / 10);
 			app->get_game_objects()[app->get_game_objects().size() - 2]->set_cook_k(cook_k);
 		}
 		return;
@@ -101,22 +105,22 @@ void Input::scroll_callback(double x_offset, double y_offset) {
 	if (!keys[GLFW_KEY_SPACE]) {
 		float specular_power;
 		if (keys[GLFW_KEY_4]) {
-			specular_power = app->get_game_objects()[app->get_game_objects().size() - 3]->get_specular_power() + y_offset;
+			specular_power = app->get_game_objects()[app->get_game_objects().size() - 3]->get_specular_power() + (float) y_offset;
 			app->get_game_objects()[app->get_game_objects().size() - 3]->set_specular_power(specular_power);
 		}
 		else {
-			specular_power = app->get_game_objects()[app->get_game_objects().size() - 4]->get_specular_power() + y_offset;
+			specular_power = app->get_game_objects()[app->get_game_objects().size() - 4]->get_specular_power() + (float) y_offset;
 			app->get_game_objects()[app->get_game_objects().size() - 4]->set_specular_power(specular_power);
 		}
 	}
 	else {
 		float specular_strength;
 		if (keys[GLFW_KEY_4]) {
-			specular_strength = app->get_game_objects()[app->get_game_objects().size() - 3]->get_specular_strength() + (y_offset / 10);
+			specular_strength = app->get_game_objects()[app->get_game_objects().size() - 3]->get_specular_strength() + ((float)y_offset / 10);
 			app->get_game_objects()[app->get_game_objects().size() - 3]->set_specular_strength(specular_strength);
 		}
 		else {
-			specular_strength = app->get_game_objects()[app->get_game_objects().size() - 4]->get_specular_strength() + (y_offset / 10);
+			specular_strength = app->get_game_objects()[app->get_game_objects().size() - 4]->get_specular_strength() + ((float)y_offset / 10);
 			app->get_game_objects()[app->get_game_objects().size() - 4]->set_specular_strength(specular_strength);
 		}
 	}

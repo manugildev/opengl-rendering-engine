@@ -1,6 +1,6 @@
-#version 140
+#version 450
 
-in vec2 vertex_positions;
+layout (location=0) in vec2 vertex_positions;
 out vec2 texture_coords;
 uniform mat4 transformation_matrix;
 

@@ -2,6 +2,7 @@
 
 #include "..\util\Util.h"
 #include "..\shaders\lighting\LightingShader.h"
+#include <glm\ext.hpp>
 
 Model::Model(const std::string & file_name) :file_name(file_name) {
 	this->load_model(file_name.c_str());
@@ -37,11 +38,26 @@ void Model::processNode(aiNode* node, const aiScene* scene) {
 	}
 
 	/* Process Materials */
+	if (scene->mNumMaterials == 0) {
+		Material mat;
+		mat.ambient_color = glm::vec3(1);
+		mat.diffuse_color = glm::vec3(1);
+		mat.specular_color = glm::vec3(1);
+		mat.shininess = 0;
+		mat.shininess_strengh = 0;
+		textures.push_back(new Texture());
+		textures[textures.size() - 1]->load();
+		mat.diffuse_texture = textures[textures.size() - 1];
+		materials.push_back(mat);
+		return;
+	}
+
+	/* Process Materials */
 	for (unsigned int i = 0; i < scene->mNumMaterials; i++) {
 		const aiMaterial* pMaterial = scene->mMaterials[i];
-		aiColor4D ambient_color;
-		aiColor4D diffuse_color;
-		aiColor4D specular_color;
+		aiColor4D ambient_color = aiColor4D(1, 1, 1, 1);
+		aiColor4D diffuse_color = aiColor4D(1, 1, 1, 1);
+		aiColor4D specular_color = aiColor4D(1, 1, 1, 1);
 		float shininess = 0;
 		float shininess_strengh = 0;
 
@@ -60,7 +76,8 @@ void Model::processNode(aiNode* node, const aiScene* scene) {
 		// TODO: Add more Texture Types
 		if (pMaterial->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
 			load_texture(i, pMaterial, aiTextureType_DIFFUSE);
-		} else {
+		}
+		else {
 			// There is no texture > we load the white pixel texture
 			textures.push_back(new Texture());
 			textures[i]->load();
@@ -109,7 +126,8 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene) {
 		if (mesh->mTextureCoords[0]) { // Does the mesh contain texture coordinates?
 			tex_coord.x = mesh->mTextureCoords[0][i].x;
 			tex_coord.y = mesh->mTextureCoords[0][i].y;
-		} else {
+		}
+		else {
 			tex_coord = glm::vec2(0.0f, 0.0f);
 		}
 		Vertex vertex(position, tex_coord, normal);
@@ -137,7 +155,7 @@ void Model::load_texture(int i, const aiMaterial* pMaterial, aiTextureType textu
 	aiString path;
 	if (pMaterial->GetTexture(texture_type, 0, &path, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS) {
 		std::string full_path = dir + "/" + path.data;
-		
+
 		Texture* t_loaded = texture_is_loaded(full_path);
 		if (!t_loaded) {
 			textures.push_back(new Texture(full_path.c_str()));
@@ -146,10 +164,12 @@ void Model::load_texture(int i, const aiMaterial* pMaterial, aiTextureType textu
 				delete textures[i];
 				textures[i] = nullptr;
 				textures[i] = new Texture();
-			} else {
+			}
+			else {
 				//printf("Loaded texture '%s'\n", full_path.c_str());
 			}
-		} else {
+		}
+		else {
 			textures.push_back(t_loaded);
 			//printf("Already loaded texture '%s'\n", full_path.c_str());
 		}

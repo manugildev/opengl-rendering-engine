@@ -13,7 +13,7 @@ public:
 	void attach_arrows(Application* app);
 	void update(float delta_time) override;
 	void render() override;
-	void set_shader_program(LightingShader* shader_program) override;
+	void set_shader_program(ShaderProgram* shader_program) override;
 	void set_toon_shading(bool toon_shading) override;
 
 	GameObject* get_red_arrow();

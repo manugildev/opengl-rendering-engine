@@ -1,6 +1,6 @@
 #version 330
 
-#define number_of_point_lights 9
+#define number_of_point_lights 128
 
 #define PI 3.14159265
 
@@ -46,6 +46,7 @@ uniform float cook_k = 0.7;
 
 uniform DirLight dir_light;
 uniform PointLight point_lights[number_of_point_lights];
+uniform int point_lights_size = 0;
 uniform Material material;
 
 uniform sampler2D texture_0;
@@ -57,10 +58,8 @@ vec3 calc_point_light_cook(PointLight light, vec3 normal, vec3 frag_pos, vec3 vi
 vec3 limit(float value, vec3 color);
 
 vec3 texture_blend;
-
-const float levels = 9.0f;
+const float levels = 8.0f;
 float spec_power = 1;
-
 
 void main(){
 	texture_blend = mix(vec3(texture(texture_0, tex_coords)), object_color, mix_power);
@@ -78,6 +77,7 @@ void main(){
 	// Point Lights
 	vec3 point_lighting = vec3(0.0f, 0.0f, 0.0f);
 	for (int i = 0; i < number_of_point_lights; i++) {
+		if (point_lights_size <= i) continue;
 		if(!cook) point_lighting += calc_point_light_phong(point_lights[i], norm, frag_pos, view_dir);
 		else point_lighting += calc_point_light_cook(point_lights[i], norm, frag_pos, view_dir);
 	}

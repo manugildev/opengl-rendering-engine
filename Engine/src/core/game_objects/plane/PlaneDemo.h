@@ -12,7 +12,7 @@ public:
 	void attach_propeller(Application * app);
 	void update(float delta_time) override;
 	void render() override;
-	void set_shader_program(LightingShader* shader_program) override;
+	void set_shader_program(ShaderProgram* shader_program) override;
 
 	bool show_debug = false;
 

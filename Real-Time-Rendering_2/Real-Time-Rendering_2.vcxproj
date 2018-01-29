@@ -151,7 +151,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\game_objects\RefractionObject.cpp" />
+    <ClCompile Include="src\input\Input.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\shaders\RefractionShader.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\game_objects\RefractionObject.h" />
+    <ClInclude Include="src\input\Input.h" />
+    <ClInclude Include="src\shaders\RefractionShader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

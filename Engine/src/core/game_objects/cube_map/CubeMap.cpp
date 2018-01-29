@@ -1,16 +1,12 @@
 #include "CubeMap.h"
 
-#define FRONT "cube_map/back.png"
-#define BACK "cube_map/front.png"
-#define TOP "cube_map/top.png"
-#define BOTTOM "cube_map/bot.png"
-#define LEFT "cube_map/left.png"
-#define RIGHT "cube_map/right.png"
-
 #define STB_IMAGE_IMPLEMENTATION
 #include <std_image\stb_image.h>
 
-CubeMap::CubeMap() {}
+CubeMap::CubeMap(int size, std::string front, std::string back, std::string top, std::string bottom, std::string left, std::string right) 
+				: front(front), bottom(bottom), top(top), right(right), left(left), back(back){
+	for (unsigned int i = 0; i < 108; i++) points[i] *= size;
+}
 
 void CubeMap::init(BasicShader* shader_program) {
 	this->shader_program = shader_program;
@@ -26,8 +22,11 @@ void CubeMap::init(BasicShader* shader_program) {
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
 
-	create_cube_map(FRONT, BACK, TOP, BOTTOM, LEFT, RIGHT, &cube_map_texture);
+	create_cube_map(front.c_str(), back.c_str(), top.c_str(), bottom.c_str(), left.c_str(), right.c_str(), &cube_map_texture);
+}
 
+GLuint CubeMap::get_cube_map_texture() {
+	return cube_map_texture;
 }
 
 bool CubeMap::load_cube_map_side(GLuint texture, GLenum side_target, const char *file_name) {
@@ -36,6 +35,7 @@ bool CubeMap::load_cube_map_side(GLuint texture, GLenum side_target, const char 
 	int x, y, n;
 	int force_channels = 4;
 	unsigned char *image_data = stbi_load(file_name, &x, &y, &n, force_channels);
+	std::cout << file_name << std::endl;
 	if (!image_data) {
 		fprintf(stderr, "ERROR: could not load %s\n", file_name);
 		return false;
@@ -47,8 +47,7 @@ bool CubeMap::load_cube_map_side(GLuint texture, GLenum side_target, const char 
 	}
 
 	// copy image data into 'target' side of cube map
-	glTexImage2D(side_target, 0, GL_RGBA, x, y, 0, GL_RGBA, GL_UNSIGNED_BYTE,
-				 image_data);
+	glTexImage2D(side_target, 0, GL_RGBA, x, y, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data);
 	free(image_data);
 	return true;
 }

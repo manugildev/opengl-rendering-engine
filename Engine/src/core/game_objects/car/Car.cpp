@@ -56,16 +56,18 @@ void Car::stop_turn_around_animation() {
 
 void Car::render() {
 	this->shader_program->start();
-
 	glm::mat4 view = this->camera->get_view_matrix();
 	glm::mat4 perspective_proj = this->camera->get_persp_proj_matrix();
 
-	this->shader_program->set_view_matrix(view);
-	this->shader_program->set_proj_matrix(perspective_proj);
-	this->shader_program->set_model_matrix(model_mat);
+	LightingShader* lighting_shader = dynamic_cast<LightingShader*>(shader_program);
+	if (lighting_shader) {
+		lighting_shader->set_view_matrix(view);
+		lighting_shader->set_proj_matrix(perspective_proj);
+		lighting_shader->set_model_matrix(model_mat);
 
-	this->shader_program->set_object_color(this->object_color);
-	this->shader_program->set_mix_power(this->mix_power);
+		lighting_shader->set_object_color(this->object_color);
+		lighting_shader->set_mix_power(this->get_mix_power());
+	}
 
 	this->model->materials[2].diffuse_color = object_color;
 	if (this->app->is_debug()) { // TODO: Make this work again

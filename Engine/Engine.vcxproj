@@ -213,6 +213,7 @@
     <ClInclude Include="include\std_image\stb_image.h" />
     <ClInclude Include="include\tween\callback.h" />
     <ClInclude Include="include\tween\tween.h" />
+    <ClInclude Include="src\core\game_objects\cube_map\CubeMap.h" />
     <ClInclude Include="src\core\util\input\InputManager.h" />
     <ClInclude Include="src\core\util\shaders\outline\OutlineShader.h" />
     <ClInclude Include="src\core\camera\Camera.h" />
@@ -224,7 +225,6 @@
     <ClInclude Include="src\core\util\gui\GuiTexture.h" />
     <ClInclude Include="src\core\util\gui\Quad.h" />
     <ClInclude Include="src\core\game_objects\car\Car.h" />
-    <ClInclude Include="src\core\game_objects\cube_map\CubeMap.h" />
     <ClInclude Include="src\core\game_objects\lights\PointLight.h" />
     <ClInclude Include="src\core\game_objects\lights\DirLight.h" />
     <ClInclude Include="src\core\game_objects\lights\Light.h" />

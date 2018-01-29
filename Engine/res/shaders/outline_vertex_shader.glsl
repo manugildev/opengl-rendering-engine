@@ -1,6 +1,5 @@
 #version 330
 
-// vertex attributes layout(location = 0) in vec3 i_position;
 layout(location = 0) in vec3 vertex_positions;
 layout(location = 1) in vec2 vertex_tex_coords;
 layout(location = 2) in vec3 vertex_normals;

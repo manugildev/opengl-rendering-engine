@@ -14,6 +14,7 @@ public:
 	void update();
 	void render();
 	void update_transformation_matrix();
+	void update_window_size();
 
 	glm::vec2 get_position();
 	glm::vec2 get_scale();
@@ -28,6 +29,7 @@ private:
 	GuiShader* shader_program;
 	Quad* quad;
 	glm::vec2 position = glm::vec2(0.0f);
+	glm::vec2 initial_scale = glm::vec2(1.0f);
 	glm::vec2 scale = glm::vec2(1.0f);
 	glm::mat4 transformation_matrix;
 };

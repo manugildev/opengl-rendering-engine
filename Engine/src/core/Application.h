@@ -35,6 +35,7 @@ public:
 	std::vector<PointLight*> get_point_lights();
 	DirLight* get_dir_light();
 	bool get_debug();
+	GuiRenderer* get_gui_renderer();
 
 	void key_callback(int key, int scancode, int action, int mode);
 	void scroll_callback(double x_offset, double y_offset);

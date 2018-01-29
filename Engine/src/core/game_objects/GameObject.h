@@ -45,11 +45,12 @@ public:
 	float get_cook_f0();
 	float get_cook_r();
 	float get_cook_k();
+	float get_mix_power();
 
 	void set_scale(glm::vec3 scale);
 	void set_ambient_strength(float ambient_strength);
 	void set_specular_strength(float specular_strength);
-	void set_specular_power(int specular_power);
+	void set_specular_power(float specular_power);
 	void set_mix_power(float mix_power);
 	void set_cook_f0(float value);
 	void set_cook_r(float value);
@@ -60,7 +61,7 @@ public:
 	virtual void set_toon_shading(bool toon_shading);
 	virtual void set_cook_shading(bool cook_shading);
 
-	virtual void set_shader_program(LightingShader* shader_program);
+	virtual void set_shader_program(ShaderProgram* shader_program);
 
 	glm::vec3 calculate_rotation_position();
 
@@ -75,15 +76,13 @@ protected:
 	GameObject* parent;
 	glm::mat4 model_mat;
 	glm::vec3 object_color;
-	float mix_power;
-	LightingShader* shader_program;
+	ShaderProgram* shader_program;
 	OutlineShader* outline_shader_program;
 
 private:
 	std::string name; //TODO: Set a name for every gameobject
 
 	CubeModel cube_mesh;
-
 	glm::vec3 scale = glm::vec3(1.0f);
 
 	glm::vec3 position = glm::vec3(0.0f);
@@ -103,6 +102,7 @@ private:
 	float specular_power = 0;
 	float cook_k = 0;
 	float cook_f0 = 0;
+	float mix_power;
 	float cook_r = 0;
 
 	float distance_from_center = 0;

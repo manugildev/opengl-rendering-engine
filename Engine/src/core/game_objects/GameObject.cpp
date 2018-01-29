@@ -12,7 +12,7 @@ GameObject::GameObject(Application *app, Model* model, glm::vec3 object_color) :
 	this->model_mat = glm::mat4(1.0f);
 }
 
-void GameObject::set_shader_program(LightingShader* shader_program) {
+void GameObject::set_shader_program(ShaderProgram* shader_program) {
 	this->shader_program = shader_program;
 	this->set_initial_shader_values();
 }
@@ -20,18 +20,20 @@ void GameObject::set_shader_program(LightingShader* shader_program) {
 
 void GameObject::set_initial_shader_values() {
 	shader_program->start();
-	shader_program->set_ambient_strength(.02f);
-	shader_program->set_specular_strength(0.1f);
-	shader_program->set_mix_power(0.0f);
-	shader_program->set_specular_power(4);
+	//shader_program->set_ambient_strength(.02f);
+	//shader_program->set_specular_strength(0.1f);
+	//shader_program->set_mix_power(0.0f);
+	//shader_program->set_specular_power(4);
 	shader_program->stop();
 }
 
 void GameObject::update_lights() {
 	// TODO: Only working for one light right now, implement shaders for multi lighting
 	shader_program->start();
-	shader_program->set_directional_light(app->get_dir_light());
-	shader_program->set_point_lights(app->get_point_lights());
+	LightingShader* lighting_shader = dynamic_cast<LightingShader*>(shader_program);
+	if (!lighting_shader) return;
+	lighting_shader->set_directional_light(app->get_dir_light());
+	lighting_shader->set_point_lights(app->get_point_lights());
 	shader_program->stop();
 }
 
@@ -75,29 +77,32 @@ void GameObject::render() {
 	if (!shader_program) return;
 
 	this->shader_program->start();	
-	this->shader_program->set_view_matrix(view);
-	this->shader_program->set_proj_matrix(perspective_proj);
-	this->shader_program->set_model_matrix(model_mat);
+	LightingShader* lighting_shader = dynamic_cast<LightingShader*>(shader_program);
+	if (lighting_shader) {
+		lighting_shader->set_view_matrix(view);
+		lighting_shader->set_proj_matrix(perspective_proj);
+		lighting_shader->set_model_matrix(model_mat);
+		lighting_shader->set_view_pos(this->camera->get_pos());
 
-	this->shader_program->set_toon_shading(toon_shading);
-	this->shader_program->set_object_color(object_color);
-	this->shader_program->set_specular_strength(specular_strength);
-	this->shader_program->set_ambient_strength(ambient_strength);
-	this->shader_program->set_specular_power(specular_power);
-	this->shader_program->set_mix_power(mix_power);
-	this->shader_program->set_cook_shading(cook_shading);
-	if (cook_shading) {
-		this->shader_program->set_cook_r(cook_r);
-		this->shader_program->set_cook_f(cook_f0);
-		this->shader_program->set_cook_k(cook_k);
+		lighting_shader->set_toon_shading(toon_shading);
+		lighting_shader->set_object_color(object_color);
+		lighting_shader->set_specular_strength(specular_strength);
+		lighting_shader->set_ambient_strength(ambient_strength);
+		lighting_shader->set_specular_power(specular_power);
+		lighting_shader->set_mix_power(mix_power);
+		lighting_shader->set_cook_shading(cook_shading);
+		if (cook_shading) {
+			lighting_shader->set_cook_r(cook_r);
+			lighting_shader->set_cook_f(cook_f0);
+			lighting_shader->set_cook_k(cook_k);
+		}
 	}
-
 	if (this->app->is_debug()) { // TODO: Make this work again
 		this->model->draw(this->shader_program, GL_LINES);
 	}
 	else this->model->draw(this->shader_program);
 	
-	this->shader_program->set_toon_shading(false);	
+	if (lighting_shader) lighting_shader->set_toon_shading(false);
 	this->shader_program->stop();
 }
 
@@ -183,6 +188,10 @@ float GameObject::get_cook_k() {
 	return this->cook_k;
 }
 
+float GameObject::get_mix_power(){
+	return this->mix_power;
+}
+
 void GameObject::set_scale(glm::vec3 scale) {
 	this->scale = scale;
 }
@@ -196,7 +205,7 @@ void GameObject::set_specular_strength(float specular_strength) {
 	this->specular_strength = specular_strength;
 }
 
-void GameObject::set_specular_power(int specular_power) {
+void GameObject::set_specular_power(float specular_power) {
 	if (specular_power <= 1) return; // Limit it
 	this->specular_power = specular_power;
 }

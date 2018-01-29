@@ -12,6 +12,7 @@ public:
 
 	void update();
 	void render();
+	void update_window_size();
 	void add_gui_texture(GuiTexture* texture);
 	GuiShader* get_shader_program();
 
