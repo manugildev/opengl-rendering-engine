@@ -36,7 +36,7 @@ class LightingShader : public ShaderProgram {
 public:
 	static LightingShader* create();
 
-	LightingShader();
+	LightingShader(std::string vertex_file=LAMP_VERTEX_FILE, std::string fragment_file= LAMP_FRAGMENT_FILE);
 	~LightingShader();
 
 	void bind_attributes() override;

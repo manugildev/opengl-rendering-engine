@@ -55,7 +55,7 @@ void Mesh::calculate_size(std::vector<glm::vec3> positions) {
 	float max_y = std::numeric_limits<float>::min(), min_y = std::numeric_limits<float>::max();
 	float max_z = std::numeric_limits<float>::min(), min_z = std::numeric_limits<float>::max();
 
-	for (int i = 0; i < positions.size(); i++) {
+	for (unsigned int i = 0; i < positions.size(); i++) {
 		max_x = std::max(max_x, positions[i].x);
 		min_x = std::min(min_x, positions[i].x);
 		max_y = std::max(max_y, positions[i].y);

@@ -25,12 +25,31 @@ public:
 	void set_environment_map(int number);
 	void set_object_color(glm::vec3 color);
 	void set_directional_light(DirLight* dir_light);
+	void set_ambient_brightness(float ambient_brightness);
+	void set_ior(float ior);
+	void set_chormatic_offset(float offset);
+	void set_fresnel(bool fresnel);
+	void set_refractive_power(float refractive_power);
+	void set_refractive_factor(float refractive_factor);
+	void set_refractive_strength(float refractive_strength);
 
 private:
-	GLuint location_model_mat, location_view_mat, location_proj_mat, location_view_pos;
+
+	GLuint location_model_mat;
+	GLuint location_view_mat; 
+	GLuint location_proj_mat; 
+	GLuint location_view_pos;
 	GLuint location_environment_map;
 	GLuint location_texture_0;
 	GLuint location_object_color;
 	DLight_Location location_dir_light;
+	GLuint location_ambient_brightness;
+	GLuint location_ior;
+	GLuint location_chromatic_offset;
+	GLuint location_fresnel;
+	GLuint location_refractive_power;
+	GLuint location_refractive_factor;
+	GLuint location_refractive_strength;
+
 };
 

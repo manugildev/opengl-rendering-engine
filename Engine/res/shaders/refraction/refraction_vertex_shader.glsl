@@ -26,5 +26,4 @@ void main(){
 
 	vec3 unit_normal = normalize(normal);
 	reflected_vector = reflect(-eye_dir, unit_normal);
-	//refracted_vector = refract(-eye_dir, unit_normal, 1.0f);
 }

@@ -31,61 +31,43 @@ int main(void) {
 	teapot->set_scale(glm::vec3(1.0f));
 	teapot->set_pos(glm::vec3(0, 0, -8));
 	teapot->set_rotation_speed(glm::vec3(0, 20, 0));
-	teapot->set_ambient_strength(0.5f);
-	teapot->set_mix_power(.6f);
+	teapot->set_ambient_brightness(0.3f);
+	teapot->set_fresnel(true);
+	teapot->set_ior(0.8f);
+	teapot->set_ambient_brightness(0.9f);
+	teapot->set_refractive_factor(0.0f);
 
 	RefractionObject * teapot1 = new RefractionObject(app, sphere_model, glm::vec3(0.90f, 0.29f, 0.23f));
 	teapot1->set_shader_program(shader_program);
 	teapot1->set_scale(glm::vec3(1.0f));
 	teapot1->set_pos(glm::vec3(0, 0, 0));
 	teapot1->set_rotation_speed(glm::vec3(0, 20, 0));
-	teapot1->set_mix_power(.6f);
-	teapot1->set_ambient_strength(0.5f);
 	teapot1->set_toon_shading(true);
 
 	RefractionObject * teapot2 = new RefractionObject(app, sphere_model, glm::vec3(0.90f, 0.29f, 0.23f));
 	teapot2->set_shader_program(shader_program);
 	teapot2->set_scale(glm::vec3(1.0f));
-	teapot2->set_mix_power(.6f);
 	teapot2->set_scale(glm::vec3(1.0f));
 	teapot2->set_pos(glm::vec3(0, 0, 8));
 	teapot2->set_rotation_speed(glm::vec3(0, 20, 0));
-	teapot2->set_ambient_strength(0.5f);
 	teapot2->set_cook_shading(true);
 
 	std::vector<GameObject*> objects = { teapot1, teapot, teapot2 };
 
 	/* Lights */
 	LampShader* shader_program_lamp = LampShader::create();
-	PointLight* p_light_7 = new PointLight(app, glm::vec3(0, 0, 8), glm::vec3(1.0f, .0f, 0.0f), .3f, 0.8f, 0.1f);
-	PointLight* p_light_8 = new PointLight(app, glm::vec3(0, 0, 0), glm::vec3(0.0f, 1.0f, 0.0f), .3f, 0.8f, 0.1f);
-	PointLight* p_light_9 = new PointLight(app, glm::vec3(0, 0, -8), glm::vec3(1.0f), .3f, 0.8f, 0.1f);
-
-	p_light_8->set_circular_speed(glm::vec2(0, -40));
-	p_light_8->set_circular_angle(glm::vec2(90, 180));
-	p_light_8->set_distance_from_center(5);
-	p_light_7->set_circular_speed(glm::vec2(0, 40));
-	p_light_7->set_circular_angle(glm::vec2(90, 0));
-	p_light_7->set_distance_from_center(5);
-	p_light_9->set_circular_speed(glm::vec2(0, 40));
-	p_light_9->set_circular_angle(glm::vec2(90, -180));
-	p_light_9->set_distance_from_center(5);
-
-	std::vector<PointLight*> point_lights = { p_light_7, p_light_8, p_light_9 };
-	for (unsigned int i = 0; i < point_lights.size(); i++) point_lights[i]->set_shader_program(shader_program_lamp);
-
 	DirLight* d_light = new DirLight(app, glm::vec3(1.0f, -1.0f, -0.0f), glm::vec3(1.0f));
 	d_light->set_shader_program(shader_program_lamp);
 
 	/* CubeMap */
 	BasicShader* cube_map_shader = BasicShader::create("shaders/cube_vertex_shader.glsl", "shaders/cube_fragment_shader.glsl");
-	CubeMap* cube_map = new CubeMap();
+
+	CubeMap* cube_map = new CubeMap(1000, "cube_map/dallas/back.jpg", "cube_map/dallas/front.jpg", "cube_map/dallas/top.jpg", "cube_map/dallas/bot.jpg", "cube_map/dallas/left.jpg", "cube_map/dallas/right.jpg");
 	cube_map->init(cube_map_shader);
 
 	teapot->set_environment_map_id(cube_map->get_cube_map_texture());
 	teapot1->set_environment_map_id(cube_map->get_cube_map_texture());
 	teapot2->set_environment_map_id(cube_map->get_cube_map_texture());
-
 
 	/* GUI */
 	GuiRenderer* gui_renderer = new GuiRenderer();
@@ -100,7 +82,6 @@ int main(void) {
 	/* Setting up the Application */
 	app->set_game_objects(objects);
 	app->set_directional_light(d_light);
-	//app->set_point_lights(point_lights);
 	app->set_cube_map(cube_map);
 	app->set_gui_renderer(gui_renderer);
 	app->set_shaders(shaders);

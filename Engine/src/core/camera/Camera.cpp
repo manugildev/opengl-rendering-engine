@@ -95,8 +95,6 @@ void Camera::update_view_matrix() {
 		glm::decompose(parent_model_mat, scale, rotation, translation, skew, perspective);
 		glm::vec3 euler_angles = glm::eulerAngles(rotation);
 
-		std::cout << glm::to_string(glm::degrees(euler_angles)) << std::endl;
-
 		glm::mat4 rotation_mat = glm::toMat4(rotation);
 		model_mat = rotation_mat * glm::mat4(1.0f);
 

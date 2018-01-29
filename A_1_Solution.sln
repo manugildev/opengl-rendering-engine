@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27130.2024
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Engine", "Engine\Engine.vcxproj", "{751B5E3C-5DFE-44DD-808F-907122EAC65A}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Real-Time-Animation", "Real-Time-Animation\Real-Time-Animation.vcxproj", "{224A81B5-100F-44AC-A1F8-F4142F5E24AE}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Real-Time-Animation_1", "Real-Time-Animation_1\Real-Time-Animation_1.vcxproj", "{224A81B5-100F-44AC-A1F8-F4142F5E24AE}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Real-Time-Rendering_2", "Real-Time-Rendering_2\Real-Time-Rendering_2.vcxproj", "{BFB5D2CD-2B39-468A-9391-D74CEC4788CE}"
 EndProject

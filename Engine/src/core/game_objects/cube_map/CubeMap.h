@@ -9,12 +9,12 @@
 
 #include "..\..\util\util\util.h"
 
-#define FRONT_CM "cube_map/second/back.jpg"
-#define BACK_CM "cube_map/second/front.jpg"
-#define TOP_CM "cube_map/second/top.jpg"
-#define BOTTOM_CM "cube_map/second/bot.jpg"
-#define LEFT_CM "cube_map/second/left.jpg"
-#define RIGHT_CM "cube_map/second/right.jpg"
+#define FRONT_CM "cube_map/sky/back.png"
+#define BACK_CM "cube_map/sky/front.png"
+#define TOP_CM "cube_map/sky/top.png"
+#define BOTTOM_CM "cube_map/sky/bot.png"
+#define LEFT_CM "cube_map/sky/left.png"
+#define RIGHT_CM "cube_map/sky/right.png"
 
 class CubeMap {
 public:
