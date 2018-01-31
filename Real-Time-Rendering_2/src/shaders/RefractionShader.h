@@ -32,6 +32,7 @@ public:
 	void set_refractive_power(float refractive_power);
 	void set_refractive_factor(float refractive_factor);
 	void set_refractive_strength(float refractive_strength);
+	void set_mix_power(float mix_power);
 
 private:
 
@@ -50,6 +51,7 @@ private:
 	GLuint location_refractive_power;
 	GLuint location_refractive_factor;
 	GLuint location_refractive_strength;
+	GLuint location_mix_power;
 
 };
 

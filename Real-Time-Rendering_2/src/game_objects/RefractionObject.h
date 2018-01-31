@@ -19,6 +19,7 @@ public:
 	void set_refractive_power(float refractive_power);
 	void set_refractive_factor(float refractive_factor);
 	void set_refractive_strength(float refractive_strength);
+	void set_mix_power(float mix_power);
 
 private:
 	GLuint environment_map_id = 0;
@@ -30,6 +31,7 @@ private:
 	float refractive_power = 1;
 	float refractive_factor = 1;
 	float refractive_strength = 1;
+	float mix_power = 1;
 
 	void update_shader_properties();
 

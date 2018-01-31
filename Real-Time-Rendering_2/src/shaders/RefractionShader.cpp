@@ -31,6 +31,7 @@ void RefractionShader::get_all_uniform_locations() {
 	location_refractive_factor = get_uniform_location("refractive_factor");
 	location_refractive_power = get_uniform_location("refractive_power");
 	location_refractive_strength = get_uniform_location("refractive_strength");
+	location_mix_power = get_uniform_location("mix_power");
 
 	/* Locations for Lights */
 	// Directional Lights
@@ -72,4 +73,8 @@ void RefractionShader::set_refractive_factor(float refractive_factor) { modify_f
 
 void RefractionShader::set_refractive_strength(float refractive_strength){
 	modify_float(location_refractive_strength, refractive_strength);
+}
+
+void RefractionShader::set_mix_power(float mix_power) {
+	modify_float(location_mix_power, mix_power);
 }

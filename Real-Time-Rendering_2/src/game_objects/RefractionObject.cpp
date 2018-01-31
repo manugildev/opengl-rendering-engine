@@ -66,6 +66,10 @@ void RefractionObject::set_refractive_strength(float refractive_strength) {
 	this->refractive_strength = refractive_strength;
 }
 
+void RefractionObject::set_mix_power(float mix_power){
+	this->mix_power = mix_power;
+}
+
 void RefractionObject::update_shader_properties() {
 	glm::mat4 view = this->camera->get_view_matrix();
 	glm::mat4 perspective_proj = this->camera->get_persp_proj_matrix();
@@ -86,6 +90,7 @@ void RefractionObject::update_shader_properties() {
 		refraction_shader->set_refractive_factor(refractive_factor);
 		refraction_shader->set_refractive_power(refractive_power);
 		refraction_shader->set_refractive_strength(refractive_strength);
+		refraction_shader->set_mix_power(mix_power);
 	}
 }
 
