@@ -27,7 +27,7 @@ void GuiRenderer::add_gui_texture(GuiTexture* texture) {
 	textures.push_back(texture);
 }
 
-GuiShader* GuiRenderer::get_shader_program() {
+ShaderProgram* GuiRenderer::get_shader_program() {
 	return shader_program;
 }
 

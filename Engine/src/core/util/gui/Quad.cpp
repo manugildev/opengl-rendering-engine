@@ -1,7 +1,7 @@
 #include "Quad.h"
-#include "..\shaders\gui\GuiShader.h"
+#include <iostream>
 
-Quad::Quad(GuiShader* shader_program) {
+Quad::Quad(ShaderProgram* shader_program) {
 
 	// Create Vertex Array Object
 	glGenVertexArrays(1, &vao);
@@ -35,6 +35,7 @@ Quad::Quad(GuiShader* shader_program) {
 
 	// Specify the layout of the vertex data
 	// Vertex_Positions are always the same, we change the tranformation_matrix - should work
+	
 	GLint posAttrib = glGetAttribLocation(shader_program->program_id, "vertex_positions");
 	glEnableVertexAttribArray(posAttrib);
 	glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), 0);
@@ -50,4 +51,8 @@ void Quad::render() {
 
 GLuint Quad::get_vao() {
 	return vao;
+}
+
+GLuint Quad::get_vertex_count() {
+	return 7;
 }

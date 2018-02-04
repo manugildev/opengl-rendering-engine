@@ -214,6 +214,9 @@
     <ClInclude Include="include\tween\callback.h" />
     <ClInclude Include="include\tween\tween.h" />
     <ClInclude Include="src\core\game_objects\cube_map\CubeMap.h" />
+    <ClInclude Include="src\core\game_objects\particle\Particle.h" />
+    <ClInclude Include="src\core\game_objects\particle\ParticleMaster.h" />
+    <ClInclude Include="src\core\game_objects\particle\ParticlerRenderer.h" />
     <ClInclude Include="src\core\util\input\InputManager.h" />
     <ClInclude Include="src\core\util\shaders\outline\OutlineShader.h" />
     <ClInclude Include="src\core\camera\Camera.h" />
@@ -234,6 +237,7 @@
     <ClInclude Include="src\core\util\shaders\lamp\LampShader.h" />
     <ClInclude Include="src\core\util\shaders\lighting\LightingShader.h" />
     <ClInclude Include="src\core\util\shaders\basic\BasicShader.h" />
+    <ClInclude Include="src\core\util\shaders\particle\ParticleShader.h" />
     <ClInclude Include="src\core\util\shaders\ShaderProgram.h" />
     <ClInclude Include="src\core\game_objects\GameObject.h" />
     <ClInclude Include="src\core\util\Logger.h" />
@@ -255,6 +259,9 @@
   <ItemGroup>
     <ClCompile Include="include\glm\detail\glm.cpp" />
     <ClCompile Include="include\tween\tween.cpp" />
+    <ClCompile Include="src\core\game_objects\particle\Particle.cpp" />
+    <ClCompile Include="src\core\game_objects\particle\ParticleMaster.cpp" />
+    <ClCompile Include="src\core\game_objects\particle\ParticlerRenderer.cpp" />
     <ClCompile Include="src\core\util\input\InputManager.cpp" />
     <ClCompile Include="src\core\util\shaders\outline\OutlineShader.cpp" />
     <ClCompile Include="src\core\game_objects\plane\Plane.cpp" />
@@ -276,6 +283,7 @@
     <ClCompile Include="src\core\util\shaders\lighting\LightingShader.cpp" />
     <ClCompile Include="src\core\util\shaders\basic\BasicShader.cpp" />
     <ClCompile Include="src\core\camera\Camera.cpp" />
+    <ClCompile Include="src\core\util\shaders\particle\ParticleShader.cpp" />
     <ClCompile Include="src\core\util\shaders\ShaderProgram.cpp" />
     <ClCompile Include="src\core\game_objects\GameObject.cpp" />
     <ClCompile Include="src\core\util\Logger.cpp" />

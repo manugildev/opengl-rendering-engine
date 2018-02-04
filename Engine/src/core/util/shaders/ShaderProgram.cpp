@@ -4,8 +4,6 @@
 #include "..\Logger.h"
 #include <windows.h>
 
-
-
 ShaderProgram::ShaderProgram(std::string vertex_file, std::string fragment_file) : vertex_file(vertex_file), fragment_file(fragment_file) {
 	vertex_shader_id = load_shader(vertex_file, GL_VERTEX_SHADER);
 	fragment_shader_id = load_shader(fragment_file, GL_FRAGMENT_SHADER);
@@ -22,7 +20,7 @@ ShaderProgram::ShaderProgram(std::string vertex_file, std::string fragment_file)
 void ShaderProgram::init() {
 	bind_attributes();
 	if (!link_shader()) return;
-	if (!validate_shader())return;
+	if (!validate_shader()) return;
 	get_all_uniform_locations();
 }
 

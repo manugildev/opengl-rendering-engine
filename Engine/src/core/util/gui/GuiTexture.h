@@ -8,7 +8,7 @@ class Application;
 
 class GuiTexture : public Texture {
 public:
-	GuiTexture(Application* app, GuiShader* shader_program, const std::string &file_name = TEXTURE_WHITE_PIXEL);
+	GuiTexture(Application* app, ShaderProgram* shader_program, const std::string &file_name = TEXTURE_WHITE_PIXEL);
 	~GuiTexture();
 
 	void update();
@@ -26,7 +26,7 @@ protected:
 	Application * app;
 
 private:
-	GuiShader* shader_program;
+	ShaderProgram* shader_program;
 	Quad* quad;
 	glm::vec2 position = glm::vec2(0.0f);
 	glm::vec2 initial_scale = glm::vec2(1.0f);

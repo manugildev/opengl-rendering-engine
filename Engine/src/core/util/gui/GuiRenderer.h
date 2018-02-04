@@ -14,11 +14,11 @@ public:
 	void render();
 	void update_window_size();
 	void add_gui_texture(GuiTexture* texture);
-	GuiShader* get_shader_program();
+	ShaderProgram* get_shader_program();
 
 
 private:
-	GuiShader* shader_program;
+	ShaderProgram* shader_program;
 	std::vector<GuiTexture*> textures;
 
 };

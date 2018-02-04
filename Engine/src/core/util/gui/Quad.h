@@ -1,17 +1,18 @@
 #pragma once
 #include <GLEW/glew.h>
-#include "..\shaders\gui\GuiShader.h"
+#include "..\shaders\ShaderProgram.h"
 
 class Quad {
 public:
-	Quad(GuiShader* shader_program);
+	Quad(ShaderProgram* shader_program);
 	~Quad();
 
 	GLuint get_vao();
+	GLuint get_vertex_count();
 	void render();
 
 private:
 	GLuint vao;
-	GuiShader* shader_program;
+	ShaderProgram* shader_program;
 };
 

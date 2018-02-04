@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Real-Time-Animation_1", "Re
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Real-Time-Rendering_2", "Real-Time-Rendering_2\Real-Time-Rendering_2.vcxproj", "{BFB5D2CD-2B39-468A-9391-D74CEC4788CE}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Real-Time-Animation_2", "Real-Time-Animation_2\Real-Time-Animation_2.vcxproj", "{0A90D9C8-7A57-4B11-B705-1CD2E2BE825F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -41,6 +43,14 @@ Global
 		{BFB5D2CD-2B39-468A-9391-D74CEC4788CE}.Release|x64.Build.0 = Release|x64
 		{BFB5D2CD-2B39-468A-9391-D74CEC4788CE}.Release|x86.ActiveCfg = Release|Win32
 		{BFB5D2CD-2B39-468A-9391-D74CEC4788CE}.Release|x86.Build.0 = Release|Win32
+		{0A90D9C8-7A57-4B11-B705-1CD2E2BE825F}.Debug|x64.ActiveCfg = Debug|x64
+		{0A90D9C8-7A57-4B11-B705-1CD2E2BE825F}.Debug|x64.Build.0 = Debug|x64
+		{0A90D9C8-7A57-4B11-B705-1CD2E2BE825F}.Debug|x86.ActiveCfg = Debug|Win32
+		{0A90D9C8-7A57-4B11-B705-1CD2E2BE825F}.Debug|x86.Build.0 = Debug|Win32
+		{0A90D9C8-7A57-4B11-B705-1CD2E2BE825F}.Release|x64.ActiveCfg = Release|x64
+		{0A90D9C8-7A57-4B11-B705-1CD2E2BE825F}.Release|x64.Build.0 = Release|x64
+		{0A90D9C8-7A57-4B11-B705-1CD2E2BE825F}.Release|x86.ActiveCfg = Release|Win32
+		{0A90D9C8-7A57-4B11-B705-1CD2E2BE825F}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -2,6 +2,7 @@
 
 #include <GLEW\glew.h>
 #include <GLFW\glfw3.h>
+#include <vector>
 
 #include "Window.h"
 #include "game_objects\GameObject.h"
@@ -13,7 +14,7 @@
 #include "game_objects\cube_map\CubeMap.h"
 #include "util\framebuffer\FrameBuffer.h"
 #include "util\input\InputManager.h"
-#include <vector>
+#include "game_objects\particle\ParticleMaster.h"
 
 
 class Application {
@@ -59,6 +60,8 @@ public:
 
 	FrameBuffer* frame_buffer;
 	float delta_time;
+
+	ParticleMaster* particle_master;
 private:
 	Window * window;
 	InputManager * input_manager;
@@ -72,4 +75,5 @@ private:
 
 	float lastFrame = 0.0f;
 	float debug = false;
+
 };

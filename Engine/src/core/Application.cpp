@@ -36,6 +36,11 @@ int Application::init() {
 
 	/* Set viewport to windows size */
 	glViewport(0, 0, window->get_width(), window->get_height());
+
+	// TODO: Temporal Particle Master
+
+	particle_master = new ParticleMaster(camera->get_persp_proj_matrix());
+
 	return 1;
 }
 
@@ -79,6 +84,7 @@ void Application::runMainGameLoop() {
 // TODO: Abstract this to run it outside
 void Application::update() {
 	this->delta_time = calculate_delta_time();
+	this->particle_master->update(delta_time);
 
 	/* Poll for and process events */
 	glfwPollEvents();
@@ -102,6 +108,7 @@ void Application::render() {
 	for (int i = 0; i < game_objects.size(); i++) game_objects[i]->render();
 	for (int i = 0; i < point_lights.size(); i++) point_lights[i]->render();
 	dir_light->render();
+	this->particle_master->render(camera);
 }
 
 //TODO: This is probably need to be in the window thing
