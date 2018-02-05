@@ -18,9 +18,10 @@ public:
 	void set_model_matrix(glm::mat4 matrix);
 	void set_view_matrix(glm::mat4 matrix);
 	void set_proj_matrix(glm::mat4 matrix);
+	void set_number_of_rows(float value);
 
 private:
 	GLuint location_model_mat, location_view_mat, location_proj_mat;
-
+	GLuint location_number_of_rows;
 };
 

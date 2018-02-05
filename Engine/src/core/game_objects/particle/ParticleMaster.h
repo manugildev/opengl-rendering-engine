@@ -1,5 +1,6 @@
 #pragma once
-#include "ParticlerRenderer.h"
+#include "ParticleRenderer.h"
+#include "ParticleSystem.h"
 
 class ParticleMaster{
 public:
@@ -9,9 +10,10 @@ public:
 	void update(float delta_time);
 	void render(Camera* camera);
 	void add_particle(Particle* p);
+	void apply_force(glm::vec3 force);
 
 private:
 	std::vector<Particle* > particles;
-	ParticlerRenderer* renderer;
+	ParticleRenderer* renderer;
 };
 

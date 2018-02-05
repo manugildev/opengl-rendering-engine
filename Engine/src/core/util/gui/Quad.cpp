@@ -54,5 +54,5 @@ GLuint Quad::get_vao() {
 }
 
 GLuint Quad::get_vertex_count() {
-	return 7;
+	return 8;
 }

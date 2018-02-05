@@ -1,5 +1,6 @@
 #pragma once
 #include "..\GameObject.h"
+#include "..\particle\ParticleSystem.h"
 
 class Application;
 
@@ -25,6 +26,8 @@ private:
 
 	bool animation_running = false;
 	float previous_random_mutiplier = 0;
+
+	ParticleSystem* system;
 
 };
 

@@ -11,8 +11,10 @@ void Input::key_callback(int key, int scancode, int action, int mode) {
 	InputManager::key_callback(key, scancode, action, mode);
 	this->process_camera_movement();
 	if (keys[GLFW_KEY_M]) {
-		Particle* p = new Particle(glm::vec3(0), glm::vec3(0,0,0), glm::vec3(0,+1.8,0), 5, 0, 0.05);
-		app->particle_master->add_particle(p);
+		app->particle_master->apply_force(glm::vec3(-10,0,0));
+	}
+	if (keys[GLFW_KEY_N]) {
+		app->particle_master->apply_force(glm::vec3(10, 0, 0));
 	}
 
 }

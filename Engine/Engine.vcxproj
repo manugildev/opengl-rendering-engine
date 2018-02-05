@@ -216,7 +216,8 @@
     <ClInclude Include="src\core\game_objects\cube_map\CubeMap.h" />
     <ClInclude Include="src\core\game_objects\particle\Particle.h" />
     <ClInclude Include="src\core\game_objects\particle\ParticleMaster.h" />
-    <ClInclude Include="src\core\game_objects\particle\ParticlerRenderer.h" />
+    <ClInclude Include="src\core\game_objects\particle\ParticleRenderer.h" />
+    <ClInclude Include="src\core\game_objects\particle\ParticleSystem.h" />
     <ClInclude Include="src\core\util\input\InputManager.h" />
     <ClInclude Include="src\core\util\shaders\outline\OutlineShader.h" />
     <ClInclude Include="src\core\camera\Camera.h" />
@@ -261,7 +262,8 @@
     <ClCompile Include="include\tween\tween.cpp" />
     <ClCompile Include="src\core\game_objects\particle\Particle.cpp" />
     <ClCompile Include="src\core\game_objects\particle\ParticleMaster.cpp" />
-    <ClCompile Include="src\core\game_objects\particle\ParticlerRenderer.cpp" />
+    <ClCompile Include="src\core\game_objects\particle\ParticleRenderer.cpp" />
+    <ClCompile Include="src\core\game_objects\particle\ParticleSystem.cpp" />
     <ClCompile Include="src\core\util\input\InputManager.cpp" />
     <ClCompile Include="src\core\util\shaders\outline\OutlineShader.cpp" />
     <ClCompile Include="src\core\game_objects\plane\Plane.cpp" />

@@ -16,7 +16,6 @@
 #include "util\input\InputManager.h"
 #include "game_objects\particle\ParticleMaster.h"
 
-
 class Application {
 public:
 	Application(Camera* camera);
@@ -61,7 +60,9 @@ public:
 	FrameBuffer* frame_buffer;
 	float delta_time;
 
-	ParticleMaster* particle_master;
+	ParticleMaster * particle_master;
+	ParticleSystem* system;
+
 private:
 	Window * window;
 	InputManager * input_manager;

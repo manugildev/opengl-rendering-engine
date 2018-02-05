@@ -6,6 +6,11 @@
 
 Car::Car(Application * app, Model* model, glm::vec3 object_color) : GameObject(app, model, object_color) {
 	this->initial_position = this->get_pos();
+	Texture* tex = new Texture("textures/snow.jpg");
+	this->system = new ParticleSystem(app, tex, 50, 1, 1, 10, 0.05f);
+	this->system->set_random_rotation(true);
+	this->system->set_scale_error(0.03f);
+	this->system->set_life_error(3.0f);
 }
 
 void Car::update(float delta_time) {
@@ -17,6 +22,15 @@ void Car::update(float delta_time) {
 	if (animation_running && std::abs(this->get_rotation()[1] - this->initial_rotation_y) > (180.0f)) {
 		stop_turn_around_animation();
 	}
+
+	glm::vec3 smoke_pos = glm::vec3(0,-0.5,3.5);
+	glm::mat4 temp_mat;
+	temp_mat[3][0] = smoke_pos[0];
+	temp_mat[3][1] = smoke_pos[1];
+	temp_mat[3][2] = smoke_pos[2];
+	temp_mat = model_mat * temp_mat;
+	smoke_pos = glm::vec3(temp_mat[3][0], temp_mat[3][1], temp_mat[3][2]);
+	this->system->generate_particles(delta_time, smoke_pos);
 }
 
 
