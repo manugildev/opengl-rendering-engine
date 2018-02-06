@@ -11,6 +11,7 @@ Car::Car(Application * app, Model* model, glm::vec3 object_color) : GameObject(a
 	this->system->set_random_rotation(true);
 	this->system->set_scale_error(0.03f);
 	this->system->set_life_error(3.0f);
+	this->system->set_object_color(object_color);
 }
 
 void Car::update(float delta_time) {

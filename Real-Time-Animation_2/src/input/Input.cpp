@@ -16,6 +16,9 @@ void Input::key_callback(int key, int scancode, int action, int mode) {
 	if (keys[GLFW_KEY_N]) {
 		app->particle_master->apply_force(glm::vec3(10, 0, 0));
 	}
+	if (keys[GLFW_KEY_U]) {
+		app->get_window()->set_full_screen(!app->get_window()->get_full_screen());
+	}
 
 }
 

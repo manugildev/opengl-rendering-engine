@@ -17,6 +17,8 @@ public:
 	void apply_force(glm::vec3 force);
 	void collision_handling();
 	Texture* get_texture();
+	void set_object_color(glm::vec3 object_color);
+	glm::vec3 get_object_color();
 
 protected:
 
@@ -25,6 +27,7 @@ private:
 	glm::vec3 velocity;
 	glm::vec3 acceleration;
 	glm::vec3 force = glm::vec3(0.0f);
+	glm::vec3 old_force = glm::vec3(0.0f);
 	glm::vec3 penalty_force;
 	float threshold = 0.06f;
 	float mass;
@@ -32,6 +35,7 @@ private:
 	float rotation;
 	float scale;
 	Texture* texture;
+	glm::vec3 object_color = glm::vec3(1);
 
 
 	float elapsed_time = 0;

@@ -15,6 +15,7 @@ Application::Application(Camera* camera) : camera(camera) {
 	this->system->set_random_rotation(true);
 	this->system->set_scale_error(0.03f);
 	this->system->set_life_error(3.0f);
+	this->system->set_object_color(glm::vec3(1,1,1));
 }
 
 int Application::init() {

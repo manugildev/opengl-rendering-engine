@@ -18,6 +18,7 @@ public:
 	glm::vec3 generate_random_unit_vector(glm::vec3 direction, float deviation);
 	float generate_value(float value1, float error);
 	float generate_rotation();
+	void set_object_color(glm::vec3 object_color);
 
 private:
 	float pps;
@@ -27,6 +28,7 @@ private:
 	Application * app;
 	Texture* texture;
 	float scale = 0.05f;
+	glm::vec3 object_color = glm::vec3(1.0f);
 
 	float speed_error, life_error, scale_error;
 	bool random_rotation = true;

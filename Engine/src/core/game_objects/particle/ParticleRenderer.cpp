@@ -43,6 +43,7 @@ void ParticleRenderer::render(std::vector<Particle*> particles, Camera* camera) 
 	particles[0]->get_texture()->bind(0);
 	for (unsigned int i = 0; i < particles.size(); i++) {
 		Particle* p = particles[i];
+		dynamic_cast<ParticleShader*> (shader_program)->set_object_color(p->get_object_color());
 		update_model_view_matrix(p->get_position(), p->get_rotation(), p->get_scale(), camera->get_view_matrix(), vbo_data);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	}

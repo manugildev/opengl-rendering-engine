@@ -32,6 +32,7 @@ void ParticleSystem::emit_particle(glm::vec3 center) {
 	float l = generate_value(life_length, life_error);
 	//std::cout << generate_rotation() << std::endl;
 	Particle* p = new Particle(texture, center, velocity, glm::vec3(0, -6.0f, 0), 1, l, generate_rotation(), s);
+	p->set_object_color(object_color);
 	app->particle_master->add_particle(p);
 }
 
@@ -92,4 +93,8 @@ float ParticleSystem::generate_value(float value1, float error) {
 float ParticleSystem::generate_rotation() {
 	if (random_rotation) return ((rand() / (float)RAND_MAX) * 360.0f);
 	else return 0;
+}
+
+void ParticleSystem::set_object_color(glm::vec3 object_color){
+	this->object_color = object_color;
 }

@@ -21,6 +21,7 @@ void ParticleShader::get_all_uniform_locations() {
 	location_view_mat = get_uniform_location("view_mat");
 	location_proj_mat = get_uniform_location("proj_mat");
 	location_number_of_rows = get_uniform_location("number_of_rows");
+	location_object_color = get_uniform_location("object_color");
 }
 
 /*void ParticleShader::set_model_matrix(glm::mat4 matrix) {
@@ -29,6 +30,10 @@ void ParticleShader::get_all_uniform_locations() {
 
 void ParticleShader::set_number_of_rows(float value) {
 	modify_float(location_number_of_rows, value);
+}
+
+void ParticleShader::set_object_color(glm::vec3 object_color){
+	modify_vec3(location_object_color, object_color);
 }
 
 void ParticleShader::set_model_matrix(glm::mat4 value) {
