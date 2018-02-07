@@ -12,6 +12,8 @@ Mesh::Mesh(std::vector<Vertex> vertices, std::vector<GLuint> indices) {
 		model.positions.push_back(vertices[i].pos);
 		model.tex_coords.push_back(vertices[i].tex_coord);
 		model.normals.push_back(vertices[i].normal);
+		model.tangents.push_back(vertices[i].tangent);
+		model.bitangents.push_back(vertices[i].bitangent);
 	}
 
 	for (int i = 0; i < indices.size(); i++) {
@@ -43,6 +45,16 @@ void Mesh::init_mesh(const IndexedModel& model) {
 	glBufferData(GL_ARRAY_BUFFER, model.normals.size() * sizeof(model.normals[0]), &model.normals[0], GL_STATIC_DRAW);
 	glEnableVertexAttribArray(2);
 	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, 0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, mesh_vab[TANGENT_VB]);
+	glBufferData(GL_ARRAY_BUFFER, model.tangents.size() * sizeof(model.tangents[0]), &model.tangents[0], GL_STATIC_DRAW);
+	glEnableVertexAttribArray(3);
+	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 0, 0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, mesh_vab[BITANGENT_VB]);
+	glBufferData(GL_ARRAY_BUFFER, model.bitangents.size() * sizeof(model.bitangents[0]), &model.bitangents[0], GL_STATIC_DRAW);
+	glEnableVertexAttribArray(4);
+	glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh_vab[INDEX_VB]);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, model.indices.size() * sizeof(model.indices[0]), &model.indices[0], GL_STATIC_DRAW);

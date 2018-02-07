@@ -12,9 +12,11 @@ LightingShader::LightingShader(std::string vertex_file, std::string fragment_fil
 LightingShader::~LightingShader() {}
 
 void LightingShader::bind_attributes() {
-	ShaderProgram::bind_attribute(0, "vertex_positions");
-	ShaderProgram::bind_attribute(1, "vertex_tex_coords");
-	ShaderProgram::bind_attribute(2, "vertex_normals");
+	ShaderProgram::bind_attribute(0, "vertex_position");
+	ShaderProgram::bind_attribute(1, "vertex_tex_coord");
+	ShaderProgram::bind_attribute(2, "vertex_normal");
+	ShaderProgram::bind_attribute(3, "vertex_tangent");
+	ShaderProgram::bind_attribute(4, "vertex_bitangent");
 }
 
 void LightingShader::get_all_uniform_locations() {
@@ -29,13 +31,16 @@ void LightingShader::get_all_uniform_locations() {
 	location_ambient_strength = get_uniform_location("ambient_strength");
 	location_specular_strength = get_uniform_location("specular_strength");
 	location_specular_power = get_uniform_location("specular_power");
-	location_texture_0 = get_uniform_location("texture_0");
+	location_diffuse_texture = get_uniform_location("diffuse_texture");
+	location_normal_texture = get_uniform_location("normal_texture");
 	location_mix_power = get_uniform_location("mix_power");
 	location_toon_shading = get_uniform_location("toon");
 	location_cook_shading = get_uniform_location("cook");
 	location_cook_r = get_uniform_location("cook_r");
 	location_cook_k = get_uniform_location("cook_k");
 	location_cook_f = get_uniform_location("cook_f");
+	location_apply_normal_map = get_uniform_location("apply_normal_map");
+	location_show_normal_texture = get_uniform_location("show_normal_texture");
 	location_point_lights_size = get_uniform_location("point_lights_size");
 
 	/* Locations for Lights */
@@ -86,7 +91,19 @@ void LightingShader::set_toon_shading(bool value) { modify_boolean(location_toon
 
 void LightingShader::set_cook_shading(bool value) { modify_boolean(location_cook_shading, value); }
 
-void LightingShader::set_texture(int number) { modify_texture(location_texture_0, number); }
+void LightingShader::apply_normal_map(bool value){
+	modify_boolean(location_apply_normal_map, value);
+}
+
+void LightingShader::show_normal_texture(bool value){
+	modify_boolean(location_show_normal_texture, value);
+}
+
+void LightingShader::set_diffuse_texture(int number) { modify_texture(location_diffuse_texture, number); }
+
+void LightingShader::set_normal_texture(int value){
+	modify_texture(location_normal_texture, value);
+}
 
 void LightingShader::set_mix_power(float value) {
 	modify_float(location_mix_power, value);

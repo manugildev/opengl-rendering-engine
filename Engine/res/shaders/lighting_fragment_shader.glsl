@@ -29,7 +29,8 @@ out vec4 frag_color;
 in vec3 frag_pos;
 in vec3 eye_dir;
 in vec3 normal;
-in vec2 tex_coords;
+in vec2 tex_coord;
+in mat3 TBN;
 
 uniform vec3 view_pos;
 uniform vec3 object_color;
@@ -49,7 +50,10 @@ uniform PointLight point_lights[number_of_point_lights];
 uniform int point_lights_size = 0;
 uniform Material material;
 
-uniform sampler2D texture_0;
+uniform sampler2D diffuse_texture;
+uniform sampler2D normal_texture;
+uniform bool show_normal_texture;
+uniform bool apply_normal_map;
 
 vec3 calc_dir_light_phong(DirLight light, vec3 normal, vec3 view_dir);
 vec3 calc_dir_light_cook(DirLight light, vec3 normal, vec3 view_dir);
@@ -58,15 +62,25 @@ vec3 calc_point_light_cook(PointLight light, vec3 normal, vec3 frag_pos, vec3 vi
 vec3 limit(float value, vec3 color);
 
 vec3 texture_blend;
-const float levels = 8.0f;
+float levels = 8.0f;
 float spec_power = 1;
 
 void main(){
-	texture_blend = mix(vec3(texture(texture_0, tex_coords)), object_color, mix_power);
+
+	if(!show_normal_texture) texture_blend = mix(vec3(texture(diffuse_texture, tex_coord)), object_color, mix_power);
+	else texture_blend = mix(vec3(texture(normal_texture, tex_coord)), object_color, mix_power);
+	
 	if(specular_power > 1) spec_power = specular_power;
 	else spec_power = material.shininess;
 
 	vec3 norm = normalize(normal);
+
+	if(apply_normal_map){
+		norm = texture(normal_texture, tex_coord).rgb;
+		norm = normalize(norm * 2.0 - 1.0);   
+		norm = normalize(TBN * norm);
+	}
+
 	vec3 view_dir = normalize(view_pos - eye_dir);
 
 	// Directional Lighting

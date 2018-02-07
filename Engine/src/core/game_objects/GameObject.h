@@ -46,7 +46,9 @@ public:
 	float get_cook_f0();
 	float get_cook_r();
 	float get_cook_k();
-	float get_mix_power();
+	float get_mix_power(); 
+	bool get_apply_normal_map();
+	bool get_show_normal_texture();
 
 	void set_scale(glm::vec3 scale);
 	void set_ambient_strength(float ambient_strength);
@@ -61,6 +63,8 @@ public:
 	void set_circular_angle(glm::vec2 value);
 	virtual void set_toon_shading(bool toon_shading);
 	virtual void set_cook_shading(bool cook_shading);
+	void set_show_normal_texture(bool value);
+	void set_apply_normal_map(bool value);
 
 	virtual void set_shader_program(ShaderProgram* shader_program);
 
@@ -105,6 +109,8 @@ private:
 	float cook_f0 = 0;
 	float mix_power;
 	float cook_r = 0;
+	float apply_normal_map = true;
+	float show_normal_texture = false;
 
 	float distance_from_center = 0;
 	glm::vec2 circular_angle = glm::vec2(0.0f);

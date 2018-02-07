@@ -10,12 +10,6 @@
 
 Application::Application(Camera* camera) : camera(camera) {
 	this->init();
-	Texture* tex = new Texture("textures/snow.jpg");
-	this->system = new ParticleSystem(this, tex, 50, 1, 1, 10, 0.05f);
-	this->system->set_random_rotation(true);
-	this->system->set_scale_error(0.03f);
-	this->system->set_life_error(3.0f);
-	this->system->set_object_color(glm::vec3(1,1,1));
 }
 
 int Application::init() {
@@ -104,7 +98,7 @@ void Application::update() {
 	for (int i = 0; i < point_lights.size(); i++) point_lights[i]->update(delta_time);
 	this->dir_light->update(delta_time);
 
-	system->generate_particles(delta_time, glm::vec3(0, 3, 0));
+	//system->generate_particles(delta_time, glm::vec3(0, 3, 0));
 }
 
 // TODO: Abstract this to run it outside

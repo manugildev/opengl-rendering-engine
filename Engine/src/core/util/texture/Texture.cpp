@@ -47,6 +47,9 @@ void Texture::unbind() {
 int Texture::get_unit() {
 	return this->unit;
 }
+void Texture::set_texture_type(TextureType texture_type) {
+	this->texture_type = texture_type;
+}
 std::string Texture::get_file_name() {
 	return this->file_name;
 }

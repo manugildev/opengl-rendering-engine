@@ -9,6 +9,8 @@
 #include <assimp\Importer.hpp>
 #include <assimp\scene.h>
 #include <assimp\postprocess.h>
+#include <assimp/mesh.h>
+#include <assimp/cimport.h>
 #include "..\shaders\ShaderProgram.h"
 
 class LightingShader;
@@ -20,6 +22,12 @@ struct Material {
 	float shininess = 8.0f;
 	float shininess_strengh = 0.0f;
 	Texture* diffuse_texture = nullptr;
+	Texture* normal_texture = nullptr;
+};
+
+struct MaterialTextures {
+	Texture* diffuse_texture;
+	Texture* normal_texture;
 };
 
 class Model {
@@ -35,11 +43,11 @@ public:
 	void processNode(aiNode* node, const aiScene* scene);
 	Mesh processMesh(aiMesh* mesh, const aiScene* scene);
 
-	void load_texture(int i, const aiMaterial* pMaterial, aiTextureType texture_type);
+	Texture* load_texture(int i, const aiMaterial* pMaterial, aiTextureType texture_type);
 	Texture* texture_is_loaded(std::string full_path);
 
 	std::vector<Mesh> meshes;
-	std::vector<Texture*> textures; // TODO; Work on this to not repeat textures, this has to be global not model dependent. If a texture is already loade why load it again? IDEA: AssetManager
+	std::vector<MaterialTextures> textures; // TODO; Work on this to not repeat textures, this has to be global not model dependent. If a texture is already loade why load it again? IDEA: AssetManager
 	std::vector<Material> materials;
 };
 

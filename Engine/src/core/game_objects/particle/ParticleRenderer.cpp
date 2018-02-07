@@ -23,8 +23,6 @@ ParticleRenderer::ParticleRenderer(glm::mat4 proj_mat) : proj_mat(proj_mat) {
 	glBindBuffer(GL_ARRAY_BUFFER, particles_position_buffer);
 	// Initialize with empty (NULL) buffer : it will be updated later, each frame.
 	glBufferData(GL_ARRAY_BUFFER, MAX_INSTANCES * INSTANCE_DATA_LENGTH * sizeof(GLfloat), NULL, GL_STREAM_DRAW);
-
-
 }
 
 ParticleRenderer::~ParticleRenderer() {
@@ -39,16 +37,15 @@ void ParticleRenderer::render(std::vector<Particle*> particles, Camera* camera) 
 
 	const int p_size = particles.size();
 	std::vector<float>* vbo_data = new std::vector<float>;
-
-	particles[0]->get_texture()->bind(0);
+	if(particles.size()>0) particles[0]->get_texture()->bind(0);
 	for (unsigned int i = 0; i < particles.size(); i++) {
 		Particle* p = particles[i];
 		dynamic_cast<ParticleShader*> (shader_program)->set_object_color(p->get_object_color());
 		update_model_view_matrix(p->get_position(), p->get_rotation(), p->get_scale(), camera->get_view_matrix(), vbo_data);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	}
-	particles[0]->get_texture()->unbind();
-	std::cout << "Particles: " << particles.size() << std::endl;
+	if (particles.size()>0) particles[0]->get_texture()->unbind();
+	//std::cout << "Particles: " << particles.size() << std::endl;
 	//udpate_vbo(particles.size(), vbo, *vbo_data, particles_position_buffer);
 	//glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, quad->get_vertex_count(), particles.size());
 	this->finish_rendering();

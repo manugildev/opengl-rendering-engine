@@ -91,6 +91,9 @@ void GameObject::render() {
 		lighting_shader->set_specular_power(specular_power);
 		lighting_shader->set_mix_power(mix_power);
 		lighting_shader->set_cook_shading(cook_shading);
+		lighting_shader->show_normal_texture(show_normal_texture);
+		lighting_shader->apply_normal_map(apply_normal_map);
+		lighting_shader->set_cook_shading(cook_shading);
 		if (cook_shading) {
 			lighting_shader->set_cook_r(cook_r);
 			lighting_shader->set_cook_f(cook_f0);
@@ -192,6 +195,14 @@ float GameObject::get_mix_power(){
 	return this->mix_power;
 }
 
+bool GameObject::get_apply_normal_map(){
+	return this->apply_normal_map;
+}
+
+bool GameObject::get_show_normal_texture(){
+	return this->show_normal_texture;
+}
+
 glm::vec3 GameObject::get_color() {
 	return this->object_color;
 }
@@ -254,6 +265,14 @@ void GameObject::set_toon_shading(bool toon_shading) {
 
 void GameObject::set_cook_shading(bool cook_shading) {
 	this->cook_shading = cook_shading;
+}
+
+void GameObject::set_show_normal_texture(bool value){
+	this->show_normal_texture = value;
+}
+
+void GameObject::set_apply_normal_map(bool value){
+	this->apply_normal_map = value;
 }
 
 

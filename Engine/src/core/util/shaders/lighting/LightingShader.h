@@ -36,7 +36,7 @@ class LightingShader : public ShaderProgram {
 public:
 	static LightingShader* create();
 
-	LightingShader(std::string vertex_file=LAMP_VERTEX_FILE, std::string fragment_file= LAMP_FRAGMENT_FILE);
+	LightingShader(std::string vertex_file = LAMP_VERTEX_FILE, std::string fragment_file = LAMP_FRAGMENT_FILE);
 	~LightingShader();
 
 	void bind_attributes() override;
@@ -44,7 +44,7 @@ public:
 
 	void set_view_matrix(glm::mat4 matrix);
 	void set_model_matrix(glm::mat4 matrix);
-	void set_proj_matrix(glm::mat4 matrix); 
+	void set_proj_matrix(glm::mat4 matrix);
 	void set_view_pos(glm::vec3 view_pos);
 	void set_object_color(glm::vec3 object_color);
 	void set_light_pos(glm::vec3 light_pos);
@@ -52,13 +52,16 @@ public:
 	void set_ambient_strength(float value);
 	void set_specular_strength(float value);
 	void set_specular_power(int value);
-	void set_texture(int value);
+	void set_diffuse_texture(int value);
+	void set_normal_texture(int value);
 	void set_mix_power(float value);
 	void set_cook_r(float value);
 	void set_cook_k(float value);
 	void set_cook_f(float value);
 	void set_toon_shading(bool value);
 	void set_cook_shading(bool value);
+	void apply_normal_map(bool value);
+	void show_normal_texture(bool value);
 
 	void set_directional_light(DirLight* dir_light);
 	void set_point_lights(std::vector<PointLight*> point_lights);
@@ -70,9 +73,11 @@ private:
 	GLuint location_model_mat, location_view_mat, location_proj_mat, location_view_pos;
 	GLuint location_object_color, location_light_pos, location_light_color;
 	GLuint location_ambient_strength, location_specular_strength, location_specular_power;
-	GLuint location_texture_0, location_mix_power, location_toon_shading, location_cook_shading;
+	GLuint location_diffuse_texture, location_normal_texture, location_mix_power, location_toon_shading, location_cook_shading;
 	GLuint location_cook_r, location_cook_f, location_cook_k;
 	GLuint location_point_lights_size;
+	GLuint location_apply_normal_map;
+	GLuint location_show_normal_texture;
 
 	DLight_Location location_dir_light;
 	Material_Location location_material;

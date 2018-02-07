@@ -1,0 +1,15 @@
+# Blender MTL File: 'AKM_LP_Final.obj'
+# Material Count: 1
+
+newmtl Rocks
+Ns 9.803922
+Ka 0.588200 0.588200 0.588200
+Kd 0.588200 0.588200 0.588200
+Ks 0.270000 0.270000 0.270000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd rocks_01_dif.tga
+map_Ka rocks_01_dif.tga
+map_Ks D:\\Sunnncho\\3ds_MAX\\80_rocks_01\\rocks_01_max_2008\\rocks_01_spec.tga
