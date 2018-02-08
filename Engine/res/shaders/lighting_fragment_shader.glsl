@@ -76,10 +76,12 @@ void main(){
 	vec3 norm = normalize(normal);
 
 	if(apply_normal_map){
-		norm = texture(normal_texture, tex_coord).rgb;
-		norm = normalize(norm * 2.0 - 1.0);   
+		norm = texture(normal_texture, tex_coord).rgb ;
+		norm = normalize(norm * 2.0 - 1);   
 		norm = normalize(TBN * norm);
+		norm = norm * vec3(1.002,1.002,1); // Normal Map intensity value
 	}
+
 
 	vec3 view_dir = normalize(view_pos - eye_dir);
 
