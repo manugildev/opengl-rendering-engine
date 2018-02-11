@@ -75,6 +75,6 @@ private:
 	DirLight* dir_light;
 
 	float lastFrame = 0.0f;
-	float debug = false;
+	bool debug = false;
 
 };

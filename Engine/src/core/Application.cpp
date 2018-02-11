@@ -40,6 +40,7 @@ int Application::init() {
 	// TODO: Temporal Particle Master
 
 	particle_master = new ParticleMaster(camera->get_persp_proj_matrix());
+	
 
 	return 1;
 }
@@ -226,8 +227,8 @@ bool Application::is_debug() {
 
 Application::~Application() {
 	delete window;
-	for (int i = 0; i < game_objects.size(); i++) { delete game_objects[i]; game_objects[i] = NULL; }
-	for (int i = 0; i < point_lights.size(); i++) { delete point_lights[i]; point_lights[i] = NULL; }
-	window = NULL;
+	for (int i = 0; i < game_objects.size(); i++) { delete game_objects[i]; game_objects[i] = nullptr; }
+	for (int i = 0; i < point_lights.size(); i++) { delete point_lights[i]; point_lights[i] = nullptr; }
+	window = nullptr;
 	glfwTerminate();
 }

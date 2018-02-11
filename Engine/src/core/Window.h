@@ -10,7 +10,7 @@ public:
 	Window(Application* app, int width, int height, std::string title);
 	~Window();
 
-	GLFWwindow *window_obj = 0;
+	GLFWwindow *window_obj = nullptr;
 
 	int get_width();
 	int get_height();

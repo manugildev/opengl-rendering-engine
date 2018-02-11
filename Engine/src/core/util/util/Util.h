@@ -3,7 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <stdio.h>
+#include <cstdio>
 
 // TODO: Remove Util from the util folder and make it a static class with no .cpp
 

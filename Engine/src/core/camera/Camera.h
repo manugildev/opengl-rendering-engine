@@ -27,7 +27,7 @@ public:
 	void update(float delta_time);
 
 	void process_keyboard(Camera_Movement direction);
-	void process_mouse(GLfloat x_offset, GLfloat y_offset, GLboolean constrain_pitch = true);
+	void process_mouse(GLfloat x_offset, GLfloat y_offset, bool constrain_pitch = true);
 	void process_mouse_scroll(GLfloat y_offset);
 
 	void update_camera_vectors();

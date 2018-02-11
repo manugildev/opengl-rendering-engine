@@ -3,8 +3,8 @@
 
 #include <GLEW\glew.h>
 #include <glm\glm.hpp>
-#include "assert.h"
-#include "stdio.h"
+#include <cassert>
+#include <cstdio>
 #include "..\..\util\shaders\basic\BasicShader.h"
 
 #include "..\..\util\util\util.h"

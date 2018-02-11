@@ -23,7 +23,6 @@ void Input::key_callback(int key, int scancode, int action, int mode) {
 		app->get_game_objects()[app->get_game_objects().size() - 2]->set_show_normal_texture(value);
 
 	}
-
 }
 
 void Input::scroll_callback(double x_offset, double y_offset) {

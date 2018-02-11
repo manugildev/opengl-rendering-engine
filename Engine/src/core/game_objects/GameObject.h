@@ -109,8 +109,8 @@ private:
 	float cook_f0 = 0;
 	float mix_power;
 	float cook_r = 0;
-	float apply_normal_map = true;
-	float show_normal_texture = false;
+	bool apply_normal_map = true;
+	bool show_normal_texture = false;
 
 	float distance_from_center = 0;
 	glm::vec2 circular_angle = glm::vec2(0.0f);

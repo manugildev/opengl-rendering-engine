@@ -21,7 +21,7 @@ void Camera::process_keyboard(Camera_Movement direction) {
 	this->direction = direction;
 }
 
-void Camera::process_mouse(GLfloat x_offset, GLfloat y_offset, GLboolean constrain_pitch) {
+void Camera::process_mouse(GLfloat x_offset, GLfloat y_offset, bool constrain_pitch) {
 	x_offset *= this->mouse_sensitivity;
 	y_offset *= this->mouse_sensitivity;
 

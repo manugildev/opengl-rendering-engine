@@ -2,6 +2,7 @@
 
 #include "util\Logger.h"
 #include "Application.h"
+#include <tweakbar\AntTweakBar.h>
 
 Window::Window(Application* app, int width, int height, std::string title) : app(app) {
 
@@ -43,7 +44,6 @@ void Window::window_size_callback(GLFWwindow * window, int width, int height) {
 	sprintf_s(temp, "Window_resize: %dx%d - Aspect_Ratio: %f", width, height, ((float)width) / height);
 	LOG_MESSAGE(temp);
 	w->app->resize_callback(width, height); 
-
 }
 
 void Window::key_callback(GLFWwindow * window, int key, int scancode, int action, int mode) {

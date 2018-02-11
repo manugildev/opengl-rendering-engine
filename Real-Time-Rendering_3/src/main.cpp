@@ -7,7 +7,10 @@
 #include "core\util\gui\GuiRenderer.h"
 #include "input\Input.h"
 
+#include <tweakbar\AntTweakBar.h>
+
 int main(void) {
+	
 	/* Camera */
 	Camera camera(glm::vec3(0.0f, 7.0f, 10.0f));
 
@@ -82,7 +85,7 @@ int main(void) {
 	gui_renderer->add_gui_texture(first_gui);
 
 	std::vector<ShaderProgram*> shaders = { shader_program, shader_program_lamp, cube_map_shader };
-	
+
 	/* Setting up the Application */
 	app->set_game_objects(objects);
 	app->set_directional_light(d_light);
@@ -91,6 +94,8 @@ int main(void) {
 	app->set_gui_renderer(gui_renderer);
 	app->set_shaders(shaders);
 	app->set_input_manager(input_manager);
+
+
 
 	/* Run the loop */
 	app->runMainGameLoop();

@@ -47,7 +47,7 @@ public:
 	Texture* texture_is_loaded(std::string full_path);
 
 	std::vector<Mesh> meshes;
-	std::vector<MaterialTextures> textures; // TODO; Work on this to not repeat textures, this has to be global not model dependent. If a texture is already loade why load it again? IDEA: AssetManager
+	std::vector<MaterialTextures> textures; // TODO: Work on this to not repeat textures, this has to be global not model dependent. If a texture is already loade why load it again? IDEA: AssetManager
 	std::vector<Material> materials;
 };
 
