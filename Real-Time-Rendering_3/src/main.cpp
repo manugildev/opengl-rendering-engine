@@ -7,7 +7,6 @@
 #include "core\util\gui\GuiRenderer.h"
 #include "input\Input.h"
 
-#include <tweakbar\AntTweakBar.h>
 
 int main(void) {
 	

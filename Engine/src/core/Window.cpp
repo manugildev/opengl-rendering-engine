@@ -2,7 +2,6 @@
 
 #include "util\Logger.h"
 #include "Application.h"
-#include <tweakbar\AntTweakBar.h>
 
 Window::Window(Application* app, int width, int height, std::string title) : app(app) {
 
@@ -59,7 +58,7 @@ void Window::scroll_callback(GLFWwindow * window, double x_offset, double y_offs
 void Window::mouse_callback(GLFWwindow * window, double x_pos, double y_pos) {
 	Window* w = reinterpret_cast<Window *>(glfwGetWindowUserPointer(window));
 	w->app->mouse_callback(x_pos, y_pos);
-}
+} 
 
 #pragma endregion 
 
