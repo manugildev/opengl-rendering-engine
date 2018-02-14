@@ -16,7 +16,7 @@ public:
 
 	GLint load();
 	GLuint* get_texture_id();
-	void bind(int texture_unit = 0) const;
+	void bind(int texture_unit = 0, unsigned texture_num = 0) const;
 	void unbind();
 	int get_unit();
 	void set_texture_type(TextureType texture_type);

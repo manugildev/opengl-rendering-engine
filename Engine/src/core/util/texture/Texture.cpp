@@ -1,5 +1,7 @@
 #include "Texture.h"
 #include <assert.h>
+#include <algorithm>
+
 #include "..\Logger.h"
 
 #include <std_image\stb_image.h>
@@ -16,17 +18,25 @@ GLint Texture::load() {
 	if (image_data == nullptr) { std::cout << "Texture loading failed: " << file_name.c_str() << std::endl; return -1; };
 
 	glGenTextures(num_of_textures, texture_id);
-	this->bind();
+	for (int i = 0; i < num_of_textures; i++) {
+		glBindTexture(texture_target, texture_id[i]);
 
-	glTexParameteri(texture_target, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(texture_target, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		if(num_of_textures == 1) glTexParameterf(texture_target, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		else glTexParameterf(texture_target, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glTexParameterf(texture_target, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		
+		glTexImage2D(texture_target, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data);
 
-	glTexParameterf(texture_target, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameterf(texture_target, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glGenerateMipmap(texture_target);
+		GLfloat maxAnisotropy;
+		glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &maxAnisotropy);
+		glTexParameterf(texture_target, GL_TEXTURE_MAX_ANISOTROPY_EXT, std::clamp(0.0f, 8.0f, maxAnisotropy));
 
-	glTexImage2D(texture_target, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data);
 
-	this->unbind();
+		glTexImage2D(texture_target, i, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data);
+
+		this->unbind();
+	}
 	stbi_image_free(image_data);
 	return 1;
 }
@@ -35,9 +45,9 @@ GLuint* Texture::get_texture_id() {
 	return this->texture_id;
 }
 
-void Texture::bind(int texture_unit) const {
+void Texture::bind(int texture_unit, unsigned texture_num) const {
 	glActiveTexture(GL_TEXTURE0 + texture_unit);
-	glBindTexture(texture_target, *texture_id);
+	glBindTexture(texture_target, texture_id[texture_num]);
 }
 
 void Texture::unbind() {

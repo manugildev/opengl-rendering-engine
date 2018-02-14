@@ -34,7 +34,7 @@ class Model {
 public:
 	const std::string file_name;
 
-	Model(const std::string & file_name = "models/cube.obj");
+	Model(const std::string & file_name = "models/cube.obj", const unsigned int mipmap_levels = 1);
 
 	void load_model(const char* file_name);
 	void draw(ShaderProgram* shader_program = nullptr, GLenum mode = GL_TRIANGLES);
@@ -49,5 +49,8 @@ public:
 	std::vector<Mesh> meshes;
 	std::vector<MaterialTextures> textures; // TODO: Work on this to not repeat textures, this has to be global not model dependent. If a texture is already loade why load it again? IDEA: AssetManager
 	std::vector<Material> materials;
+
+private:
+	unsigned int mipmap_levels;
 };
 

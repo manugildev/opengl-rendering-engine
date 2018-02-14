@@ -3,7 +3,7 @@
 #include "..\util\Util.h"
 #include "..\shaders\lighting\LightingShader.h"
 #include <glm\ext.hpp>
-Model::Model(const std::string & file_name) :file_name(file_name) {
+Model::Model(const std::string & file_name, const unsigned int mipmap_levels) :file_name(file_name), mipmap_levels(mipmap_levels) {
 	this->load_model(file_name.c_str());
 }
 
@@ -192,7 +192,7 @@ Texture* Model::load_texture(int i, const aiMaterial* pMaterial, aiTextureType t
 		Texture* t_loaded = texture_is_loaded(full_path);
 		if (t_loaded) return t_loaded;
 		else {
-			Texture* new_texture = new Texture(full_path.c_str());
+			Texture* new_texture = new Texture(full_path.c_str(), GL_TEXTURE_2D, mipmap_levels);
 			if (new_texture->load() == -1) {
 				printf("Error loading texture '%s', loading the white pixel texture instead.\n", full_path.c_str());
 				new_texture = new Texture();

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2024
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Engine", "Engine\Engine.vcxproj", "{751B5E3C-5DFE-44DD-808F-907122EAC65A}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Real-Time-Animation_2", "Real-Time-Animation_2\Real-Time-Animation_2.vcxproj", "{0A90D9C8-7A57-4B11-B705-1CD2E2BE825F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Real-Time-Rendering_3", "Real-Time-Rendering_3\Real-Time-Rendering_3.vcxproj", "{B9239EB4-0FE4-48CF-8356-534AD37F3484}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Real-Time-Rendering_4", "Real-Time-Rendering_4\Real-Time-Rendering_4.vcxproj", "{E6DE3BFA-841E-4E0E-AFB6-114E5D429269}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,6 +63,14 @@ Global
 		{B9239EB4-0FE4-48CF-8356-534AD37F3484}.Release|x64.Build.0 = Release|x64
 		{B9239EB4-0FE4-48CF-8356-534AD37F3484}.Release|x86.ActiveCfg = Release|Win32
 		{B9239EB4-0FE4-48CF-8356-534AD37F3484}.Release|x86.Build.0 = Release|Win32
+		{E6DE3BFA-841E-4E0E-AFB6-114E5D429269}.Debug|x64.ActiveCfg = Debug|x64
+		{E6DE3BFA-841E-4E0E-AFB6-114E5D429269}.Debug|x64.Build.0 = Debug|x64
+		{E6DE3BFA-841E-4E0E-AFB6-114E5D429269}.Debug|x86.ActiveCfg = Debug|Win32
+		{E6DE3BFA-841E-4E0E-AFB6-114E5D429269}.Debug|x86.Build.0 = Debug|Win32
+		{E6DE3BFA-841E-4E0E-AFB6-114E5D429269}.Release|x64.ActiveCfg = Release|x64
+		{E6DE3BFA-841E-4E0E-AFB6-114E5D429269}.Release|x64.Build.0 = Release|x64
+		{E6DE3BFA-841E-4E0E-AFB6-114E5D429269}.Release|x86.ActiveCfg = Release|Win32
+		{E6DE3BFA-841E-4E0E-AFB6-114E5D429269}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

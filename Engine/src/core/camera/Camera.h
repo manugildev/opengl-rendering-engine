@@ -66,7 +66,7 @@ private:
 	glm::mat4 view_matrix;
 	/* Camera Options */
 	GLfloat movement_speed;
-	GLfloat acceleration = 3.0f;
+	GLfloat acceleration = 0.4f;
 	GLfloat max_velocity = 0.6f;
 	GLfloat mouse_sensitivity;
 	Camera_Movement direction;

@@ -140,7 +140,7 @@ void Camera::set_parent_model_mat(glm::mat4  parent_model_mat) {
 }
 
 void Camera::update(float delta_time) {
-	movement_speed = this->movement_speed + (this->acceleration * delta_time);
+	movement_speed += (this->acceleration * delta_time);
 	if (movement_speed >= max_velocity) movement_speed = max_velocity;
 
 	if (this->direction == FORWARD) this->position += this->front * movement_speed;
