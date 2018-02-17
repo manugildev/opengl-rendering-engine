@@ -16,7 +16,7 @@ const glm::vec3 DEFAULT_OBJ_COLOR(1.0f);
 
 class GameObject {
 public:
-	GameObject(Application *app, Model* model, glm::vec3 object_color = DEFAULT_OBJ_COLOR);
+	GameObject(std::string name, Application *app, Model* model, glm::vec3 object_color = DEFAULT_OBJ_COLOR);
 	~GameObject();
 
 	virtual void update(float delta_time);
@@ -34,6 +34,7 @@ public:
 	void set_quaternion(glm::quat quaternion);
 	void set_model_mat(glm::mat4 model);
 
+	std::string get_name();
 	glm::vec3 get_pos();
 	glm::vec3 get_rotation();
 	glm::vec3 get_speed();
@@ -85,7 +86,7 @@ protected:
 	OutlineShader* outline_shader_program;
 
 private:
-	std::string name; //TODO: Set a name for every gameobject
+	std::string name;
 
 	CubeModel cube_mesh;
 	glm::vec3 scale = glm::vec3(1.0f);

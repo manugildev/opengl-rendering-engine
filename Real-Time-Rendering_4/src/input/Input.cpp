@@ -13,14 +13,14 @@ void Input::key_callback(int key, int scancode, int action, int mode) {
 	if (keys[GLFW_KEY_U]) app->get_window()->set_full_screen(!app->get_window()->get_full_screen());
 
 	if (keys[GLFW_KEY_1]) {
-		bool value = !app->get_game_objects()[app->get_game_objects().size() - 1]->get_apply_normal_map();
-		app->get_game_objects()[app->get_game_objects().size() - 1]->set_apply_normal_map(value);
-		app->get_game_objects()[app->get_game_objects().size() - 2]->set_apply_normal_map(value);
+		bool value = !app->get_component("barrel")->get_apply_normal_map();
+		app->get_component("barrel")->set_apply_normal_map(value);
+		app->get_component("rock")->set_apply_normal_map(value);
 	}
 	if (keys[GLFW_KEY_2]) {
-		bool value = !app->get_game_objects()[app->get_game_objects().size() - 1]->get_show_normal_texture();
-		app->get_game_objects()[app->get_game_objects().size() - 1]->set_show_normal_texture(value);
-		app->get_game_objects()[app->get_game_objects().size() - 2]->set_show_normal_texture(value);
+		bool value = !app->get_component("rock")->get_show_normal_texture();
+		app->get_component("rock")->set_show_normal_texture(value);
+		app->get_component("barrel")->set_show_normal_texture(value);
 
 	}
 }

@@ -1,7 +1,7 @@
 #include "RefractionObject.h"
 #include "..\shaders\RefractionShader.h"
 
-RefractionObject::RefractionObject(Application * app, Model * model, glm::vec3 color) : GameObject(app, model, color) {
+RefractionObject::RefractionObject(std::string name, Application * app, Model * model, glm::vec3 color) : GameObject(app, model, color) {
 }
 
 

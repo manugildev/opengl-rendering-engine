@@ -3,7 +3,7 @@
 
 class RefractionObject : public GameObject {
 public:
-	RefractionObject(Application * app, Model * model, glm::vec3 color);
+	RefractionObject(std::string name, Application * app, Model * model, glm::vec3 color);
 	~RefractionObject();
 
 	virtual void update(float delta_time);

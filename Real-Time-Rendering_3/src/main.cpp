@@ -26,22 +26,22 @@ int main(void) {
 	/* GameObjects */
 	LightingShader* shader_program = LightingShader::create();
 
-	GameObject * teapot = new GameObject(app, barrel_model, glm::vec3(0.90f, 0.29f, 0.23f));
-	teapot->set_shader_program(shader_program);
-	teapot->set_pos(glm::vec3(0, 0, 4));
-	teapot->set_rotation_speed(glm::vec3(0, 20, 0));
-	teapot->set_scale(glm::vec3(.5f));
-	teapot->set_specular_strength(1);
-	teapot->set_specular_power(1);
+	GameObject * barrel = new GameObject("barrel", app, barrel_model, glm::vec3(0.90f, 0.29f, 0.23f));
+	barrel->set_shader_program(shader_program);
+	barrel->set_pos(glm::vec3(0, 0, 4));
+	barrel->set_rotation_speed(glm::vec3(0, 20, 0));
+	barrel->set_scale(glm::vec3(.5f));
+	barrel->set_specular_strength(1);
+	barrel->set_specular_power(1);
 
-	GameObject * teapot1 = new GameObject(app, rock_model, glm::vec3(0.90f, 0.29f, 0.23f));
-	teapot1->set_shader_program(shader_program);
-	teapot1->set_scale(glm::vec3(.5f));
-	teapot1->set_pos(glm::vec3(0, 0, -4));
-	teapot1->set_rotation_speed(glm::vec3(0, 20, 0));
-	teapot1->set_specular_power(0.2);
+	GameObject * rock = new GameObject("rock", app, rock_model, glm::vec3(0.90f, 0.29f, 0.23f));
+	rock->set_shader_program(shader_program);
+	rock->set_scale(glm::vec3(.5f));
+	rock->set_pos(glm::vec3(0, 0, -4));
+	rock->set_rotation_speed(glm::vec3(0, 20, 0));
+	rock->set_specular_power(0.2);
 
-	std::vector<GameObject*> objects = { teapot, teapot1};
+	std::vector<GameObject*> objects = { barrel, rock};
 
 	/* Lights */
 	LampShader* shader_program_lamp = LampShader::create();

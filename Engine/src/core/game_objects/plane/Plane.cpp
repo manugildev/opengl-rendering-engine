@@ -7,7 +7,7 @@
 
 
 
-Plane::Plane(Application * app, Model* model, Camera* camera) : GameObject(app, model) {
+Plane::Plane(std::string name, Application * app, Model* model, Camera* camera) : GameObject(name, app, model) {
 	camera = app->get_camera();
 
 	this->attach_propeller(app);
@@ -20,7 +20,7 @@ Plane::Plane(Application * app, Model* model, Camera* camera) : GameObject(app, 
 
 void Plane::attach_wheels(Application * app) {
 	Model* wheels_model = new Model("models/plane/wheels.obj");
-	wheels = new GameObject(app, wheels_model);
+	wheels = new GameObject("wheels", app, wheels_model);
 	wheels->set_pos(glm::vec3(0.0f, -1.02f, -1.7f));
 	wheels->set_parent(this);
 	wheels->set_scale(glm::vec3(1.0f, 1.1f, 1.1f));
@@ -29,7 +29,7 @@ void Plane::attach_wheels(Application * app) {
 
 void Plane::attach_propeller(Application * app) {
 	Model* propeller_model = new Model("models/plane/propeller_1.obj");
-	propeller = new GameObject(app, propeller_model);
+	propeller = new GameObject("propeller", app, propeller_model);
 	propeller->set_pos(glm::vec3(0.0f, -0.0f, -3.19f));
 	propeller->set_parent(this);
 	propeller->set_scale(glm::vec3(1.1f, 1.1f, 1.1f));
@@ -41,18 +41,18 @@ void Plane::attach_arrows(Application * app) {
 	Model* blue_arrow_model = new Model("models/blue_arrow.obj");
 	Model* red_arrow_model = new Model("models/red_arrow.obj");
 
-	green_arrow = new GameObject(app, green_arrow_model, glm::vec3(0.0f, 1.0f, 0.0f));
+	green_arrow = new GameObject("green_arrow", app, green_arrow_model, glm::vec3(0.0f, 1.0f, 0.0f));
 	green_arrow->set_pos(glm::vec3(0.0f, 0.0f, 0.0f));
 	green_arrow->set_scale(glm::vec3(3.45f, 3.45f, 3.45f));
 	green_arrow->set_rotation(glm::vec3(0, 0, 0));
 
-	blue_arrow = new GameObject(app, green_arrow_model, glm::vec3(0.0f, 0.0f, 1.0f));
+	blue_arrow = new GameObject("blue_arrow", app, green_arrow_model, glm::vec3(0.0f, 0.0f, 1.0f));
 	blue_arrow->set_pos(glm::vec3(0.0f, 0.0f, 0.0f));
 	blue_arrow->set_parent(green_arrow);
 	blue_arrow->set_scale(glm::vec3(0.90f, 0.90f, 0.90f));
 	blue_arrow->set_rotation(glm::vec3(90, 0, -90));
 
-	red_arrow = new GameObject(app, green_arrow_model, glm::vec3(1.0f, 0.0f, 0.0f));
+	red_arrow = new GameObject("red_arrow", app, green_arrow_model, glm::vec3(1.0f, 0.0f, 0.0f));
 	red_arrow->set_pos(glm::vec3(0.0f, 0.0f, 0.0f));
 	red_arrow->set_parent(blue_arrow);
 	red_arrow->set_scale(glm::vec3(0.90f, 0.90f, 0.90f));

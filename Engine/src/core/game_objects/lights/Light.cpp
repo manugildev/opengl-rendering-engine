@@ -3,7 +3,7 @@
 #include <glm\gtc\type_ptr.hpp>
 #include <glm\ext.hpp>
 
-Light::Light(Application* app, glm::vec3 light_position, glm::vec3 light_color) : GameObject(app, new Model("models/sphere.obj")), light_position(light_position), light_color(light_color) {
+Light::Light(Application* app, glm::vec3 light_position, glm::vec3 light_color) : GameObject("Light", app, new Model("models/sphere.obj")), light_position(light_position), light_color(light_color) {
 	this->set_model_mat(glm::translate(glm::mat4(1.0f), light_position));
 	this->set_pos(light_position);
 	this->set_scale(glm::vec3(0.3f));

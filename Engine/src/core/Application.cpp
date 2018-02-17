@@ -198,6 +198,13 @@ GuiRenderer * Application::get_gui_renderer() {
 	return this->gui_renderer;
 }
 
+GameObject * Application::get_component(std::string name) {
+	for (unsigned int i = 0; i < game_objects.size(); i++) { 
+		if (game_objects[i]->get_name() == name) return game_objects[i];
+	}
+	return nullptr;
+}
+
 std::vector<PointLight*> Application::get_point_lights() {
 	return this->point_lights;
 }

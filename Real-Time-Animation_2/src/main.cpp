@@ -23,62 +23,62 @@ int main(void) {
 
 	/* GameObjects */
 	LightingShader* shader_program = LightingShader::create();
-	GameObject *city = new GameObject(app, city_model, glm::vec3(1.0f));
+	GameObject *city = new GameObject("city", app, city_model, glm::vec3(1.0f));
 	city->set_scale(glm::vec3(1.0f));
 	city->set_rotation_speed(glm::vec3(0.0f, 0.0f, 0.0f));
 	city->set_pos(glm::vec3(0.0f, 0.0f, 0.0f));
 	city->set_shader_program(shader_program);
 
-	Car *car1 = new Car(app, car_model, glm::vec3(0.18f, 0.80f, 0.44f));
+	Car *car1 = new Car("car1", app, car_model, glm::vec3(0.18f, 0.80f, 0.44f));
 	car1->set_parent(city);
 	car1->set_initial_pos(glm::vec3(0.0f, 1.0f, -10.0f));
 	car1->set_rotation(glm::vec3(0.0f, 270.0f, 0.0f));
 	car1->set_shader_program(shader_program);
 	car1->set_acceleration(glm::vec3(Util::random_range(3.0f, 7.0f), 0.0f, 0.0f));
 
-	Car *car5 = new Car(app, car_model, glm::vec3(0.20f, 0.59f, 0.84f));
+	Car *car5 = new Car("car5", app, car_model, glm::vec3(0.20f, 0.59f, 0.84f));
 	car5->set_parent(city);
 	car5->set_initial_pos(glm::vec3(0.0f, 1.0f, -5.0f));
 	car5->set_rotation(glm::vec3(0.0f, 270.0f, 0.0f));
 	car5->set_shader_program(shader_program);
 	car5->set_acceleration(glm::vec3(Util::random_range(3.0f, 7.0f), 0.0f, 0.0f));
 
-	Car *car2 = new Car(app, car_model, glm::vec3(0.90f, 0.29f, 0.23f));
+	Car *car2 = new Car("car2", app, car_model, glm::vec3(0.90f, 0.29f, 0.23f));
 	car2->set_parent(city);
 	car2->set_initial_pos(glm::vec3(0.0f, 1.0f, 0.0f));
 	car2->set_rotation(glm::vec3(0.0f, -270.0f, 0.0f));
 	car2->set_shader_program(shader_program);
 	car2->set_acceleration(glm::vec3(-Util::random_range(3.0f, 7.0f), 0.0f, 0.0f));
 
-	Car *car6 = new Car(app, car_model, glm::vec3(0.94f, 0.76f, 0.05f));
+	Car *car6 = new Car("car6", app, car_model, glm::vec3(0.94f, 0.76f, 0.05f));
 	car6->set_parent(city);
 	car6->set_initial_pos(glm::vec3(0.0f, 1.0f, 5.0f));
 	car6->set_rotation(glm::vec3(0.0f, -270.0f, 0.0f));
 	car6->set_shader_program(shader_program);
 	car6->set_acceleration(glm::vec3(-Util::random_range(3.0f, 7.0f), 0.0f, 0.0f));
 
-	Car *car3 = new Car(app, car_model, glm::vec3(0.10f, 0.73f, 0.61f));
+	Car *car3 = new Car("car3", app, car_model, glm::vec3(0.10f, 0.73f, 0.61f));
 	car3->set_parent(city);
 	car3->set_initial_pos(glm::vec3(0.0f, 1.0f, 0.0f));
 	car3->set_rotation(glm::vec3(0.0f, 0.0f, 0.0f));
 	car3->set_shader_program(shader_program);
 	car3->set_acceleration(glm::vec3(0.0f, 0.0f, -Util::random_range(3.0f, 7.0f)));
 
-	Car *car7 = new Car(app, car_model, glm::vec3(0.6f, 0.34f, 0.71f));
+	Car *car7 = new Car("car7", app, car_model, glm::vec3(0.6f, 0.34f, 0.71f));
 	car7->set_parent(city);
 	car7->set_initial_pos(glm::vec3(5.0f, 1.0f, 0.0f));
 	car7->set_rotation(glm::vec3(0.0f, 0.0f, 0.0f));
 	car7->set_shader_program(shader_program);
 	car7->set_acceleration(glm::vec3(0.0f, 0.0f, -Util::random_range(3.0f, 7.0f)));
 
-	Car *car4 = new Car(app, car_model, glm::vec3(0.9f, 0.49f, 0.13f));
+	Car *car4 = new Car("car4", app, car_model, glm::vec3(0.9f, 0.49f, 0.13f));
 	car4->set_parent(city);
 	car4->set_initial_pos(glm::vec3(-5.0f, 1.0f, 0.0f));
 	car4->set_rotation(glm::vec3(0.0f, -180.0f, 0.0f));
 	car4->set_shader_program(shader_program);
 	car4->set_acceleration(glm::vec3(0.0f, 0.0f, Util::random_range(3.0f, 7.0f)));
 
-	Car *car8 = new Car(app, car_model, glm::vec3(0.97f, 0.42f, 0.56f));
+	Car *car8 = new Car("car8", app, car_model, glm::vec3(0.97f, 0.42f, 0.56f));
 	car8->set_parent(city);
 	car8->set_initial_pos(glm::vec3(-10.0f, 1.0f, 0.0f));
 	car8->set_rotation(glm::vec3(0.0f, -180.0f, 0.0f));

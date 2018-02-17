@@ -5,7 +5,7 @@
 #include <glm/gtx/matrix_decompose.hpp>
 #include <tween\tween.h>
 
-PlaneDemo::PlaneDemo(Application * app, Model* model, Camera* camera) : GameObject(app, model) {
+PlaneDemo::PlaneDemo(std::string name, Application * app, Model* model, Camera* camera) : GameObject(name, app, model) {
 	camera = app->get_camera();
 
 	this->attach_propeller(app);
@@ -14,7 +14,7 @@ PlaneDemo::PlaneDemo(Application * app, Model* model, Camera* camera) : GameObje
 
 void PlaneDemo::attach_wheels(Application * app) {
 	Model* wheels_model = new Model("models/plane/wheels.obj");
-	wheels = new GameObject(app, wheels_model);
+	wheels = new GameObject("wheels", app, wheels_model);
 	wheels->set_pos(glm::vec3(0.0f, -1.02f, -1.7f));
 	wheels->set_parent(this);
 	wheels->set_scale(glm::vec3(1.0f, 1.1f, 1.1f));
@@ -23,7 +23,7 @@ void PlaneDemo::attach_wheels(Application * app) {
 
 void PlaneDemo::attach_propeller(Application * app) {
 	Model* propeller_model = new Model("models/plane/propeller_1.obj");
-	propeller = new GameObject(app, propeller_model);
+	propeller = new GameObject("propeller", app, propeller_model);
 	propeller->set_pos(glm::vec3(0.0f, -0.0f, -3.19f));
 	propeller->set_parent(this);
 	propeller->set_scale(glm::vec3(1.1f, 1.1f, 1.1f));

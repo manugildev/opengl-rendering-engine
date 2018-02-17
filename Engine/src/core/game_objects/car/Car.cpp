@@ -4,7 +4,7 @@
 #include "..\..\util\shaders\lighting\LightingShader.h"
 #include "..\..\Application.h"
 
-Car::Car(Application * app, Model* model, glm::vec3 object_color) : GameObject(app, model, object_color) {
+Car::Car(std::string name, Application * app, Model* model, glm::vec3 object_color) : GameObject(name, app, model, object_color) {
 	this->initial_position = this->get_pos();
 	Texture* tex = new Texture("textures/snow.jpg");
 	this->system = new ParticleSystem(app, tex, 50, 1, 1, 10, 0.05f);

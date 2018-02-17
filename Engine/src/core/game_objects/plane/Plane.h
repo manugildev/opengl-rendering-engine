@@ -7,7 +7,7 @@ class Application;
 
 class Plane : public GameObject {
 public:
-	Plane(Application* app, Model* model, Camera* camera);
+	Plane(std::string name, Application* app, Model* model, Camera* camera);
 	void attach_wheels(Application * app);
 	void attach_propeller(Application * app);
 	void attach_arrows(Application* app);

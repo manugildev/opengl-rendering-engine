@@ -8,7 +8,7 @@
 #include "..\Application.h"
 #include "..\src\core\util\shaders\lighting\LightingShader.h"
 
-GameObject::GameObject(Application *app, Model* model, glm::vec3 object_color) : app(app), camera(app->get_camera()), model(model), object_color(object_color) {
+GameObject::GameObject(std::string name, Application *app, Model* model, glm::vec3 object_color) : name(name), app(app), camera(app->get_camera()), model(model), object_color(object_color) {
 	this->model_mat = glm::mat4(1.0f);
 }
 
@@ -146,6 +146,10 @@ void GameObject::set_rotation_speed(glm::vec3 speed) {
 
 void GameObject::set_max_rotation_speed(glm::vec3 max_speed) {
 	this->max_rotation_speed = max_speed;
+}
+
+std::string GameObject::get_name(){
+	return name;
 }
 
 glm::vec3 GameObject::get_pos() {

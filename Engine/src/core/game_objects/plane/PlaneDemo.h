@@ -7,7 +7,7 @@ class Application;
 
 class PlaneDemo : public GameObject {
 public:
-	PlaneDemo(Application* app, Model* model, Camera* camera);
+	PlaneDemo(std::string name, Application* app, Model* model, Camera* camera);
 	void attach_wheels(Application * app);
 	void attach_propeller(Application * app);
 	void update(float delta_time) override;
