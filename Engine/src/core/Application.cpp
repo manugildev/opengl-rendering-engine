@@ -89,14 +89,14 @@ void Application::update() {
 
 	/* Poll for and process events */
 	glfwPollEvents();
-	for (int i = 0; i < game_objects.size(); i++) game_objects[i]->update(delta_time);
+	for (unsigned int i = 0; i < game_objects.size(); i++) game_objects[i]->update(delta_time);
 
 	/* Updating the camera aftwerwards because of the FPV*/
 	this->camera->update(delta_time);
 	this->camera->update_view_matrix();
 	this->camera->set_persp_proj_matrix(glm::perspective(glm::radians(camera->get_field_of_view()), camera->get_aspect_ratio(), 0.1f, 10000.0f));
 
-	for (int i = 0; i < point_lights.size(); i++) point_lights[i]->update(delta_time);
+	for (unsigned int i = 0; i < point_lights.size(); i++) point_lights[i]->update(delta_time);
 	this->dir_light->update(delta_time);
 
 	//system->generate_particles(delta_time, glm::vec3(0, 3, 0));
@@ -108,8 +108,8 @@ void Application::render() {
 	glClearColor(0.7f, 0.7f, 0.7f, 1.0f);
 
 	cube_map->render(camera->get_view_matrix(), camera->get_persp_proj_matrix());
-	for (int i = 0; i < game_objects.size(); i++) game_objects[i]->render();
-	for (int i = 0; i < point_lights.size(); i++) point_lights[i]->render();
+	for (unsigned int i = 0; i < game_objects.size(); i++) game_objects[i]->render();
+	for (unsigned int i = 0; i < point_lights.size(); i++) point_lights[i]->render();
 	dir_light->render();
 	this->particle_master->render(camera);
 }
@@ -121,11 +121,11 @@ void Application::bindAsRenderTarget() {
 }
 
 void Application::update_lights() {
-	for (int i = 0; i < game_objects.size(); i++) game_objects[i]->update_lights();
+	for (unsigned int i = 0; i < game_objects.size(); i++) game_objects[i]->update_lights();
 }
 
 float Application::calculate_delta_time() {
-	float currentFrame = glfwGetTime();
+	double currentFrame = glfwGetTime();
 	delta_time = currentFrame - lastFrame;
 	lastFrame = currentFrame;
 	return delta_time;
@@ -144,7 +144,7 @@ void Application::resize_callback(int width, int height) {
 
 void Application::scroll_callback(double x_offset, double y_offset) {
 	if (this->input_manager) this->input_manager->scroll_callback(x_offset, y_offset);
-	camera->process_mouse_scroll(y_offset);
+	camera->process_mouse_scroll((float) y_offset);
 }
 
 void Application::mouse_callback(double x_pos, double y_pos) {
@@ -153,7 +153,7 @@ void Application::mouse_callback(double x_pos, double y_pos) {
 #pragma endregion
 
 void Application::check_shaders() {
-	for (int i = 0; i < shaders.size(); i++) {
+	for (unsigned int i = 0; i < shaders.size(); i++) {
 		shaders[i]->check_if_modified();
 	}
 }
@@ -198,13 +198,6 @@ GuiRenderer * Application::get_gui_renderer() {
 	return this->gui_renderer;
 }
 
-GameObject* Application::get_component(std::string name) {
-	for (unsigned int i = 0; i < game_objects.size(); i++) { 
-		if (game_objects[i]->get_name() == name) return game_objects[i];
-	}
-	return nullptr;
-}
-
 std::vector<PointLight*> Application::get_point_lights() {
 	return this->point_lights;
 }
@@ -234,8 +227,8 @@ bool Application::is_debug() {
 
 Application::~Application() {
 	delete window;
-	for (int i = 0; i < game_objects.size(); i++) { delete game_objects[i]; game_objects[i] = nullptr; }
-	for (int i = 0; i < point_lights.size(); i++) { delete point_lights[i]; point_lights[i] = nullptr; }
+	for (unsigned int i = 0; i < game_objects.size(); i++) { delete game_objects[i]; game_objects[i] = nullptr; }
+	for (unsigned int i = 0; i < point_lights.size(); i++) { delete point_lights[i]; point_lights[i] = nullptr; }
 	window = nullptr;
 	glfwTerminate();
 }

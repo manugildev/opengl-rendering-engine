@@ -39,7 +39,7 @@ int main(void) {
 	rock->set_scale(glm::vec3(.5f));
 	rock->set_pos(glm::vec3(0, 0, -4));
 	rock->set_rotation_speed(glm::vec3(0, 20, 0));
-	rock->set_specular_power(0.2);
+	rock->set_specular_power(0.2f);
 
 	std::vector<GameObject*> objects = { barrel, rock};
 

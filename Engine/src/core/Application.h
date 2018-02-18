@@ -16,7 +16,6 @@
 #include "util\input\InputManager.h"
 #include "game_objects\particle\ParticleMaster.h"
 
-
 class Application {
 public:
 	Application(Camera* camera);
@@ -38,7 +37,12 @@ public:
 	bool get_debug();
 	GuiRenderer* get_gui_renderer();
 
-	GameObject* get_component(std::string name);
+	//TODO: Why this function is in here? This function si a Template function that should be somewhere else!!
+	template<typename T>
+	T* get_component(std::string name) {
+		auto it = std::find_if(game_objects.begin(), game_objects.end(), [name](T* g) { return  g->get_name() == name; });
+		return *it;
+	};
 
 	void key_callback(int key, int scancode, int action, int mode);
 	void scroll_callback(double x_offset, double y_offset);

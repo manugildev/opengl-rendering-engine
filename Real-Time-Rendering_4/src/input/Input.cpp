@@ -8,21 +8,6 @@ Input::~Input() {}
 void Input::key_callback(int key, int scancode, int action, int mode) {
 	InputManager::key_callback(key, scancode, action, mode);
 	this->process_camera_movement();
-	
-	if (keys[GLFW_KEY_P]) app->set_debug(!app->get_debug());
-	if (keys[GLFW_KEY_U]) app->get_window()->set_full_screen(!app->get_window()->get_full_screen());
-
-	if (keys[GLFW_KEY_1]) {
-		bool value = !app->get_component("barrel")->get_apply_normal_map();
-		app->get_component("barrel")->set_apply_normal_map(value);
-		app->get_component("rock")->set_apply_normal_map(value);
-	}
-	if (keys[GLFW_KEY_2]) {
-		bool value = !app->get_component("rock")->get_show_normal_texture();
-		app->get_component("rock")->set_show_normal_texture(value);
-		app->get_component("barrel")->set_show_normal_texture(value);
-
-	}
 }
 
 void Input::scroll_callback(double x_offset, double y_offset) {
