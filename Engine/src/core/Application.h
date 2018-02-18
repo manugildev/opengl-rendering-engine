@@ -16,6 +16,7 @@
 #include "util\input\InputManager.h"
 #include "game_objects\particle\ParticleMaster.h"
 
+
 class Application {
 public:
 	Application(Camera* camera);
@@ -36,6 +37,7 @@ public:
 	DirLight* get_dir_light();
 	bool get_debug();
 	GuiRenderer* get_gui_renderer();
+
 	GameObject* get_component(std::string name);
 
 	void key_callback(int key, int scancode, int action, int mode);

@@ -21,7 +21,7 @@ int main(void) {
 
 	/* Models */
 	Model* barrel_model = new Model("models/floor.obj", 1);
-	Model* barrel_model1 = new Model("models/floor.obj", 10);
+	Model* barrel_model1 = new Model("models/floor.obj", 20);
 
 	/* GameObjects */
 	LightingShader* shader_program = LightingShader::create();

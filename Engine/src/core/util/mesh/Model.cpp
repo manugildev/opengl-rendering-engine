@@ -80,13 +80,10 @@ void Model::processNode(aiNode* node, const aiScene* scene) {
 		// TODO: Save colors
 		// TODO: Add more Texture Types
 		MaterialTextures mT;
-		mT.normal_texture = new Texture(DEFAULT_NORMAL_MAP);
-		mT.normal_texture->load();
 
 		if (pMaterial->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
 			mT.diffuse_texture = load_texture(i, pMaterial, aiTextureType_DIFFUSE);
-		}
-		else {
+		} else {
 			// There is no texture > we load the white pixel texture
 			mT.diffuse_texture = new Texture();
 			mT.diffuse_texture->load();
@@ -94,8 +91,7 @@ void Model::processNode(aiNode* node, const aiScene* scene) {
 
 		if (pMaterial->GetTextureCount(aiTextureType_HEIGHT) > 0) {
 			mT.normal_texture = load_texture(i, pMaterial, aiTextureType_HEIGHT);
-		}
-		else {
+		} else {
 			mT.normal_texture = new Texture(DEFAULT_NORMAL_MAP);
 			mT.normal_texture->load();
 		}

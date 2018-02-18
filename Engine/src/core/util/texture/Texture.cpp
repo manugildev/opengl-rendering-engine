@@ -21,10 +21,15 @@ GLint Texture::load() {
 	for (int i = 0; i < num_of_textures; i++) {
 		glBindTexture(texture_target, texture_id[i]);
 
-		if(num_of_textures == 1) glTexParameterf(texture_target, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		else glTexParameterf(texture_target, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-		glTexParameterf(texture_target, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		
+		if (num_of_textures == 1) {
+			glTexParameterf(texture_target, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+			glTexParameterf(texture_target, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		}
+		else {
+			glTexParameterf(texture_target, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR );
+			glTexParameterf(texture_target, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		}
+
 		glTexImage2D(texture_target, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data);
 
 		glGenerateMipmap(texture_target);

@@ -62,7 +62,7 @@ vec3 calc_point_light_cook(PointLight light, vec3 normal, vec3 frag_pos, vec3 vi
 vec3 limit(float value, vec3 color);
 
 vec3 texture_blend;
-float levels = 8.0f;
+float levels = 3.0f;
 float spec_power = 1;
 
 void main(){

@@ -101,34 +101,35 @@ int main(void) {
 	cube->set_mix_power(.9f);
 	cube->set_specular_strength(0.0f);
 
-	GameObject * teapot = new GameObject("teapot", app, new Model("models/teapot.obj"), glm::vec3(0.90f, 0.29f, 0.23f));
-	teapot->set_parent(city);
-	teapot->set_shader_program(shader_program);
-	teapot->set_scale(glm::vec3(1.0f));
-	teapot->set_pos(glm::vec3(60, 10, -8));
-	teapot->set_rotation_speed(glm::vec3(0, 20, 0));
-	teapot->set_mix_power(.6f);
-
-	GameObject * teapot1 = new GameObject("teapot1", app, new Model("models/teapot.obj"), glm::vec3(0.90f, 0.29f, 0.23f));
+	Model* teapot_model = new Model("models/pumba/pumba.obj");
+	GameObject * teapot1 = new GameObject("teapot1", app, teapot_model , glm::vec3(1));
 	teapot1->set_parent(city);
 	teapot1->set_shader_program(shader_program);
 	teapot1->set_scale(glm::vec3(1.0f));
-	teapot1->set_pos(glm::vec3(60, 10, 0));
+	teapot1->set_pos(glm::vec3(60, 10, -8));
 	teapot1->set_rotation_speed(glm::vec3(0, 20, 0));
-	teapot1->set_mix_power(.6f);
-	teapot1->set_toon_shading(true);
+	teapot1->set_mix_power(0.1f);
 
-	GameObject * teapot2 = new GameObject("teapot2", app, new Model("models/teapot.obj"), glm::vec3(0.90f, 0.29f, 0.23f));
+	GameObject * teapot2 = new GameObject("teapot2", app,teapot_model, glm::vec3(1));
 	teapot2->set_parent(city);
 	teapot2->set_shader_program(shader_program);
 	teapot2->set_scale(glm::vec3(1.0f));
-	teapot2->set_mix_power(.6f);
-	teapot2->set_scale(glm::vec3(1.0f));
-	teapot2->set_pos(glm::vec3(60, 10, 8));
+	teapot2->set_pos(glm::vec3(60, 10, 0));
 	teapot2->set_rotation_speed(glm::vec3(0, 20, 0));
-	teapot2->set_cook_shading(true);
+	teapot2->set_mix_power(1);
+	teapot2->set_toon_shading(true);
 
-	std::vector<GameObject*> objects = { city, car1, car2, car3, car4, car5, car6, car7, car8, teapot1, teapot, teapot2, main_plane };
+	GameObject * teapot3 = new GameObject("teapot3", app, teapot_model, glm::vec3(1));
+	teapot3->set_parent(city);
+	teapot3->set_shader_program(shader_program);
+	teapot3->set_scale(glm::vec3(1.0f));
+	teapot3->set_mix_power(0.9999);
+	teapot3->set_scale(glm::vec3(1.0f));
+	teapot3->set_pos(glm::vec3(60, 10, 8));
+	teapot3->set_rotation_speed(glm::vec3(0, 20, 0));
+	teapot3->set_cook_shading(true);
+
+	std::vector<GameObject*> objects = { city, car1, car2, car3, car4, car5, car6, car7, car8, teapot1, teapot2, teapot3, main_plane };
 
 	/* Lights */
 	LampShader* shader_program1 = LampShader::create();
