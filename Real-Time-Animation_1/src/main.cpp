@@ -123,7 +123,7 @@ int main(void) {
 	teapot3->set_parent(city);
 	teapot3->set_shader_program(shader_program);
 	teapot3->set_scale(glm::vec3(1.0f));
-	teapot3->set_mix_power(0.9999);
+	teapot3->set_mix_power(0.9999f);
 	teapot3->set_scale(glm::vec3(1.0f));
 	teapot3->set_pos(glm::vec3(60, 10, 8));
 	teapot3->set_rotation_speed(glm::vec3(0, 20, 0));

@@ -40,8 +40,8 @@ public:
 	//TODO: Why this function is in here? This function si a Template function that should be somewhere else!!
 	template<typename T>
 	T* get_component(std::string name) {
-		auto it = std::find_if(game_objects.begin(), game_objects.end(), [name](T* g) { return  g->get_name() == name; });
-		return *it;
+		auto it = std::find_if(game_objects.begin(), game_objects.end(), [name](GameObject* g) { return  g->get_name() == name; });
+		return dynamic_cast<T*>(*it);
 	};
 
 	void key_callback(int key, int scancode, int action, int mode);

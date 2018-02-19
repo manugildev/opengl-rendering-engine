@@ -13,15 +13,15 @@ void Input::key_callback(int key, int scancode, int action, int mode) {
 	this->process_camera_movement();
 
 	/* City Rotation */
-	if (keys[GLFW_KEY_J]) app->get_game_objects()[0]->set_rotation_speed(glm::vec3(0.0f, -30.0f, 0.0f));
-	if (keys[GLFW_KEY_L]) app->get_game_objects()[0]->set_rotation_speed(glm::vec3(0.0f, 30.0f, 0.0f));
+	if (keys[GLFW_KEY_J]) app->get_component<GameObject>("city")->set_rotation_speed(glm::vec3(0.0f, -30.0f, 0.0f));
+	if (keys[GLFW_KEY_L]) app->get_component<GameObject>("city")->set_rotation_speed(glm::vec3(0.0f, 30.0f, 0.0f));
 	if (!keys[GLFW_KEY_L] && !keys[GLFW_KEY_J]) {
-		app->get_game_objects()[0]->set_rotation_acceleration(glm::vec3(0.0f));
-		app->get_game_objects()[0]->set_rotation_speed(glm::vec3(0.0f));
+		app->get_component<GameObject>("city")->set_rotation_acceleration(glm::vec3(0.0f));
+		app->get_component<GameObject>("city")->set_rotation_speed(glm::vec3(0.0f));
 	}
 
 	/* Plane Rotation */ //Todo: Get direction instead of pointer
-	Plane* plane = dynamic_cast <Plane*>(app->get_game_objects()[app->get_game_objects().size() - 1]);
+	Plane* plane = app->get_component<Plane>("plane");
 	if (keys[GLFW_KEY_Z]) {
 		plane->set_speed_y(-60.0f);
 
@@ -86,18 +86,18 @@ void Input::scroll_callback(double x_offset, double y_offset) {
 	InputManager::scroll_callback(x_offset, y_offset);
 	if (keys[GLFW_KEY_1] || keys[GLFW_KEY_2] || keys[GLFW_KEY_3]) {
 		if (keys[GLFW_KEY_1]) {
-			float cook_r = app->get_game_objects()[app->get_game_objects().size() - 2]->get_cook_r() + ((float) y_offset / 10);
-			app->get_game_objects()[app->get_game_objects().size() - 2]->set_cook_r(cook_r);
+			float cook_r = app->get_component<GameObject>("teapot3")->get_cook_r() + ((float) y_offset / 10);
+			app->get_component<GameObject>("teapot3")->set_cook_r(cook_r);
 		}
 
 		if (keys[GLFW_KEY_2]) {
-			float cook_f0 = app->get_game_objects()[app->get_game_objects().size() - 2]->get_cook_f0() + ((float) y_offset / 10);
-			app->get_game_objects()[app->get_game_objects().size() - 2]->set_cook_f0(cook_f0);
+			float cook_f0 = app->get_component<GameObject>("teapot3")->get_cook_f0() + ((float) y_offset / 10);
+			app->get_component<GameObject>("teapot3")->set_cook_f0(cook_f0);
 		}
 
 		if (keys[GLFW_KEY_3]) {
-			float cook_k = app->get_game_objects()[app->get_game_objects().size() - 2]->get_cook_k() + ((float) y_offset / 10);
-			app->get_game_objects()[app->get_game_objects().size() - 2]->set_cook_k(cook_k);
+			float cook_k = app->get_component<GameObject>("teapot3")->get_cook_k() + ((float) y_offset / 10);
+			app->get_component<GameObject>("teapot3")->set_cook_k(cook_k);
 		}
 		return;
 	}
@@ -105,23 +105,23 @@ void Input::scroll_callback(double x_offset, double y_offset) {
 	if (!keys[GLFW_KEY_SPACE]) {
 		float specular_power;
 		if (keys[GLFW_KEY_4]) {
-			specular_power = app->get_game_objects()[app->get_game_objects().size() - 3]->get_specular_power() + (float) y_offset;
-			app->get_game_objects()[app->get_game_objects().size() - 3]->set_specular_power(specular_power);
+			specular_power = app->get_component<GameObject>("teapot2")->get_specular_power() + (float) y_offset;
+			app->get_component<GameObject>("teapot2")->set_specular_power(specular_power);
 		}
 		else {
-			specular_power = app->get_game_objects()[app->get_game_objects().size() - 4]->get_specular_power() + (float) y_offset;
-			app->get_game_objects()[app->get_game_objects().size() - 4]->set_specular_power(specular_power);
+			specular_power = app->get_component<GameObject>("teapot2")->get_specular_power() + (float) y_offset;
+			app->get_component<GameObject>("teapot2")->set_specular_power(specular_power);
 		}
 	}
 	else {
 		float specular_strength;
 		if (keys[GLFW_KEY_4]) {
-			specular_strength = app->get_game_objects()[app->get_game_objects().size() - 3]->get_specular_strength() + ((float)y_offset / 10);
-			app->get_game_objects()[app->get_game_objects().size() - 3]->set_specular_strength(specular_strength);
+			specular_strength = app->get_component<GameObject>("teapot3")->get_specular_strength() + ((float)y_offset / 10);
+			app->get_component<GameObject>("teapot3")->set_specular_strength(specular_strength);
 		}
 		else {
-			specular_strength = app->get_game_objects()[app->get_game_objects().size() - 4]->get_specular_strength() + ((float)y_offset / 10);
-			app->get_game_objects()[app->get_game_objects().size() - 4]->set_specular_strength(specular_strength);
+			specular_strength = app->get_component<GameObject>("teapot3")->get_specular_strength() + ((float)y_offset / 10);
+			app->get_component<GameObject>("teapot3")->set_specular_strength(specular_strength);
 		}
 	}
 }
