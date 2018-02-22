@@ -8,6 +8,7 @@ Input::~Input() {}
 void Input::key_callback(int key, int scancode, int action, int mode) {
 	InputManager::key_callback(key, scancode, action, mode);
 	this->process_camera_movement();
+	if (keys[GLFW_KEY_U]) app->get_window()->set_full_screen(!app->get_window()->get_full_screen());
 }
 
 void Input::scroll_callback(double x_offset, double y_offset) {
