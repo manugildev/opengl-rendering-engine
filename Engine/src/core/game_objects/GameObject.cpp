@@ -55,7 +55,7 @@ void GameObject::update(float delta_time) {
 	glm::quat rotY = glm::angleAxis(glm::radians(rotation[1]), glm::vec3(0.f, 1.f, 0.f));
 	glm::quat rotZ = glm::angleAxis(glm::radians(rotation[2]), glm::vec3(0.f, 0.f, 1.f));
 	quaternion = rotZ * rotY * rotX;
-
+	
 	this->update_model_mat();
 }
 
@@ -66,7 +66,9 @@ void GameObject::update_model_mat() {
 	this->model_mat[3][0] = this->get_pos()[0];
 	this->model_mat[3][1] = this->get_pos()[1];
 	this->model_mat[3][2] = this->get_pos()[2];
-	//this->model_mat = glm::translate(this->model_mat, this->position);
+
+	this->global_model_mat = this->model_mat;
+	
 	if (parent != nullptr) this->model_mat = parent->model_mat * this->model_mat;
 }
 
@@ -100,7 +102,7 @@ void GameObject::render() {
 			lighting_shader->set_cook_k(cook_k);
 		}
 	}
-	if (this->app->is_debug()) { // TODO: Make this work again
+	if (this->app->is_debug()) {
 		this->model->draw(this->shader_program, GL_LINES);
 	}
 	else this->model->draw(this->shader_program);
@@ -168,9 +170,12 @@ glm::vec3 GameObject::get_rotation_speed() {
 	return this->rotation_speed;
 }
 
-glm::mat4 GameObject::get_model_mat()
-{
+glm::mat4 GameObject::get_model_mat(){
 	return this->model_mat;
+}
+
+glm::mat4 GameObject::get_global_model_mat() {
+	return this->global_model_mat;
 }
 
 glm::quat GameObject::get_quaternion() { return this->quaternion; }
@@ -288,8 +293,12 @@ void GameObject::set_model_mat(glm::mat4 model_mat) {
 	this->model_mat = model_mat;
 }
 
+void GameObject::set_global_model_mat(glm::mat4 model_mat) {
+	this->global_model_mat = model_mat;
+}
+
 void GameObject::set_quaternion(glm::quat quaternion) {
-	this->quaternion = quaternion; 
+	this->quaternion = quaternion;
 }
 
 glm::vec3 GameObject::calculate_rotation_position() {	

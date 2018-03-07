@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2027
+VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Engine", "Engine\Engine.vcxproj", "{751B5E3C-5DFE-44DD-808F-907122EAC65A}"
 EndProject
@@ -16,6 +16,11 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Real-Time-Rendering_4", "Real-Time-Rendering_4\Real-Time-Rendering_4.vcxproj", "{E6DE3BFA-841E-4E0E-AFB6-114E5D429269}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Real-Time-Animation_3", "Real-Time-Animation_3\Real-Time-Animation_3.vcxproj", "{57E57B57-B7CF-4737-99B7-5A0B881B4103}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2D41AEB4-E2B7-453D-A4F2-A8F4C9D74659}"
+	ProjectSection(SolutionItems) = preProject
+		readme.md = readme.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

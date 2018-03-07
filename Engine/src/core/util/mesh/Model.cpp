@@ -1,8 +1,9 @@
 #include "Model.h"
 
+#include <glm\ext.hpp>
+
 #include "..\util\Util.h"
 #include "..\shaders\lighting\LightingShader.h"
-#include <glm\ext.hpp>
 Model::Model(const std::string & file_name, const unsigned int mipmap_levels) :file_name(file_name), mipmap_levels(mipmap_levels) {
 	this->load_model(file_name.c_str());
 }

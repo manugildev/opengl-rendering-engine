@@ -32,7 +32,8 @@ public:
 	void set_max_rotation_speed(glm::vec3 max_speed);
 	void set_parent(GameObject* parent);
 	void set_quaternion(glm::quat quaternion);
-	void set_model_mat(glm::mat4 model);
+	void set_model_mat(glm::mat4 mat);
+	void set_global_model_mat(glm::mat4 mat);
 
 	std::string get_name();
 	glm::vec3 get_pos();
@@ -41,6 +42,7 @@ public:
 	glm::vec3 get_rotation_speed();
 	glm::vec3 get_color();
 	glm::mat4 get_model_mat();
+	glm::mat4 get_global_model_mat();
 	glm::quat get_quaternion();
 	float get_specular_power();
 	float get_specular_strength();
@@ -81,11 +83,10 @@ protected:
 	Application* app;
 	GameObject* parent;
 	glm::mat4 model_mat;
+	glm::mat4 global_model_mat;
 	glm::vec3 object_color;
 	ShaderProgram* shader_program;
 	OutlineShader* outline_shader_program;
-
-private:
 	std::string name;
 
 	CubeModel cube_mesh;

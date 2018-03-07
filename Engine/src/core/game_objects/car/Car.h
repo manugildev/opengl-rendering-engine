@@ -28,6 +28,5 @@ private:
 	float previous_random_mutiplier = 0;
 
 	ParticleSystem* system;
-
 };
 

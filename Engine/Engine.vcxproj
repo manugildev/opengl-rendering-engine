@@ -429,7 +429,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{751B5E3C-5DFE-44DD-808F-907122EAC65A}</ProjectGuid>
     <RootNamespace>A1Solution</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
     <ProjectName>Engine</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
