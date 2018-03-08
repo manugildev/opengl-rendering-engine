@@ -6,7 +6,6 @@
 #include <tween\tween.h>
 
 
-
 Plane::Plane(std::string name, Application * app, Model* model, Camera* camera) : GameObject(name, app, model) {
 	camera = app->get_camera();
 
@@ -156,7 +155,7 @@ void Plane::start_yaw() {
 
 void Plane::update_quaternion_speed(float delta_time) {
 	/* Along Y Axis*/
-	glm::quat new_quat = glm::angleAxis(glm::radians(quaternion_speed.y *delta_time), axis_y);
+	glm::quat new_quat = glm::angleAxis(glm::radians(quaternion_speed.y * delta_time), axis_y);
 	transform = new_quat * transform;
 
 	new_quat = glm::angleAxis(glm::radians(quaternion_speed.x *delta_time), axis_x);

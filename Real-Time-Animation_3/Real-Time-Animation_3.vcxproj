@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{57E57B57-B7CF-4737-99B7-5A0B881B4103}</ProjectGuid>
     <RootNamespace>RealTimeAnimation3</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -149,6 +149,7 @@
     <ClCompile Include="src\gameobjects\Skeleton.cpp" />
     <ClCompile Include="src\gameobjects\Spline.cpp" />
     <ClCompile Include="src\gameobjects\Bone.cpp" />
+    <ClCompile Include="src\gameobjects\Target.cpp" />
     <ClCompile Include="src\input\Input.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\util\CCDSolver.cpp" />
@@ -162,8 +163,10 @@
     <ClInclude Include="src\gameobjects\Skeleton.h" />
     <ClInclude Include="src\gameobjects\Spline.h" />
     <ClInclude Include="src\gameobjects\Bone.h" />
+    <ClInclude Include="src\gameobjects\Target.h" />
     <ClInclude Include="src\input\Input.h" />
     <ClInclude Include="src\util\CCDSolver.h" />
+    <ClInclude Include="src\util\maths.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

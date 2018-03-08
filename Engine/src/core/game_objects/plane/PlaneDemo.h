@@ -1,6 +1,5 @@
 #pragma once
 #include "..\GameObject.h"
-#include <tween\tween.h>
 #include <glm/gtx/matrix_decompose.hpp>
 
 class Application;

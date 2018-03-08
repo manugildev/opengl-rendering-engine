@@ -30,7 +30,7 @@ public:
 	void set_rotation_acceleration(glm::vec3 acc);
 	void set_rotation_speed(glm::vec3 speed);
 	void set_max_rotation_speed(glm::vec3 max_speed);
-	void set_parent(GameObject* parent);
+	virtual void set_parent(GameObject* parent);
 	void set_quaternion(glm::quat quaternion);
 	void set_model_mat(glm::mat4 mat);
 	void set_global_model_mat(glm::mat4 mat);
@@ -52,6 +52,9 @@ public:
 	float get_mix_power(); 
 	bool get_apply_normal_map();
 	bool get_show_normal_texture();
+	GameObject* get_parent();
+	ShaderProgram* get_shader_program();
+	Model* get_model();
 
 	void set_scale(glm::vec3 scale);
 	void set_ambient_strength(float ambient_strength);

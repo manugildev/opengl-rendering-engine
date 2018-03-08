@@ -14,6 +14,8 @@ public:
 
 	void add(Bone* bone);
 	std::vector<Bone*> get_bones();
+	void add_new_bone();
+	void remove_bone();
 private:
 	std::vector<Bone*> bones;
 	CCDSolver* solver;

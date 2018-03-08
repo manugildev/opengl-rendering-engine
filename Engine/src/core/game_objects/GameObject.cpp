@@ -212,6 +212,18 @@ bool GameObject::get_show_normal_texture(){
 	return this->show_normal_texture;
 }
 
+GameObject * GameObject::get_parent(){
+	return this->parent;
+}
+
+ShaderProgram * GameObject::get_shader_program(){
+	return shader_program;
+}
+
+Model * GameObject::get_model(){
+	return model;
+}
+
 glm::vec3 GameObject::get_color() {
 	return this->object_color;
 }

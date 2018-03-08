@@ -226,7 +226,8 @@ struct aiLight
      *  undefined for directional lights. The outer angle must be
      *  greater than or equal to the inner angle.
      *  It is assumed that the application uses a smooth
-     *  interpolation between the inner and the outer cone of the
+     *  interpolation be
+     he inner and the outer cone of the
      *  spot light.
      */
     float mAngleOuterCone;

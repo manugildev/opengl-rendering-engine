@@ -26,7 +26,7 @@ namespace glm
 	/// @addtogroup gtx_rotate_vector
 	/// @{
 
-	/// Returns Spherical interpolation between two vectors
+	/// Returns Spherical interpolation be wo vectors
 	/// 
 	/// @param x A first vector
 	/// @param y A second vector

@@ -175,7 +175,8 @@ enum aiPostProcessSteps
     * #aiProcess_GenNormals. There's a importer property,
     * <tt>#AI_CONFIG_PP_GSN_MAX_SMOOTHING_ANGLE</tt> which allows you to specify
     * an angle maximum for the normal smoothing algorithm. Normals exceeding
-    * this limit are not smoothed, resulting in a 'hard' seam between two faces.
+    * this limit are not smoothed, resulting in a 'hard' seam be
+    wo faces.
     * Using a decent angle here (e.g. 80 degrees) results in very good visual
     * appearance.
     */

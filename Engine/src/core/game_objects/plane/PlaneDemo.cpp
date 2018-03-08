@@ -3,7 +3,6 @@
 #include <glm\gtc\matrix_transform.hpp>
 #include <glm/ext.hpp>
 #include <glm/gtx/matrix_decompose.hpp>
-#include <tween\tween.h>
 
 PlaneDemo::PlaneDemo(std::string name, Application * app, Model* model, Camera* camera) : GameObject(name, app, model) {
 	camera = app->get_camera();

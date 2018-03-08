@@ -1,5 +1,8 @@
 #include "Input.h"
 #include "core\game_objects\GameObject.h"
+#include "..\gameobjects\Skeleton.h"
+#include "..\gameobjects\Target.h"
+#include <glm\ext.hpp>
 
 Input::Input(Application* app) : InputManager(app) {}
 
@@ -25,6 +28,23 @@ void Input::key_callback(int key, int scancode, int action, int mode) {
 	else if (keys[GLFW_KEY_U]) target->set_speed(glm::vec3(velocity.y , velocity.y, -1));
 
 	if(!keys[GLFW_KEY_I] &&! keys[GLFW_KEY_K]&& !keys[GLFW_KEY_J]&& !keys[GLFW_KEY_L] && !keys[GLFW_KEY_O] && !keys[GLFW_KEY_U])target->set_speed(glm::vec3(0));
+	
+	if (keys[GLFW_KEY_T]) app->get_component<Skeleton>("skeleton")->add_new_bone();
+	
+	if (keys[GLFW_KEY_Y]) app->get_component<Skeleton>("skeleton")->remove_bone();
+
+	if (keys[GLFW_KEY_M]) std::cout << glm::to_string(app->get_component<GameObject>("target")->get_pos()) << std::endl;
+
+	if (keys[GLFW_KEY_1]) app->get_component<Target>("target")->start_keyframe_animation(0);
+	if (keys[GLFW_KEY_2]) app->get_component<Target>("target")->start_keyframe_animation(1);
+	if (keys[GLFW_KEY_3]) app->get_component<Target>("target")->start_keyframe_animation(2);
+	if (keys[GLFW_KEY_4]) app->get_component<Target>("target")->start_keyframe_animation(3);
+	if (keys[GLFW_KEY_5]) app->get_component<Target>("target")->start_keyframe_animation(4);
+	if (keys[GLFW_KEY_6]) app->get_component<Target>("target")->start_keyframe_animation(5);
+	if (keys[GLFW_KEY_7]) app->get_component<Target>("target")->start_keyframe_animation(6);
+	if (keys[GLFW_KEY_8]) app->get_component<Target>("target")->start_keyframe_animation(7);
+	if (keys[GLFW_KEY_9]) app->get_component<Target>("target")->start_keyframe_animation(8);
+	
 
 }
 
