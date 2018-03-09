@@ -11,7 +11,7 @@ Input::~Input() {}
 void Input::key_callback(int key, int scancode, int action, int mode) {
 	InputManager::key_callback(key, scancode, action, mode);
 	this->process_camera_movement();
-	//if (keys[GLFW_KEY_U]) app->get_window()->set_full_screen(!app->get_window()->get_full_screen());
+	if (keys[GLFW_KEY_F]) app->get_window()->set_full_screen(!app->get_window()->get_full_screen());
 	if (keys[GLFW_KEY_P]) app->set_debug(!app->get_debug());
 
 	GameObject* target = app->get_component<GameObject>("target");
