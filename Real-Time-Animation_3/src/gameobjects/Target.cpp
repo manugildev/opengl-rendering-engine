@@ -15,32 +15,75 @@ Target::~Target()
 }
 
 void Target::update(float delta_time) {
-	elapsed += delta_time;	
+	elapsed += delta_time;
 	tween::Tween::updateTweens(elapsed);
-	
+
 	GameObject::update(delta_time);
 
 	if (maths::vector_to_vec3(end_vector) == maths::vector_to_vec3(interpolation_value)) {
 		playing_animation = false;
-	} else {
-		set_pos(maths::vector_to_vec3(interpolation_value));
+		spiral_curve = false;
 	}
+
+	if (playing_animation) {
+		if (spiral_curve) {
+			set_pos(+glm::vec3(get_pos().x, maths::vector_to_vec3(interpolation_value).y, get_pos().z));
+		}
+		else { set_pos(maths::vector_to_vec3(interpolation_value)); }
+	}
+	else if (playing_spline) set_pos(current_spline.get_point_on_bezier_curve(spline_interpolator));
 }
 
 void Target::add_keyframe_point(glm::vec3 point) {
 	keyframes.push_back(point);
 }
-void Target::onComplete() {
+void Target::add_spline(Spline spline) {
+	splines.push_back(spline);
 
 }
 void Target::start_keyframe_animation(int i) {
-	if (i >= keyframes.size()) return;
-	myTween.cancel();
 	playing_animation = true;
+	playing_spline = false;
+	myTween.cancel();
 	glm::vec3 start_point = get_pos();
+	if (i == 9) {
+		spiral_curve = true;
+		interpolation_value = maths::vec3_to_vector(start_point);
+		end_vector = maths::vec3_to_vector(start_point + glm::vec3(0, get_pos().y > 0 ? -6 : 6, 0));
+		myTween = tween::Tween::make().to(interpolation_value, end_vector).seconds(10.0);
+		myTween.start();
+	}
+
+	if (i >= keyframes.size()) return;
 	interpolation_value = maths::vec3_to_vector(start_point);
 	end_vector = maths::vec3_to_vector(keyframes[i]);
 	myTween = tween::Tween::make().to(interpolation_value, end_vector).seconds(1.0);
 	myTween.start();
+
+
 }
+
+void Target::start_spline_animation(int i) {
+	if (i >= keyframes.size()) return;
+	myTween.cancel();
+	playing_spline = true;
+	playing_animation = false;
+	spline_interpolator = 0;
+	myTween = tween::Tween::make().to(spline_interpolator, 1.0f).seconds(3.0);
+	myTween.start();
+	current_spline = splines[i];
+}
+
+void Target::prepare_spline_animation(int i) {
+	if (i >= keyframes.size()) return;
+	myTween.cancel();
+	playing_animation = true;
+	playing_spline = false;
+	glm::vec3 start_point = get_pos();
+	interpolation_value = maths::vec3_to_vector(start_point);
+	end_vector = maths::vec3_to_vector(splines[i].p0);
+	myTween = tween::Tween::make().to(interpolation_value, end_vector).seconds(1.0);
+	myTween.start();
+}
+
 

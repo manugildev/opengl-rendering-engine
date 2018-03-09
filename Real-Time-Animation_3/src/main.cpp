@@ -54,11 +54,16 @@ int main(void) {
 	target->add_keyframe_point(glm::vec3(0.22, -1.21, -0.69));
 	target->add_keyframe_point(glm::vec3(2.20, 1.81, -0.31));
 
+	target->add_spline(Spline(glm::vec3(-3, 0, 0), glm::vec3(-3, 3, 0), glm::vec3(3, 3, 1), glm::vec3(3, 0, 0)));	
+	target->add_spline(Spline(glm::vec3(-2, -1, 1), glm::vec3(-1, 2, 1), glm::vec3(1, -1, 1), glm::vec3(2, 1, 1)));
+	target->add_spline(Spline(glm::vec3(3, -1,2), glm::vec3(-1, 2, -4), glm::vec3(4, 2, 1), glm::vec3(-2, 1, 4)));
+
 
 	Skeleton* skeleton = new Skeleton("skeleton", app, target);
 	skeleton->set_shader_program(shader_program);
 
 	Bone* bone1 = new Bone("bone1", app, bone_model, glm::vec3(0.90f, 0.29f, 0.23f), 1);
+	bone1->set_pos(glm::vec3(-199,109,100));
 	bone1->set_shader_program(shader_program);
 	bone1->set_mix_power(0.9);
 
