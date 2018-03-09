@@ -20,6 +20,8 @@ private:
 	std::vector<Bone*> bones;
 	CCDSolver* solver;
 	GameObject* target;
+	Model* bone_model;
+	Model* hand_model;
 	
 };
 

@@ -2,6 +2,8 @@
 
 Skeleton::Skeleton(std::string name, Application * app, GameObject* target) : GameObject(name, app, nullptr, glm::vec3()), target(target) {
 	solver = new CCDSolver();
+	bone_model = new Model("models/bone.obj");
+	hand_model = new Model("models/hand.obj");
 }
 
 
@@ -21,6 +23,9 @@ void Skeleton::add(Bone* bone) {
 	bones.push_back(bone);
 	for (int i = 1; i < bones.size(); i++) bones[i]->set_parent(bones[i - 1]);
 	for (int i = 0; i < bones.size() - 1; i++) bones[i]->set_children(bones[i + 1]);
+
+	for (int i = 0; i < bones.size(); i++) bones[i]->set_model(bone_model);
+	if(bones.size() > 3) bones[bones.size() -2]->set_model(hand_model);
 
 }
 
@@ -43,6 +48,8 @@ void Skeleton::add_new_bone() {
 
 	for (int i = 1; i < bones.size(); i++) bones[i]->set_parent(bones[i - 1]);
 	for (int i = 0; i < bones.size() - 1; i++) bones[i]->set_children(bones[i + 1]);
+	for (int i = 0; i < bones.size(); i++) bones[i]->set_model(bone_model);
+	if (bones.size() > 2) bones[bones.size() - 2]->set_model(hand_model);
 }
 
 
@@ -53,4 +60,6 @@ void Skeleton::remove_bone() {
 
 	for (int i = 1; i < bones.size(); i++) bones[i]->set_parent(bones[i - 1]);
 	for (int i = 0; i < bones.size() - 1; i++) bones[i]->set_children(bones[i + 1]);
+	for (int i = 0; i < bones.size(); i++) bones[i]->set_model(bone_model);
+	if (bones.size() > 2) bones[bones.size() - 2]->set_model(hand_model);
 }

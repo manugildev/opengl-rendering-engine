@@ -34,6 +34,8 @@ public:
 	void set_quaternion(glm::quat quaternion);
 	void set_model_mat(glm::mat4 mat);
 	void set_global_model_mat(glm::mat4 mat);
+	void set_name(std::string name);
+	void set_model(Model* model);
 
 	std::string get_name();
 	glm::vec3 get_pos();

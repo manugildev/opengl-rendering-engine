@@ -313,6 +313,14 @@ void GameObject::set_quaternion(glm::quat quaternion) {
 	this->quaternion = quaternion;
 }
 
+void GameObject::set_name(std::string name) {
+	this->name = name;
+}
+
+void GameObject::set_model(Model * model){
+	this->model = model;
+}
+
 glm::vec3 GameObject::calculate_rotation_position() {	
 	glm::vec2 radian_angle = glm::radians(circular_angle);
 	float new_x = distance_from_center * glm::cos(radian_angle.x) * glm::sin(radian_angle.y);

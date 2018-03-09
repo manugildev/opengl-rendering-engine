@@ -14,6 +14,7 @@ Bone::Bone(std::string name, Application * app, Model* model, glm::vec3 object_c
 	end_pos = glm::vec3(0, length, 0);
 
 	set_scale(glm::vec3(length));
+
 }
 
 Bone::~Bone(){
@@ -36,10 +37,7 @@ void Bone::update(float delta_time){
 		this->model_mat[3][1] = p->end_pos[1];
 		this->model_mat[3][2] = p->end_pos[2];
 	}
-
-
 	this->global_model_mat = this->model_mat;
-
 
 	this->end->set_pos(this->end_pos);
 	this->origin->update(delta_time);
@@ -49,8 +47,8 @@ void Bone::update(float delta_time){
 
 void Bone::render() {
 	GameObject::render();
-	this->origin->render();
-	this->end->render();
+	//this->origin->render();
+	//this->end->render();
 }
 
 void Bone::set_shader_program(ShaderProgram * shader_program) {

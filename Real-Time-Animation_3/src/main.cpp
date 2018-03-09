@@ -75,17 +75,22 @@ int main(void) {
 	bone3->set_shader_program(shader_program);
 	bone3->set_mix_power(0.9);
 
-	Bone* efector = new Bone("efector", app, sphere_model, glm::vec3(0.29f, 0.90f, 0.23f), 0);
+	Bone* efector = new Bone("efector", app, sphere_model, glm::vec3(0.29f, 0.90f, 0.23f), 0.0);
 	efector->set_shader_program(shader_program);
-	efector->set_scale(glm::vec3(0.3));
+	efector->set_scale(glm::vec3(0.03));
 	efector->set_mix_power(0.9);
 
+	GameObject* sphere = new GameObject("sphere", app, sphere_model, glm::vec3(0.90f, 0.29f, 0.23f));
+	sphere->set_shader_program(shader_program);
+	sphere->set_scale(glm::vec3(0.1));
+	sphere->set_mix_power(0.9);
+	
 	skeleton->add(bone1);
 	skeleton->add(bone2);
 	skeleton->add(bone3);
 	skeleton->add(efector);
 
-	std::vector<GameObject*> objects = { skeleton, target };
+	std::vector<GameObject*> objects = { skeleton, target, sphere };
 
 	/* Lights */
 	LampShader* shader_program_lamp = LampShader::create();
