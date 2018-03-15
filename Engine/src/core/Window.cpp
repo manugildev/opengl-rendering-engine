@@ -100,6 +100,4 @@ void Window::set_aspect_ratio(float aspect_ratio) {
 
 Window::~Window() {
 	glfwDestroyWindow(window_obj);
-	delete window_obj;
-	window_obj = NULL;
 }

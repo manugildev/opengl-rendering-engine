@@ -1,7 +1,6 @@
 #pragma once
+#include "Engine.h"
 #include "Bone.h"
-#include "vector"
-#include "core\Application.h"
 #include "../util/CCDSolver.h"
 
 class Skeleton : public GameObject {
@@ -9,7 +8,7 @@ public:
 	Skeleton(std::string name, Application * app, GameObject* target);
 	~Skeleton();
 
-	void update(float delta_time) override;
+	void update(double delta_time) override;
 	void render() override;
 
 	void add(Bone* bone);

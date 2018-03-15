@@ -1,5 +1,4 @@
 #include "LampShader.h"
-#include <iostream>
 
 LampShader *LampShader::create() {
 	LampShader *p = new LampShader();

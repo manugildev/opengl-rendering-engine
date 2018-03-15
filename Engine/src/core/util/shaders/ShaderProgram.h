@@ -1,8 +1,5 @@
 #pragma once
-
-#include <sstream>
-#include <GLEW\glew.h>
-#include <glm\glm.hpp>
+#include "En.h"
 
 class ShaderProgram {
 public:

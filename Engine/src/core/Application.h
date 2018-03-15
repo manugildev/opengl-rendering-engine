@@ -1,20 +1,17 @@
 #pragma once
-
-#include <GLEW\glew.h>
-#include <GLFW\glfw3.h>
-#include <vector>
+#include "En.h"
 
 #include "Window.h"
 #include "game_objects\GameObject.h"
-#include "camera\Camera.h"
-#include "util\mesh\Mesh.h"
-#include "util\gui\GuiRenderer.h"
 #include "game_objects\lights\DirLight.h"
 #include "game_objects\lights\PointLight.h"
 #include "game_objects\cube_map\CubeMap.h"
-#include "util\framebuffer\FrameBuffer.h"
-#include "util\input\InputManager.h"
 #include "game_objects\particle\ParticleMaster.h"
+#include "camera\Camera.h"
+#include "util\mesh\Mesh.h"
+#include "util\gui\GuiRenderer.h"
+#include "util\input\InputManager.h"
+#include "util\framebuffer\FrameBuffer.h"
 
 class Application {
 public:
@@ -26,7 +23,7 @@ public:
 	void update();
 	void render();
 	void bindAsRenderTarget();
-	float calculate_delta_time();
+	double calculate_delta_time();
 
 	/* Getters */
 	Camera* get_camera();
@@ -65,10 +62,9 @@ public:
 	bool is_debug();
 
 	FrameBuffer* frame_buffer;
-	float delta_time;
-
 	ParticleMaster * particle_master;
-	ParticleSystem* system;
+
+	double delta_time;
 
 private:
 	Window * window;
@@ -81,7 +77,7 @@ private:
 	GuiRenderer* gui_renderer;
 	DirLight* dir_light;
 
-	float lastFrame = 0.0f;
+	double lastFrame = 0.0f;
 	bool debug = false;
 
 };

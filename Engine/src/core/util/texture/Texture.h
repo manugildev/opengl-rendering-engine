@@ -1,7 +1,5 @@
 #pragma once
-
-#include <iostream>
-#include <GLEW/glew.h>
+#include "En.h"
 
 const std::string TEXTURE_WHITE_PIXEL = "textures/empty_pixel.jpg";
 const std::string DEFAULT_NORMAL_MAP = "textures/default_normal_map.jpg";

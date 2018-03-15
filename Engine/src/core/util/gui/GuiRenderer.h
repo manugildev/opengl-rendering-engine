@@ -1,5 +1,4 @@
 #pragma once
-#include <vector>
 #include "GuiTexture.h"
 #include "..\shaders\gui\GuiShader.h"
 

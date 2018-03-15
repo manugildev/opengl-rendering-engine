@@ -1,9 +1,8 @@
 #include "Model.h"
 
-#include <glm\ext.hpp>
-
 #include "..\util\Util.h"
 #include "..\shaders\lighting\LightingShader.h"
+
 Model::Model(const std::string & file_name, const unsigned int mipmap_levels) :file_name(file_name), mipmap_levels(mipmap_levels) {
 	this->load_model(file_name.c_str());
 }
@@ -196,21 +195,20 @@ Texture* Model::load_texture(int i, const aiMaterial* pMaterial, aiTextureType t
 			}
 			new_texture->set_texture_type(t_type);
 			return new_texture;
-
 		}
 	}
-
+	return nullptr;
 }
 
 // Returns nullptr if the texture is not loaded yet, and returns the Texture pointer if it is
 //TODO: Not working
 Texture * Model::texture_is_loaded(std::string full_path) {
-	for (int i = 0; i < textures.size(); i++) {
-		if (textures[i].diffuse_texture->get_file_name() == full_path) {
-			return textures[i].diffuse_texture;
+	for (MaterialTextures t: textures) {
+		if (t.diffuse_texture->get_file_name() == full_path) {
+			return t.diffuse_texture;
 		}
-		if (textures[i].normal_texture->get_file_name() == full_path) {
-			return textures[i].normal_texture;
+		if (t.normal_texture->get_file_name() == full_path) {
+			return t.normal_texture;
 		}
 	}
 	return nullptr;

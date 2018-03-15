@@ -213,25 +213,22 @@
     <ClInclude Include="include\std_image\stb_image.h" />
     <ClInclude Include="include\tween\callback.h" />
     <ClInclude Include="include\tween\tween.h" />
+    <ClInclude Include="src\core\game_objects\lights\DirLight.h" />
+    <ClInclude Include="src\core\game_objects\lights\Light.h" />
+    <ClInclude Include="src\core\game_objects\lights\PointLight.h" />
+    <ClInclude Include="src\En.h" />
     <ClInclude Include="src\core\game_objects\cube_map\CubeMap.h" />
     <ClInclude Include="src\core\game_objects\particle\Particle.h" />
     <ClInclude Include="src\core\game_objects\particle\ParticleMaster.h" />
     <ClInclude Include="src\core\game_objects\particle\ParticleRenderer.h" />
     <ClInclude Include="src\core\game_objects\particle\ParticleSystem.h" />
     <ClInclude Include="src\core\util\input\InputManager.h" />
-    <ClInclude Include="src\core\util\shaders\outline\OutlineShader.h" />
     <ClInclude Include="src\core\camera\Camera.h" />
-    <ClInclude Include="src\core\game_objects\plane\Plane.h" />
-    <ClInclude Include="src\core\game_objects\plane\PlaneDemo.h" />
     <ClInclude Include="src\core\util\framebuffer\FrameBuffer.h" />
     <ClInclude Include="src\core\util\shaders\gui\GuiShader.h" />
     <ClInclude Include="src\core\util\gui\GuiRenderer.h" />
     <ClInclude Include="src\core\util\gui\GuiTexture.h" />
     <ClInclude Include="src\core\util\gui\Quad.h" />
-    <ClInclude Include="src\core\game_objects\car\Car.h" />
-    <ClInclude Include="src\core\game_objects\lights\PointLight.h" />
-    <ClInclude Include="src\core\game_objects\lights\DirLight.h" />
-    <ClInclude Include="src\core\game_objects\lights\Light.h" />
     <ClInclude Include="src\core\util\mesh\CubeModel.h" />
     <ClInclude Include="src\core\util\mesh\Mesh.h" />
     <ClInclude Include="src\core\util\mesh\Model.h" />
@@ -256,28 +253,25 @@
     <ClInclude Include="src\core\util\texture\Texture.h" />
     <ClInclude Include="src\core\util\util\Util.h" />
     <ClInclude Include="src\core\Window.h" />
+    <ClInclude Include="src\Engine.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\glm\detail\glm.cpp" />
     <ClCompile Include="include\tween\tween.cpp" />
+    <ClCompile Include="src\core\game_objects\lights\DirLight.cpp" />
+    <ClCompile Include="src\core\game_objects\lights\Light.cpp" />
+    <ClCompile Include="src\core\game_objects\lights\PointLight.cpp" />
     <ClCompile Include="src\core\game_objects\particle\Particle.cpp" />
     <ClCompile Include="src\core\game_objects\particle\ParticleMaster.cpp" />
     <ClCompile Include="src\core\game_objects\particle\ParticleRenderer.cpp" />
     <ClCompile Include="src\core\game_objects\particle\ParticleSystem.cpp" />
     <ClCompile Include="src\core\util\input\InputManager.cpp" />
-    <ClCompile Include="src\core\util\shaders\outline\OutlineShader.cpp" />
-    <ClCompile Include="src\core\game_objects\plane\Plane.cpp" />
-    <ClCompile Include="src\core\game_objects\plane\PlaneDemo.cpp" />
     <ClCompile Include="src\core\util\framebuffer\FrameBuffer.cpp" />
     <ClCompile Include="src\core\util\shaders\gui\GuiShader.cpp" />
     <ClCompile Include="src\core\util\gui\GuiRenderer.cpp" />
     <ClCompile Include="src\core\util\gui\GuiTexture.cpp" />
     <ClCompile Include="src\core\util\gui\Quad.cpp" />
-    <ClCompile Include="src\core\game_objects\car\Car.cpp" />
     <ClCompile Include="src\core\game_objects\cube_map\CubeMap.cpp" />
-    <ClCompile Include="src\core\game_objects\lights\DirLight.cpp" />
-    <ClCompile Include="src\core\game_objects\lights\Light.cpp" />
-    <ClCompile Include="src\core\game_objects\lights\PointLight.cpp" />
     <ClCompile Include="src\core\util\mesh\CubeModel.cpp" />
     <ClCompile Include="src\core\util\mesh\Mesh.cpp" />
     <ClCompile Include="src\core\util\mesh\Model.cpp" />
@@ -498,7 +492,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;%(AdditionalIncludeDirectories);$(ProjectDir)src</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>

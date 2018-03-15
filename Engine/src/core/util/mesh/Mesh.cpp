@@ -1,6 +1,4 @@
 #include "Mesh.h"
-#include <vector>
-#include <algorithm> 
 
 Mesh::Mesh(std::vector<Vertex> vertices, std::vector<GLuint> indices) {
 	this->vertices = vertices;
@@ -8,7 +6,7 @@ Mesh::Mesh(std::vector<Vertex> vertices, std::vector<GLuint> indices) {
 
 	IndexedModel model;
 
-	for (int i = 0; i < vertices.size(); i++) {
+	for (unsigned int i = 0; i < vertices.size(); i++) {
 		model.positions.push_back(vertices[i].pos);
 		model.tex_coords.push_back(vertices[i].tex_coord);
 		model.normals.push_back(vertices[i].normal);
@@ -16,7 +14,7 @@ Mesh::Mesh(std::vector<Vertex> vertices, std::vector<GLuint> indices) {
 		model.bitangents.push_back(vertices[i].bitangent);
 	}
 
-	for (int i = 0; i < indices.size(); i++) {
+	for (unsigned int i = 0; i < indices.size(); i++) {
 		model.indices.push_back(indices[i]);
 	}
 

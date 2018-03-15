@@ -1,5 +1,5 @@
 #include "InputManager.h"
-#include "..\..\Application.h"
+#include "core\Application.h"
 
 InputManager::InputManager(Application * app) : app(app) {
 	// TODO: This will be helpful when you start without the mouse

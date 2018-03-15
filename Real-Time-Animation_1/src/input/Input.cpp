@@ -1,5 +1,5 @@
 #include "Input.h"
-#include "core\game_objects\plane\Plane.h"
+#include "..\game_objects\plane\Plane.h"
 
 Input::Input(Application* app) : InputManager(app) {
 }
@@ -86,17 +86,17 @@ void Input::scroll_callback(double x_offset, double y_offset) {
 	InputManager::scroll_callback(x_offset, y_offset);
 	if (keys[GLFW_KEY_1] || keys[GLFW_KEY_2] || keys[GLFW_KEY_3]) {
 		if (keys[GLFW_KEY_1]) {
-			float cook_r = app->get_component<GameObject>("teapot3")->get_cook_r() + ((float) y_offset / 10);
+			float cook_r = app->get_component<GameObject>("teapot3")->get_cook_r() + ((float)y_offset / 10);
 			app->get_component<GameObject>("teapot3")->set_cook_r(cook_r);
 		}
 
 		if (keys[GLFW_KEY_2]) {
-			float cook_f0 = app->get_component<GameObject>("teapot3")->get_cook_f0() + ((float) y_offset / 10);
+			float cook_f0 = app->get_component<GameObject>("teapot3")->get_cook_f0() + ((float)y_offset / 10);
 			app->get_component<GameObject>("teapot3")->set_cook_f0(cook_f0);
 		}
 
 		if (keys[GLFW_KEY_3]) {
-			float cook_k = app->get_component<GameObject>("teapot3")->get_cook_k() + ((float) y_offset / 10);
+			float cook_k = app->get_component<GameObject>("teapot3")->get_cook_k() + ((float)y_offset / 10);
 			app->get_component<GameObject>("teapot3")->set_cook_k(cook_k);
 		}
 		return;
@@ -105,12 +105,12 @@ void Input::scroll_callback(double x_offset, double y_offset) {
 	if (!keys[GLFW_KEY_SPACE]) {
 		float specular_power;
 		if (keys[GLFW_KEY_4]) {
-			specular_power = app->get_component<GameObject>("teapot2")->get_specular_power() + (float) y_offset;
-			app->get_component<GameObject>("teapot2")->set_specular_power(specular_power);
+			specular_power = app->get_component<GameObject>("teapot2")->get_specular_power() + (float)y_offset;
+			app->get_component<GameObject>("teapot2")->set_specular_power((int)specular_power);
 		}
 		else {
-			specular_power = app->get_component<GameObject>("teapot2")->get_specular_power() + (float) y_offset;
-			app->get_component<GameObject>("teapot2")->set_specular_power(specular_power);
+			specular_power = app->get_component<GameObject>("teapot2")->get_specular_power() + (float)y_offset;
+			app->get_component<GameObject>("teapot2")->set_specular_power((int)specular_power);
 		}
 	}
 	else {

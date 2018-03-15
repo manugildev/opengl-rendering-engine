@@ -1,6 +1,4 @@
 #include "Particle.h"
-#include <glm\ext.hpp>
-#include <iostream>
 
 Particle::Particle() {
 }
@@ -12,8 +10,8 @@ Particle::~Particle() {
 }
 
 
-bool Particle::update(float delta_time) {
-	this->scale -= 0.05*(1 - (elapsed_time / life_length));
+bool Particle::update(double delta_time) {
+	this->scale -= (float)(0.05f *(1 - (elapsed_time / life_length)));
 	if (get_position()[1] < -10) return false;
 	if (glm::length(velocity) < 0.1) return false;
 
@@ -23,7 +21,8 @@ bool Particle::update(float delta_time) {
 	if (false) {
 		this->velocity += this->force * delta_time;
 		this->position += this->velocity * delta_time;
-	} else {
+	}
+	else {
 		this->position += (this->velocity + (0.5f * old_force)) * delta_time;
 		this->velocity += (0.5f * (this->force + old_force)) * delta_time;
 	}
@@ -32,8 +31,8 @@ bool Particle::update(float delta_time) {
 	this->elapsed_time += delta_time;
 	this->penalty_force = force;
 	this->force = glm::vec3(0);
-	float life_factor = elapsed_time / life_length;
-	this->scale += 0.05*(1 - (elapsed_time / life_length));
+	float life_factor = ((float) elapsed_time) / life_length;
+	this->scale += (float)(0.05f * (1 - (elapsed_time / life_length)));
 	if (scale < 0) scale = 0;
 	collision_handling();
 	return elapsed_time < life_length;

@@ -1,6 +1,6 @@
 #include "ParticleSystem.h"
 #include "Particle.h"
-#include "..\..\Application.h"
+#include "core\Application.h"
 
 ParticleSystem::ParticleSystem(Application * app, Texture* texture, float pps, float speed, float gravity_factor, float life_length, float scale) : app(app), texture(texture), pps(pps), speed(speed), gravity_factor(gravity_factor), life_length(life_length), scale(scale) {
 }
@@ -8,22 +8,22 @@ ParticleSystem::ParticleSystem(Application * app, Texture* texture, float pps, f
 ParticleSystem::~ParticleSystem() {
 }
 
-void ParticleSystem::generate_particles(float delta_time, glm::vec3 system_center) {
-	float particles_to_create = pps * delta_time;
+void ParticleSystem::generate_particles(double delta_time, glm::vec3 system_center) {
+	double particles_to_create = pps * delta_time;
 	int count = (int)glm::floor(particles_to_create);
-	float partial_particle = std::fmod(particles_to_create, 1);
+	double partial_particle = std::fmod(particles_to_create, 1);
 	for (int i = 0; i < count; i++) {
 		emit_particle(system_center);
 	}
-	float r = ((double)rand() / (RAND_MAX));
+	double r = ((double) rand() / (RAND_MAX));
 	if (r < partial_particle) emit_particle(system_center);
 }
 
 void ParticleSystem::emit_particle(glm::vec3 center) {
-	float r = ((double)rand() / (RAND_MAX));
-	float dir_x = r * 1.0f - 0.5f;
+	double r = ((double)rand() / (RAND_MAX));
+	double dir_x = r * 1.0f - 0.5f;
 	r = ((double)rand() / (RAND_MAX));
-	float dir_z = r * 1.0f - 0.5f;
+	double dir_z = r * 1.0f - 0.5f;
 
 	glm::vec3 velocity = glm::vec3(dir_x, 1, dir_z);
 	velocity = glm::normalize(velocity);
@@ -54,15 +54,15 @@ void ParticleSystem::set_random_rotation(bool value) {
 
 void ParticleSystem::set_direction(glm::vec3 direction, float deviation) {
 	this->direction = direction;
-	this->direction_deviation = deviation * 3.141692;
+	this->direction_deviation = deviation * 3.141692f;
 }
 
 glm::vec3 ParticleSystem::generate_random_unit_vector(glm::vec3 direction, float deviation) {
 	float cos_angle = glm::cos(deviation);
 	float r = rand() / ((float)RAND_MAX);
 
-	float theta = (float)r * 2.0f * 3.141692;
-	r = rand() / ((float)RAND_MAX);
+	float theta = (float) r * 2.0f * 3.141692f;
+	r = rand() / ((float) RAND_MAX);
 	float z = cos_angle + (r * (1 - cos_angle));
 	float root_one_minus = (float)glm::sqrt(1 - z * z);
 	float x = (float)root_one_minus * glm::cos(theta);

@@ -1,10 +1,8 @@
 #include "Texture.h"
-#include <assert.h>
-#include <algorithm>
-
-#include "..\Logger.h"
 
 #include <std_image\stb_image.h>
+
+#include "..\Logger.h"
 
 Texture::Texture(const std::string & file_name, GLenum texture_target, int num_of_textures) : texture_target(texture_target), file_name(file_name), num_of_textures(num_of_textures) {
 	//LOG_MESSAGE("Importing: " + file_name);

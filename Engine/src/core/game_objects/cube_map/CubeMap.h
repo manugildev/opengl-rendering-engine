@@ -1,10 +1,7 @@
 #ifndef GRAPHICS_CUBE_MAP_H
 #define GRAPHICS_CUBE_MAP_H
 
-#include <GLEW\glew.h>
-#include <glm\glm.hpp>
-#include <cassert>
-#include <cstdio>
+#include "En.h"
 #include "..\..\util\shaders\basic\BasicShader.h"
 
 #include "..\..\util\util\util.h"

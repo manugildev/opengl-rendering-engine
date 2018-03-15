@@ -1,7 +1,5 @@
 #include "ParticleRenderer.h"
 #include "..\..\util\shaders\particle\ParticleShader.h"
-#include <iostream>
-#include <glm\ext.hpp>
 
 #define MAX_INSTANCES 10000
 #define INSTANCE_DATA_LENGTH 16

@@ -1,10 +1,5 @@
-#include "core\Application.h"
-#include "core\util\texture\Texture.h"
-#include "core\util\shaders\lighting\LightingShader.h"
-#include <iostream>
-#include <assimp\Importer.hpp>
-#include "core\game_objects\cube_map\CubeMap.h"
-#include "core\util\gui\GuiRenderer.h"
+#include "Engine.h"
+
 #include "input\Input.h"
 #include "game_objects\RefractionObject.h"
 #include "shaders\RefractionShader.h"

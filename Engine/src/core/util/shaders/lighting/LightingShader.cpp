@@ -1,5 +1,4 @@
 #include "LightingShader.h"
-#include <iostream>
 
 LightingShader * LightingShader::create() {
 	LightingShader * p = new LightingShader();
@@ -127,7 +126,7 @@ void LightingShader::set_directional_light(DirLight* dir_light) {
 
 void LightingShader::set_point_lights(std::vector<PointLight*> point_lights) {
 	// Point Lights
-	for (int i = 0; i < point_lights.size(); i++) {
+	for (unsigned int i = 0; i < point_lights.size(); i++) {
 		this->set_point_light(point_lights[i], i);
 	}
 	this->set_point_lights_size(point_lights.size());

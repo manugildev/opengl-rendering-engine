@@ -1,8 +1,4 @@
 #pragma once
-#include <GLEW\glew.h>
-#include <glm\glm.hpp>
-#include <iostream>
-#include <vector>
 
 #include "..\texture\Texture.h"
 

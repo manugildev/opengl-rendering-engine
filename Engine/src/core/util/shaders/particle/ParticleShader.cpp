@@ -1,5 +1,4 @@
 #include "ParticleShader.h"
-#include <iostream>
 
 ParticleShader * ParticleShader::create(std::string vertex_shader, std::string fragment_shader) {
 	ParticleShader * p = new ParticleShader(vertex_shader, fragment_shader);

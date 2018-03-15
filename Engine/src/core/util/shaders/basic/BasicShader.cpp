@@ -1,5 +1,4 @@
 #include "BasicShader.h"
-#include <iostream>
 
 BasicShader * BasicShader::create(std::string vertex_shader, std::string fragment_shader) {
 	BasicShader * p = new BasicShader(vertex_shader, fragment_shader);

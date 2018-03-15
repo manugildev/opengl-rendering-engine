@@ -18,7 +18,7 @@ protected:
 	bool first_mouse = true;
 
 	float lastFrame = 0.0f;
-	float last_x = 0, last_y = 0;
-	float x_offset = 0, y_offset = 0;
+	double last_x = 0, last_y = 0;
+	double x_offset = 0, y_offset = 0;
 };
 

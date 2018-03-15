@@ -37,6 +37,7 @@ int ShaderProgram::link_shader() {
 		std::cout << "\n=============================================================" << std::endl;
 		return 0;
 	}
+	return 1;
 }
 
 int ShaderProgram::validate_shader() {
@@ -52,6 +53,7 @@ int ShaderProgram::validate_shader() {
 		std::cout << "\n=============================================================" << std::endl;
 		return 0;
 	}
+	return 1;
 }
 
 void ShaderProgram::start() {
@@ -76,7 +78,7 @@ void ShaderProgram::modify_vec3(GLuint location, glm::vec3 vector) {
 }
 
 void ShaderProgram::modify_boolean(GLuint location, bool value) {
-	glUniform1f(location, value ? 1 : 0);
+	glUniform1i(location, value ? 1 : 0);
 }
 
 void ShaderProgram::modify_float(GLuint location, float value) {

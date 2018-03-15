@@ -1,9 +1,10 @@
 #pragma once
-#include <vector>
+#include "En.h"
+#include "Particle.h"
+
 #include "..\..\camera\Camera.h"
 #include "..\..\util\shaders\ShaderProgram.h"
 #include "..\..\util\gui\Quad.h"
-#include "Particle.h"
 
 class ParticleRenderer {
 public:

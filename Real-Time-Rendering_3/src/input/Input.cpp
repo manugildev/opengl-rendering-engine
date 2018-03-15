@@ -1,5 +1,4 @@
 #include "Input.h"
-#include "core\game_objects\plane\Plane.h"
 
 Input::Input(Application* app) : InputManager(app) {}
 

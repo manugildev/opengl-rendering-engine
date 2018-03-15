@@ -1,8 +1,5 @@
 #include "CCDSolver.h"
-#include "../gameobjects/Skeleton.h"
-#include <algorithm>
-#include "glm/ext.hpp"
-#include <glm/gtx/vector_angle.hpp> 
+#include "../game_objects/Skeleton.h"
 #include "maths.h"
 
 CCDSolver::CCDSolver() {}
@@ -16,7 +13,7 @@ void CCDSolver::update(float delta_time, Skeleton* skeleton, GameObject* target)
 	Bone* last_bone = skeleton->get_bones().back();
 	float distance = glm::distance(last_bone->get_pos(), target->get_pos());
 
-	float threshold = 0.001;
+	float threshold = 0.001f;
 	int max_iterations = 1000;
 	int iterations = 0;
 

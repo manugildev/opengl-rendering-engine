@@ -1,16 +1,12 @@
 #pragma once
 
-#include "Model.h"
-#include <iostream>
-#include <GLEW/glew.h>
-#include <vector>
 #include "Mesh.h"
 
 #include <assimp\Importer.hpp>
 #include <assimp\scene.h>
 #include <assimp\postprocess.h>
-#include <assimp/mesh.h>
-#include <assimp/cimport.h>
+#include <assimp\mesh.h>
+#include <assimp\cimport.h>
 #include "..\shaders\ShaderProgram.h"
 
 class LightingShader;

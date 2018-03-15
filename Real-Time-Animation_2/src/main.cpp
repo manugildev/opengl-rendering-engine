@@ -1,10 +1,5 @@
-#include <iostream>
-#include <assimp\Importer.hpp>
-
-#include "core\Application.h"
-#include "core\game_objects\car\Car.h"
-#include "core\game_objects\plane\Plane.h"
-#include "core\util\shaders\lighting\LightingShader.h"
+#include "Engine.h"
+#include "game_objects\car\Car.h"
 #include "input\Input.h"
 
 int main(void) {

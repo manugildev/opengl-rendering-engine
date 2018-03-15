@@ -1,12 +1,6 @@
 #include "Application.h"
-#include "game_objects/plane/Plane.h"
+
 #include "util\Logger.h"
-
-#include <iostream>
-#include "util\texture\Texture.h"
-#include <glm\glm.hpp>
-#include "util\gui\Quad.h"
-
 
 Application::Application(Camera* camera) : camera(camera) {
 	this->init();
@@ -36,12 +30,9 @@ int Application::init() {
 
 	/* Set viewport to windows size */
 	glViewport(0, 0, window->get_width(), window->get_height());
-
-	// TODO: Temporal Particle Master
-
-	particle_master = new ParticleMaster(camera->get_persp_proj_matrix());
 	
-
+	// TODO: Temporal Particle Master
+	particle_master = new ParticleMaster(camera->get_persp_proj_matrix());
 	return 1;
 }
 
@@ -99,7 +90,6 @@ void Application::update() {
 	for (unsigned int i = 0; i < point_lights.size(); i++) point_lights[i]->update(delta_time);
 	this->dir_light->update(delta_time);
 
-	//system->generate_particles(delta_time, glm::vec3(0, 3, 0));
 }
 
 // TODO: Abstract this to run it outside
@@ -124,7 +114,7 @@ void Application::update_lights() {
 	for (unsigned int i = 0; i < game_objects.size(); i++) game_objects[i]->update_lights();
 }
 
-float Application::calculate_delta_time() {
+double Application::calculate_delta_time() {
 	double currentFrame = glfwGetTime();
 	delta_time = currentFrame - lastFrame;
 	lastFrame = currentFrame;

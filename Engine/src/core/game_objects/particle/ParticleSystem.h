@@ -1,5 +1,6 @@
 #pragma once
-#include <glm\glm.hpp>
+#include "En.h"
+
 #include "..\..\util\texture\Texture.h"
 class Application;
 class ParticleSystem {
@@ -7,7 +8,7 @@ public:
 	ParticleSystem(Application * app, Texture* texture, float pps, float speed, float gravity_factor, float life_length, float scale);
 	~ParticleSystem();
 
-	void generate_particles(float delta_time, glm::vec3 system_center);
+	void generate_particles(double delta_time, glm::vec3 system_center);
 	void emit_particle(glm::vec3 center);
 
 	void set_speed_error(float value);

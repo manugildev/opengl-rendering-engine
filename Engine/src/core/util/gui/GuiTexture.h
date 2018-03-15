@@ -1,6 +1,4 @@
 #pragma once
-#include <GLEW\glew.h>
-#include <glm\glm.hpp>
 #include "Quad.h"
 #include "..\texture\Texture.h"
 

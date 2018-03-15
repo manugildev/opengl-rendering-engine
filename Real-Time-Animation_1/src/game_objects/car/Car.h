@@ -1,6 +1,5 @@
 #pragma once
-#include "..\GameObject.h"
-#include "..\particle\ParticleSystem.h"
+#include "Engine.h"
 
 class Application;
 
@@ -8,7 +7,7 @@ class Car : public GameObject {
 
 public:
 	Car(std::string name, Application *, Model* model, glm::vec3 object_color);
-	void update(float delta_time) override;
+	void update(double delta_time) override;
 	void render() override;
 	void set_initial_pos(glm::vec3 pos);
 

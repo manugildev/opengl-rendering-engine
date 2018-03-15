@@ -1,10 +1,5 @@
-#include <iostream>
-
-#include <glm\gtc\matrix_transform.hpp>
-#include <glm\detail\func_vector_relational.hpp>
-#include <glm\ext.hpp>
-
 #include "GameObject.h"
+
 #include "..\Application.h"
 #include "..\src\core\util\shaders\lighting\LightingShader.h"
 
@@ -37,7 +32,7 @@ void GameObject::update_lights() {
 	shader_program->stop();
 }
 
-void GameObject::update(float delta_time) {
+void GameObject::update(double delta_time) {
 	this->position -= rotation_factor;
 	if (distance_from_center != 0) this->circular_angle += this->circular_speed * delta_time;
 	//model_mat = glm::rotate(model_mat, glm::radians(1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
@@ -77,15 +72,15 @@ void GameObject::render() {
 	glm::mat4 perspective_proj = this->camera->get_persp_proj_matrix();
 
 	if (!shader_program) return;
+	this->shader_program->start();
 
-	this->shader_program->start();	
+	// Todo: Why LightingShader and not ShaderProgram?? This should be abstracted to another class
 	LightingShader* lighting_shader = dynamic_cast<LightingShader*>(shader_program);
 	if (lighting_shader) {
 		lighting_shader->set_view_matrix(view);
 		lighting_shader->set_proj_matrix(perspective_proj);
 		lighting_shader->set_model_matrix(model_mat);
 		lighting_shader->set_view_pos(this->camera->get_pos());
-
 		lighting_shader->set_toon_shading(toon_shading);
 		lighting_shader->set_object_color(object_color);
 		lighting_shader->set_specular_strength(specular_strength);
@@ -102,10 +97,10 @@ void GameObject::render() {
 			lighting_shader->set_cook_k(cook_k);
 		}
 	}
+
 	if (this->app->is_debug()) {
 		this->model->draw(this->shader_program, GL_LINES);
-	}
-	else this->model->draw(this->shader_program);
+	} else this->model->draw(this->shader_program);
 	
 	if (lighting_shader) lighting_shader->set_toon_shading(false);
 	this->shader_program->stop();
@@ -180,7 +175,7 @@ glm::mat4 GameObject::get_global_model_mat() {
 
 glm::quat GameObject::get_quaternion() { return this->quaternion; }
 
-float GameObject::get_specular_power() {
+int GameObject::get_specular_power() {
 	return this->specular_power;
 }
 
@@ -241,7 +236,7 @@ void GameObject::set_specular_strength(float specular_strength) {
 	this->specular_strength = specular_strength;
 }
 
-void GameObject::set_specular_power(float specular_power) {
+void GameObject::set_specular_power(int specular_power) {
 	if (specular_power <= 1) return; // Limit it
 	this->specular_power = specular_power;
 }

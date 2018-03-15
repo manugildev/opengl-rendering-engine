@@ -13,7 +13,7 @@ public:
 	glm::vec3 get_acceleration();
 	float get_rotation();
 	float get_scale();
-	bool update(float delta_time);
+	bool update(double delta_time);
 	void apply_force(glm::vec3 force);
 	void collision_handling();
 	Texture* get_texture();
@@ -31,13 +31,11 @@ private:
 	glm::vec3 penalty_force;
 	float threshold = 0.06f;
 	float mass;
-	float life_length;
+	double life_length;
 	float rotation;
 	float scale;
 	Texture* texture;
 	glm::vec3 object_color = glm::vec3(1);
-
-
-	float elapsed_time = 0;
+	double elapsed_time = 0;
 };
 

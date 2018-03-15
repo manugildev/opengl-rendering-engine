@@ -1,7 +1,5 @@
 #pragma once
-#include <GLEW\glew.h>
-#include <GLFW\glfw3.h>
-#include <iostream>
+#include "En.h"
 
 class Application;
 
@@ -20,7 +18,7 @@ public:
 	void set_aspect_ratio(float aspect_ratio);
 
 private:
-	Application * app;
+	Application* app;
 
 	int window_width;
 	int window_height;

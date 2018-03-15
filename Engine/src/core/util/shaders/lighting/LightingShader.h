@@ -2,7 +2,6 @@
 #include "..\ShaderProgram.h"
 #include "..\src\core\game_objects\lights\DirLight.h"
 #include "..\src\core\game_objects\lights\PointLight.h"
-#include <vector>
 
 const std::string LAMP_VERTEX_FILE = "shaders/lighting_vertex_shader.glsl";
 const std::string LAMP_FRAGMENT_FILE = "shaders/lighting_fragment_shader.glsl";

@@ -1,5 +1,4 @@
 #include "DirLight.h"
-#include <glm\ext.hpp>
 
 DirLight::DirLight(Application* app, glm::vec3 direction, glm::vec3 light_color) : Light(app, direction * -50.0f, light_color), direction(direction) {
 	this->model = new Model("models/cube.obj");

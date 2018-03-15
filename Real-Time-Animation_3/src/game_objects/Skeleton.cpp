@@ -10,7 +10,7 @@ Skeleton::Skeleton(std::string name, Application * app, GameObject* target) : Ga
 Skeleton::~Skeleton() {
 }
 
-void Skeleton::update(float delta_time) {
+void Skeleton::update(double delta_time) {
 	solver->update(delta_time, this, target);
 	for (Bone* bone : bones) bone->update(delta_time);
 }

@@ -1,8 +1,4 @@
 #include "Car.h"
-#include <glm\ext.hpp>
-#include "..\GameObject.h"
-#include "..\..\util\shaders\lighting\LightingShader.h"
-#include "..\..\Application.h"
 
 Car::Car(std::string name, Application * app, Model* model, glm::vec3 object_color) : GameObject(name, app, model, object_color) {
 	this->initial_position = this->get_pos();
@@ -14,7 +10,7 @@ Car::Car(std::string name, Application * app, Model* model, glm::vec3 object_col
 	this->system->set_object_color(object_color);
 }
 
-void Car::update(float delta_time) {
+void Car::update(double delta_time) {
 	GameObject::update(delta_time);
 	this->distance_traveled = glm::length(this->get_pos() - this->initial_position);
 	if (this->distance_traveled > city_size - 5 && !animation_running) {

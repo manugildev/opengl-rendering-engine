@@ -11,8 +11,8 @@ void GuiRenderer::render() {
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glDisable(GL_DEPTH_TEST);
-	for (int i = 0; i < textures.size(); i++) {
-		textures[i]->render();
+	for (GuiTexture* t : textures) {
+		t->render();
 	}
 	glEnable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);
@@ -20,7 +20,7 @@ void GuiRenderer::render() {
 }
 
 void GuiRenderer::update_window_size() {
-	for (int i = 0; i < textures.size(); i++) textures[i]->update_window_size();
+	for (GuiTexture* t : textures) t->update_window_size();
 }
 
 void GuiRenderer::add_gui_texture(GuiTexture* texture) {

@@ -1,5 +1,4 @@
 #include "Quad.h"
-#include <iostream>
 
 Quad::Quad(ShaderProgram* shader_program) {
 

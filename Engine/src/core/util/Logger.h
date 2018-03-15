@@ -1,6 +1,5 @@
 #pragma once
-
-#include <ostream>
+#include "En.h"
 
 #define LOG_MESSAGE(MESSAGE) logger->print(MESSAGE);
 

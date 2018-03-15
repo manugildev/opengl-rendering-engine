@@ -1,6 +1,5 @@
 #pragma once
-#include "..\GameObject.h"
-#include <glm/gtx/matrix_decompose.hpp>
+#include "Engine.h"
 #include <tween\tween.h>
 
 class Application;
@@ -11,7 +10,7 @@ public:
 	void attach_wheels(Application * app);
 	void attach_propeller(Application * app);
 	void attach_arrows(Application* app);
-	void update(float delta_time) override;
+	void update(double delta_time) override;
 	void render() override;
 	void set_shader_program(ShaderProgram* shader_program) override;
 	void set_toon_shading(bool toon_shading) override;
@@ -38,7 +37,7 @@ public:
 	void start_yaw();
 
 	float start_time = 0.0f;
-	float elapsed = 0.0f;
+	double elapsed = 0.0f;
 	float finish_time = 1.0f;
 	float from = 0.0f;
 	float to = 1.0f;
@@ -60,6 +59,6 @@ private:
 
 	glm::vec3 quaternion_speed;
 	void update_quaternion_axis(glm::quat transform);
-	void update_quaternion_speed(float delta_time);
+	void update_quaternion_speed(double delta_time);
 };
 

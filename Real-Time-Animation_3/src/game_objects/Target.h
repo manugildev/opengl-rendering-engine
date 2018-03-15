@@ -1,5 +1,5 @@
 #pragma once
-#include "core\game_objects\GameObject.h"
+#include "Engine.h"
 #include <tween\tween.h>
 #include "Spline.h"
 
@@ -8,13 +8,13 @@ public:
 	Target(std::string name, Application * app, Model* model, glm::vec3 object_color);
 	~Target();
 
-	void update(float delta_time) override;
+	void update(double delta_time) override;
 
 	void add_keyframe_point(glm::vec3 point);
 	void add_spline(Spline spline);
-	void start_keyframe_animation(int i);
-	void start_spline_animation(int i);
-	void prepare_spline_animation(int i);
+	void start_keyframe_animation(unsigned int i);
+	void start_spline_animation(unsigned int i);
+	void prepare_spline_animation(unsigned int i);
 
 private:
 	std::vector<glm::vec3> keyframes;
@@ -27,8 +27,8 @@ private:
 
 	std::vector<float> interpolation_value;
 	std::vector<float> end_vector;
-	float elapsed;
-	tween::Tween myTween;
+	double elapsed;
+	tween::Tween tween;
 	
 	float spline_interpolator = 0;
 

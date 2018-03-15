@@ -1,12 +1,12 @@
 #pragma once
-#include "core\Application.h"
+#include "Engine.h"
 
 class RefractionObject : public GameObject {
 public:
 	RefractionObject(std::string name, Application * app, Model * model, glm::vec3 color);
 	~RefractionObject();
 
-	virtual void update(float delta_time);
+	virtual void update(double delta_time);
 	virtual void render();
 	virtual void update_lights();
 	virtual void set_shader_program(ShaderProgram* shader_program);

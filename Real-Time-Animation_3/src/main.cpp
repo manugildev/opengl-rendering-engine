@@ -1,16 +1,9 @@
-#include "core\Application.h"
-#include "core\util\texture\Texture.h"
-#include "core\util\shaders\lighting\LightingShader.h"
-#include <iostream>
-#include <assimp\Importer.hpp>
-#include "core\game_objects\cube_map\CubeMap.h"
-#include "core\util\gui\GuiRenderer.h"
-#include "input\Input.h"
-#include "gameobjects\Bone.h"
-#include "gameobjects\Skeleton.h"
-#include "gameobjects\Target.h"
-#include <glm\ext.hpp>
+#include "Engine.h"
 
+#include "input\Input.h"
+#include "game_objects\Bone.h"
+#include "game_objects\Skeleton.h"
+#include "game_objects\Target.h"
 
 int main(void) {
 
@@ -37,13 +30,13 @@ int main(void) {
 	floor1->set_scale(glm::vec3(1.0f));
 	floor1->set_specular_strength(0);
 	floor1->set_specular_power(1);
-	floor1->set_mix_power(0.1);
+	floor1->set_mix_power(0.1f);
 
 	Target * target = new Target("target", app, sphere_model, glm::vec3(0.90f, 0.50f, 0.23f));
 	target->set_shader_program(shader_program);
 	target->set_pos(glm::vec3(0, 3.52, 0));
-	target->set_scale(glm::vec3(0.07));
-	target->set_mix_power(0.9);
+	target->set_scale(glm::vec3(0.07f));
+	target->set_mix_power(0.9f);
 
 	target->add_keyframe_point(glm::vec3(-4,2,3));
 	target->add_keyframe_point(glm::vec3(-0.58, 1, 0));
@@ -62,28 +55,28 @@ int main(void) {
 	Skeleton* skeleton = new Skeleton("skeleton", app, target);
 	skeleton->set_shader_program(shader_program);
 
-	Bone* bone1 = new Bone("bone1", app, bone_model, glm::vec3(0.90f, 0.29f, 0.23f), 1);
+	Bone* bone1 = new Bone("bone1", app, bone_model, glm::vec3(0.90f, 0.29f, 0.23f), 1.0f);
 	bone1->set_pos(glm::vec3(-199,109,100));
 	bone1->set_shader_program(shader_program);
-	bone1->set_mix_power(0.9);
+	bone1->set_mix_power(0.9f);
 
-	Bone* bone2 = new Bone("bone2", app, bone_model, glm::vec3(0.29f, 0.90f, 0.23f), 0.8);
+	Bone* bone2 = new Bone("bone2", app, bone_model, glm::vec3(0.29f, 0.90f, 0.23f), 0.8f);
 	bone2->set_shader_program(shader_program);
-	bone2->set_mix_power(0.9);
+	bone2->set_mix_power(0.9f);
 
-	Bone* bone3 = new Bone("bone3", app, bone_model, glm::vec3(0.29f, 0.23f, 0.90f), 0.6);
+	Bone* bone3 = new Bone("bone3", app, bone_model, glm::vec3(0.29f, 0.23f, 0.90f), 0.6f);
 	bone3->set_shader_program(shader_program);
-	bone3->set_mix_power(0.9);
+	bone3->set_mix_power(0.9f);
 
-	Bone* efector = new Bone("efector", app, sphere_model, glm::vec3(0.29f, 0.90f, 0.23f), 0.0);
+	Bone* efector = new Bone("efector", app, sphere_model, glm::vec3(0.29f, 0.90f, 0.23f), 0.0f);
 	efector->set_shader_program(shader_program);
 	efector->set_scale(glm::vec3(0.03));
-	efector->set_mix_power(0.9);
+	efector->set_mix_power(0.9f);
 
 	GameObject* sphere = new GameObject("sphere", app, sphere_model, glm::vec3(0.90f, 0.29f, 0.23f));
 	sphere->set_shader_program(shader_program);
-	sphere->set_scale(glm::vec3(0.1));
-	sphere->set_mix_power(0.9);
+	sphere->set_scale(glm::vec3(0.1f));
+	sphere->set_mix_power(0.9f);
 	
 	skeleton->add(bone1);
 	skeleton->add(bone2);

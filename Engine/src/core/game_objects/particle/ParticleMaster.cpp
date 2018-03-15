@@ -1,5 +1,4 @@
 #include "ParticleMaster.h"
-#include <iostream>
 
 ParticleMaster::ParticleMaster(glm::mat4 proj_mat) {
 	renderer = new ParticleRenderer(proj_mat);
@@ -9,7 +8,7 @@ ParticleMaster::ParticleMaster(glm::mat4 proj_mat) {
 ParticleMaster::~ParticleMaster(){
 }
 
-void ParticleMaster::update(float delta_time){
+void ParticleMaster::update(double delta_time){
 	std::vector<Particle *>::iterator it;
 	for (auto it = particles.begin(); it != particles.end();)	{
 		Particle* p = *it;
@@ -27,7 +26,7 @@ void ParticleMaster::add_particle(Particle * p){
 }
 
 void ParticleMaster::apply_force(glm::vec3 force){
-	for (int i = 0; i < particles.size(); i++) {
-		particles[i]->apply_force(force);		
+	for (Particle* p : particles) {
+		p->apply_force(force);		
 	}
 }

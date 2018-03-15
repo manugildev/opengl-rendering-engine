@@ -1,7 +1,4 @@
 #pragma once
-
-#include <glm\glm.hpp>
-#include <GLEW\glew.h>
 #include "..\GameObject.h"
 #include "..\..\util\shaders\lamp\LampShader.h"
 #include "..\..\util\mesh\Mesh.h"
@@ -17,7 +14,7 @@ public:
 	~Light();
 
 	void render() override;
-	void update(float delta_time) override;
+	void update(double delta_time) override;
 	void set_initial_shader_values() override;
 	void set_shader_program(LampShader* shader_program);
 

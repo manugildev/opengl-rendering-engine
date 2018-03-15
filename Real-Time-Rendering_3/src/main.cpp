@@ -1,12 +1,6 @@
-#include "core\Application.h"
-#include "core\util\texture\Texture.h"
-#include "core\util\shaders\lighting\LightingShader.h"
-#include <iostream>
-#include <assimp\Importer.hpp>
-#include "core\game_objects\cube_map\CubeMap.h"
-#include "core\util\gui\GuiRenderer.h"
-#include "input\Input.h"
+#include "Engine.h"
 
+#include "input\Input.h"
 
 int main(void) {
 	
@@ -39,7 +33,7 @@ int main(void) {
 	rock->set_scale(glm::vec3(.5f));
 	rock->set_pos(glm::vec3(0, 0, -4));
 	rock->set_rotation_speed(glm::vec3(0, 20, 0));
-	rock->set_specular_power(0.2f);
+	rock->set_specular_power(0);
 
 	std::vector<GameObject*> objects = { barrel, rock};
 
@@ -93,8 +87,6 @@ int main(void) {
 	app->set_gui_renderer(gui_renderer);
 	app->set_shaders(shaders);
 	app->set_input_manager(input_manager);
-
-
 
 	/* Run the loop */
 	app->runMainGameLoop();

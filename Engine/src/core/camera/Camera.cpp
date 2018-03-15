@@ -1,11 +1,7 @@
 #include "Camera.h"
-#include <iostream>
-#include <glm\ext.hpp>
-#include <glm\gtc\matrix_transform.hpp>
-#include <glm/gtx/matrix_decompose.hpp>
 
-Camera::Camera(glm::vec3 position, glm::vec3 up, GLfloat yaw, GLfloat pitch, glm::vec3 front,
-	GLfloat movement_speed, GLfloat mouse_sensitivity, GLfloat zoom) {
+Camera::Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch, glm::vec3 front,
+	float movement_speed, float mouse_sensitivity, float zoom) {
 	this->position = position;
 	this->world_up = up;
 	this->yaw = yaw;
@@ -21,12 +17,12 @@ void Camera::process_keyboard(Camera_Movement direction) {
 	this->direction = direction;
 }
 
-void Camera::process_mouse(GLfloat x_offset, GLfloat y_offset, bool constrain_pitch) {
+void Camera::process_mouse(double x_offset, double y_offset, bool constrain_pitch) {
 	x_offset *= this->mouse_sensitivity;
 	y_offset *= this->mouse_sensitivity;
 
-	this->yaw += x_offset;
-	this->pitch += y_offset;
+	this->yaw += (float) x_offset;
+	this->pitch += (float) y_offset;
 
 	if (constrain_pitch) {
 		if (this->pitch > 89.0f) this->pitch = 89.0f;
@@ -36,8 +32,8 @@ void Camera::process_mouse(GLfloat x_offset, GLfloat y_offset, bool constrain_pi
 
 }
 
-void Camera::process_mouse_scroll(GLfloat y_offset) {
-	if (this->field_of_view >= 1.0f && this->field_of_view <= 85.0f) this->field_of_view -= y_offset;
+void Camera::process_mouse_scroll(double y_offset) {
+	if (this->field_of_view >= 1.0f && this->field_of_view <= 85.0f) this->field_of_view -= (float) y_offset;
 	if (this->field_of_view <= 1.0f) this->field_of_view = 1.0f;
 	if (this->field_of_view >= 85.0f) this->field_of_view = 85.0f;
 }
@@ -139,8 +135,8 @@ void Camera::set_parent_model_mat(glm::mat4  parent_model_mat) {
 	this->parent_model_mat = parent_model_mat;
 }
 
-void Camera::update(float delta_time) {
-	movement_speed += (this->acceleration * delta_time);
+void Camera::update(double delta_time) {
+	movement_speed += (this->acceleration * (float) delta_time);
 	if (movement_speed >= max_velocity) movement_speed = max_velocity;
 
 	if (this->direction == FORWARD) this->position += this->front * movement_speed;

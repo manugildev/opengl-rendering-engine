@@ -1,6 +1,5 @@
 #pragma once
-#include "core\Application.h"
-#include "core\util\shaders\lighting\LightingShader.h" // Get the DLightLocation
+#include "Engine.h"
 
 
 const std::string REFRACTION_VERTEX_FILE = "shaders/refraction/refraction_vertex_shader.glsl";

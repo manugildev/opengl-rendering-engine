@@ -1,14 +1,14 @@
 #include "RefractionObject.h"
 #include "..\shaders\RefractionShader.h"
 
-RefractionObject::RefractionObject(std::string name, Application * app, Model * model, glm::vec3 color) : GameObject(app, model, color) {
+RefractionObject::RefractionObject(std::string name, Application * app, Model * model, glm::vec3 color) : GameObject(name, app, model, color) {
 }
 
 
 RefractionObject::~RefractionObject() {
 }
 
-void RefractionObject::update(float delta_time) {
+void RefractionObject::update(double delta_time) {
 	GameObject::update(delta_time);
 }
 

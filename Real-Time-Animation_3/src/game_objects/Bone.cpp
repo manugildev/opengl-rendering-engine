@@ -1,5 +1,4 @@
 #include "Bone.h"
-#include <glm\ext.hpp>
 #include "..\util\maths.h"
 
 Bone::Bone(std::string name, Application * app, Model* model, glm::vec3 object_color, float length) : GameObject(name, app, model, object_color), length(length){
@@ -24,7 +23,7 @@ Bone::~Bone(){
 	end = nullptr;
 }
 
-void Bone::update(float delta_time){
+void Bone::update(double delta_time){
 
 	this->model_mat = glm::scale(glm::mat4(1.0f), this->scale);
 	glm::quat new_quat = maths::rotation_between_vectors(glm::vec3(0, 1, 0), end_pos - origin_pos);

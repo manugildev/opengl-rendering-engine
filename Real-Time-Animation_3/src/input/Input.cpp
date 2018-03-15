@@ -1,8 +1,7 @@
 #include "Input.h"
-#include "core\game_objects\GameObject.h"
-#include "..\gameobjects\Skeleton.h"
-#include "..\gameobjects\Target.h"
-#include <glm\ext.hpp>
+#include "Engine.h"
+#include "..\game_objects\Skeleton.h"
+#include "..\game_objects\Target.h"
 
 Input::Input(Application* app) : InputManager(app) {}
 

@@ -1,5 +1,5 @@
 #pragma once
-#include <glm\glm.hpp>
+#include "Engine.h"
 
 class Spline {
 public:
