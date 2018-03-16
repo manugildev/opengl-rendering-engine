@@ -1,8 +1,5 @@
 #include "ShaderProgram.h"
-#include <fstream>
-#include <iostream>
 #include "..\Logger.h"
-#include <windows.h>
 
 ShaderProgram::ShaderProgram(std::string vertex_file, std::string fragment_file) : vertex_file(vertex_file), fragment_file(fragment_file) {
 	vertex_shader_id = load_shader(vertex_file, GL_VERTEX_SHADER);
@@ -189,11 +186,8 @@ void ShaderProgram::reload() {
 	this->get_all_uniform_locations();
 
 	this->set_last_access_time();
-
-
+	
 }
-
-
 
 ShaderProgram::~ShaderProgram() {
 	stop();

@@ -4,7 +4,6 @@
 #include "Application.h"
 
 Window::Window(Application* app, int width, int height, std::string title) : app(app) {
-
 	glfwWindowHint(GLFW_SAMPLES, 16);
 
 	// Move window to the upper left corner.

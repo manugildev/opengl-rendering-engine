@@ -89,6 +89,7 @@ void Application::update() {
 
 	for (unsigned int i = 0; i < point_lights.size(); i++) point_lights[i]->update(delta_time);
 	this->dir_light->update(delta_time);
+	this->update_lights();
 
 }
 
@@ -100,7 +101,7 @@ void Application::render() {
 	cube_map->render(camera->get_view_matrix(), camera->get_persp_proj_matrix());
 	for (unsigned int i = 0; i < game_objects.size(); i++) game_objects[i]->render();
 	for (unsigned int i = 0; i < point_lights.size(); i++) point_lights[i]->render();
-	dir_light->render();
+	this->dir_light->render();
 	this->particle_master->render(camera);
 }
 

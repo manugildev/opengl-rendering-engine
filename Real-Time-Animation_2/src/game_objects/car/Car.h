@@ -6,7 +6,7 @@ class Application;
 class Car : public GameObject {
 
 public:
-	Car(std::string name, Application *, Model* model, glm::vec3 object_color);
+	Car(std::string name, Application * app, Model* model, glm::vec3 object_color);
 	void update(double delta_time) override;
 	void render() override;
 	void set_initial_pos(glm::vec3 pos);

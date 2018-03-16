@@ -29,7 +29,6 @@ int main(void) {
 	floor1->set_specular_strength(0);
 	floor1->set_specular_power(1);
 	floor1->set_mix_power(0.5);
-	//teapot->set_rotation_speed(glm::vec3(0,20,0));
 
 	GameObject * floor2 = new GameObject("floor2", app, floor_mipmap, glm::vec3(0.29f, 0.90f, 0.23f));
 	floor2->set_shader_program(shader_program);
@@ -38,7 +37,6 @@ int main(void) {
 	floor2->set_specular_strength(0);
 	floor2->set_specular_power(1);
 	floor2->set_mix_power(0.5);
-	//teapot1->set_rotation_speed(glm::vec3(0, 20, 0));
 
 
 	Car *car1 = new Car("car1", app, car_model, glm::vec3(0.18f, 0.80f, 0.44f));
@@ -118,9 +116,6 @@ int main(void) {
 	p_light_10->set_circular_angle(glm::vec3(0, 180, 0));
 	p_light_10->set_distance_from_center(5);
 
-	//std::vector<PointLight*> point_lights = {p_light_7, p_light_9, p_light_8, p_light_10 };
-	//for (unsigned int i = 0; i < point_lights.size(); i++) point_lights[i]->set_shader_program(shader_program_lamp);
-	//for (unsigned int i = 0; i < point_lights.size(); i++) point_lights[i]->set_scale(glm::vec3(0.1,0.1,0.1));
 
 	DirLight* d_light = new DirLight(app, glm::vec3(1.0f, -1.0f, -0.0f), glm::vec3(1.0f));
 	d_light->set_shader_program(shader_program_lamp);

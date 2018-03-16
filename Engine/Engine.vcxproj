@@ -256,6 +256,7 @@
     <ClInclude Include="src\Engine.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="include\glm\detail\dummy.cpp" />
     <ClCompile Include="include\glm\detail\glm.cpp" />
     <ClCompile Include="include\tween\tween.cpp" />
     <ClCompile Include="src\core\game_objects\lights\DirLight.cpp" />

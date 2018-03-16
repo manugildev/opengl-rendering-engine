@@ -7,7 +7,7 @@ Light::Light(Application* app, glm::vec3 light_position, glm::vec3 light_color) 
 	this->set_scale(glm::vec3(0.3f));
 }
 
-void Light::set_shader_program(LampShader* shader_program) {
+void Light::set_shader_program(ShaderProgram* shader_program) {
 	this->shader_program = shader_program;
 	this->set_initial_shader_values();
 }
@@ -24,11 +24,13 @@ void Light::render() {
 	glm::mat4 view = this->camera->get_view_matrix();
 	glm::mat4 perspective_proj = this->camera->get_persp_proj_matrix();
 
-	shader_program->set_object_color(light_color);
-	shader_program->set_view_matrix(view);
-	shader_program->set_proj_matrix(perspective_proj);
-	shader_program->set_model_matrix(get_model_mat());
-
+	LampShader* lamp_shader_program = dynamic_cast<LampShader*>(shader_program);
+	if (lamp_shader_program) {
+		lamp_shader_program->set_object_color(light_color);
+		lamp_shader_program->set_view_matrix(view);
+		lamp_shader_program->set_proj_matrix(perspective_proj);
+		lamp_shader_program->set_model_matrix(get_model_mat());
+	}
 	if (app->is_debug()) {
 		model->draw(nullptr, GL_LINES);
 	} else model->draw();
@@ -37,7 +39,6 @@ void Light::render() {
 
 void Light::update(double delta_time) {
 	GameObject::update(delta_time);
-	app->update_lights();
 }
 
 glm::vec3 Light::get_light_position() {

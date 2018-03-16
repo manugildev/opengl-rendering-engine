@@ -16,7 +16,7 @@ public:
 	void render() override;
 	void update(double delta_time) override;
 	void set_initial_shader_values() override;
-	void set_shader_program(LampShader* shader_program);
+	void set_shader_program(ShaderProgram* shader_program);
 
 	glm::vec3 get_light_position();
 	glm::vec3 get_light_color();
@@ -25,6 +25,6 @@ protected:
 	glm::vec3 light_color;
 
 private:
-	LampShader* shader_program;
+	ShaderProgram * shader_program;
 };
 

@@ -31,13 +31,12 @@ private:
 	GLuint vertex_shader_id;
 	GLuint fragment_shader_id;
 	std::string vertex_file, fragment_file;
-
+	
 protected:
 	virtual void bind_attributes() = 0;
 	virtual void get_all_uniform_locations() = 0;
 	void bind_attribute(int attribute, std::string variable_name);
 	double fragment_file_last_write_time;
 	double vertex_file_last_write_time;
-
 };
 
