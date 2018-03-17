@@ -13,5 +13,5 @@ float LinearizeDepth(in vec2 uv){
 
 void main(void){
     float c = LinearizeDepth(texture_coords);
-    out_color = vec4(c, c, c, 1.0);
+    out_color = vec4(c, c, c, c > 0.9 ? 0 : 1);
 }
