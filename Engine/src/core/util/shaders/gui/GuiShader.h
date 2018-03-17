@@ -3,6 +3,7 @@
 
 const std::string GUI_VERTEX_FILE = "shaders/gui_vertex_shader.glsl";
 const std::string GUI_FRAGMENT_FILE = "shaders/gui_fragment_shader.glsl";
+
 class GuiShader :
 	public ShaderProgram {
 public:

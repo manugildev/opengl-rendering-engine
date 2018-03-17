@@ -54,6 +54,10 @@ int ShaderProgram::validate_shader() {
 }
 
 void ShaderProgram::start() {
+	if (is_modified) {
+		this->reload(); 
+		is_modified = false;
+	}
 	glUseProgram(program_id);
 }
 
@@ -107,10 +111,10 @@ void ShaderProgram::check_if_modified() {
 
 
 	if (time_vertex != vertex_file_last_write_time || time_fragment != fragment_file_last_write_time) {
+		std::cout << "Shader has changed" << std::endl;
 		vertex_file_last_write_time = time_vertex;
 		fragment_file_last_write_time = time_fragment;
-		this->reload();
-		std::cout << "Shader has changed" << std::endl;
+		this->is_modified = true;
 	}
 }
 

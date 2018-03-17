@@ -4,6 +4,7 @@
 
 Application::Application(Camera* camera) : camera(camera) {
 	this->init();
+	
 }
 
 int Application::init() {
@@ -33,23 +34,27 @@ int Application::init() {
 	
 	// TODO: Temporal Particle Master
 	particle_master = new ParticleMaster(camera->get_persp_proj_matrix());
+	shader_check_thread = new std::thread(&Application::check_shaders, this);
 	return 1;
 }
 
 // TODO: Abstract this to run it outside
 void Application::runMainGameLoop() {
 	while (!glfwWindowShouldClose(window->window_obj) && glfwGetKey(window->window_obj, GLFW_KEY_ESCAPE) != GLFW_PRESS) {
-		this->check_shaders();
 
 		/* Update */
 		this->update();
 
 		/* Render */
 		if (this->frame_buffer) {
-			this->frame_buffer->bind();
+			glDisable(GL_ALPHA_TEST);
+			this->frame_buffer->bind(); 
+			
 			glViewport(0, 0, window->get_width(), window->get_height());
-			//this->render();
+			this->render();
+		
 			this->frame_buffer->unbind();
+			glDisable(GL_ALPHA_TEST);
 		}
 
 		glViewport(0, 0, window->get_width(), window->get_height());
@@ -144,13 +149,19 @@ void Application::mouse_callback(double x_pos, double y_pos) {
 #pragma endregion
 
 void Application::check_shaders() {
-	for (unsigned int i = 0; i < shaders.size(); i++) {
-		shaders[i]->check_if_modified();
+	while (!stop_thread) {
+		for (unsigned int i = 0; i < shaders.size(); i++) {
+			shaders[i]->check_if_modified();
+		}
+		std::this_thread::sleep_for(std::chrono::seconds(1));
 	}
 }
 
 void Application::set_game_objects(std::vector<GameObject*> game_objects) {
 	this->game_objects = game_objects;
+	for (GameObject* game_object : this->game_objects) {
+		game_object->set_initial_shader_values();
+	}
 }
 
 void Application::set_gui_renderer(GuiRenderer* gui_renderer) {
@@ -217,7 +228,11 @@ bool Application::is_debug() {
 }
 
 Application::~Application() {
+	stop_thread = true;
+	shader_check_thread->join();
 	delete window;
+	delete shader_check_thread;
+	shader_check_thread = nullptr;
 	for (unsigned int i = 0; i < game_objects.size(); i++) { delete game_objects[i]; game_objects[i] = nullptr; }
 	for (unsigned int i = 0; i < point_lights.size(); i++) { delete point_lights[i]; point_lights[i] = nullptr; }
 	window = nullptr;

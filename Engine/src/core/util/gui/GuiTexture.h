@@ -7,6 +7,7 @@ class Application;
 class GuiTexture : public Texture {
 public:
 	GuiTexture(Application* app, ShaderProgram* shader_program, const std::string &file_name = TEXTURE_WHITE_PIXEL);
+	GuiTexture(Application* app, ShaderProgram* shader_program, Texture* texture);
 	~GuiTexture();
 
 	void update();

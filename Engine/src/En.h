@@ -12,6 +12,7 @@
 #include <cstdio>
 #include <windows.h>
 
+#include <thread>
 #include <vector>
 #include <list>
 #include <map>

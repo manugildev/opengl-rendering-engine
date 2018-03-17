@@ -10,6 +10,11 @@ Texture::Texture(const std::string & file_name, GLenum texture_target, int num_o
 	this->load();
 }
 
+Texture::Texture(Texture & texture) : texture_target(texture.texture_target), file_name(texture.file_name), num_of_textures(texture.num_of_textures) {
+	this->texture_id = new GLuint[texture.num_of_textures];
+	texture_id = texture.get_texture_id();
+}
+
 GLint Texture::load() {
 	unsigned char* image_data = stbi_load(file_name.c_str(), &width, &height, &num_of_components, STBI_rgb_alpha);
 

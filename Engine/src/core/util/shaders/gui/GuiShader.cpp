@@ -1,8 +1,5 @@
 #include "GuiShader.h"
 
-const std::string BASIC_VERTEX_FILE = "shaders/gui_vertex_shader.glsl";
-const std::string BASIC_FRAGMENT_FILE = "shaders/gui_fragment_shader.glsl";
-
 GuiShader * GuiShader::create(std::string vertex_shader, std::string fragment_shader) {
 	GuiShader * p = new GuiShader(vertex_shader, fragment_shader);
 	p->init();

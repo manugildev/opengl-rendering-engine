@@ -31,7 +31,7 @@ private:
 	GLuint vertex_shader_id;
 	GLuint fragment_shader_id;
 	std::string vertex_file, fragment_file;
-	
+	bool is_modified = false;
 protected:
 	virtual void bind_attributes() = 0;
 	virtual void get_all_uniform_locations() = 0;

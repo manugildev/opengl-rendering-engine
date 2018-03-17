@@ -6,14 +6,21 @@ GuiTexture::GuiTexture(Application * app, ShaderProgram* shader_program, const s
 	this->update_transformation_matrix();
 }
 
+GuiTexture::GuiTexture(Application * app, ShaderProgram * shader_program, Texture * texture): Texture(*texture), app(app), shader_program(shader_program) {
+	this->quad = new Quad(shader_program);
+	this->update_transformation_matrix();
+}
+
 void GuiTexture::update() {}
 
 void GuiTexture::render() {
-	this->bind(0);
 	GuiShader* gui_shader = dynamic_cast<GuiShader*>(shader_program);
+	gui_shader->start();
+	this->bind(0);
 	if (gui_shader) gui_shader->set_transformation_matrix(transformation_matrix);
 	this->quad->render();
 	this->unbind();
+	gui_shader->stop();
 }
 
 void GuiTexture::update_transformation_matrix() {

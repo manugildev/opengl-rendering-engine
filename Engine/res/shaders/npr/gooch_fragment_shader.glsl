@@ -48,5 +48,6 @@ void main(){
 
 	float spec = max(dot(nreflect, nview), 0.0);
 	spec = pow(spec, specular_power);
+	
 	frag_color = vec4(min(kfinal + spec, 1.0), 1.0); 
 }

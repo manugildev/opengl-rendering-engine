@@ -23,7 +23,6 @@ void GameObject::set_initial_shader_values() {
 }
 
 void GameObject::update_lights() {
-	// TODO: Only working for one light right now, implement shaders for multi lighting
 	shader_program->start();
 	LightingShader* lighting_shader = dynamic_cast<LightingShader*>(shader_program);
 	if (!lighting_shader) return;

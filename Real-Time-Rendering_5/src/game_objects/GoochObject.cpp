@@ -35,13 +35,13 @@ void GoochObject::update_shader_properties(){
 	glm::vec3 camera_pos = this->camera->get_pos();
 	GoochShader* gooch_shader = dynamic_cast<GoochShader*>(shader_program);
 	if (gooch_shader) {
-		gooch_shader->modify_vec3(gooch_shader->location_object_color, get_color());
-		gooch_shader->modify_vec3(gooch_shader->location_dir_light.direction, app->get_dir_light()->get_direction());
-		gooch_shader->modify_vec3(gooch_shader->location_dir_light.light_color, app->get_dir_light()->get_color());
-
 		gooch_shader->modify_mat4(gooch_shader->location_view_mat, view_matrix);
 		gooch_shader->modify_mat4(gooch_shader->location_proj_mat, projection_matrix);
 		gooch_shader->modify_mat4(gooch_shader->location_model_mat, model_mat);
 		gooch_shader->modify_vec3(gooch_shader->location_view_position, camera_pos);
+
+		gooch_shader->modify_vec3(gooch_shader->location_object_color, get_color());
+		gooch_shader->modify_vec3(gooch_shader->location_dir_light.direction, app->get_dir_light()->get_direction());
+		gooch_shader->modify_vec3(gooch_shader->location_dir_light.light_color, app->get_dir_light()->get_color());
 	}
 }

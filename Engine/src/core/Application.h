@@ -80,4 +80,6 @@ private:
 	double lastFrame = 0.0f;
 	bool debug = false;
 
+	std::thread* shader_check_thread;
+	bool stop_thread;
 };

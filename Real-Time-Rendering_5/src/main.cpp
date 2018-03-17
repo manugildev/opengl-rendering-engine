@@ -22,19 +22,10 @@ int main(void) {
 	InputManager* input_manager = new Input(app);
 
 	/* Models */
-	Model* floor_no_mipmap = new Model("models/floor.obj", 1);
-	Model* car_model = new Model("models/teapot.obj");
+	Model* car_model = new Model("models/volks.obj");
 
 	/* GameObjects */
 	GoochShader* shader_program = GoochShader::create();
-
-	GameObject * floor1 = new GameObject("floor1", app, floor_no_mipmap, glm::vec3(0.90f, 0.29f, 0.23f));
-	floor1->set_shader_program(shader_program);
-	floor1->set_pos(glm::vec3(0, 0, 0));
-	floor1->set_scale(glm::vec3(5.0f));
-	floor1->set_specular_strength(0);
-	floor1->set_specular_power(1);
-	floor1->set_mix_power(0.5);
 
 	GoochObject * car1 = new GoochObject("car1", app, car_model, glm::vec3(0.90f, 0.29f, 0.23f));
 	car1->set_shader_program(shader_program);
@@ -60,14 +51,25 @@ int main(void) {
 	first_gui->set_position(glm::vec2(0.0f, -0.0f));
 	gui_renderer->add_gui_texture(first_gui);
 
-	std::vector<ShaderProgram*> shaders = { shader_program, shader_program_lamp, cube_map_shader };
 
+
+	FrameBuffer* frame_buffer = new FrameBuffer(app);
+
+	GuiShader* depth_shader_program = GuiShader::create("shaders/gui_vertex_shader.glsl", "shaders/gui_depth_fragment_shader.glsl");
+	GuiTexture* frame_buffer_texture = new GuiTexture(app, depth_shader_program, frame_buffer->get_depth_texture());
+	frame_buffer_texture->set_scale(glm::vec2(.960f/2, -.540f/2));
+	frame_buffer_texture->set_position(glm::vec2(0.75f, -0.75f));
+	gui_renderer->add_gui_texture(frame_buffer_texture);
+
+	std::vector<ShaderProgram*> shaders = { shader_program, shader_program_lamp, cube_map_shader, gui_renderer->get_shader_program(), depth_shader_program};
+	
 	/* Setting up the Application */
-	app->set_game_objects(objects);
 	app->set_cube_map(cube_map);
 	app->set_gui_renderer(gui_renderer);
 	app->set_shaders(shaders);
 	app->set_input_manager(input_manager);
+	app->set_game_objects(objects);
+	app->set_frame_buffer(frame_buffer);
 
 	/* Run the loop */
 	app->runMainGameLoop();
