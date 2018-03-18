@@ -17,5 +17,6 @@
 - [ ] Add font rendering
 - [ ] Remove the util\util\Util.h class
 - [ ] Abstract the shaders
+- [ ] Virtualize the main loop from the Application class
 
  

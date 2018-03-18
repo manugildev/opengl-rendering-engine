@@ -35,6 +35,7 @@ int Application::init() {
 	// TODO: Temporal Particle Master
 	particle_master = new ParticleMaster(camera->get_persp_proj_matrix());
 	shader_check_thread = new std::thread(&Application::check_shaders, this);
+	basic_normal_shader = BasicShader::create("shaders/basic_vertex_shader.glsl", "shaders/basic_normal_fragment_shader.glsl");
 	return 1;
 }
 
@@ -49,10 +50,12 @@ void Application::runMainGameLoop() {
 		if (this->frame_buffer) {
 			glDisable(GL_ALPHA_TEST);
 			this->frame_buffer->bind(); 
-			
-			glViewport(0, 0, window->get_width(), window->get_height());
-			this->render();
-		
+
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			glClearColor(0.0f, 0.7f, 0.7f, 1.0f);
+			//for (unsigned int i = 0; i < game_objects.size(); i++) game_objects[i]->render();
+			for (unsigned int i = 0; i < game_objects.size(); i++) game_objects[i]->render1(basic_normal_shader);
+
 			this->frame_buffer->unbind();
 			glDisable(GL_ALPHA_TEST);
 		}
@@ -101,7 +104,7 @@ void Application::update() {
 // TODO: Abstract this to run it outside
 void Application::render() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearColor(0.7f, 0.7f, 0.7f, 1.0f);
+	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
 	cube_map->render(camera->get_view_matrix(), camera->get_persp_proj_matrix());
 	for (unsigned int i = 0; i < game_objects.size(); i++) game_objects[i]->render();

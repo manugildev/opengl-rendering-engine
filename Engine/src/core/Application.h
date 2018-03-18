@@ -63,6 +63,7 @@ public:
 
 	FrameBuffer* frame_buffer;
 	ParticleMaster * particle_master;
+	ShaderProgram* basic_normal_shader;
 
 	double delta_time;
 

@@ -29,7 +29,7 @@ int main(void) {
 
 	GoochObject * car1 = new GoochObject("car1", app, car_model, glm::vec3(0.90f, 0.29f, 0.23f));
 	car1->set_shader_program(shader_program);
-	car1->set_rotation_speed(glm::vec3(0, 30, 0));
+	car1->set_rotation_speed(glm::vec3(0, 0, 0));
 	car1->set_pos(glm::vec3(0, 0, 0));
 	car1->set_scale(glm::vec3(1.0f));
 	car1->set_specular_strength(0);
@@ -51,8 +51,6 @@ int main(void) {
 	first_gui->set_position(glm::vec2(0.0f, -0.0f));
 	gui_renderer->add_gui_texture(first_gui);
 
-
-
 	FrameBuffer* frame_buffer = new FrameBuffer(app);
 
 	GuiShader* depth_shader_program = GuiShader::create("shaders/gui_vertex_shader.glsl", "shaders/gui_edge_fragment_shader.glsl");
@@ -60,11 +58,11 @@ int main(void) {
 	
 	float scale = 960.0f / 540.0f;
 	
-	frame_buffer_texture->set_scale(glm::vec2(scale*0.5f, -0.5f));
-	frame_buffer_texture->set_position(glm::vec2(0.5f, -0.5f));
+	frame_buffer_texture->set_scale(glm::vec2(scale, -1.0f));
+	frame_buffer_texture->set_position(glm::vec2(0.0f, -0.0f));
 	gui_renderer->add_gui_texture(frame_buffer_texture);
 
-	std::vector<ShaderProgram*> shaders = { shader_program, shader_program_lamp, cube_map_shader, gui_renderer->get_shader_program(), depth_shader_program};
+	std::vector<ShaderProgram*> shaders = { shader_program, shader_program_lamp, cube_map_shader, gui_renderer->get_shader_program(), depth_shader_program, app->basic_normal_shader};
 	
 	/* Setting up the Application */
 	app->set_cube_map(cube_map);

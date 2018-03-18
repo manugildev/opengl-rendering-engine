@@ -11,8 +11,11 @@ BasicShader::BasicShader(std::string vertex_shader, std::string fragment_shader)
 BasicShader::~BasicShader() {}
 
 void BasicShader::bind_attributes() {
-	ShaderProgram::bind_attribute(0, "vertex_positions");
-	ShaderProgram::bind_attribute(1, "vertex_normals");
+	ShaderProgram::bind_attribute(0, "vertex_position");
+	ShaderProgram::bind_attribute(1, "vertex_tex_coord");
+	ShaderProgram::bind_attribute(2, "vertex_normal");
+	ShaderProgram::bind_attribute(3, "vertex_tangent");
+	ShaderProgram::bind_attribute(4, "vertex_bitangent");
 }
 
 void BasicShader::get_all_uniform_locations() {

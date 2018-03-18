@@ -105,6 +105,19 @@ void GameObject::render() {
 	this->shader_program->stop();
 }
 
+void GameObject::render1(ShaderProgram* s_program) {
+	glm::mat4 view = this->camera->get_view_matrix();
+	glm::mat4 perspective_proj = this->camera->get_persp_proj_matrix();
+	BasicShader* shader = dynamic_cast<BasicShader*>(s_program);
+	shader->start();
+	shader->set_view_matrix(view);
+	shader->set_proj_matrix(perspective_proj);
+	shader->set_model_matrix(model_mat);
+	this->model->draw(this->shader_program);
+	shader->stop();
+
+}
+
 #pragma region PROPERTIES_SETTERS
 void GameObject::set_pos(glm::vec3 pos) {
 	this->position = pos;
