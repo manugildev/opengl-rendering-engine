@@ -28,6 +28,7 @@
 #include "core\util\shaders\gui\GuiShader.h"
 #include "core\util\shaders\lamp\LampShader.h"
 #include "core\util\shaders\lighting\LightingShader.h"
+#include "core\util\shaders\gooch\GoochShader.h"
 #include "core\util\shaders\particle\ParticleShader.h"
 #include "core\util\texture\Texture.h"
 #include "core\util\util\Util.h"

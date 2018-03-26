@@ -2,6 +2,7 @@
 
 #include "..\util\Util.h"
 #include "..\shaders\lighting\LightingShader.h"
+#include "..\shaders\gooch\GoochShader.h"
 
 Model::Model(const std::string & file_name, const unsigned int mipmap_levels) :file_name(file_name), mipmap_levels(mipmap_levels) {
 	this->load_model(file_name.c_str());
@@ -228,6 +229,9 @@ void Model::draw(ShaderProgram* shader_program, GLenum mode) { //TODO: Maybe bri
 		const unsigned int m_index = meshes[i].get_material_index();
 		LightingShader* lighting_shader = dynamic_cast<LightingShader*>(shader_program);
 		if (lighting_shader) lighting_shader->set_material(materials[m_index]);
+
+		GoochShader* gooch_shader = dynamic_cast<GoochShader*>(shader_program);
+		if (gooch_shader) gooch_shader->set_material(materials[m_index]);
 
 		textures[m_index].diffuse_texture->bind(0);
 		textures[m_index].normal_texture->bind(1);

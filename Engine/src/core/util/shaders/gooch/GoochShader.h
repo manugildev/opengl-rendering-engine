@@ -11,6 +11,7 @@ public:
 
 	void bind_attributes() override;
 	void get_all_uniform_locations() override;
+	void set_material(Material material);
 
 	static const std::string VERTEX_FILE;
 	static const std::string FRAGMENT_FILE;
@@ -26,5 +27,6 @@ public:
 	GLuint location_object_color;
 	GLuint location_view_position;
 	DLight_Location location_dir_light;
+	Material_Location location_material;
 };
 

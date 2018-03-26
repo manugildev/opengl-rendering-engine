@@ -131,12 +131,10 @@
     <ClCompile Include="src\game_objects\GoochObject.cpp" />
     <ClCompile Include="src\input\Input.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\shaders\GoochShader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\game_objects\GoochObject.h" />
     <ClInclude Include="src\input\Input.h" />
-    <ClInclude Include="src\shaders\GoochShader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

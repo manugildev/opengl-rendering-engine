@@ -2,7 +2,6 @@
 
 #include "input\Input.h"
 #include "game_objects\GoochObject.h"
-#include "shaders\GoochShader.h"
 
 int main(void) {
 

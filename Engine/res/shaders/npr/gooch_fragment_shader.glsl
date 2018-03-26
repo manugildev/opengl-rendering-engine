@@ -19,6 +19,7 @@ in vec3 eye_dir;
 in vec3 normal;
 in vec2 tex_coords;
 
+uniform Material material;
 uniform vec3 view_pos;
 uniform sampler2D texture_0;
 uniform DirLight dir_light;
@@ -34,8 +35,8 @@ float diffuse_reflection;
 vec3 reflection_vector;
 
 void main(){
-	vec3 kcool = min(cool_color + diffuse_cool * vec3(1,1,1), 1.0);
-	vec3 kwarm = min(warm_color + diffuse_warm * vec3(1,1,1), 1.0);
+	vec3 kcool = min(cool_color + diffuse_cool * material.diffuse_color, 1.0);
+	vec3 kwarm = min(warm_color + diffuse_warm * material.diffuse_color, 1.0);
 
 	vec3 light_direction = normalize(-dir_light.direction);	
 	vec3 norm = normalize(normal);

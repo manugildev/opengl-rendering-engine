@@ -216,6 +216,7 @@
     <ClInclude Include="src\core\game_objects\lights\DirLight.h" />
     <ClInclude Include="src\core\game_objects\lights\Light.h" />
     <ClInclude Include="src\core\game_objects\lights\PointLight.h" />
+    <ClInclude Include="src\core\util\shaders\gooch\GoochShader.h" />
     <ClInclude Include="src\En.h" />
     <ClInclude Include="src\core\game_objects\cube_map\CubeMap.h" />
     <ClInclude Include="src\core\game_objects\particle\Particle.h" />
@@ -268,6 +269,7 @@
     <ClCompile Include="src\core\game_objects\particle\ParticleSystem.cpp" />
     <ClCompile Include="src\core\util\input\InputManager.cpp" />
     <ClCompile Include="src\core\util\framebuffer\FrameBuffer.cpp" />
+    <ClCompile Include="src\core\util\shaders\gooch\GoochShader.cpp" />
     <ClCompile Include="src\core\util\shaders\gui\GuiShader.cpp" />
     <ClCompile Include="src\core\util\gui\GuiRenderer.cpp" />
     <ClCompile Include="src\core\util\gui\GuiTexture.cpp" />

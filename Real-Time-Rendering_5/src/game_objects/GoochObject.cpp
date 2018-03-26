@@ -1,5 +1,4 @@
 #include "GoochObject.h"
-#include "..\shaders\GoochShader.h"
 
 GoochObject::GoochObject(std::string name, Application * app, Model* model, glm::vec3 object_color) : GameObject(name, app, model, object_color){
 }

@@ -30,8 +30,8 @@ void main(void) {
 
 	float grayScale = dot(c, vec3(0.19, 0.97, 0.09));
 	
-	float a = grayScale > 0.999 ? 0 : 1;
-	grayScale = min(grayScale, 0.2);
-	//a = min(a, 1- texture2D(gui_texture, texture_coords).a);
+	float a = grayScale > 0.9 ? 0 : 1;
+	grayScale = min(grayScale, 0.1);
+	a = min(a, 1- texture2D(gui_texture, texture_coords).a);
 	out_color = vec4(grayScale, grayScale, grayScale, a);
 }
