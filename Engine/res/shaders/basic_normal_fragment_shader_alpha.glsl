@@ -13,7 +13,7 @@ float LinearizeDepth(){
 
 void main(){
     float c = LinearizeDepth();
-	vec4 out_color = vec4(normal.x, normal.y, gl_FragCoord.z, 1);	
+	vec4 out_color = vec4(normal.x, normal.y, normal.z, 1);	
 	frag_color = out_color;
 
 }

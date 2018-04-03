@@ -4,7 +4,11 @@ GuiRenderer::GuiRenderer() {
 	shader_program = GuiShader::create();
 }
 
-void GuiRenderer::update() {}
+void GuiRenderer::update(double delta_time) {
+	for (GuiTexture* t : textures) {
+		t->update(delta_time);
+	}
+}
 
 void GuiRenderer::render() {
 	glEnable(GL_BLEND);
@@ -27,6 +31,10 @@ void GuiRenderer::add_gui_texture(GuiTexture* texture) {
 
 ShaderProgram* GuiRenderer::get_shader_program() {
 	return shader_program;
+}
+
+std::vector<GuiTexture*> GuiRenderer::get_textures() {
+	return textures;
 }
 
 GuiRenderer::~GuiRenderer() {

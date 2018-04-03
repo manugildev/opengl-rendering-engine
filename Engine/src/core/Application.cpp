@@ -36,6 +36,9 @@ int Application::init() {
 	particle_master = new ParticleMaster(camera->get_persp_proj_matrix());
 	shader_check_thread = new std::thread(&Application::check_shaders, this);
 	basic_normal_shader = BasicShader::create("shaders/basic_vertex_shader.glsl", "shaders/basic_normal_fragment_shader.glsl");
+	basic_depth_shader = BasicShader::create("shaders/basic_vertex_shader.glsl", "shaders/basic_depth_fragment_shader.glsl");
+	basic_normal_shader_no_alpha = BasicShader::create("shaders/basic_vertex_shader.glsl", "shaders/basic_normal_fragment_shader_alpha.glsl");
+
 	return 1;
 }
 
@@ -46,19 +49,64 @@ void Application::runMainGameLoop() {
 		/* Update */
 		this->update();
 
-		/* Render */
-		if (this->frame_buffer) {
+		/* Render FrameBuffers */
+		if (this->frame_buffers.size() != 0) {
+
+			// Frame Buffer 0
 			glDisable(GL_ALPHA_TEST);
-			this->frame_buffer->bind(); 
+			this->frame_buffers[0]->bind();
 
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			glClearColor(0.0f, 0.7f, 0.7f, 1.0f);
-			//for (unsigned int i = 0; i < game_objects.size(); i++) game_objects[i]->render();
 			for (unsigned int i = 0; i < game_objects.size(); i++) game_objects[i]->render1(basic_normal_shader);
+			this->frame_buffers[0]->unbind();
 
-			this->frame_buffer->unbind();
+			// Frame Buffer 1
+			this->frame_buffers[1]->bind();
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+			for (unsigned int i = 0; i < game_objects.size(); i++) game_objects[i]->render1(basic_depth_shader);
+			this->frame_buffers[1]->unbind();
+
+			// Frame Buffer 2
+			this->frame_buffers[2]->bind();
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+			for (unsigned int i = 0; i < game_objects.size(); i++) game_objects[i]->render1(basic_normal_shader_no_alpha);
+			this->frame_buffers[2]->unbind();
+
+			// Frame Buffer 3
+			this->frame_buffers[3]->bind();
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+			for (unsigned int i = 0; i < game_objects.size(); i++) game_objects[i]->render1(basic_normal_shader);
+			this->frame_buffers[3]->unbind();
+
+
+			// Frame Buffer 4
+			this->frame_buffers[4]->bind();
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+			for (unsigned int i = 0; i < game_objects.size(); i++) game_objects[i]->render1(basic_normal_shader);
+			this->frame_buffers[4]->unbind();
+
+
+			// Frame Buffer 5
+			this->frame_buffers[5]->bind();
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+			game_objects[1]->render(); 
+			this->frame_buffers[5]->unbind();
+
+			// Frame Buffer 6
+			this->frame_buffers[6]->bind();
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+			game_objects[0]->render();
+			this->frame_buffers[6]->unbind();
 			glDisable(GL_ALPHA_TEST);
 		}
+
 
 		glViewport(0, 0, window->get_width(), window->get_height());
 		this->render();
@@ -99,6 +147,8 @@ void Application::update() {
 	this->dir_light->update(delta_time);
 	this->update_lights();
 
+	this->gui_renderer->update(delta_time);
+
 }
 
 // TODO: Abstract this to run it outside
@@ -137,7 +187,11 @@ void Application::key_callback(int key, int scancode, int action, int mode) {
 }
 
 void Application::resize_callback(int width, int height) {
-	if (frame_buffer) frame_buffer->resize();
+	if (frame_buffers.size()!= 0) 
+		for (FrameBuffer* f : frame_buffers) {
+			f->resize();
+		}
+
 	if (gui_renderer) gui_renderer->update_window_size();
 }
 
@@ -165,6 +219,10 @@ void Application::set_game_objects(std::vector<GameObject*> game_objects) {
 	for (GameObject* game_object : this->game_objects) {
 		game_object->set_initial_shader_values();
 	}
+}
+
+void Application::set_frame_buffers(std::vector<FrameBuffer*> frame_buffers){
+	this->frame_buffers = frame_buffers;
 }
 
 void Application::set_gui_renderer(GuiRenderer* gui_renderer) {
@@ -209,10 +267,6 @@ std::vector<PointLight*> Application::get_point_lights() {
 
 void Application::set_cube_map(CubeMap * cube_map) {
 	this->cube_map = cube_map;
-}
-
-void Application::set_frame_buffer(FrameBuffer* frame_buffer) {
-	this->frame_buffer = frame_buffer;
 }
 
 void Application::set_debug(bool debug) {

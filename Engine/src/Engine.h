@@ -16,9 +16,9 @@
 #include "core\game_objects\particle\ParticleSystem.h"
 
 #include "core\util\framebuffer\FrameBuffer.h"
-#include "core\util\gui\GuiRenderer.h"
-#include "core\util\gui\GuiTexture.h"
 #include "core\util\gui\Quad.h"
+#include "core\util\gui\GuiTexture.h"
+#include "core\util\gui\GuiRenderer.h"
 #include "core\util\input\InputManager.h"
 #include "core\util\mesh\Mesh.h"
 #include "core\util\mesh\Model.h"

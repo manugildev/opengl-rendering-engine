@@ -11,6 +11,13 @@ void Input::key_callback(int key, int scancode, int action, int mode) {
 	if (keys[GLFW_KEY_P]) app->set_debug(!app->get_debug());
 	if (keys[GLFW_KEY_U]) app->get_window()->set_full_screen(!app->get_window()->get_full_screen());
 
+	if (keys[GLFW_KEY_1]) app->get_gui_renderer()->get_textures()[2]->trigger_scaling_animation();
+	if (keys[GLFW_KEY_2]) app->get_gui_renderer()->get_textures()[3]->trigger_scaling_animation();
+	if (keys[GLFW_KEY_3]) app->get_gui_renderer()->get_textures()[4]->trigger_scaling_animation();
+	if (keys[GLFW_KEY_4]) app->get_gui_renderer()->get_textures()[5]->trigger_scaling_animation();
+	if (keys[GLFW_KEY_5]) app->get_gui_renderer()->get_textures()[6]->trigger_scaling_animation();
+	if (keys[GLFW_KEY_6]) app->get_gui_renderer()->get_textures()[7]->trigger_scaling_animation();
+
 }
 
 void Input::scroll_callback(double x_offset, double y_offset) {
@@ -37,4 +44,6 @@ void Input::process_camera_movement() {
 		!(keys[GLFW_KEY_S]) &&
 		!(keys[GLFW_KEY_A]) &&
 		!(keys[GLFW_KEY_D])) app->get_camera()->process_keyboard(STOP);
+
+
 }

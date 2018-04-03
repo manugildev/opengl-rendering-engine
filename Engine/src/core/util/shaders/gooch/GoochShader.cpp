@@ -41,6 +41,9 @@ void GoochShader::get_all_uniform_locations() {
 	location_material.shininess = get_uniform_location("material.shininess");
 	location_material.shininess_strength = get_uniform_location("material.shininess_strength");
 
+	location_use_object_color = get_uniform_location("use_object_color");
+	location_use_phong = get_uniform_location("use_phong");
+
 }
 
 void GoochShader::set_material(Material material) {

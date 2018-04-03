@@ -217,6 +217,7 @@
     <ClInclude Include="src\core\game_objects\lights\Light.h" />
     <ClInclude Include="src\core\game_objects\lights\PointLight.h" />
     <ClInclude Include="src\core\util\shaders\gooch\GoochShader.h" />
+    <ClInclude Include="src\core\util\util\maths.h" />
     <ClInclude Include="src\En.h" />
     <ClInclude Include="src\core\game_objects\cube_map\CubeMap.h" />
     <ClInclude Include="src\core\game_objects\particle\Particle.h" />

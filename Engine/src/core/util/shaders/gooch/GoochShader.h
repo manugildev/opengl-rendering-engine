@@ -26,6 +26,8 @@ public:
 	GLuint location_texture_0;
 	GLuint location_object_color;
 	GLuint location_view_position;
+	GLuint location_use_object_color;
+	GLuint location_use_phong;
 	DLight_Location location_dir_light;
 	Material_Location location_material;
 };

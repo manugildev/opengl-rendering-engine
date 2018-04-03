@@ -47,23 +47,25 @@ public:
 	void resize_callback(int width, int height);
 
 	/* Setters */
-	void set_game_objects(std::vector<GameObject*> game_objects); 
+	void set_game_objects(std::vector<GameObject*> game_objects);
+	void set_frame_buffers(std::vector<FrameBuffer*> frame_buffers);
 	void set_gui_renderer(GuiRenderer* gui_renderer);
 	void set_directional_light(DirLight* dir_light);
 	void set_point_lights(std::vector<PointLight*> point_lights);
 	void set_shaders(std::vector<ShaderProgram*> shaders);
 	void set_input_manager(InputManager* input_manager);
 	void set_cube_map(CubeMap* cube_map);
-	void set_frame_buffer(FrameBuffer* frame_buffer);
 	void set_debug(bool debug);
 
 	void update_lights();
 	void check_shaders();
 	bool is_debug();
 
-	FrameBuffer* frame_buffer;
+	std::vector<FrameBuffer*> frame_buffers;
 	ParticleMaster * particle_master;
 	ShaderProgram* basic_normal_shader;
+	ShaderProgram* basic_depth_shader;
+	ShaderProgram* basic_normal_shader_no_alpha;
 
 	double delta_time;
 

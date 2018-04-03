@@ -42,5 +42,7 @@ void GoochObject::update_shader_properties(){
 		gooch_shader->modify_vec3(gooch_shader->location_object_color, get_color());
 		gooch_shader->modify_vec3(gooch_shader->location_dir_light.direction, app->get_dir_light()->get_direction());
 		gooch_shader->modify_vec3(gooch_shader->location_dir_light.light_color, app->get_dir_light()->get_color());
+		gooch_shader->modify_boolean(gooch_shader->location_use_object_color, use_object_color);
+		gooch_shader->modify_boolean(gooch_shader->location_use_phong, use_phong);
 	}
 }

@@ -45,7 +45,7 @@ Texture* FrameBuffer::create_texture_attachment(int width, int height) {
 }
 
 Texture* FrameBuffer::create_depth_texture_attachment(int width, int height) {
-	Texture* new_texture = new Texture("textures/empty_pixel.png", GL_TEXTURE_2D, 20);
+	Texture* new_texture = new Texture();
 	new_texture->bind();
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);

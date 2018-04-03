@@ -28,14 +28,10 @@ void main(void) {
 	vec4 sobel = sqrt((sobel_edge_h * sobel_edge_h) + (sobel_edge_v * sobel_edge_v));
 	vec3 c = 1 - sobel.rgb;
 
-	float grayScale = dot(c, vec3(0.09, 0.97, 0.09));	
-	grayScale = min(grayScale, 0.1);
-
 	float Cmax = max(max(c.r, c.g), c.b);
     float Cmin = min(min(c.r, c.g), c.b);
 	float delta = Cmax - Cmin;
 	float saturation = delta / Cmax;
 
-	c = vec3(grayScale, grayScale, grayScale);
-	out_color = vec4(c, saturation);
+	out_color = vec4(c, 1);
 }
