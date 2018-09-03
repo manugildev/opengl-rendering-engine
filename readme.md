@@ -4,7 +4,7 @@ This project started with the idea of making my assignments faster to code. Inst
 
 Due to the amount of work of the Master that I am doing, this project is still not finished and a lot of new features have to be added to convert it into a fully functional engine.
 
-### Demo Projects
+### Demo Projects (Videos)
 - [Gooch Technical Shading](https://youtu.be/SKc75BOTq18)
 - [Inverse Kinematics](https://www.youtube.com/watch?v=7K0FUKm95bE)
 - [MipMapping](https://youtu.be/TsZA2yeeR8w)
