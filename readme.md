@@ -10,7 +10,7 @@ Due to the amount of work of the Master that I am doing, this project is still n
 - [MipMapping](https://youtu.be/TsZA2yeeR8w)
 - [Rendering Styles (Refraction and Reflection)](https://youtu.be/G2UApdAjK6k)
 - [Particles](https://youtu.be/OrJ3MiT1Vhc)
-- [Rendering Styles (Phong, Gooch & Cartoon)](https://youtu.be/dhwIXdvvFHY)
+- [Rendering Styles (Phong, Gooch and Cartoon)](https://youtu.be/dhwIXdvvFHY)
 - [Rotations (Euler and Quaternions / Hierarchical)](https://youtu.be/HpgOAALAXjU)
 - [First Demo](https://youtu.be/ZkJKG76QycA)
 
