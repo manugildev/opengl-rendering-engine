@@ -21,7 +21,7 @@ Window::Window(Application* app, int width, int height, std::string title) : app
 	glfwSetCursorPos(window_obj, window_width / 2, window_height / 2);
 	glfwSetWindowSizeCallback(window_obj, window_size_callback);
 	glfwSetInputMode(window_obj, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-	glfwSetWindowPos(window_obj, 600, 300);
+	glfwSetWindowPos(window_obj, 50, 50);
 	glfwSetWindowAspectRatio(window_obj, 16, 9);
 
 	glfwMakeContextCurrent(window_obj);

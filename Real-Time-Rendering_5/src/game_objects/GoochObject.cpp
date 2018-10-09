@@ -28,6 +28,9 @@ void GoochObject::set_initial_shader_values(){
 	}
 }
 
+void GoochObject::update_lights() {
+}
+
 void GoochObject::update_shader_properties(){
 	glm::mat4 view_matrix = this->camera->get_view_matrix();
 	glm::mat4 projection_matrix = this->camera->get_persp_proj_matrix();
@@ -44,5 +47,7 @@ void GoochObject::update_shader_properties(){
 		gooch_shader->modify_vec3(gooch_shader->location_dir_light.light_color, app->get_dir_light()->get_color());
 		gooch_shader->modify_boolean(gooch_shader->location_use_object_color, use_object_color);
 		gooch_shader->modify_boolean(gooch_shader->location_use_phong, use_phong);
+		gooch_shader->modify_boolean(gooch_shader->location_use_phong, use_phong);
+		gooch_shader->set_point_lights(app->get_point_lights());
 	}
 }

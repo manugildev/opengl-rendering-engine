@@ -28,7 +28,7 @@ void main(void) {
 	vec4 sobel = sqrt((sobel_edge_h * sobel_edge_h) + (sobel_edge_v * sobel_edge_v));
 	vec3 c = 1 - sobel.rgb;
 
-	float grayScale = dot(c, vec3(0.09, 0.97, 0.09));	
+	float grayScale = dot(c, vec3(0.09, 0.97, 0.99));	
 	grayScale = min(grayScale, 0.1);
 
 	float Cmax = max(max(c.r, c.g), c.b);

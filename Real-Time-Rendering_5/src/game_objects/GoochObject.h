@@ -9,6 +9,7 @@ public:
 	virtual void update(double delta_time);
 	virtual void render();
 	virtual void set_initial_shader_values();
+	virtual void update_lights();
 	bool use_object_color = true;
 	bool use_phong = false;
 

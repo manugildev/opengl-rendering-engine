@@ -15,6 +15,7 @@ int main(void) {
 	LampShader* shader_program_lamp = LampShader::create();
 	DirLight* d_light = new DirLight(app, glm::vec3(1.0f, -1.0f, -0.0f), glm::vec3(1.0f));
 	d_light->set_shader_program(shader_program_lamp);
+
 	app->set_directional_light(d_light);
 
 	/* InputManager */
@@ -42,7 +43,6 @@ int main(void) {
 	car2->set_specular_strength(0);
 	car2->set_specular_power(1);
 	car2->use_phong = true;
-
 
 	std::vector<GameObject*> objects = { car1, car2 };
 	
